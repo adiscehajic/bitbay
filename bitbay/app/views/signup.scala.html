@@ -1,0 +1,100 @@
+@(userRegistration: Form[User])
+@import helper._
+	<!DOCTYPE html>
+		<html>
+			<head>
+				<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+				<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/signup.css")">
+				<link rel="shortcut icon" type="image/ico" href="@routes.Assets.versioned("images/favicon.ico")">
+				<script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
+				<title> Registration </title>
+			</head>
+			<body>
+			<div class="row">
+			<div class="container">
+				<div class="container" style="padding-left:0px">
+					<div class="row">
+						<div id="row1">
+							<div class="row">
+								<div class="col-lg-2">
+									<a href="/"><img id="TitlePhoto" src="http://s18.postimg.org/xn7bwmw0l/logo3.png"></a>
+								</div>
+								<div class="col-lg-5" style="margin-top:5px">
+									<h1 id="title"> Get Started with BitBay! </h1>
+								</div>
+							</div>
+							<div class="row">
+								<p id="semi-title"> Create your personal account or start a buisness account.</p>
+							</div>
+						</div>
+					</div>
+					<div class="container">
+						<div class="row">
+							<div class="col-md-10">
+								<div id="inputs">
+								@helper.form(action = routes.Users.newUser()) {
+									<div class="container">
+										<div class="row">
+											<div class="col-sm-3">
+												<p class="paragraph"> First name </p>
+												<input class="form-control" id="ex3" type="text" name="first-name">
+											</div>
+											<div class="col-sm-3">
+												<p class="paragraph"> Last name </p>
+												<input class="form-control" id="ex3" type="text" name="last-name">
+											</div>
+										</div>
+										<div id="rowEmail">
+											<div class="row">
+												<div class="col-sm-4">
+													<p class="paragraph"> Email </p>
+													<input class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status" type="email" name="email">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-3">
+												@if(flash.contains("error")) {
+
+												}
+												<p class="paragraph" id="pass"> Create password </p>
+												<input class="form-control" id="ex3" type="password" name="password">
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-3">
+												<p class="paragraph"> Confirm password </p>
+												<input class="form-control" id="ex3" type="password" name="confirmPassword">
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-9" style="padding-left:0px">
+												<p class="confirmPar"> By clicking Register, you agree that you have read and accepted the BitBay <a href="">User Agreement</a> and <a href="">User Privacy Notice </a> and that you are at least 18 years old. </p>
+												<button class="btn btn-primary btn-md" style="margin: 0px 0px 15px 15px"> Register </button>
+											</div>
+										</div>
+									</div>
+								}
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="row">
+									<p class="confirmPar" style="margin-top:10px"> Already have an Account? </p>
+									<button class="btn btn-default btn-md" style="margin: 0px 0px 15px 15px" onclick="javascript:location.href='/signin'"> Sign in </button>
+								</div>
+							</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer navbar-static-bottom">
+			<div id="footer">
+				<div class="container">
+					<p class = "pFooter"> Copyright © 2015. BitBay. All Rights Reserved.</p>
+				</div>
+			</div>
+		</div>
+			</body>
+		</html>
+
