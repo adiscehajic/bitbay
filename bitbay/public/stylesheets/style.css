@@ -4,30 +4,18 @@ body{
     	}
 
     	
-
-
-.col{
-	margin-right: 2px;
-	
-	width: 48%;
-	height: 400px;
-
-	background-color: #ffffff;
-	margin-right: 2px;
-	border-right: 1px solid #ccc;
-	box-shadow: 4px 0 1px #eee;
-
-	border-radius: 3px;
-	box-shadow: 4px 4px 1px #eee;
-	border: 1px solid #ddd;
-	margin-top: 10px;
+.form-control {
+  width: 80%;
+  height: 30px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  margin-right: 15px;
+  margin-left: 20px;
+  padding-right: 20px;
 }
 
-.form-control{
-	width: 80%;
-	margin-left: 20px;
 
-}
+
 
 p{
 	margin-right: 280px;
@@ -35,7 +23,8 @@ p{
 }
 
 h2{
-	padding-left: 23px;
+	padding-left: 20px;
+  margin-bottom: 30px;
 }
 
 
@@ -54,7 +43,6 @@ h2{
     box-shadow: 0 3px 0 rgba(0,0,0,.04);
     vertical-align: baseline;
     text-align: center;
-    text-decoration: none;
     white-space: nowrap;
     font-weight: 500;
     font-size: 16px;
@@ -64,7 +52,9 @@ h2{
 
     margin-top: 6px;
     margin-left: 22px;
-
+    margin-bottom: 20px;
+    text-decoration: none;
+    content: 'Register';
   }
 
  .btn:hover{
@@ -78,7 +68,7 @@ h2{
   }
 
   img{
-  	margin-left: -14px;
+  	margin-left: 0px;
   }
 
 .pFooter{
@@ -89,18 +79,37 @@ h2{
 
 .title{
 	text-align: center;
-	margin-top: 120px;
+	margin-top: 80px;
+  margin-bottom: 10px;
+  padding-left: 0px;
+
 }
 
 
 
-form{
-	width: 86%;
+.inputs{
+  padding-top: 10px;
+  margin-right: 2px;
+
+  background-color: #ffffff;
+  margin-right: 2px;
+  border-right: 1px solid #ccc;
+  box-shadow: 4px 0 1px #eee;
+
+  border-radius: 3px;
+  box-shadow: 4px 4px 1px #eee;
+  border: 1px solid #ddd;
+  margin-top: 10px;
 }
 
-#footer{
-	margin-top: 40px;
+#bimg{
+  width: 120px;
+  margin-bottom: 10px;
 }
 
+h4{
+  text-align: center;
+  padding-bottom: 10px;
 
+}
 

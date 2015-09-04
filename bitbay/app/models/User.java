@@ -57,6 +57,7 @@ public class User extends Model {
         // Checking if the loaded user exists and if his password corresponds to the inputed password.
         if (user != null && BCrypt.checkpw(password, user.password)) {
             return user;
+
         } else {
             return null;
         }
