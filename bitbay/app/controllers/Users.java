@@ -25,6 +25,7 @@ public class Users extends Controller {
     private String name;
 
     public Result index() {
+        Logger.info(session().get("email"));
         return ok(index.render(name));
     }
 
@@ -33,7 +34,11 @@ public class Users extends Controller {
      * @return
      */
     public Result signup() {
-        return ok(signup.render(userRegistration));
+        if (session().get("email") == null) {
+            return ok(signup.render(userRegistration));
+        } else {
+            return redirect(routes.Users.index());
+        }
     }
 
     /**
@@ -79,13 +84,15 @@ public class Users extends Controller {
                 flash("errorEmail", "Email already exists.");
                 return badRequest(signup.render(boundForm));
             }
+
+            session().clear();
+            session("email", email);
             // Redirecting to the main page.
             return ok(index.render(user.firstName));
         } else {
             flash("error", "Password must have min. 8 characters and must match.");
             return badRequest(signup.render(userRegistration));
         }
-
     }
 
     /**
@@ -116,10 +123,18 @@ public class Users extends Controller {
             flash("errorNoInput", "Please input email and password.");
             return ok(signIn.render(userRegistration));
         } else if (user != null) {
+            session().clear();
+            session("email", email);
             return ok(index.render(user.firstName));
         } else {
             return null;
         }
 
+    }
+
+    public Result logout() {
+        session().clear();
+        flash("successLogout", "You have successfully logged out!");
+        return redirect(routes.Users.signIn());
     }
 }

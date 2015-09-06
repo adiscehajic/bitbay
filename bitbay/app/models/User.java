@@ -63,6 +63,15 @@ public class User extends Model {
         }
     }
 
+    public static User getUserByEmail(String email) {
+        User user = User.finder.where().eq("email", email).findUnique();
+        if (user != null) {
+            return user;
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Prints the information about user first name and last name.
      * @return

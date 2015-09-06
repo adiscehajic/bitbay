@@ -1,13 +1,13 @@
 @(name: String)
 
-@main("bitbay Home") {
+@main("bitbay Home", User.getUserByEmail(session.get("email"))) {
 
     <div class="jumbotron">
         @if(name == null) {
             <h1>Welcome</h1>
         } else {
             <h1>Welcome  @name</h1>
-            <h4>Your login was succesfull</h4>
+            <h4>Your login was succesfull!</h4>
         }
 
         <p><a class="btn btn-primary btn-lg" href="/" role="button">Back to home</a></p>

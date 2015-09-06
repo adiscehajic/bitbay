@@ -46,6 +46,11 @@
 											@flash.get("errorEmail")
 											</div>
 										}
+										@if(flash.containsKey("successLogout")) {
+											<div class="alert alert-success" style="width: 80%; margin-left: 20px;">
+											@flash.get("successLogout")
+											</div>
+										}
 
                             			<label style = "margin-left:20px;font-weight:normal;">Email</label>
                             			<!--field for email -->
