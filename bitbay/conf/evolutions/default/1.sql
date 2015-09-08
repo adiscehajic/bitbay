@@ -5,9 +5,15 @@
 
 create table category (
   id                        integer auto_increment not null,
+<<<<<<< HEAD
   name                      varchar(255),
   parent_id                 integer,
   status_id                 integer,
+=======
+  parent_id                 integer,
+  status_id                 integer,
+  name                      varchar(255),
+>>>>>>> 89e26e0d4eb85f455eac3c0f54dc325cea0857db
   constraint pk_category primary key (id))
 ;
 
