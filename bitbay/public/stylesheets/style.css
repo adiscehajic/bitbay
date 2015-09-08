@@ -1,0 +1,115 @@
+
+body{
+    		background-color: #f4f4f4;
+    	}
+
+    	
+.form-control {
+  width: 80%;
+  height: 30px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  margin-right: 15px;
+  margin-left: 20px;
+  padding-right: 20px;
+}
+
+
+
+
+p{
+	margin-right: 280px;
+	color:#555;
+}
+
+h2{
+	padding-left: 20px;
+  margin-bottom: 30px;
+}
+
+
+.btn{
+    background: #00509d;
+    background: -webkit-gradient(linear,left top,left bottom,from(#0079bc),to(#00509d));
+    background: -moz-linear-gradient(top,#0079bc,#00509d);
+    text-decoration: none;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0079bc', endColorstr='#00509d');
+    color: #fff;
+
+
+    padding: .5em 1.2em;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    box-shadow: 0 3px 0 rgba(0,0,0,.04);
+    vertical-align: baseline;
+    text-align: center;
+    white-space: nowrap;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    zoom: 1;
+    display: inline-block;
+
+    margin-top: 6px;
+    margin-left: 22px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    content: 'Register';
+  }
+
+ .btn:hover{
+    background: #00509d;
+    color: #fff;
+  }
+
+  .link{
+  	text-decoration: underline;
+  	padding-left: 20px;
+  }
+
+  img{
+  	margin-left: 0px;
+  }
+
+.pFooter{
+	text-align: center;
+	margin-right: 40px;
+	font-size:11px;
+}
+
+.title{
+	text-align: center;
+	margin-top: 80px;
+  margin-bottom: 10px;
+  padding-left: 0px;
+
+}
+
+
+
+.inputs{
+  padding-top: 10px;
+  margin-right: 2px;
+
+  background-color: #ffffff;
+  margin-right: 2px;
+  border-right: 1px solid #ccc;
+  box-shadow: 4px 0 1px #eee;
+
+  border-radius: 3px;
+  box-shadow: 4px 4px 1px #eee;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+}
+
+#bimg{
+  width: 120px;
+  margin-bottom: 10px;
+}
+
+h4{
+  text-align: center;
+  padding-bottom: 10px;
+
+}
+

@@ -1,0 +1,92 @@
+@(userRegistration: Form[User])
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+   		 <!-- Bootstrap -->
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+
+		<link rel="shortcut icon" type="image/ico" href="@routes.Assets.versioned("images/favicon.ico")">
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/style.css")">
+		<title> Sign In </title>
+    
+	</head>
+	<body>
+		<div class="container">
+
+			<a href="/"><img src="@routes.Assets.versioned("images/logo.png")" class = "logo"></a>
+			
+
+		</div>
+
+		<div class = "container">
+			<div class = "row">
+				<div class="col col-md-6">
+					<h2>Sign in</h2>
+					<div>
+						@helper.form(action = routes.Users.validate()) {
+						<form>
+  							<div class="form-group">
+                 
+    							<label style = "margin-left:20px;font-weight:normal;">Email</label>
+                   
+   								 <input type="email" class="form-control" id="exampleInputEmail1" name="email">
+                   
+  							</div>
+
+  							<div class="form-group">
+    							<label style = "margin-left:20px;font-weight:normal;">Password</label>
+                  
+    							<input type="password" class="form-control" id="exampleInputPassword1" name="password">
+
+  							</div>
+  
+  							<div class="checkbox">
+ 		   					
+   							 <label>
+      							<input type="checkbox" style = "margin-left:0px; margin-top:14px;"> <p style = "padding-left:20px; padding-top:10px;">Stay signed in</p>
+    						</label>
+  							</div>
+  							<button type="submit" class="btn btn-default">Sign in</button>
+						</form>
+						}
+					</div>
+				</div>
+
+				<div class="col col-md-6" style = "background-color: #fcfcfc;">
+        	<div class ="container">
+					<div class = "row" style = "margin-left: 10%">
+						  <label><h2 class = "title">New to bitbay?</h2></label>
+             		 </div>
+              			<div class = "row" style = " margin-left:11%">
+              				<label><h5>Get started now. It's fast and easy!</h5></label>
+          				 </div>
+                			<div class ="row" style = "margin-left:15%">
+								<button type="submit" class="btn btn-default" onclick="javascript:location.href='/signup'">Register</button>
+                			</div>
+
+					</div>
+				</div>
+				
+			</div>
+
+			
+		</div>
+
+    <div class = "footer navbar-static-bottom" style = "margin-top: 40px;">
+    <div id="footer">
+      <div class="container" >
+        <p class = "pFooter">Copyright © 2015. bitbay. All Rights Reserved.</p>
+      </div>
+    </div>
+</div>
+
+
+	</body>
+</html>

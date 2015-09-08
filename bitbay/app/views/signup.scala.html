@@ -1,0 +1,127 @@
+@(userRegistration: Form[User])
+@import helper._
+	<!DOCTYPE html>
+		<html>
+			<head>
+				<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+				<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/signup.css")">
+				<link rel="shortcut icon" type="image/ico" href="@routes.Assets.versioned("images/favicon.ico")">
+				<script src="@routes.Assets.versioned("javascripts/signup.js")" type="text/javascript"></script>
+				<title> Registration </title>
+			</head>
+			<body onload="validateRegistration()">
+			<div class="row">
+			<div class="container">
+				<div class="container" style="padding-left:0px">
+					<div class="row">
+						<div id="row1">
+							<div class="row">
+								<div class="col-md-2">
+									<a href="/"><img id="TitlePhoto" src="http://s18.postimg.org/xn7bwmw0l/logo3.png"></a>
+								</div>
+								<div class="col-md-5" style="margin-top:5px">
+									<h1 id="title"> Get started with bitbay! </h1>
+								</div>
+							</div>
+							<div class="row">
+								<p id="semi-title"> Create your personal account.</p>
+							</div>
+						</div>
+					</div>
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<div id="inputs">
+								@helper.form(action = routes.Users.newUser()) {
+									<div class="container">
+										<div class="row">
+											@if(flash.containsKey("errorFirstName")) {
+												<div class="alert alert-warning" style="width: 47%; margin-left: 15px;">
+													@flash.get("errorFirstName")
+												</div>
+											}
+											@if(flash.containsKey("errorLastName")) {
+												<div class="alert alert-warning" style="width: 47%; margin-left: 15px;">
+													@flash.get("errorLastName")
+												</div>
+											}
+											<div class="col-md-3">
+
+												<p class="paragraph"> First name </p>
+												<input class="form-control" onkeyup="validateRegistration()" onfocusout="checkName()" id="ex3" type="text" name="first-name">
+											</div>
+
+											<div class="col-md-3">
+
+												<p class="paragraph"> Last name </p>
+												<input class="form-control" onkeyup="validateRegistration()" onfocusout="checkSurname()" id="ex3" type="text" name="last-name">
+											</div>
+										</div>
+										<div id="rowEmail">
+
+											<div class="row">
+												<div class="col-md-4">
+													@if(flash.containsKey("errorEmail")) {
+													<div class="alert alert-danger" style="margin-top: 20px; width: 96%">
+													@flash.get("errorEmail")
+													</div>
+												}
+													<p class="paragraph"> Email </p>
+													<input class="form-control" id="inputSuccess2" onkeyup="validateRegistration()" onfocusout="checkEmail()" aria-describedby="inputSuccess2Status" type="email" name="email" required>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-3">
+												@if(flash.containsKey("error")) {
+													<div class="alert alert-warning" style="margin-top: 20px; width: 96%">
+													@flash.get("error")
+													</div>
+												}
+												@if(flash.containsKey("errorPassword")) {
+													<div class="alert alert-danger" style="margin-top: 20px; width: 96%">
+													@flash.get("errorPassword")
+													</div>
+												}
+												<p class="paragraph" id="pass"> Create password </p>
+												<input class="form-control" id="pass-input" onkeyup="validateRegistration()" onfocusout="checkPassword()" type="password" name="password">
+												<p style="font-size:9px; margin: 0 0 10px 5px;">(min. 8 characters)</p>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-3">
+												<p class="paragraph"> Confirm password </p>
+												<input class="form-control" id="ex3" onkeyup="validateRegistration()" onfocusout="checkMatching()" type="password" name="confirmPassword">
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-9" style="padding-left:0px">
+												<p class="confirmPar"> By clicking Register, you agree that you have read and accepted the bitbay <a href="">User Agreement</a> and <a href="">User Privacy Notice </a> and that you are at least 18 years old. </p>
+												<button class="btn btn-primary btn-md" style="margin: 0px 0px 15px 15px" name="register" > Register </button>
+											</div>
+										</div>
+									</div>
+								}
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="row">
+									<p class="confirmPar" style="margin-top:10px"> Already have an Account? </p>
+									<a href="/signin"><button class="btn btn-default btn-md" style="margin: 0px 0px 15px 15px"> Sign in </button></a>
+								</div>
+							</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer navbar-static-bottom">
+			<div id="footer">
+				<div class="container">
+					<p class = "pFooter"> Copyright © 2015. bitbay. All Rights Reserved.</p>
+				</div>
+			</div>
+		</div>
+			</body>
+		</html>
+

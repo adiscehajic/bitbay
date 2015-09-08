@@ -1,0 +1,119 @@
+@(userRegistration: Form[User])
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+			<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+			<!-- Bootstrap -->
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+		<link rel="shortcut icon" type="image/ico" href="@routes.Assets.versioned("images/favicon.ico")">
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/style.css")">
+
+		<title> Sign In </title>
+</head>
+<body>
+				<div class = "container">
+					<div class ="row">
+						<div class="container">
+							<a href="/"><img src="@routes.Assets.versioned("images/logo3.png")" id = "TitleImage"></a>
+						</div>
+					</div>
+					<div class ="row">
+						<div class = "col-md-6">
+							<div class = "inputs">
+							<div class = "container" style = "margin-right:5px;">
+								<div class = "row">
+									<div class = "col-md-6">
+										<h2>Sign in</h2>
+									</div>
+								</div>
+
+								@helper.form(action = routes.Users.validate()) {
+								<div class = "row">
+									<div class="col-md-6">
+
+										@if(flash.containsKey("errorNoInput")) {
+											<div class="alert alert-warning" style="width: 80%; margin-left: 20px;">
+												@flash.get("errorNoInput")
+											</div>
+										}
+										@if(flash.containsKey("errorEmail")) {
+											<div class="alert alert-danger" style="width: 80%; margin-left: 20px;">
+											@flash.get("errorEmail")
+											</div>
+										}
+										@if(flash.containsKey("successLogout")) {
+											<div class="alert alert-success" style="width: 80%; margin-left: 20px;">
+											@flash.get("successLogout")
+											</div>
+										}
+
+                            			<label style = "margin-left:20px;font-weight:normal;">Email</label>
+                            			<!--field for email -->
+                            			<input type="email" class="form-control" id="exampleInputEmail1" name="email">
+                        			</div>
+								</div>
+								<div class = "row">
+									<div class="col-md-6">
+                            			<label style = "margin-left:20px;font-weight:normal;">Password</label>
+                            			<!--field for password -->
+                           				 <input type="password"class="form-control" id="exampleInputPassword1" name="password">
+                        			</div>
+                        		</div>
+                        		<div class = "row">
+                        			<div class ="col-md-6">
+                        				<div class="checkbox" style="width: 100%;">
+                                		<input type="checkbox" style = "margin-left:20px; margin-top:14px;"> <p style = "padding-left:36px; padding-top:10px; width: 100%;">Stay signed in</p>
+                            		</div>
+                            	</div>
+                        		</div>
+                        		<div class ="row">
+                        			<div class ="col-md-6">
+                        				<button type="submit" class="btn btn-default">Sign in</button>
+                        			</div>
+                        		</div>
+								}
+							</div>
+						</div>
+					</div>
+					<div class = "col-md-6">
+						<div class = "inputs" >
+							<div class = "container" >
+								<div class = "row" >
+									<div class = "col-md-6">
+										<h2 class = "title">New to <img src="@routes.Assets.versioned("images/logoText.png")" id = "bimg" ></h2>
+									</div>
+								</div>
+								<div class = "row" >
+									<div class = "col-md-6">
+										<h4>Get started now. It's fast and easy!</h4>
+									</div>
+								</div>
+
+								<div class = "row">
+									<div class = "col-md-6">
+										<a href="/signup"><button type="submit" class="btn btn-default" style = "margin-left:37%; margin-bottom: 85px;">Register</button></a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+						
+					</div>
+				</div>
+
+				<div class = "footer navbar-static-bottom" style = "margin-top: 40px;">
+    				<div id="footer">
+      					<div class="container" >
+        				<p class = "pFooter">Copyright © 2015. bitbay. All Rights Reserved.</p>
+      					</div>
+    				</div>
+				</div>
+			</body>
+		</html>
+
