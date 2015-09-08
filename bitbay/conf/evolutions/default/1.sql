@@ -3,6 +3,14 @@
 
 # --- !Ups
 
+create table category (
+  id                        integer auto_increment not null,
+  parent_id                 integer,
+  status_id                 integer,
+  name                      varchar(255),
+  constraint pk_category primary key (id))
+;
+
 create table country (
   id                        integer auto_increment not null,
   name                      varchar(255),
@@ -43,6 +51,8 @@ create index ix_user_userCountry_2 on user (user_country_id);
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
+
+drop table category;
 
 drop table country;
 
