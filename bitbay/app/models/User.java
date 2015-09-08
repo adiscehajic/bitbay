@@ -5,10 +5,12 @@ import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
 import java.util.Date;
 import play.data.format.Formats;
+import com.avaje.ebean.Model.Finder;
 
 import javax.persistence.*;
 
 import java.lang.String;
+import java.lang.Integer;
 
 
 /**
@@ -46,7 +48,6 @@ public class User extends Model {
     @ManyToOne
     public Country userCountry;
 
-    @Constraints.MaxLength(255)
     public Integer zip;
 
     @Constraints.MaxLength(255)
@@ -63,15 +64,11 @@ public class User extends Model {
     @Column(columnDefinition = "datetime")
     public Date updated = new Date();
 
-
     public String token;
-
-
-
 
     // Declaring variable.
     private static Finder<String, User> finder =
-            new Finder<>(String.class, User.class);
+            new Finder<>(User.class);
 
     /**
      * Constructor.
@@ -86,12 +83,13 @@ public class User extends Model {
      * @param email - Email of the user.
      * @param password - Password of the user.
      */
-    public User(Integer id, String firstName, String lastName, String email, String password) {
+    public User(Integer id, String firstName, String lastName, String email, String password, UserType userType) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.userType = userType;
     }
 
     /**

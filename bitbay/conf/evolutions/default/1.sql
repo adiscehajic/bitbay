@@ -9,6 +9,21 @@ create table country (
   constraint pk_country primary key (id))
 ;
 
+create table product (
+  id                        integer auto_increment not null,
+  user_id                   integer,
+  name                      varchar(255),
+  description               varchar(255),
+  manufacturer              varchar(255),
+  chategory                 varchar(255),
+  price                     double,
+  quantity                  integer,
+  selling_type              varchar(255),
+  registration              datetime,
+  updated                   datetime,
+  constraint pk_product primary key (id))
+;
+
 create table user (
   id                        integer auto_increment not null,
   first_name                varchar(255),
@@ -33,10 +48,12 @@ create table user_type (
   constraint pk_user_type primary key (id))
 ;
 
-alter table user add constraint fk_user_userType_1 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
-create index ix_user_userType_1 on user (user_type_id);
-alter table user add constraint fk_user_userCountry_2 foreign key (user_country_id) references country (id) on delete restrict on update restrict;
-create index ix_user_userCountry_2 on user (user_country_id);
+alter table product add constraint fk_product_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_product_user_1 on product (user_id);
+alter table user add constraint fk_user_userType_2 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
+create index ix_user_userType_2 on user (user_type_id);
+alter table user add constraint fk_user_userCountry_3 foreign key (user_country_id) references country (id) on delete restrict on update restrict;
+create index ix_user_userCountry_3 on user (user_country_id);
 
 
 
@@ -45,6 +62,8 @@ create index ix_user_userCountry_2 on user (user_country_id);
 SET FOREIGN_KEY_CHECKS=0;
 
 drop table country;
+
+drop table product;
 
 drop table user;
 
