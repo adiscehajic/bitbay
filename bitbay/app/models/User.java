@@ -3,8 +3,12 @@ package models;
 import com.avaje.ebean.Model;
 import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
+import java.util.Date;
+import play.data.format.Formats;
 
 import javax.persistence.*;
+
+import java.lang.String;
 
 
 /**
@@ -14,11 +18,56 @@ import javax.persistence.*;
 public class User extends Model {
 
     // Declaring properties of User model.
+    @Id
     public Integer id;
+
+    @Constraints.MaxLength(255)
+    @Constraints.Required
     public String firstName;
+
+    @Constraints.MaxLength(255)
+    @Constraints.Required
     public String lastName;
+
+    @Column(unique = true)
+    @Constraints.MaxLength(255)
+    @Constraints.Required()
+    @Constraints.Email
     public String email;
+
+    @Constraints.MaxLength(255)
+    @Constraints.MinLength(8)
+    @Constraints.Required()
     public String password;
+
+    @ManyToOne
+    public UserType userType;
+
+    @ManyToOne
+    public Country userCountry;
+
+    @Constraints.MaxLength(255)
+    public Integer zip;
+
+    @Constraints.MaxLength(255)
+    public String City;
+
+    @Constraints.MaxLength(255)
+    public String address;
+
+    @Formats.DateTime(pattern = "dd/MM/yyyy")
+    @Column(columnDefinition = "datetime")
+    public Date registration = new Date();
+
+    @Formats.DateTime(pattern = "dd/MM/yyyy")
+    @Column(columnDefinition = "datetime")
+    public Date updated = new Date();
+
+
+    public String token;
+
+
+
 
     // Declaring variable.
     private static Finder<String, User> finder =
@@ -71,6 +120,27 @@ public class User extends Model {
             return null;
         }
     }
+
+//    public static User findById(Integer id){
+//        User user = User.finder.where().eq("id", id).findUnique();
+//        if(user != null){
+//            return user;
+//        }else{
+//            return null;
+//        }
+//    }
+
+    //TODO
+//    public static Result deleteUser(Integer id){
+//       // User user = findById(id);
+//       // if(user != null){
+//       //     return redirect("/") ;
+//       // }else{
+//
+//       // }
+//        return TODO;
+//    }
+
 
     /**
      * Prints the information about user first name and last name.
