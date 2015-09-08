@@ -13,6 +13,7 @@ import com.avaje.ebean.Ebean;
 import models.*;
 
 import javax.persistence.PersistenceException;
+import javax.xml.transform.Result;
 
 /**
  * Created by adis.cehajic on 02/09/15.
@@ -137,4 +138,12 @@ public class Users extends Controller {
         flash("successLogout", "You have successfully logged out!");
         return redirect(routes.Users.signIn());
     }
+
+    public Result deleteUser(Integer id){
+        User user = User.findById(id);
+        deleteUser().user;
+        return TODO;
+    }
+
+
 }
