@@ -7,7 +7,7 @@ import java.util.Date;
 import play.data.format.Formats;
 
 import javax.persistence.*;
-import javax.xml.transform.Result;
+
 import java.lang.String;
 
 
@@ -119,25 +119,25 @@ public class User extends Model {
         }
     }
 
-    public static User findById(Integer id){
-        User user = User.finder.where().eq("id", id).findUnique();
-        if(user != null){
-            return user;
-        }else{
-            return null;
-        }
-    }
+//    public static User findById(Integer id){
+//        User user = User.finder.where().eq("id", id).findUnique();
+//        if(user != null){
+//            return user;
+//        }else{
+//            return null;
+//        }
+//    }
 
     //TODO
-    public static Result deleteUser(Integer id){
-       // User user = findById(id);
-       // if(user != null){
-       //     return redirect("/") ;
-       // }else{
-
-       // }
-        return TODO;
-    }
+//    public static Result deleteUser(Integer id){
+//       // User user = findById(id);
+//       // if(user != null){
+//       //     return redirect("/") ;
+//       // }else{
+//
+//       // }
+//        return TODO;
+//    }
 
 
     /**

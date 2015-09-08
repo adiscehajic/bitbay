@@ -13,7 +13,7 @@ import com.avaje.ebean.Ebean;
 import models.*;
 
 import javax.persistence.PersistenceException;
-import javax.xml.transform.Result;
+
 
 /**
  * Created by adis.cehajic on 02/09/15.
@@ -140,10 +140,14 @@ public class Users extends Controller {
     }
 
     public Result deleteUser(Integer id){
-        User user = User.findById(id);
-        deleteUser().user;
+//        User user = User.findById(id);
+//        deleteUser().user;
         return TODO;
     }
 
+    public Result editUser(Integer id){
+
+        return TODO;
+    }
 
 }
