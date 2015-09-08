@@ -21,16 +21,9 @@ GET         /user/edit/:id       @controllers.Users.editUser(id: Integer)
 
 GET         /category/           @controllers.Categories.list()
 GET         /category/new/       @controllers.Categories.newCategory()
-<<<<<<< HEAD
 GET         /category/edit/:id   @controllers.Categories.editCategory(id:Integer)
 GET         /category/delete/:id @controllers.Categories.deleteCategory(id:Integer)
 POST        /category/save       @controllers.Categories.saveCategory()
-=======
-GET         /category/edit/:id   @controllers.Categories.editCategory(id: Integer)
-GET         /category/delete/:id @controllers.Categories.deleteCategory(id: Integer)
-POST        /category/save       @controllers.Categories.saveCategory()
-
->>>>>>> 89e26e0d4eb85f455eac3c0f54dc325cea0857db
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
