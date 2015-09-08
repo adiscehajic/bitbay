@@ -40,11 +40,13 @@ public class User extends Model {
     @Constraints.Required()
     public String password;
 
-    public String userType;
+    @ManyToOne
+    public UserType userType;
 
-    public String userCountry;
+    @ManyToOne
+    public Country userCountry;
 
-
+    @Constraints.MaxLength(255)
     public Integer zip;
 
     @Constraints.MaxLength(255)
