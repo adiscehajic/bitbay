@@ -6,8 +6,6 @@
 create table category (
   id                        integer auto_increment not null,
   name                      varchar(255),
-  parent_id                 integer,
-  status_id                 integer,
   constraint pk_category primary key (id))
 ;
 
@@ -23,7 +21,7 @@ create table product (
   name                      varchar(255),
   description               varchar(255),
   manufacturer              varchar(255),
-  chategory                 varchar(255),
+  category_id               integer,
   price                     double,
   quantity                  integer,
   selling_type              varchar(255),
@@ -58,10 +56,12 @@ create table user_type (
 
 alter table product add constraint fk_product_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
 create index ix_product_user_1 on product (user_id);
-alter table user add constraint fk_user_userType_2 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
-create index ix_user_userType_2 on user (user_type_id);
-alter table user add constraint fk_user_userCountry_3 foreign key (user_country_id) references country (id) on delete restrict on update restrict;
-create index ix_user_userCountry_3 on user (user_country_id);
+alter table product add constraint fk_product_category_2 foreign key (category_id) references category (id) on delete restrict on update restrict;
+create index ix_product_category_2 on product (category_id);
+alter table user add constraint fk_user_userType_3 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
+create index ix_user_userType_3 on user (user_type_id);
+alter table user add constraint fk_user_userCountry_4 foreign key (user_country_id) references country (id) on delete restrict on update restrict;
+create index ix_user_userCountry_4 on user (user_country_id);
 
 
 

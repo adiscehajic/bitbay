@@ -1,4 +1,5 @@
 @(id: Integer)
+@(userRegistration: Userp
 
 @main("User Profile", User.getUserByEmail(session.get("email"))) {
 
@@ -45,7 +46,7 @@
                     <div class="col-lg-4">
                       <div class="panel panel-primary">
                         <div class="panel-heading">
-                          <div class="panel-title" align="center">First name</div>
+                          <div class="panel-title" align="center" value="">First name</div>
                         </div>
                       </div>
                     </div>
