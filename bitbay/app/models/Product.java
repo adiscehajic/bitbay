@@ -22,7 +22,8 @@ public class Product extends Model {
     public String name;
     public String description;
     public String manufacturer;
-    public String chategory;
+    @ManyToOne
+    public Category category;
     @Constraints.Required
     public Double price;
     @Constraints.Min(1)
@@ -38,12 +39,12 @@ public class Product extends Model {
     @Column(columnDefinition = "datetime")
     public Date updated = new Date();
 
-    public Product(User user, String name, String description, String manufacturer, String chategory, Double price, Integer quantity, String sellingType) {
+    public Product(User user, String name, String description, String manufacturer, Category category, Double price, Integer quantity, String sellingType) {
         this.user = user;
         this.name = name;
         this.description = description;
         this.manufacturer = manufacturer;
-        this.chategory = chategory;
+        this.category = category;
         this.price = price;
         this.quantity = quantity;
         this.sellingType = sellingType;

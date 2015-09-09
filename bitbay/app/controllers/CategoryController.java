@@ -18,7 +18,7 @@ import models.*;
  */
 
 
-public class Categories extends Controller{
+public class CategoryController extends Controller {
 
     /**
      * Method for creating new Category

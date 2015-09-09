@@ -1,6 +1,7 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import models.Category;
 import models.Product;
 import models.User;
 import play.data.Form;
@@ -36,10 +37,12 @@ public class ProductController extends Controller {
         String name = boundForm.bindFromRequest().field("name").value();
         String description = boundForm.bindFromRequest().field("description").value();
         String manufacturer = boundForm.bindFromRequest().field("manufacturer").value();
-        String category = boundForm.bindFromRequest().field("category").value();
+        String categoryValue = boundForm.bindFromRequest().field("category").value();
         String price = boundForm.bindFromRequest().field("price").value();
         String quantity = boundForm.bindFromRequest().field("quantity").value();
         String sellingType = boundForm.bindFromRequest().field("selling-type").value();
+
+        Category category = Category.getCategoryById(Integer.parseInt(categoryValue));
 
         Product product = new Product(user, name, description, manufacturer, category, Double.parseDouble(price), Integer.parseInt(quantity), sellingType);
 

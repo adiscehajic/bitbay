@@ -153,6 +153,12 @@ public class Users extends Controller {
         return TODO;
     }
 
+    public Result getUser(Integer id){
+//        User user = User.findById(id);
+//        deleteUser().user;
+        return TODO;
+    }
+
     public Result editUser(Integer id){
 
         return TODO;
