@@ -19,18 +19,12 @@ create table country (
 
 create table product (
   id                        integer auto_increment not null,
-<<<<<<< HEAD
   user_id                   integer,
-=======
->>>>>>> develop
   name                      varchar(255),
   description               varchar(255),
   manufacturer              varchar(255),
   chategory                 varchar(255),
-<<<<<<< HEAD
   price                     double,
-=======
->>>>>>> develop
   quantity                  integer,
   selling_type              varchar(255),
   registration              datetime,
