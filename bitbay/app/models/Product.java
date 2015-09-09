@@ -49,4 +49,6 @@ public class Product extends Model {
         this.quantity = quantity;
         this.sellingType = sellingType;
     }
+
+
 }
