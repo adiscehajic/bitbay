@@ -1,5 +1,4 @@
-@(id: Integer)
-@(userRegistration: Userp
+@(user: User)
 
 @main("User Profile", User.getUserByEmail(session.get("email"))) {
 
@@ -12,7 +11,7 @@
 
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <div class="panel-title">Some user</div>
+          <div class="panel-title">@user.firstName</div>
         </div>
         <div class="panel-body">
           <div class="row">
@@ -35,7 +34,7 @@
                       </div>
                       </div>
                     <div class="col-lg-8">
-                      <div class="well well-sm" align="center">Something</div>
+                      <div class="well well-sm" align="center">@user.firstName</div>
                     </div>
                   </div>
 
@@ -48,7 +47,7 @@
                       </div>
                     </div>
                     <div class="col-lg-8">
-                      <div class="well well-sm" align="center">Something</div>
+                      <div class="well well-sm" align="center">@user.lastName</div>
                     </div>
                   </div>
 
@@ -61,7 +60,7 @@
                       </div>
                     </div>
                     <div class="col-lg-8">
-                      <div class="well well-sm" align="center">Something</div>
+                      <div class="well well-sm" align="center">@user.email</div>
                     </div>
                   </div>
 
@@ -74,7 +73,7 @@
                       </div>
                     </div>
                     <div class="col-lg-8">
-                      <div class="well well-sm" align="center">Something</div>
+                      <div class="well well-sm" align="center">@user.userCountry</div>
                     </div>
                   </div>
 
@@ -87,7 +86,7 @@
                       </div>
                     </div>
                     <div class="col-lg-8">
-                      <div class="well well-sm" align="center">Something</div>
+                      <div class="well well-sm" align="center">@user.address</div>
                     </div>
                   </div>
 
@@ -100,7 +99,7 @@
                       </div>
                     </div>
                     <div class="col-lg-8">
-                      <div class="well well-sm" align="center">Something</div>
+                      <div class="well well-sm" align="center">@user.registration</div>
                     </div>
                   </div>
 
@@ -113,7 +112,7 @@
                             </div>
                         </div>
                         <div class="col-lg-8">
-                            <div class="well well-sm" align="center">Something</div>
+                            <div class="well well-sm" align="center">@user.updated</div>
                         </div>
                     </div>
 
@@ -129,7 +128,7 @@
           <div class="panel-footer">
             <span>
               <a href="#" title="See your products" data-toggle="tooltip" class="btn btn-lg btn-primary">Products</a>
-              <a href="" title="Edit this user" data-toggle="tooltip"  type="button" class="btn btn-lg btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+              <a href="@routes.Users.editUser(user.id)" title="Edit this user" data-toggle="tooltip"  type="button" class="btn btn-lg btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
               <a title="Remove this user" data-toggle="tooltip"  type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
             </span>
           </div>
