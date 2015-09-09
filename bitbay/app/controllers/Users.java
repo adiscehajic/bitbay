@@ -8,6 +8,10 @@ import play.mvc.Result;
 import views.html.index;
 import views.html.signup;
 import views.html.signIn;
+<<<<<<< HEAD
+=======
+import views.html.user.userEdit;
+>>>>>>> develop
 import views.html.user.userProfile;
 import java.lang.*;
 import java.text.Normalizer;
@@ -157,6 +161,7 @@ public class Users extends Controller {
     }
 
     public Result getUser(Integer id){
+<<<<<<< HEAD
         String email = session().get("email");
         User user =  User.getUserByEmail(email);
 
@@ -173,6 +178,16 @@ public class Users extends Controller {
 //
 //        return ok(getUser.render(filledForm));
         return TODO;
+=======
+//        User user = User.findById(id);
+//        deleteUser().user;
+        return ok(userProfile.render(id));
+    }
+
+    public Result editUser(Integer id){
+
+        return ok(userEdit.render(id));
+>>>>>>> develop
     }
 
 }
