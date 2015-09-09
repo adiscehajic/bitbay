@@ -7,6 +7,8 @@ import play.mvc.Result;
 import views.html.index;
 import views.html.signup;
 import views.html.signIn;
+import views.html.user.userEdit;
+import views.html.user.userProfile;
 import java.lang.*;
 
 import com.avaje.ebean.Ebean;
@@ -156,12 +158,12 @@ public class Users extends Controller {
     public Result getUser(Integer id){
 //        User user = User.findById(id);
 //        deleteUser().user;
-        return TODO;
+        return ok(userProfile.render(id));
     }
 
     public Result editUser(Integer id){
 
-        return TODO;
+        return ok(userEdit.render(id));
     }
 
 }
