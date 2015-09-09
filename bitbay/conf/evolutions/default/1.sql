@@ -3,6 +3,14 @@
 
 # --- !Ups
 
+create table category (
+  id                        integer auto_increment not null,
+  name                      varchar(255),
+  parent_id                 integer,
+  status_id                 integer,
+  constraint pk_category primary key (id))
+;
+
 create table country (
   id                        integer auto_increment not null,
   name                      varchar(255),
@@ -11,12 +19,18 @@ create table country (
 
 create table product (
   id                        integer auto_increment not null,
+<<<<<<< HEAD
   user_id                   integer,
+=======
+>>>>>>> develop
   name                      varchar(255),
   description               varchar(255),
   manufacturer              varchar(255),
   chategory                 varchar(255),
+<<<<<<< HEAD
   price                     double,
+=======
+>>>>>>> develop
   quantity                  integer,
   selling_type              varchar(255),
   registration              datetime,
@@ -60,6 +74,8 @@ create index ix_user_userCountry_3 on user (user_country_id);
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
+
+drop table category;
 
 drop table country;
 
