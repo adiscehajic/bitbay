@@ -36,10 +36,7 @@ function validateRegistration() {
     var name = document.getElementsByName("first-name")[0].value;
     var surname = document.getElementsByName("last-name")[0].value;
     var button = document.getElementsByName("register")[0];
-    var inpName = document.getElementsByName("first-name")[0];
-    var inpSurname = document.getElementsByName("last-name")[0];
-    var inpPass = document.getElementsByName("password")[0];
-    var inpConfPass = document.getElementsByName("confirmPassword")[0];
+    var user_type = document.getElementsByName("type")[0].value;
 
     if(name.length == 0) {
         button.disabled = true;
@@ -51,6 +48,9 @@ function validateRegistration() {
         button.disabled = true;
         return;
     } else if(validateLength() == false || validateMatching() == false) {
+        button.disabled = true;
+        return;
+    } else if(user_type == 0) {
         button.disabled = true;
         return;
     }

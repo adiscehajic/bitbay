@@ -48,7 +48,7 @@
 											<div class="col-md-3">
 
 												<p class="paragraph"> First name </p>
-												<input class="form-control" onkeyup="validateRegistration()" onfocusout="checkName()" id="ex3" type="text" name="first-name">
+												<input class="form-control" onkeyup="validateRegistration()" onfocusout="checkName()" id="ex3" type="text" name="first-name" value="@userRegistration("first-name").value">
 											</div>
 
 											<div class="col-md-3">
@@ -59,8 +59,8 @@
 
 											<div class="col-md-3">
 												<p class="paragraph">Account type</p>
-												<select class="form-control placeholder" name="type">
-													<option value="" selected disabled>Please select type</option>
+												<select class="form-control placeholder" name="type" onchange="validateRegistration()">
+													<option value="0" selected disabled>Please select type</option>
 													<option value="3">Seller</option>
 													<option value="2">Buyer</option>
 												</select>

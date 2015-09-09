@@ -4,11 +4,15 @@ import com.avaje.ebean.Ebean;
 import models.Category;
 import models.Product;
 import models.User;
+import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.index;
 import views.html.product.product;
 import views.html.product.newProduct;
+
+import java.util.List;
 
 /**
  * Created by adis.cehajic on 08/09/15.
@@ -22,7 +26,8 @@ public class ProductController extends Controller {
     }
 
     public Result newProduct() {
-        return ok(newProduct.render());
+        List<Category> categories = Category.findAll();
+        return ok(newProduct.render(categories));
     }
 
     public Result deleteProduct(Integer id) {
@@ -41,14 +46,15 @@ public class ProductController extends Controller {
         String price = boundForm.bindFromRequest().field("price").value();
         String quantity = boundForm.bindFromRequest().field("quantity").value();
         String sellingType = boundForm.bindFromRequest().field("selling-type").value();
+        Logger.info(categoryValue);
 
-        Category category = Category.getCategoryById(Integer.parseInt(categoryValue));
+        Category category = Category.getCategoryByName(categoryValue);
 
         Product product = new Product(user, name, description, manufacturer, category, Double.parseDouble(price), Integer.parseInt(quantity), sellingType);
 
         Ebean.save(product);
 
-        return ok(newProduct.render());
+        return ok(index.render("Hello"));
 
     }
 }

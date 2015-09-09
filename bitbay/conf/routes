@@ -10,9 +10,8 @@ GET         /signin                    @controllers.Users.signIn()
 POST        /signin                    @controllers.Users.validate()
 GET         /logout                    @controllers.Users.logout()
 
-
+GET         /product/new               @controllers.ProductController.newProduct()
 GET         /product/:id               @controllers.ProductController.getProduct(id: Integer)
-GET         /product/new/              @controllers.ProductController.newProduct()
 GET         /product/delete/:id        @controllers.ProductController.deleteProduct(id: Integer)
 POST        /product/new/              @controllers.ProductController.saveProduct()
 
