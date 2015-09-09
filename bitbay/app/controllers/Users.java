@@ -161,33 +161,29 @@ public class Users extends Controller {
     }
 
     public Result getUser(Integer id){
-<<<<<<< HEAD
         String email = session().get("email");
         User user =  User.getUserByEmail(email);
 
         Form<User> filledForm = userRegistration.bindFromRequest();
 
         return ok(userProfile.render(user));
-//        return TODO;
+
     }
 
-    public Result editUser(Integer id){
+    public Result editUser(Integer id) {
 //        String email = session().get("email");
 //        User user = User.getUserByEmail(email);
 //        Form<User> filledForm = userRegistration.bindFromRequest();
 //
 //        return ok(getUser.render(filledForm));
         return TODO;
-=======
-//        User user = User.findById(id);
-//        deleteUser().user;
-        return ok(userProfile.render(id));
     }
 
     public Result editUser(Integer id){
 
-        return ok(userEdit.render(id));
->>>>>>> develop
+       // return ok(userEdit.render(id));
+        return TODO;
+
     }
 
 }
