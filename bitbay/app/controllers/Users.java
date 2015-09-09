@@ -64,6 +64,9 @@ public class Users extends Controller {
         String email = boundForm.bindFromRequest().field("email").value();
         String password = boundForm.bindFromRequest().field("password").value();
         String confirmPassword = boundForm.bindFromRequest().field("confirmPassword").value();
+        String type = boundForm.bindFromRequest().field("type").value();
+        UserType userType = UserType.getUserTypeById(Integer.parseInt(type));
+        Logger.info(type);
 
         if (firstName.equals("")) {
             flash("errorFirstName", "Please input first name.");
@@ -77,7 +80,7 @@ public class Users extends Controller {
         // new user and storing him into database.
         if (password.equals(confirmPassword) && password != "" && password.length() >= 8) {
             // Creating new user.
-            User user = new User(null, firstName, lastName, email, password);
+            User user = new User(null, firstName, lastName, email, password, userType);
             // Saving new user into database.
             try {
                 Ebean.save(user);
@@ -105,8 +108,13 @@ public class Users extends Controller {
         Form<User> boundForm = userRegistration.bindFromRequest();
         // Reading inputed values and storing them into string variables.
         String email = boundForm.bindFromRequest().field("email").value();
-
         String password = boundForm.bindFromRequest().field("password").value();
+
+      //  if (boundForm.hasErrors()) {
+        //    flash("signInError", "Wrong input!");
+         //   return badRequest(signIn.render(boundForm));
+       // }
+
         // Calling method authenticate and creating new user.
 
         if (email.equals("") || password.equals("")) {

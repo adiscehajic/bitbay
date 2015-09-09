@@ -19,10 +19,18 @@ create table country (
 
 create table product (
   id                        integer auto_increment not null,
+<<<<<<< HEAD
+  user_id                   integer,
+=======
+>>>>>>> develop
   name                      varchar(255),
   description               varchar(255),
   manufacturer              varchar(255),
   chategory                 varchar(255),
+<<<<<<< HEAD
+  price                     double,
+=======
+>>>>>>> develop
   quantity                  integer,
   selling_type              varchar(255),
   registration              datetime,
@@ -54,10 +62,12 @@ create table user_type (
   constraint pk_user_type primary key (id))
 ;
 
-alter table user add constraint fk_user_userType_1 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
-create index ix_user_userType_1 on user (user_type_id);
-alter table user add constraint fk_user_userCountry_2 foreign key (user_country_id) references country (id) on delete restrict on update restrict;
-create index ix_user_userCountry_2 on user (user_country_id);
+alter table product add constraint fk_product_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_product_user_1 on product (user_id);
+alter table user add constraint fk_user_userType_2 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
+create index ix_user_userType_2 on user (user_type_id);
+alter table user add constraint fk_user_userCountry_3 foreign key (user_country_id) references country (id) on delete restrict on update restrict;
+create index ix_user_userCountry_3 on user (user_country_id);
 
 
 
