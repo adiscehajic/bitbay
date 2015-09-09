@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-@(user: User)
-=======
 
-@(userRegistration: User)
->>>>>>> develop
+@(user: User)
 
 @main("User Profile", User.getUserByEmail(session.get("email"))) {
 
@@ -79,6 +75,19 @@
                     </div>
                     <div class="col-lg-8">
                       <div class="well well-sm" align="center">@user.userCountry</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-4">
+                      <div class="panel panel-primary">
+                        <div class="panel-heading">
+                          <div class="panel-title" align="center">City</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-8">
+                      <div class="well well-sm" align="center">@user.userCity</div>
                     </div>
                   </div>
 

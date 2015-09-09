@@ -50,10 +50,13 @@ public class User extends Model {
     @ManyToOne
     public Country userCountry;
 
+    @Constraints.MaxLength(255)
+    public String city;
+
     public Integer zip;
 
     @Constraints.MaxLength(255)
-    public String City;
+    public String userCity;
 
     @Constraints.MaxLength(255)
     public String address;
