@@ -119,14 +119,14 @@ public class User extends Model {
         }
     }
 
-//    public static User findById(Integer id){
-//        User user = User.finder.where().eq("id", id).findUnique();
-//        if(user != null){
-//            return user;
-//        }else{
-//            return null;
-//        }
-//    }
+    public static User findById(Integer id){
+        User user = User.finder.where().eq("id", id).findUnique();
+        if(user != null){
+            return user;
+        }else{
+            return null;
+        }
+    }
 
     //TODO
 //    public static Result deleteUser(Integer id){
