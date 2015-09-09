@@ -167,12 +167,20 @@ public class Users extends Controller {
 
     }
 
+<<<<<<< HEAD
+    public Result editUser(Integer id) {
+       String email = session().get("email");
+       User user = User.getUserByEmail(email);
+       Form<User> filledForm = userRegistration.bindFromRequest();
+=======
 
     public Result editUser(Integer id){
+>>>>>>> develop
 
-       // return ok(userEdit.render(id));
-        return TODO;
+        return ok(userEdit.render(user));
 
     }
+
+
 
 }
