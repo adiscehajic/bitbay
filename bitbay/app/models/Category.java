@@ -7,6 +7,7 @@ import play.data.format.Formats;
 import javax.persistence.*;
 
 import java.lang.String;
+import java.util.List;
 
 /**
  * Created by Adnan on 8.9.2015.
@@ -35,8 +36,13 @@ public class Category extends Model {
 //    }
 
 
-    public static Category getCategoryById(Integer id) {
-        Category c = Category.finder.where().eq("id", id).findUnique();
+    public static Category getCategoryByName(String name) {
+        Category c = Category.finder.where().eq("name", name).findUnique();
         return c;
+    }
+
+    public static List<Category> findAll() {
+        List<Category> categories = finder.all();
+        return categories;
     }
 }

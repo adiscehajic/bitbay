@@ -8,6 +8,7 @@ import views.html.index;
 import views.html.signup;
 import views.html.signIn;
 import java.lang.*;
+import java.util.List;
 
 import com.avaje.ebean.Ebean;
 import models.*;
@@ -62,7 +63,7 @@ public class CategoryController extends Controller {
      * @return - List of users
      */
     public Result list(){
-
+        List<Category> categories = Category.findAll();
         return TODO;
     }
 }

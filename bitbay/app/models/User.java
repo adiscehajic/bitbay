@@ -42,7 +42,9 @@ public class User extends Model {
     @Constraints.Required()
     public String password;
 
+
     @ManyToOne
+    @Constraints.Required
     public UserType userType;
 
     @ManyToOne
