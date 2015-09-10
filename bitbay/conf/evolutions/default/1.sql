@@ -37,10 +37,9 @@ create table user (
   email                     varchar(255),
   password                  varchar(255),
   user_type_id              integer,
-  user_country_id           integer,
+  country_id                integer,
   city                      varchar(255),
   zip                       integer,
-  user_city                 varchar(255),
   address                   varchar(255),
   registration              datetime,
   updated                   datetime,
@@ -61,8 +60,8 @@ alter table product add constraint fk_product_category_2 foreign key (category_i
 create index ix_product_category_2 on product (category_id);
 alter table user add constraint fk_user_userType_3 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
 create index ix_user_userType_3 on user (user_type_id);
-alter table user add constraint fk_user_userCountry_4 foreign key (user_country_id) references country (id) on delete restrict on update restrict;
-create index ix_user_userCountry_4 on user (user_country_id);
+alter table user add constraint fk_user_country_4 foreign key (country_id) references country (id) on delete restrict on update restrict;
+create index ix_user_country_4 on user (country_id);
 
 
 
