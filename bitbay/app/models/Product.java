@@ -6,6 +6,7 @@ import play.data.validation.Constraints;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by adis.cehajic on 08/09/15.
@@ -39,6 +40,8 @@ public class Product extends Model {
     @Column(columnDefinition = "datetime")
     public Date updated = new Date();
 
+    private static Finder<String, Product> finder = new Finder<String, Product>(Product.class);
+
     public Product(User user, String name, String description, String manufacturer, Category category, Double price, Integer quantity, String sellingType) {
         this.user = user;
         this.name = name;
@@ -50,5 +53,8 @@ public class Product extends Model {
         this.sellingType = sellingType;
     }
 
-
+    public static List<Product> findAll() {
+        List<Product> products = finder.all();
+        return products;
+    }
 }

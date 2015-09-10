@@ -12,6 +12,8 @@ import views.html.user.userEdit;
 import views.html.user.userProfile;
 import java.lang.*;
 import java.text.Normalizer;
+import java.util.List;
+import views.html.admin.allUsers;
 
 import com.avaje.ebean.Ebean;
 import models.*;
@@ -152,9 +154,10 @@ public class Users extends Controller {
     }
 
     public Result deleteUser(Integer id){
-//        User user = User.findById(id);
-//        deleteUser().user;
-        return TODO;
+        User user = User.findById(id);
+        Ebean.delete(user);
+        List<User> list = User.findAll();
+        return redirect(routes.AdminController.adminUsers());
     }
 
     public Result getUser(Integer id){
