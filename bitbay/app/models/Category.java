@@ -35,9 +35,17 @@ public class Category extends Model {
 //        this.status_id = status_id;
 //    }
 
+    public Category(String name) {
+        this.name = name;
+    }
 
     public static Category getCategoryByName(String name) {
         Category c = Category.finder.where().eq("name", name).findUnique();
+        return c;
+    }
+
+    public static Category getCategoryById(Integer id) {
+        Category c = Category.finder.where().eq("id", id).findUnique();
         return c;
     }
 

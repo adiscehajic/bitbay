@@ -34,6 +34,5 @@ public class AdminController extends Controller {
         List<Product> list = Product.findAll();
         return ok(allProducts.render(list));}
 
-    public Result adminNewCategory() { return ok(newCategory.render());    }
 }
 
