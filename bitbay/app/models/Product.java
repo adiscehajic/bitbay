@@ -39,6 +39,8 @@ public class Product extends Model {
     @Column(columnDefinition = "datetime")
     public Date updated = new Date();
 
+    private static Finder<String, Product> finder = new Finder<String, Product>(Product.class);
+
     public Product(User user, String name, String description, String manufacturer, Category category, Double price, Integer quantity, String sellingType) {
         this.user = user;
         this.name = name;
@@ -50,5 +52,8 @@ public class Product extends Model {
         this.sellingType = sellingType;
     }
 
-
+    public static Product getProductById(Integer id) {
+        Product product = Product.finder.where().eq("id", id).findUnique();
+        return product;
+    }
 }
