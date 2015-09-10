@@ -1,0 +1,38 @@
+.navbar{
+	 
+	  margin: 10px;
+}
+
+
+.col-md-12{
+	
+	border: 1px solid black;
+	border-top: none;
+}
+.row{
+	background-color: #f4f4f4
+}
+
+.form-control{
+	margin-bottom: 40px;
+}
+
+.btn-primary{
+	margin-bottom: 60px;
+
+}
+
+h2{
+	margin-top: 40px;
+}
+
+.pFooter{
+	text-align: center;
+	margin-right: 40px;
+	font-size:11px;
+}
+
+
+.a{
+	color: white;
+}

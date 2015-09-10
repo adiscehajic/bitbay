@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 import java.lang.String;
 import java.lang.Integer;
+import java.util.List;
 
 
 /**
@@ -139,7 +140,10 @@ public class User extends Model {
 //       // }
 //        return TODO;
 //    }
-
+    public static List<User> findAll() {
+        List<User> users = finder.all();
+        return users;
+    }
 
     /**
      * Prints the information about user first name and last name.
