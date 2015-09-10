@@ -2,18 +2,23 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 import models.Category;
+import models.Image;
 import models.Product;
 import models.User;
+import org.apache.commons.io.FileUtils;
+import play.Play;
 import play.data.Form;
 import play.mvc.Controller;
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
-import views.html.index;
-import views.html.product.product;
 import views.html.product.newProduct;
 import views.html.product.editProduct;
 import views.html.product.productProfile;
 import views.html.user.userProducts;
+import java.io.File;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,7 +30,8 @@ public class ProductController extends Controller {
 
     public Result getProduct(Integer id) {
         Product product = Product.getProductById(id);
-        return ok(productProfile.render(product));
+        String path = Image.getImagePath(product);
+        return ok(productProfile.render(product, path));
     }
 
     public Result newProduct() {
@@ -62,6 +68,24 @@ public class ProductController extends Controller {
         Product product = new Product(user, name, description, manufacturer, category, Double.parseDouble(price), Integer.parseInt(quantity), sellingType);
 
         Ebean.save(product);
+
+        MultipartFormData body = request().body().asMultipartFormData();
+        List<FilePart> pictures = body.getFiles();
+
+        if (pictures != null) {
+            for (FilePart picture : pictures) {
+                String fileName = picture.getFilename();
+                File file = picture.getFile();
+            try {
+                FileUtils.moveFile(file, new File(Play.application().path() + "\\public\\images\\" + fileName));
+                Image image = new Image(fileName, product);
+                Ebean.save(image);
+            } catch (IOException e) {
+
+            }
+
+            }
+        }
 
         return redirect(routes.Users.index());
     }
