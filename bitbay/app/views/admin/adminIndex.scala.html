@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
-		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/interface.css")">
+		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("../../../public/stylesheets/adminIndex.css")">
 		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/newCategory.css")">
 		<link rel="shortcut icon" type="image/ico" href="@routes.Assets.versioned("images/favicon.ico")">
 		<script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")" type="text/javascript"></script>
@@ -26,10 +26,10 @@
 							<li><a href="#">Settings</a></li>
 						</ul>
 					</li>
-					<li><a href="/admin"><span class="glyphicon glyphicon-log-in"></span> Logout </a></li>
+					<li><a href="@routes.AdminController.adminLogout()"><span class="glyphicon glyphicon-log-in"></span> Logout </a></li>
 				</ul>
 				</div>
-			</div>
+
 		</nav>
 		<div class="container-floating">
 			<div class="col-md-2">

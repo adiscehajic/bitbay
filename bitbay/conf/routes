@@ -18,6 +18,9 @@ GET         /product/edit/:id           @controllers.ProductController.editProdu
 POST        /product/edit/:id           @controllers.ProductController.updateProduct(id: Integer)
 
 GET         /admin                      @controllers.AdminController.adminLogin()
+GET         /admin/logout               @controllers.AdminController.adminLogout()
+GET         /admin/index                @controllers.AdminController.adminIndex()
+POST        /admin/index                @controllers.AdminController.validateLogin()
 GET         /admin/users                @controllers.AdminController.adminUsers()
 GET         /admin/categories           @controllers.AdminController.adminCategories()
 GET         /admin/products             @controllers.AdminController.adminProducts()
