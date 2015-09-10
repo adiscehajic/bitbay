@@ -35,8 +35,9 @@ public class Users extends Controller {
     private String name;
 
     public Result index() {
+        List<Product> products = Product.findAll();
         Logger.info(session().get("email"));
-        return ok(index.render(name));
+        return ok(index.render(name, products));
     }
 
     /**
@@ -101,7 +102,7 @@ public class Users extends Controller {
             session().clear();
             session("email", email);
             // Redirecting to the main page.
-            return ok(index.render(user.firstName));
+            return redirect(routes.Users.index());
         } else {
             flash("error", "Password must have min. 8 characters and must match.");
             return badRequest(signup.render(userRegistration));
@@ -143,7 +144,7 @@ public class Users extends Controller {
         } else if (user != null) {
             session().clear();
             session("email", email);
-            return ok(index.render(user.firstName));
+            return redirect(routes.Users.index());
         } else {
             return null;
         }

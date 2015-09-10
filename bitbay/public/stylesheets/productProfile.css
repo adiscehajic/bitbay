@@ -4,3 +4,8 @@
 	height: 20px !important;
 	background-color: #FFFFFF;
 }
+
+td {
+	padding-right: 15px;
+	padding-left: 15px;
+}
