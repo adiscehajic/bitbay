@@ -1,15 +1,6 @@
-@(id:Integer)
-<!DOCTYPE html>
-<html>
-	<head>
-		<script src="@routes.Assets.versioned("javascripts/signup.js")" type="text/javascript"></script>
-		<script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")" type="text/javascript"></script>
-		<script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")" type="text/javascript"></script>
-		<link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
-		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/productProfile.css")">
-		<link rel="shortcut icon" type="image/ico" href="@routes.Assets.versioned("images/favicon.ico")">
-	</head>
-	<body>
+@(product: Product)
+
+@main("Product", User.getUserByEmail(session.get("email"))) {
 		<div class="container">
 			<div class="row">
 				<div class="col-md-1"></div>
@@ -19,7 +10,7 @@
 					</div>
 				</div>
 				<div class="col-md-4">
-					<h2> Product name </h2>
+					<h2>@product.name</h2>
 					<table>
 						<tbody>
 							<tr class="blank_row"></tr>
@@ -27,41 +18,43 @@
 
 							<tr>
 								<td> User: </td>
-								<td></td>
+								<td>@product.user.email</td>
 							</tr>
 							<tr>
 								<td> Category: </td>
-								<td></td>
+								<td>@product.category.name</td>
 							</tr>
 							<tr class="blank_row"></tr>
 							<tr>
 								<td> <h4> Price:</h4></td>
-								<td> <h4> 400$ </h4></td>
+								<td> <h4>@product.price</h4></td>
 							</tr>
 							<tr class="blank_row"></tr>
 
 							<tr>
 								<td> Manifacturer: </td>
-								<td></td>
+								<td>@product.manufacturer</td>
 							</tr>
 							<tr>
-								<td> Avability: </td>
-								<td></td>
+								<td>Avability:</td>
+
+								<td>No</td>
+
 							</tr>
 							<tr class="blank_row"></tr>
 							<tr>
-								<td> Quantity: </td>
-								<td> <input> </td>
+								<td>Quantity:</td>
+								<td><input></td>
 							</tr>
 							<tr class="blank_row"></tr>
 							<tr class="blank_row"></tr>
 							<tr class="blank_row"></tr>
 							<tr class="blank_row"></tr>
-							<tr class="blank_row"></tr>
-							<tr class="blank_row"></tr>
-							<tr class="blank_row"></tr>
 							<tr>
-								<td colspan="2"><button class="btn btn-primary"> Add to chart </button></td>
+								<td><button class="btn btn-primary"> Add to chart </button>
+									@helper.form(action = routes.ProductController.deleteProduct(product.id)) {
+									<button type="submit" class="btn btn-primary">Delete</button></td>
+								}
 							</tr>
 						</tbody>
 					</table>
@@ -78,14 +71,7 @@
 
 					<div class="tab-content">
 						<div id="about" class="tab-pane fade in active">
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-								been the industry's standard dummy text ever since the 1500s, when an unknown printer took
-								a galley of type and scrambled it to make a type specimen book. It has survived not only five
-								centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-								It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-								passages, and more recently with desktop publishing software like Aldus PageMaker including
-								versions of Lorem Ipsum.
-							</p>
+							<p>@product.description</p>
 						</div>
 						<div id="menu1" class="tab-pane fade">
 							<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
@@ -104,5 +90,4 @@
 				</div>
 			</div>
 		</div>
-	</body>
-</html>	
+}

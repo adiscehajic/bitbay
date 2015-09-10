@@ -12,6 +12,7 @@ import views.html.index;
 import views.html.product.product;
 import views.html.product.newProduct;
 import views.html.product.editProduct;
+import views.html.product.productProfile;
 
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class ProductController extends Controller {
     private static Form<Product> productForm = Form.form(Product.class);
 
     public Result getProduct(Integer id) {
-        return ok(product.render(id));
+        Product product = Product.getProductById(id);
+        return ok(productProfile.render(product));
     }
 
     public Result newProduct() {
@@ -59,7 +61,7 @@ public class ProductController extends Controller {
 
         Ebean.save(product);
 
-        return ok(index.render("Hello"));
+        return redirect(routes.Users.index());
     }
 
     public Result editProduct(Integer id) {
