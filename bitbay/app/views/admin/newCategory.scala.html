@@ -1,3 +1,4 @@
+
 @interface {
 
       <div class = "row">
@@ -5,18 +6,21 @@
           <h2>Add category</h2>
         </div>
       </div>
+    <form method="POST" action="@routes.CategoryController.saveCategory()">
       <div class = "row">
         <div class="col-md-6">
           <label style = "margin-left : 20 px ; font-weight : normal ;"> Category name: </label>
-          <input type="text" class="form-control" id="exampleInputEmail1">
+          <input type="text" class="form-control" id="exampleInputEmail1" name="categoryName">
         </div>
       </div>
       <!--Buttons-->
       <div class ="row">
-        <div class ="col-md-6">
-            <a href="@routes.AdminController.adminCategories()"><button type="submit" class="btn btn-primary" style="margin-right:10px">
-            Add category</button></a>
-            <a href="@routes.AdminController.adminCategories()"><button type="submit" class="btn btn-primary">Cancel</button></a>
+        <div class ="col-md-1" style="padding-right: 0px;">
+            <button class="btn btn-primary" type="submit"> Save </button>
+        </div>
+        <div class="col-md-1" style="padding-left: 0px">
+            <a href="@routes.AdminController.adminCategories()"><button type="submit" class="btn btn-default">Cancel</button></a>
         </div>
       </div>
+    </form>
 }

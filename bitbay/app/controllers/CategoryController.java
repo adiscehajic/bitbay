@@ -4,11 +4,11 @@ import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.index;
-import views.html.signup;
-import views.html.signIn;
+import views.html.admin.newCategory;
+import views.html.admin.editCategory;
 import java.lang.*;
 import java.util.List;
+
 
 import com.avaje.ebean.Ebean;
 import models.*;
@@ -21,13 +21,20 @@ import models.*;
 
 public class CategoryController extends Controller {
 
+    private static final Form<Category> categoryForm = Form.form(Category.class);
+
     /**
      * Method for creating new Category
      * @return
      */
     public Result newCategory(){
+        
+        return ok(newCategory.render());
+    }
 
-        return TODO;
+    public Result editCategory(Integer id) {
+        Category c = Category.getCategoryById(id);
+        return ok(editCategory.render(c));
     }
 
     /**
@@ -35,9 +42,16 @@ public class CategoryController extends Controller {
      * @param id - ID of selected Category
      * @return
      */
-    public Result editCategory(Integer id){
+    public Result updateCategory(Integer id){
+        Category c = Category.getCategoryById(id);
+        Form<Category> boundForm = categoryForm.bindFromRequest();
+        String name = boundForm.bindFromRequest().field("categoryName").value();
 
-        return TODO;
+        if(!name.equals(c.name)) {
+            c.name = name;
+        }
+        Ebean.update(c);
+        return redirect(routes.AdminController.adminCategories());
     }
 
     /**
@@ -46,16 +60,24 @@ public class CategoryController extends Controller {
      * @return
      */
     public Result deleteCategory(Integer id){
-
-        return TODO;
+       Category c = Category.getCategoryById(id);
+        Ebean.delete(c);
+        return redirect(routes.AdminController.adminCategories());
     }
 
     /**
      * This method is used to save new category to database
      */
     public Result saveCategory(){
+        Form<Category> boundForm = categoryForm.bindFromRequest();
 
-        return TODO;
+        String name = boundForm.bindFromRequest().field("categoryName").value();
+        Logger.info(name);
+        Category c = new Category(name);
+        Ebean.save(c);
+
+        List<Category> list = Category.findAll();
+        return redirect(routes.AdminController.adminCategories());
     }
 
     /**
@@ -66,5 +88,6 @@ public class CategoryController extends Controller {
         List<Category> categories = Category.findAll();
         return TODO;
     }
+
 }
 
