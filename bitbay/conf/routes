@@ -10,28 +10,23 @@ GET         /signin                     @controllers.Users.signIn()
 POST        /signin                     @controllers.Users.validate()
 GET         /logout                     @controllers.Users.logout()
 
+GET         /product/new                @controllers.ProductController.newProduct()
+GET         /product/:id                @controllers.ProductController.getProduct(id: Integer)
+GET         /product/delete/:id         @controllers.ProductController.deleteProduct(id: Integer)
+POST        /product/new/               @controllers.ProductController.saveProduct()
+GET         /product/edit/:id           @controllers.ProductController.editProduct(id: Integer)
+POST        /product/edit/:id           @controllers.ProductController.updateProduct(id: Integer)
+
 GET         /admin                      @controllers.AdminController.adminLogin()
 GET         /admin/users                @controllers.AdminController.adminUsers()
 GET         /admin/categories           @controllers.AdminController.adminCategories()
 GET         /admin/products             @controllers.AdminController.adminProducts()
 GET         /admin/newcategory          @controllers.AdminController.adminNewCategory()
 
-<<<<<<< HEAD
-=======
 GET         /user/:id                  @controllers.Users.getUser(id: Integer)
 GET         /user/delete/:id           @controllers.Users.deleteUser(id: Integer)
 GET         /user/edit/:id             @controllers.Users.editUser(id: Integer)
 POST        /user/edit/:id             @controllers.Users.updateUser(id: Integer)
->>>>>>> develop
-
-GET         /product/new                @controllers.ProductController.newProduct()
-GET         /product/:id                @controllers.ProductController.getProduct(id: Integer)
-GET         /product/delete/:id         @controllers.ProductController.deleteProduct(id: Integer)
-POST        /product/new/               @controllers.ProductController.saveProduct()
-
-GET         /user/:id                   @controllers.Users.getUser(id: Integer)
-GET         /user/delete/:id            @controllers.Users.deleteUser(id: Integer)
-GET         /user/edit/:id              @controllers.Users.editUser(id: Integer)
 
 GET         /category/                  @controllers.CategoryController.list()
 GET         /category/new/              @controllers.CategoryController.newCategory()

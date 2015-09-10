@@ -11,6 +11,7 @@ import play.mvc.Result;
 import views.html.index;
 import views.html.product.product;
 import views.html.product.newProduct;
+import views.html.product.editProduct;
 
 import java.util.List;
 
@@ -31,9 +32,14 @@ public class ProductController extends Controller {
     }
 
     public Result deleteProduct(Integer id) {
-        return TODO;
-    }
+        Product product = Product.getProductById(id);
 
+        if (User.getUserByEmail(session("email")).id == product.user.id) {
+            Ebean.delete(product);
+        }
+
+        return redirect(routes.Users.getUser(1));
+    }
 
     public Result saveProduct() {
         Form<Product> boundForm = productForm.bindFromRequest();
@@ -46,7 +52,6 @@ public class ProductController extends Controller {
         String price = boundForm.bindFromRequest().field("price").value();
         String quantity = boundForm.bindFromRequest().field("quantity").value();
         String sellingType = boundForm.bindFromRequest().field("selling-type").value();
-        Logger.info(categoryValue);
 
         Category category = Category.getCategoryByName(categoryValue);
 
@@ -55,7 +60,37 @@ public class ProductController extends Controller {
         Ebean.save(product);
 
         return ok(index.render("Hello"));
+    }
 
+    public Result editProduct(Integer id) {
+        Product product = Product.getProductById(id);
+        List<Category> categories = Category.findAll();
+
+        Form<Product> filledForm = productForm.fill(product);
+        return ok(editProduct.render(product));
+    }
+
+    public Result updateProduct(Integer id) {
+        Product product = Product.getProductById(id);
+        Form<Product> boundForm = productForm.bindFromRequest();
+
+        String name = boundForm.bindFromRequest().field("name").value();
+        String description = boundForm.bindFromRequest().field("description").value();
+        String manufacturer = boundForm.bindFromRequest().field("manufacturer").value();
+        String price = boundForm.bindFromRequest().field("price").value();
+        String quantity = boundForm.bindFromRequest().field("quantity").value();
+        String sellingType = boundForm.bindFromRequest().field("selling-type").value();
+
+        product.name = name;
+        product.description = description;
+        product.manufacturer = manufacturer;
+        product.price = Double.parseDouble(price);
+        product.quantity = Integer.parseInt(quantity);
+        product.sellingType = sellingType;
+
+        Ebean.update(product);
+
+        return redirect(routes.ProductController.getProduct(product.id));
     }
 
 }

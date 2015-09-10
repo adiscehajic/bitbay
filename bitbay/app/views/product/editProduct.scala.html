@@ -1,0 +1,48 @@
+@(product: Product)
+@import helper._
+
+@main("Product", User.getUserByEmail(session.get("email"))) {
+
+  <div class="container">
+
+  @helper.form(action = routes.ProductController.updateProduct(product.id)) {
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h3>Edit Product</h3>
+
+      <div class="form-group">
+        <label for="product-name">Product Name:</label>
+        <input type="text" class="form-control" id="product-name" name="name" value="@product.name">
+      </div>
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="text" class="form-control" id="price" name="price" value="@product.price">
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity:</label>
+        <input type="text" class="form-control" id="quantity" name="quantity" value="@product.quantity">
+      </div>
+      <div class="form-group">
+        <label for="manufacturer">Manufacturer:</label>
+        <input type="text" class="form-control" id="manufacturer" name="manufacturer" value="@product.manufacturer">
+      </div>
+      <div class="form-group">
+        <label for="selling-type">Type of selling:</label>
+        <input type="text" class="form-control" id="selling-type" name="selling-type" value="@product.sellingType">
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" rows="5" id="description" name="description">@product.description</textarea >
+      </div>
+
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a href="@routes.ProductController.getProduct(product.id)" class="btn btn-primary">Cancel</a>
+
+      }
+
+      @helper.form(action = routes.ProductController.deleteProduct(product.id)) {
+        <button type="submit" class="btn btn-primary">Delete</button>
+  }
+</div>
+</div>
+}

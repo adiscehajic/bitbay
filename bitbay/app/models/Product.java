@@ -53,6 +53,11 @@ public class Product extends Model {
         this.sellingType = sellingType;
     }
 
+    public static Product getProductById(Integer id) {
+        Product product = Product.finder.where().eq("id", id).findUnique();
+        return product;
+    }
+
     public static List<Product> findAll() {
         List<Product> products = finder.all();
         return products;
