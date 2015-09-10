@@ -1,4 +1,5 @@
 @(user: User)
+@import helper._
 
 @main("User Profile", User.getUserByEmail(session.get("email"))) {
 
@@ -7,6 +8,7 @@
         <div class="row">
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                <form method="POST" action="@routes.Users.updateUser(user.id)">
 
 
                 <div class="panel panel-primary">
@@ -34,7 +36,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <input type="text" class="form-control"  placeholder="First Name" value="@user.firstName">
+                                                <input type="text" class="form-control"  placeholder="First Name" name="firstName" value="@user.firstName">
                                             </div>
                                         </div>
 
@@ -47,7 +49,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <input type="text" class="form-control"  placeholder="Last Name" value="@user.lastName">
+                                                <input type="text" class="form-control"  placeholder="Last Name" name="lastName" value="@user.lastName">
                                             </div>
                                         </div>
 
@@ -55,12 +57,12 @@
                                             <div class="col-lg-4">
                                                 <div class="panel panel-primary">
                                                     <div class="panel-heading">
-                                                        <div class="panel-title" align="center">Password</div>
+                                                        <div class="panel-title" align="center">New Password</div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <input type="password" class="form-control"  placeholder="Password" value="@user.password">
+                                                <input type="password" class="form-control"  placeholder="Password" name="password">
                                             </div>
                                         </div>
 
@@ -73,7 +75,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <input type="password" class="form-control"  placeholder="Password">
+                                                <input type="password" class="form-control"  placeholder="Password" name="confirmPassword">
                                             </div>
                                         </div>
 
@@ -86,7 +88,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <input type="text" class="form-control"  placeholder="Country" value="@user.userCountry">
+                                                <input type="text" class="form-control"  placeholder="Country" name="country" value="@user.country">
                                             </div>
                                         </div>
 
@@ -99,7 +101,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <input type="text" class="form-control"  placeholder="City" value="@user.userCity">
+                                                <input type="text" class="form-control"  placeholder="City" name="city" value="@user.city">
                                             </div>
                                         </div>
 
@@ -112,7 +114,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <input type="text" class="form-control"  placeholder="Address" value="@user.address">
+                                                <input type="text" class="form-control"  placeholder="Address" name="address" value="@user.address">
                                             </div>
                                         </div>
 
@@ -125,15 +127,16 @@
 
                         <div class="panel-footer" align="center">
                             <span >
-                                <a href="#"  class="btn btn-lg btn-primary">Save</a>
+                                <button type="submit" class="btn btn-lg btn-primary">Save</button>
                                 <a href="@routes.Users.getUser(user.id)"  class="btn btn-lg btn-primary">Cancel</a>
-
                             </span>
                         </div>
                     </div>
 
 
                 </div>
+
+                </form>
             </div>
         </div>
     </div>

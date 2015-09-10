@@ -16,6 +16,13 @@ GET         /admin/categories           @controllers.AdminController.adminCatego
 GET         /admin/products             @controllers.AdminController.adminProducts()
 GET         /admin/newcategory          @controllers.AdminController.adminNewCategory()
 
+<<<<<<< HEAD
+=======
+GET         /user/:id                  @controllers.Users.getUser(id: Integer)
+GET         /user/delete/:id           @controllers.Users.deleteUser(id: Integer)
+GET         /user/edit/:id             @controllers.Users.editUser(id: Integer)
+POST        /user/edit/:id             @controllers.Users.updateUser(id: Integer)
+>>>>>>> develop
 
 GET         /product/new                @controllers.ProductController.newProduct()
 GET         /product/:id                @controllers.ProductController.getProduct(id: Integer)
