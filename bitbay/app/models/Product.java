@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import views.html.user.userProducts;
+import org.apache.commons.io.FileUtils;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,7 +18,7 @@ public class Product extends Model {
 
     @Id
     public Integer id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     public User user;
     @Constraints.MaxLength(255)
     @Constraints.Required
@@ -32,7 +33,6 @@ public class Product extends Model {
     @Constraints.Required
     public Integer quantity;
     public String sellingType;
-
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date registration = new Date();

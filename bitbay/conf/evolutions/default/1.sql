@@ -15,6 +15,13 @@ create table country (
   constraint pk_country primary key (id))
 ;
 
+create table image (
+  id                        integer auto_increment not null,
+  path                      varchar(255),
+  product_id                integer,
+  constraint pk_image primary key (id))
+;
+
 create table product (
   id                        integer auto_increment not null,
   user_id                   integer,
@@ -54,14 +61,16 @@ create table user_type (
   constraint pk_user_type primary key (id))
 ;
 
-alter table product add constraint fk_product_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_product_user_1 on product (user_id);
-alter table product add constraint fk_product_category_2 foreign key (category_id) references category (id) on delete restrict on update restrict;
-create index ix_product_category_2 on product (category_id);
-alter table user add constraint fk_user_userType_3 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
-create index ix_user_userType_3 on user (user_type_id);
-alter table user add constraint fk_user_country_4 foreign key (country_id) references country (id) on delete restrict on update restrict;
-create index ix_user_country_4 on user (country_id);
+alter table image add constraint fk_image_product_1 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_image_product_1 on image (product_id);
+alter table product add constraint fk_product_user_2 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_product_user_2 on product (user_id);
+alter table product add constraint fk_product_category_3 foreign key (category_id) references category (id) on delete restrict on update restrict;
+create index ix_product_category_3 on product (category_id);
+alter table user add constraint fk_user_userType_4 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
+create index ix_user_userType_4 on user (user_type_id);
+alter table user add constraint fk_user_country_5 foreign key (country_id) references country (id) on delete restrict on update restrict;
+create index ix_user_country_5 on user (country_id);
 
 
 
@@ -72,6 +81,8 @@ SET FOREIGN_KEY_CHECKS=0;
 drop table category;
 
 drop table country;
+
+drop table image;
 
 drop table product;
 
