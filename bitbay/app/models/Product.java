@@ -6,6 +6,7 @@ import play.data.validation.Constraints;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by adis.cehajic on 08/09/15.
@@ -55,5 +56,10 @@ public class Product extends Model {
     public static Product getProductById(Integer id) {
         Product product = Product.finder.where().eq("id", id).findUnique();
         return product;
+    }
+
+    public static List<Product> findAll() {
+        List<Product> products = finder.all();
+        return products;
     }
 }

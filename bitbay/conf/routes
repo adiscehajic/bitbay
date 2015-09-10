@@ -17,9 +17,16 @@ POST        /product/new/               @controllers.ProductController.saveProdu
 GET         /product/edit/:id           @controllers.ProductController.editProduct(id: Integer)
 POST        /product/edit/:id           @controllers.ProductController.updateProduct(id: Integer)
 
-GET         /user/:id                   @controllers.Users.getUser(id: Integer)
-GET         /user/delete/:id            @controllers.Users.deleteUser(id: Integer)
-GET         /user/edit/:id              @controllers.Users.editUser(id: Integer)
+GET         /admin                      @controllers.AdminController.adminLogin()
+GET         /admin/users                @controllers.AdminController.adminUsers()
+GET         /admin/categories           @controllers.AdminController.adminCategories()
+GET         /admin/products             @controllers.AdminController.adminProducts()
+GET         /admin/newcategory          @controllers.AdminController.adminNewCategory()
+
+GET         /user/:id                  @controllers.Users.getUser(id: Integer)
+GET         /user/delete/:id           @controllers.Users.deleteUser(id: Integer)
+GET         /user/edit/:id             @controllers.Users.editUser(id: Integer)
+POST        /user/edit/:id             @controllers.Users.updateUser(id: Integer)
 
 GET         /category/                  @controllers.CategoryController.list()
 GET         /category/new/              @controllers.CategoryController.newCategory()

@@ -1,0 +1,22 @@
+@interface {
+
+      <div class = "row">
+        <div class = "col-md-6">
+          <h2>Add category</h2>
+        </div>
+      </div>
+      <div class = "row">
+        <div class="col-md-6">
+          <label style = "margin-left : 20 px ; font-weight : normal ;"> Category name: </label>
+          <input type="text" class="form-control" id="exampleInputEmail1">
+        </div>
+      </div>
+      <!--Buttons-->
+      <div class ="row">
+        <div class ="col-md-6">
+            <a href="@routes.AdminController.adminCategories()"><button type="submit" class="btn btn-primary" style="margin-right:10px">
+            Add category</button></a>
+            <a href="@routes.AdminController.adminCategories()"><button type="submit" class="btn btn-primary">Cancel</button></a>
+        </div>
+      </div>
+}

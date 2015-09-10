@@ -1,7 +1,9 @@
 package controllers;
 
 
+import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -12,9 +14,12 @@ import views.html.user.userEdit;
 import views.html.user.userProfile;
 import java.lang.*;
 import java.text.Normalizer;
-
+import java.util.List;
+import views.html.admin.allUsers;
+import java.util.Date;
 import com.avaje.ebean.Ebean;
 import models.*;
+import models.Country;
 
 import javax.persistence.PersistenceException;
 
@@ -145,18 +150,32 @@ public class Users extends Controller {
 
     }
 
+    /**
+     * Method that ends current session
+     */
     public Result logout() {
         session().clear();
         flash("successLogout", "You have successfully logged out!");
         return redirect(routes.Users.signIn());
     }
 
+    /**
+     * This method delete selected user
+     * @param id - ID of selected user
+     */
     public Result deleteUser(Integer id){
-//        User user = User.findById(id);
-//        deleteUser().user;
-        return TODO;
+        User user = User.findById(id);
+        Ebean.delete(user);
+
+        return redirect(routes.AdminController.adminUsers());
+
     }
 
+    /**
+     * This method find and return user by ID
+     * @param id - ID of wanted user
+     * @return - user with selected ID
+     */
     public Result getUser(Integer id){
         String email = session().get("email");
         User user =  User.getUserByEmail(email);
@@ -166,15 +185,69 @@ public class Users extends Controller {
     }
 
 
+    /**
+     * Mehtod for changing user data
+     * @param id - ID of selected user
+     * @return - User with selected ID
+     */
     public Result editUser(Integer id) {
        String email = session().get("email");
        User user = User.getUserByEmail(email);
-       Form<User> filledForm = userRegistration.bindFromRequest();
 
         return ok(userEdit.render(user));
 
     }
 
+    /**
+     * Method for updating user information
+     * @param id - ID of selected user
+     */
+    public Result updateUser(Integer id){
 
+        String email = session().get("email");
+        User user = User.getUserByEmail(email);
+
+        Form<User> boundForm = userRegistration.bindFromRequest();
+
+        //Collecting data from user edit page
+        String name = boundForm.bindFromRequest().field("firstName").value();
+        String lastName = boundForm.bindFromRequest().field("lastName").value();
+        String pass = boundForm.bindFromRequest().field("password").value();
+        String conPass = boundForm.bindFromRequest().field("confirmPassword").value();
+       // TODO Country country = boundForm.bindFromRequest().field("country").value();
+        String city = boundForm.bindFromRequest().field("city").value();
+        String address = boundForm.bindFromRequest().field("address").value();
+
+        //Checking if any user information was changed
+        if(!name.equals(user.firstName)){
+            user.firstName = name;
+        }
+
+        if(!lastName.equals(user.lastName)){
+            user.lastName = lastName;
+        }
+
+        if(pass.equals(conPass)){
+            user.password = BCrypt.hashpw(pass, BCrypt.gensalt());
+        }
+
+//      TODO  if(!country.equals(user.country)){
+//            user.country = country;
+//        }
+
+        if(!city.equals(user.city)){
+            user.city = city;
+        }
+
+        if(!address.equals(user.address)){
+            user.address = address;
+        }
+        //Updating time when profile information has been changed
+        user.updated= new Date();
+        Ebean.update(user);
+
+
+        return redirect(routes.Users.getUser(user.id));
+    }
 
 }

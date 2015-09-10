@@ -92,4 +92,5 @@ public class ProductController extends Controller {
 
         return redirect(routes.ProductController.getProduct(product.id));
     }
+
 }

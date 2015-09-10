@@ -1,0 +1,17 @@
+.nav-stacked {
+	background-color:#191919;
+	border-radius: 5px;
+}
+
+a {
+	color: gray;
+}
+
+.menuItem {
+	font-weight: bold;
+}
+
+.table {
+	background-color: #F4F4F4;
+}
+
