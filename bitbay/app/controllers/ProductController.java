@@ -4,7 +4,6 @@ import com.avaje.ebean.Ebean;
 import models.Category;
 import models.Product;
 import models.User;
-import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -13,6 +12,7 @@ import views.html.product.product;
 import views.html.product.newProduct;
 import views.html.product.editProduct;
 import views.html.product.productProfile;
+import views.html.user.userProducts;
 
 import java.util.List;
 
@@ -40,7 +40,9 @@ public class ProductController extends Controller {
             Ebean.delete(product);
         }
 
-        return redirect(routes.Users.getUser(1));
+        User user = User.getUserByEmail(session().get("email"));
+        List<Product> products = Product.findAllProductsByUser(user.email);
+        return ok(userProducts.render(products, user));
     }
 
     public Result saveProduct() {

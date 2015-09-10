@@ -2,7 +2,6 @@ package models;
 
 import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
-import play.data.format.Formats;
 
 import javax.persistence.*;
 
@@ -53,4 +52,5 @@ public class Category extends Model {
         List<Category> categories = finder.all();
         return categories;
     }
+
 }

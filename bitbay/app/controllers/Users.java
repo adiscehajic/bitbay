@@ -3,7 +3,6 @@ package controllers;
 
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
-import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -13,13 +12,11 @@ import views.html.signIn;
 import views.html.user.userEdit;
 import views.html.user.userProfile;
 import java.lang.*;
-import java.text.Normalizer;
 import java.util.List;
-import views.html.admin.allUsers;
 import java.util.Date;
 import com.avaje.ebean.Ebean;
 import models.*;
-import models.Country;
+import views.html.user.userProducts;
 
 import javax.persistence.PersistenceException;
 
@@ -249,6 +246,13 @@ public class Users extends Controller {
 
 
         return redirect(routes.Users.getUser(user.id));
+    }
+
+    public Result getAllUserProducts() {
+        List<Product> products = Product.findAllProductsByUser(session().get("email"));
+        User user = User.getUserByEmail(session().get("email"));
+
+        return ok(userProducts.render(products, user));
     }
 
 }
