@@ -3,6 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
+import views.html.user.userProducts;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -60,6 +61,14 @@ public class Product extends Model {
 
     public static List<Product> findAll() {
         List<Product> products = finder.all();
+        return products;
+    }
+
+    public static List<Product> findAllProductsByUser(String email) {
+
+        User user = User.getUserByEmail(email);
+        List<Product> products = Product.finder.where().eq("user", user).findList();
+
         return products;
     }
 }

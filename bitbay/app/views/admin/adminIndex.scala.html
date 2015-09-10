@@ -13,14 +13,13 @@
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse">
-			<div class="navbar-header">
-				<a class="navbar-brand"><a href="/"><img src="@routes.Assets.versioned("images/adminLogo.png")" class="img-responsive"></a>
-				</a>
+			<div class="container-fluid">
+				<div class="navbar-header pull-left" >
+					<a href="/"><img src="@routes.Assets.versioned("images/adminLogo.png")" class="img-responsive" style = "margin-top:8px;"></a>
 				</div>
-				<div>
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav navbar-right" style = "margin-top:10px; margin-right:10px;">
 					<li class="dropdown">
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span> Username </a>
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span> Username </a>
 						<ul class="dropdown-menu">
 							<li><a href="#">Messages</a></li>
 							<li><a href="#">Settings</a></li>
@@ -28,8 +27,6 @@
 					</li>
 					<li><a href="/admin"><span class="glyphicon glyphicon-log-in"></span> Logout </a></li>
 				</ul>
-				</div>
-			</div>
 		</nav>
 		<div class="container-floating">
 			<div class="col-md-2">
