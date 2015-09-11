@@ -1,5 +1,6 @@
 package controllers;
 
+import helpers.CurrentAdmin;
 import models.Category;
 import models.Product;
 import models.User;
@@ -7,11 +8,11 @@ import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.admin.allCategories;
 import views.html.admin.login;
 import views.html.admin.allProducts;
 import views.html.admin.allUsers;
-import views.html.admin.newCategory;
 import views.html.admin.adminHome;
 
 
@@ -32,20 +33,24 @@ public class AdminController extends Controller {
         return redirect(routes.AdminController.adminLogin());
     }
 
+    @Security.Authenticated(CurrentAdmin.class)
     public Result adminIndex() {
         return ok(adminHome.render());
     }
 
+    @Security.Authenticated(CurrentAdmin.class)
     public Result adminUsers() {
         List<User> users = User.findAll();
         return ok(allUsers.render(users));
     }
 
+    @Security.Authenticated(CurrentAdmin.class)
     public Result adminCategories() {
         List<Category> categories = Category.findAll();
         return ok(allCategories.render(categories));
     }
 
+    @Security.Authenticated(CurrentAdmin.class)
     public Result adminProducts() {
         List<Product> list = Product.findAll();
         return ok(allProducts.render(list));}

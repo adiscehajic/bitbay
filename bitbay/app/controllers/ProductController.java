@@ -1,23 +1,25 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import helpers.CurrentSeller;
 import models.Category;
 import models.Image;
 import models.Product;
 import models.User;
 import org.apache.commons.io.FileUtils;
+import play.Logger;
 import play.Play;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.product.newProduct;
 import views.html.product.editProduct;
 import views.html.product.productProfile;
 import views.html.user.userProducts;
 import java.io.File;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -34,11 +36,13 @@ public class ProductController extends Controller {
         return ok(productProfile.render(product, path));
     }
 
+    @Security.Authenticated(CurrentSeller.class)
     public Result newProduct() {
         List<Category> categories = Category.findAll();
         return ok(newProduct.render(categories));
     }
 
+    @Security.Authenticated(CurrentSeller.class)
     public Result deleteProduct(Integer id) {
         Product product = Product.getProductById(id);
 
@@ -51,6 +55,7 @@ public class ProductController extends Controller {
         return ok(userProducts.render(products, user));
     }
 
+    @Security.Authenticated(CurrentSeller.class)
     public Result saveProduct() {
         Form<Product> boundForm = productForm.bindFromRequest();
 
@@ -81,15 +86,14 @@ public class ProductController extends Controller {
                 Image image = new Image(fileName, product);
                 Ebean.save(image);
             } catch (IOException e) {
-
+                Logger.info(e.getMessage());
             }
-
             }
         }
-
         return redirect(routes.Users.index());
     }
 
+    @Security.Authenticated(CurrentSeller.class)
     public Result editProduct(Integer id) {
         Product product = Product.getProductById(id);
         List<Category> categories = Category.findAll();
@@ -98,6 +102,7 @@ public class ProductController extends Controller {
         return ok(editProduct.render(product));
     }
 
+    @Security.Authenticated(CurrentSeller.class)
     public Result updateProduct(Integer id) {
         Product product = Product.getProductById(id);
         Form<Product> boundForm = productForm.bindFromRequest();

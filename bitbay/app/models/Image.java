@@ -21,7 +21,7 @@ public class Image extends Model {
     @Id
     public Integer id;
     public String path;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     public Product product;
 
     public Image(String path, Product product) {
@@ -31,7 +31,11 @@ public class Image extends Model {
 
     public static String getImagePath(Product product) {
         List<Image> image = Image.finder.where().eq("product", product).findList();
-        return image.get(0).path;
+        if (image.size() > 0) {
+            return image.get(0).path;
+        } else {
+            return "http://placehold.it/450x600";
+        }
     }
 
 }

@@ -1,11 +1,13 @@
 package controllers;
 
 
+import helpers.CurrentSeller;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.index;
 import views.html.signup;
 import views.html.signIn;
@@ -130,6 +132,10 @@ public class Users extends Controller {
             return ok(signIn.render(userRegistration));
         }
         User user = User.authenticate(email,password);
+
+        if (user.userType.id == 1) {
+            return redirect(routes.Users.signIn());
+        }
         // Checking if the user exists. If the inputed email and password are correct
         // redirecting to the main page, othewise opens sign in page.
 
@@ -193,8 +199,11 @@ public class Users extends Controller {
        String email = session().get("email");
        User user = User.getUserByEmail(email);
 
-        return ok(userEdit.render(user));
-
+        if (user != null) {
+            return ok(userEdit.render(user));
+        } else {
+            return redirect(routes.Users.signIn());
+        }
     }
 
     /**
@@ -245,15 +254,18 @@ public class Users extends Controller {
         user.updated= new Date();
         Ebean.update(user);
 
-
         return redirect(routes.Users.getUser(user.id));
     }
 
+    @Security.Authenticated(CurrentSeller.class)
     public Result getAllUserProducts() {
         List<Product> products = Product.findAllProductsByUser(session().get("email"));
         User user = User.getUserByEmail(session().get("email"));
-
-        return ok(userProducts.render(products, user));
+        if (user != null) {
+            return ok(userProducts.render(products, user));
+        } else {
+            return redirect(routes.Users.signIn());
+        }
     }
 
 }
