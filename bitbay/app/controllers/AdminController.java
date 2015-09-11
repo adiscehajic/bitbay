@@ -3,6 +3,7 @@ package controllers;
 import models.Category;
 import models.Product;
 import models.User;
+import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -68,7 +69,7 @@ public class AdminController extends Controller {
             return redirect(routes.AdminController.adminLogin());
         }
         User user = User.authenticate(email,password);
-
+        Logger.info(user.firstName);
             // Checking if the user exists. If the inputed email and password are correct
             // redirecting to the main page, othewise opens sign in page.
 

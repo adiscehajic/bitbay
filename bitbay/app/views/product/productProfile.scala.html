@@ -1,4 +1,4 @@
-@(product: Product)
+@(product: Product)(path: String)
 
 @main("Product", User.getUserByEmail(session.get("email"))) {
 		<div class="container">
@@ -6,7 +6,7 @@
 				<div class="col-md-1"></div>
 				<div class="col-md-4" style="margin-right: 5%">
 					<div class="thumbnail">
-						<img src="http://placehold.it/450x600">
+						<img src="@routes.Assets.versioned("images/" + path)"/>
 					</div>
 				</div>
 				<div class="col-md-4">
