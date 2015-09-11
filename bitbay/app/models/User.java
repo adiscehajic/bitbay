@@ -58,6 +58,9 @@ public class User extends Model {
     @Constraints.MaxLength(255)
     public String address;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Product> products;
+
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date registration = new Date();

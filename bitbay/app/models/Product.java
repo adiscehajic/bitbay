@@ -18,7 +18,7 @@ public class Product extends Model {
 
     @Id
     public Integer id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     public User user;
     @Constraints.MaxLength(255)
     @Constraints.Required
@@ -33,6 +33,8 @@ public class Product extends Model {
     @Constraints.Required
     public Integer quantity;
     public String sellingType;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Image> images;
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date registration = new Date();

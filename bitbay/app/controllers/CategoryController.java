@@ -1,9 +1,11 @@
 package controllers;
 
+import helpers.CurrentAdmin;
 import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.admin.newCategory;
 import views.html.admin.editCategory;
 import java.lang.*;
@@ -17,8 +19,7 @@ import models.*;
 /**
  * Created by Adnan on 8.9.2015.
  */
-
-
+@Security.Authenticated(CurrentAdmin.class)
 public class CategoryController extends Controller {
 
     private static final Form<Category> categoryForm = Form.form(Category.class);
@@ -28,7 +29,6 @@ public class CategoryController extends Controller {
      * @return
      */
     public Result newCategory(){
-        
         return ok(newCategory.render());
     }
 
