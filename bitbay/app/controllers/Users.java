@@ -44,8 +44,9 @@ public class Users extends Controller {
      * @return
      */
     public Result signup() {
+        Form<User> boundForm = userRegistration.bindFromRequest();
         if (session().get("email") == null) {
-            return ok(signup.render(userRegistration));
+            return badRequest(signup.render(boundForm));
         } else {
             return redirect(routes.Users.index());
         }
