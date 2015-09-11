@@ -48,13 +48,13 @@
 											<div class="col-md-3">
 
 												<p class="paragraph"> First name * </p>
-												<input class="form-control" onkeyup="validateRegistration()" onfocusout="checkName()" id="ex3" type="text" name="first-name" value="@userRegistration("first-name").value">
+												<input class="form-control" onkeypress="return isAlphaKey(event);" onkeyup="validateRegistration()" onfocusout="checkName()" id="ex3" type="letter" name="first-name" value="@userRegistration("first-name").value">
 											</div>
 
 											<div class="col-md-3">
 
 												<p class="paragraph"> Last name * </p>
-												<input class="form-control" onkeyup="validateRegistration()" onfocusout="checkSurname()" id="ex3" type="text" name="last-name" value="@userRegistration("last-name").value">
+												<input class="form-control" onkeypress="return isAlphaKey(event);" onkeyup="validateRegistration()" onfocusout="checkSurname()" id="ex3" type="text" name="last-name" value="@userRegistration("last-name").value">
 											</div>
 
 											<div class="col-md-3">
