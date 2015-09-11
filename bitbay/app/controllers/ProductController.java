@@ -82,7 +82,7 @@ public class ProductController extends Controller {
                 String fileName = picture.getFilename();
                 File file = picture.getFile();
             try {
-                FileUtils.moveFile(file, new File(Play.application().path() + "\\public\\images\\" + fileName));
+                FileUtils.moveFile(file, new File(Play.application().path() + "/public/images/" + fileName));
                 Image image = new Image(fileName, product);
                 Ebean.save(image);
             } catch (IOException e) {

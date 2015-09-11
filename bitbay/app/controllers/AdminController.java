@@ -74,7 +74,6 @@ public class AdminController extends Controller {
             return redirect(routes.AdminController.adminLogin());
         }
         User user = User.authenticate(email,password);
-        Logger.info(user.firstName);
             // Checking if the user exists. If the inputed email and password are correct
             // redirecting to the main page, othewise opens sign in page.
 

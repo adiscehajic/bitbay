@@ -133,9 +133,7 @@ public class Users extends Controller {
         }
         User user = User.authenticate(email,password);
 
-        if (user.userType.id == 1) {
-            return redirect(routes.Users.signIn());
-        }
+
         // Checking if the user exists. If the inputed email and password are correct
         // redirecting to the main page, othewise opens sign in page.
 
@@ -146,6 +144,9 @@ public class Users extends Controller {
             flash("errorNoInput", "Please input email and password.");
             return ok(signIn.render(userRegistration));
         } else if (user != null) {
+            if (user.userType.id == 1) {
+                return redirect(routes.Users.signIn());
+            }
             session().clear();
             session("email", email);
             return redirect(routes.Users.index());

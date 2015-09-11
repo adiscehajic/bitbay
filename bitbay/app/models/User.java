@@ -144,7 +144,7 @@ public class User extends Model {
 //        return TODO;
 //    }
     public static List<User> findAll() {
-        List<User> users = finder.all();
+        List<User> users = finder.where().ne("userType.id", 1).findList();
         return users;
     }
 
