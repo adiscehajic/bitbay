@@ -24,7 +24,7 @@
     @for(product <- products) {
         <div class="col-sm-6 col-md-3 col-lg-3">
             <div class="thumbnail">
-                <img src="@routes.Assets.versioned("images/" + Image.getImagePath(product))">
+                <img src="@routes.Assets.versioned("images/products/" + Image.getImagePath(product))">
                 <div class="caption">
                     <h3>@product.name</h3>
                     <p>@product.description</p>

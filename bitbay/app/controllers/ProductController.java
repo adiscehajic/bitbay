@@ -55,6 +55,14 @@ public class ProductController extends Controller {
         return ok(userProducts.render(products, user));
     }
 
+    public Result deleteProductAdmin(Integer id) {
+        Product product = Product.getProductById(id);
+
+        Ebean.delete(product);
+
+        return redirect(routes.AdminController.adminProducts());
+    }
+
     @Security.Authenticated(CurrentSeller.class)
     public Result saveProduct() {
         Form<Product> boundForm = productForm.bindFromRequest();
@@ -82,7 +90,7 @@ public class ProductController extends Controller {
                 String fileName = picture.getFilename();
                 File file = picture.getFile();
             try {
-                FileUtils.moveFile(file, new File(Play.application().path() + "/public/images/" + fileName));
+                FileUtils.moveFile(file, new File(Play.application().path() + "/public/images/products/" + fileName));
                 Image image = new Image(fileName, product);
                 Ebean.save(image);
             } catch (IOException e) {

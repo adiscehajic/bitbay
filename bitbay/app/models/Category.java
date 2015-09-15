@@ -20,6 +20,8 @@ public class Category extends Model {
     @Constraints.Required
     public String name;
 
+    @OneToMany
+    private List<Product> products;
 //    public Integer parent_id;
 //    public Integer status_id;
 

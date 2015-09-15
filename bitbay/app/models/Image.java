@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import java.util.List;
 
 /**
- * Created by Denis Cehajic on 9/10/2015.
+ * Created by Adis Cehajic on 9/10/2015.
  */
 @Entity
 public class Image extends Model {
