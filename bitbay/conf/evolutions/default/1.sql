@@ -4,26 +4,26 @@
 # --- !Ups
 
 create table category (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   name                      varchar(255),
   constraint pk_category primary key (id))
 ;
 
 create table country (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   name                      varchar(255),
   constraint pk_country primary key (id))
 ;
 
 create table image (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   path                      varchar(255),
   product_id                integer,
   constraint pk_image primary key (id))
 ;
 
 create table product (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   user_id                   integer,
   name                      varchar(255),
   description               varchar(255),
@@ -38,7 +38,7 @@ create table product (
 ;
 
 create table user (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   first_name                varchar(255),
   last_name                 varchar(255),
   email                     varchar(255),
@@ -56,10 +56,22 @@ create table user (
 ;
 
 create table user_type (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   name                      varchar(255),
   constraint pk_user_type primary key (id))
 ;
+
+create sequence category_seq;
+
+create sequence country_seq;
+
+create sequence image_seq;
+
+create sequence product_seq;
+
+create sequence user_seq;
+
+create sequence user_type_seq;
 
 alter table image add constraint fk_image_product_1 foreign key (product_id) references product (id) on delete restrict on update restrict;
 create index ix_image_product_1 on image (product_id);
@@ -76,19 +88,31 @@ create index ix_user_country_5 on user (country_id);
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
+SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table category;
+drop table if exists category;
 
-drop table country;
+drop table if exists country;
 
-drop table image;
+drop table if exists image;
 
-drop table product;
+drop table if exists product;
 
-drop table user;
+drop table if exists user;
 
-drop table user_type;
+drop table if exists user_type;
 
-SET FOREIGN_KEY_CHECKS=1;
+SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists category_seq;
+
+drop sequence if exists country_seq;
+
+drop sequence if exists image_seq;
+
+drop sequence if exists product_seq;
+
+drop sequence if exists user_seq;
+
+drop sequence if exists user_type_seq;
 
