@@ -45,6 +45,8 @@ public class Product extends Model {
 
     private static Finder<String, Product> finder = new Finder<String, Product>(Product.class);
 
+    public Product () {}
+
     public Product(User user, String name, String description, String manufacturer, Category category, Double price, Integer quantity, String sellingType) {
         this.user = user;
         this.name = name;
