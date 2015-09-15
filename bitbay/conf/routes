@@ -24,6 +24,7 @@ POST        /admin/index                @controllers.AdminController.validateLog
 GET         /admin/users                @controllers.AdminController.adminUsers()
 GET         /admin/categories           @controllers.AdminController.adminCategories()
 GET         /admin/products             @controllers.AdminController.adminProducts()
+GET         /admin/products/:id         @controllers.ProductController.deleteProductAdmin(id: Integer)
 
 GET         /user/products              @controllers.Users.getAllUserProducts()
 GET         /user/:id                   @controllers.Users.getUser(id: Integer)

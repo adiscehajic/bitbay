@@ -73,4 +73,10 @@ public class Product extends Model {
 
         return products;
     }
+
+    public static List<Product> findAllProductsByCategory(Category category) {
+        List<Product> products = Product.finder.where().eq("category", category).findList();
+
+        return products;
+    }
 }
