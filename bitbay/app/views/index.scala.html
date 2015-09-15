@@ -24,11 +24,10 @@
     @for(product <- products) {
         <div class="col-sm-6 col-md-3 col-lg-3">
             <div class="thumbnail">
-                <img src="@routes.Assets.versioned("images/products/" + Image.getImagePath(product))">
+                <a href="@routes.ProductController.getProduct(product.id)"><img src="@routes.Assets.versioned("images/products/" + Image.getImagePath(product))"></a>
                 <div class="caption">
-                    <h3>@product.name</h3>
+                    <h3><a href="@routes.ProductController.getProduct(product.id)">@product.name</a></h3>
                     <p>@product.description</p>
-                    <p><a href="/" class="btn btn-primary" role="button">Buy</a> <a href="@routes.ProductController.getProduct(product.id)" class="btn btn-default" role="button">View</a></p>
                 </div>
             </div>
         </div>

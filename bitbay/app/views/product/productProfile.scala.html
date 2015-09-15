@@ -6,7 +6,9 @@
 				<div class="col-md-1"></div>
 				<div class="col-md-4" style="margin-right: 5%">
 					<div class="thumbnail">
+
 						<img src="@routes.Assets.versioned("images/products/" + path)"/>
+
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -51,7 +53,11 @@
 							<tr class="blank_row"></tr>
 							<tr class="blank_row"></tr>
 							<tr>
-								<td><button class="btn btn-primary"> Add to chart </button></td>
+								<td>
+									<form action="@routes.CartController.addToCart(product.id)" method="POST">
+										<button type="submit "class="btn btn-primary"> Add to chart </button>
+									</form>
+								</td>
 							</tr>
 						</tbody>
 					</table>

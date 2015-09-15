@@ -4,6 +4,7 @@
 
 # Home page
 GET         /                           @controllers.Users.index()
+POST        /                           @controllers.CartController.addToCart(id: Integer)
 GET         /signup                     @controllers.Users.signup()
 POST        /signup                     @controllers.Users.newUser()
 GET         /signin                     @controllers.Users.signIn()
@@ -18,6 +19,7 @@ POST        /product/new/               @controllers.ProductController.saveProdu
 GET         /product/edit/:id           @controllers.ProductController.editProduct(id: Integer)
 POST        /product/edit/:id           @controllers.ProductController.updateProduct(id: Integer)
 
+
 GET         /admin                      @controllers.AdminController.adminLogin()
 GET         /admin/logout               @controllers.AdminController.adminLogout()
 GET         /admin/index                @controllers.AdminController.adminIndex()
@@ -27,11 +29,15 @@ GET         /admin/categories           @controllers.AdminController.adminCatego
 GET         /admin/products             @controllers.AdminController.adminProducts()
 GET         /admin/products/:id         @controllers.ProductController.deleteProductAdmin(id: Integer)
 
+
+GET         /user/cart                  @controllers.CartController.getCart()
+GET         /user/cart/delete:id        @controllers.CartController.removeFromCart(id: Integer)
 GET         /user/products              @controllers.Users.getAllUserProducts()
 GET         /user/:id                   @controllers.Users.getUser(id: Integer)
 GET         /user/delete/:id            @controllers.Users.deleteUser(id: Integer)
 GET         /user/edit/:id              @controllers.Users.editUser(id: Integer)
 POST        /user/edit/:id              @controllers.Users.updateUser(id: Integer)
+
 
 GET         /category                   @controllers.CategoryController.list()
 GET         /category/new               @controllers.CategoryController.newCategory()
