@@ -35,6 +35,8 @@ public class Product extends Model {
     public String sellingType;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Image> images;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> comments;
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date registration = new Date();

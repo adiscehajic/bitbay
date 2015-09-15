@@ -4,26 +4,37 @@
 # --- !Ups
 
 create table category (
-  id                        integer not null,
+  id                        integer auto_increment not null,
   name                      varchar(255),
   constraint pk_category primary key (id))
 ;
 
+create table comment (
+  id                        integer auto_increment not null,
+  title                     varchar(255),
+  text                      varchar(255),
+  user_id                   integer,
+  product_id                integer,
+  comment_date              datetime,
+  constraint uq_comment_user_id unique (user_id),
+  constraint pk_comment primary key (id))
+;
+
 create table country (
-  id                        integer not null,
+  id                        integer auto_increment not null,
   name                      varchar(255),
   constraint pk_country primary key (id))
 ;
 
 create table image (
-  id                        integer not null,
+  id                        integer auto_increment not null,
   path                      varchar(255),
   product_id                integer,
   constraint pk_image primary key (id))
 ;
 
 create table product (
-  id                        integer not null,
+  id                        integer auto_increment not null,
   user_id                   integer,
   name                      varchar(255),
   description               varchar(255),
@@ -38,7 +49,7 @@ create table product (
 ;
 
 create table user (
-  id                        integer not null,
+  id                        integer auto_increment not null,
   first_name                varchar(255),
   last_name                 varchar(255),
   email                     varchar(255),
@@ -56,63 +67,45 @@ create table user (
 ;
 
 create table user_type (
-  id                        integer not null,
+  id                        integer auto_increment not null,
   name                      varchar(255),
   constraint pk_user_type primary key (id))
 ;
 
-create sequence category_seq;
-
-create sequence country_seq;
-
-create sequence image_seq;
-
-create sequence product_seq;
-
-create sequence user_seq;
-
-create sequence user_type_seq;
-
-alter table image add constraint fk_image_product_1 foreign key (product_id) references product (id) on delete restrict on update restrict;
-create index ix_image_product_1 on image (product_id);
-alter table product add constraint fk_product_user_2 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_product_user_2 on product (user_id);
-alter table product add constraint fk_product_category_3 foreign key (category_id) references category (id) on delete restrict on update restrict;
-create index ix_product_category_3 on product (category_id);
-alter table user add constraint fk_user_userType_4 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
-create index ix_user_userType_4 on user (user_type_id);
-alter table user add constraint fk_user_country_5 foreign key (country_id) references country (id) on delete restrict on update restrict;
-create index ix_user_country_5 on user (country_id);
+alter table comment add constraint fk_comment_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_comment_user_1 on comment (user_id);
+alter table comment add constraint fk_comment_product_2 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_comment_product_2 on comment (product_id);
+alter table image add constraint fk_image_product_3 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_image_product_3 on image (product_id);
+alter table product add constraint fk_product_user_4 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_product_user_4 on product (user_id);
+alter table product add constraint fk_product_category_5 foreign key (category_id) references category (id) on delete restrict on update restrict;
+create index ix_product_category_5 on product (category_id);
+alter table user add constraint fk_user_userType_6 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
+create index ix_user_userType_6 on user (user_type_id);
+alter table user add constraint fk_user_country_7 foreign key (country_id) references country (id) on delete restrict on update restrict;
+create index ix_user_country_7 on user (country_id);
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists category;
+drop table category;
 
-drop table if exists country;
+drop table comment;
 
-drop table if exists image;
+drop table country;
 
-drop table if exists product;
+drop table image;
 
-drop table if exists user;
+drop table product;
 
-drop table if exists user_type;
+drop table user;
 
-SET REFERENTIAL_INTEGRITY TRUE;
+drop table user_type;
 
-drop sequence if exists category_seq;
-
-drop sequence if exists country_seq;
-
-drop sequence if exists image_seq;
-
-drop sequence if exists product_seq;
-
-drop sequence if exists user_seq;
-
-drop sequence if exists user_type_seq;
+SET FOREIGN_KEY_CHECKS=1;
 
