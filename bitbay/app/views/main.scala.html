@@ -58,6 +58,7 @@
                                 <li><a href="signup"><span class="glyphicon glyphicon-registration-mark"></span>  Sign up</a></li>
                             } else {
                             <li><a href="@routes.Users.getUser(user.id)"> <span class="glyphicon glyphicon-user"></span>  @user.firstName</a></li>
+                            <li><a href="@routes.CartController.getCart()"> <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
                             <li><a href="@routes.Users.logout()"> <span class="glyphicon glyphicon-log-out"></span>  Logout</a></li>
                         }
 

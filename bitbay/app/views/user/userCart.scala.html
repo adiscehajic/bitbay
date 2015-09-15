@@ -1,0 +1,44 @@
+@(products : List[Product])(user: User)
+
+@import helpers.SessionHelper;
+
+@main("Cart", user) {
+
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">@user.firstName's Cart</div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th> Product </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(product <- products) {
+                        <tr>
+                            <td class="cartData"><a href="@routes.ProductController.getProduct(product.id)"><img src="@routes.Assets.versioned("images/" + Image.getImagePath(product))" width="150" height="100"/></a></td>
+                            <td class="cartData" style="font-size: 17px"><a href="@routes.ProductController.getProduct(product.id)"> @product.name </a></td>
+                            <td class="cartData"> @product.quantity </td>
+                            <td class="cartData"> @product.price </td>
+                            <td class="cartData"><a href="@routes.CartController.removeFromCart(product.id)"><span class="glyphicon glyphicon-remove" style="font-size: 20px"></span></a></td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <div class="row">
+                <label style="float: right; margin-right:4%"> Total: </label>
+            </div>
+            <div class="row">
+                <button class="btn btn-primary" style="float: right; margin-right:2%"> Checkout </button>
+            </div>
+        </div>
+    </div>
+}

@@ -19,6 +19,7 @@ import java.util.Date;
 import com.avaje.ebean.Ebean;
 import models.*;
 import views.html.user.userProducts;
+import views.html.user.userCart;
 
 import javax.persistence.PersistenceException;
 
@@ -108,6 +109,7 @@ public class Users extends Controller {
             return badRequest(signup.render(userRegistration));
         }
     }
+
 
     /**
      * Reads inputed values that are inputed on sign in page and validates them.

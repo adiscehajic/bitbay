@@ -9,3 +9,9 @@ td {
 	padding-right: 15px;
 	padding-left: 15px;
 }
+
+.table tbody>tr>td.cartData {
+    vertical-align: middle;
+}
+
+
