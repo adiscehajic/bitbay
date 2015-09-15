@@ -2,10 +2,7 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 import helpers.CurrentSeller;
-import models.Category;
-import models.Image;
-import models.Product;
-import models.User;
+import models.*;
 import org.apache.commons.io.FileUtils;
 import play.Logger;
 import play.Play;
@@ -33,7 +30,10 @@ public class ProductController extends Controller {
     public Result getProduct(Integer id) {
         Product product = Product.getProductById(id);
         String path = Image.getImagePath(product);
-        return ok(productProfile.render(product, path));
+
+        List<Comment> comments = Comment.sortCommentByDate(product);
+
+        return ok(productProfile.render(product, path, comments));
     }
 
     @Security.Authenticated(CurrentSeller.class)
@@ -53,6 +53,14 @@ public class ProductController extends Controller {
         User user = User.getUserByEmail(session().get("email"));
         List<Product> products = Product.findAllProductsByUser(user.email);
         return ok(userProducts.render(products, user));
+    }
+
+    public Result deleteProductAdmin(Integer id) {
+        Product product = Product.getProductById(id);
+
+        Ebean.delete(product);
+
+        return redirect(routes.AdminController.adminProducts());
     }
 
     @Security.Authenticated(CurrentSeller.class)
@@ -82,7 +90,7 @@ public class ProductController extends Controller {
                 String fileName = picture.getFilename();
                 File file = picture.getFile();
             try {
-                FileUtils.moveFile(file, new File(Play.application().path() + "/public/images/" + fileName));
+                FileUtils.moveFile(file, new File(Play.application().path() + "/public/images/products/" + fileName));
                 Image image = new Image(fileName, product);
                 Ebean.save(image);
             } catch (IOException e) {

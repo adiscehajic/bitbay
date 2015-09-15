@@ -16,6 +16,17 @@ create table category (
   constraint pk_category primary key (id))
 ;
 
+create table comment (
+  id                        integer auto_increment not null,
+  title                     varchar(255),
+  text                      varchar(255),
+  user_id                   integer,
+  product_id                integer,
+  comment_date              datetime,
+  constraint uq_comment_user_id unique (user_id),
+  constraint pk_comment primary key (id))
+;
+
 create table country (
   id                        integer auto_increment not null,
   name                      varchar(255),
@@ -68,6 +79,21 @@ create table user_type (
   constraint pk_user_type primary key (id))
 ;
 
+alter table comment add constraint fk_comment_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_comment_user_1 on comment (user_id);
+alter table comment add constraint fk_comment_product_2 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_comment_product_2 on comment (product_id);
+alter table image add constraint fk_image_product_3 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_image_product_3 on image (product_id);
+alter table product add constraint fk_product_user_4 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_product_user_4 on product (user_id);
+alter table product add constraint fk_product_category_5 foreign key (category_id) references category (id) on delete restrict on update restrict;
+create index ix_product_category_5 on product (category_id);
+alter table user add constraint fk_user_userType_6 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
+create index ix_user_userType_6 on user (user_type_id);
+alter table user add constraint fk_user_country_7 foreign key (country_id) references country (id) on delete restrict on update restrict;
+create index ix_user_country_7 on user (country_id);
+
 
 create table cart_product (
   cart_id                        integer not null,
@@ -102,6 +128,8 @@ drop table cart;
 drop table cart_product;
 
 drop table category;
+
+drop table comment;
 
 drop table country;
 

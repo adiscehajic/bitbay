@@ -35,6 +35,8 @@ public class Product extends Model {
     public String sellingType;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Image> images;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> comments;
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date registration = new Date();
@@ -44,6 +46,8 @@ public class Product extends Model {
     public Date updated = new Date();
 
     private static Finder<String, Product> finder = new Finder<String, Product>(Product.class);
+
+    public Product () {}
 
     public Product(User user, String name, String description, String manufacturer, Category category, Double price, Integer quantity, String sellingType) {
         this.user = user;
@@ -70,6 +74,12 @@ public class Product extends Model {
 
         User user = User.getUserByEmail(email);
         List<Product> products = Product.finder.where().eq("user", user).findList();
+
+        return products;
+    }
+
+    public static List<Product> findAllProductsByCategory(Category category) {
+        List<Product> products = Product.finder.where().eq("category", category).findList();
 
         return products;
     }

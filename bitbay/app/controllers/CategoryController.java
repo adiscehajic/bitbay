@@ -60,7 +60,15 @@ public class CategoryController extends Controller {
      * @return
      */
     public Result deleteCategory(Integer id){
-       Category c = Category.getCategoryById(id);
+        Category c = Category.getCategoryById(id);
+
+        List<Product> products = Product.findAllProductsByCategory(c);
+
+        for (Product product : products) {
+            product.category = Category.getCategoryById(5);
+            product.save();
+        }
+
         Ebean.delete(c);
         return redirect(routes.AdminController.adminCategories());
     }
