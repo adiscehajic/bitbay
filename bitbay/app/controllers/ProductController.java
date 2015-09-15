@@ -2,10 +2,7 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 import helpers.CurrentSeller;
-import models.Category;
-import models.Image;
-import models.Product;
-import models.User;
+import models.*;
 import org.apache.commons.io.FileUtils;
 import play.Logger;
 import play.Play;
@@ -33,7 +30,10 @@ public class ProductController extends Controller {
     public Result getProduct(Integer id) {
         Product product = Product.getProductById(id);
         String path = Image.getImagePath(product);
-        return ok(productProfile.render(product, path));
+
+        List<Comment> comments = Comment.sortCommentByDate(product);
+
+        return ok(productProfile.render(product, path, comments));
     }
 
     @Security.Authenticated(CurrentSeller.class)
