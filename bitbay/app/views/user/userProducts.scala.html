@@ -24,6 +24,7 @@
                     <td> @product.quantity</td>
                     <td> @product.price </td>
                     <td>
+                        <a href="@routes.ProductController.editProduct(product.id)"><button type="submit"><span class="glyphicon glyphicon-edit"></span></button></a>
                         <a href="@routes.ProductController.deleteProduct(product.id)"><button type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
                     </td>
                  </tr>
