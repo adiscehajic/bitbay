@@ -20,6 +20,7 @@ import com.avaje.ebean.Ebean;
 import models.*;
 import views.html.user.userProducts;
 import views.html.user.userCart;
+import models.Country;
 
 import javax.persistence.PersistenceException;
 
@@ -201,9 +202,9 @@ public class Users extends Controller {
     public Result editUser(Integer id) {
        String email = session().get("email");
        User user = User.getUserByEmail(email);
-
+        List<Country> countries = Country.findAllCountries();
         if (user != null) {
-            return ok(userEdit.render(user));
+            return ok(userEdit.render(user, countries));
         } else {
             return redirect(routes.Users.signIn());
         }
@@ -225,10 +226,11 @@ public class Users extends Controller {
         String lastName = boundForm.bindFromRequest().field("lastName").value();
         String pass = boundForm.bindFromRequest().field("password").value();
         String conPass = boundForm.bindFromRequest().field("confirmPassword").value();
-       // TODO Country country = boundForm.bindFromRequest().field("country").value();
+        String countryName = boundForm.bindFromRequest().field("country").value();
         String city = boundForm.bindFromRequest().field("city").value();
         String address = boundForm.bindFromRequest().field("address").value();
 
+        Logger.info(countryName);
         //Checking if any user information was changed
         if(!name.equals(user.firstName)){
             user.firstName = name;
@@ -242,9 +244,11 @@ public class Users extends Controller {
             user.password = BCrypt.hashpw(pass, BCrypt.gensalt());
         }
 
-//      TODO  if(!country.equals(user.country)){
-//            user.country = country;
-//        }
+
+                user.country = Country.findCountryByName(countryName);
+
+
+
 
         if(!city.equals(user.city)){
             user.city = city;

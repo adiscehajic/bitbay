@@ -74,7 +74,7 @@ public class ProductController extends Controller {
         String categoryValue = boundForm.bindFromRequest().field("category").value();
         String price = boundForm.bindFromRequest().field("price").value();
         String quantity = boundForm.bindFromRequest().field("quantity").value();
-        String sellingType = boundForm.bindFromRequest().field("selling-type").value();
+        String sellingType = boundForm.bindFromRequest().field("type").value();
 
         Category category = Category.getCategoryByName(categoryValue);
 
