@@ -11,7 +11,7 @@
 
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <div class="panel-title">@user.firstName</div>
+          <div class="panel-title">@user.firstName @user.lastName</div>
         </div>
         <div class="panel-body">
           <div class="row">
@@ -73,7 +73,11 @@
                       </div>
                     </div>
                     <div class="col-lg-8">
-                      <div class="well well-sm" align="center">@user.country</div>
+                      @if(user.country != null) {
+                        <div class="well well-sm" align="center">@user.country.name</div>
+                      }else{
+                        <div class="well well-sm" align="center"></div>
+                      }
                     </div>
                   </div>
 

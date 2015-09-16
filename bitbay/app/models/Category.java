@@ -51,7 +51,7 @@ public class Category extends Model {
     }
 
     public static List<Category> findAll() {
-        List<Category> categories = finder.all();
+        List<Category> categories = finder.orderBy("name asc").findList();
         return categories;
     }
 

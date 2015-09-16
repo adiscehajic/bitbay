@@ -26,6 +26,7 @@ public class User extends Model {
 
     @Constraints.MaxLength(255)
     @Constraints.Required
+    @Constraints.Pattern("[a-z A-Z]")
     public String firstName;
 
     @Constraints.MaxLength(255)
