@@ -106,6 +106,8 @@ alter table product add constraint fk_product_user_5 foreign key (user_id) refer
 create index ix_product_user_5 on product (user_id);
 alter table product add constraint fk_product_category_6 foreign key (category_id) references category (id) on delete restrict on update restrict;
 create index ix_product_category_6 on product (category_id);
+
+
 alter table thumb add constraint fk_thumb_comment_7 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
 create index ix_thumb_comment_7 on thumb (comment_id);
 alter table thumb add constraint fk_thumb_user_8 foreign key (user_id) references user (id) on delete restrict on update restrict;
@@ -114,6 +116,7 @@ alter table user add constraint fk_user_userType_9 foreign key (user_type_id) re
 create index ix_user_userType_9 on user (user_type_id);
 alter table user add constraint fk_user_country_10 foreign key (country_id) references country (id) on delete restrict on update restrict;
 create index ix_user_country_10 on user (country_id);
+
 alter table user add constraint fk_user_userType_7 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
 create index ix_user_userType_7 on user (user_type_id);
 alter table user add constraint fk_user_country_8 foreign key (country_id) references country (id) on delete restrict on update restrict;
