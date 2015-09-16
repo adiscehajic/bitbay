@@ -74,7 +74,7 @@ public class ProductController extends Controller {
         String categoryValue = boundForm.bindFromRequest().field("category").value();
         String price = boundForm.bindFromRequest().field("price").value();
         String quantity = boundForm.bindFromRequest().field("quantity").value();
-        String sellingType = boundForm.bindFromRequest().field("selling-type").value();
+        String sellingType = boundForm.bindFromRequest().field("type").value();
 
         Category category = Category.getCategoryByName(categoryValue);
 
@@ -89,13 +89,13 @@ public class ProductController extends Controller {
             for (FilePart picture : pictures) {
                 String fileName = picture.getFilename();
                 File file = picture.getFile();
-            try {
-                FileUtils.moveFile(file, new File(Play.application().path() + "/public/images/products/" + fileName));
-                Image image = new Image(fileName, product);
-                Ebean.save(image);
-            } catch (IOException e) {
-                Logger.info(e.getMessage());
-            }
+                try {
+                    FileUtils.moveFile(file, new File(Play.application().path() + "/public/images/products/" + fileName));
+                    Image image = new Image(fileName, product);
+                    Ebean.save(image);
+                } catch (IOException e) {
+                    Logger.info(e.getMessage());
+                }
             }
         }
         return redirect(routes.Users.index());
