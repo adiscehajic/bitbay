@@ -41,7 +41,12 @@ public class CartController extends Controller {
         User user = User.getUserByEmail(session().get("email"));
         Cart cart = Cart.findCartByUser(user);
 
-        return ok(userCart.render(cart.products, user));
+        if(cart != null) {
+            return ok(userCart.render(cart.products, user));
+        } else {
+            return ok(userCart.render(null, user));
+        }
+
     }
 
 

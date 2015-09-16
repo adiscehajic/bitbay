@@ -40,4 +40,13 @@ public class Cart extends Model{
         return cart;
     }
 
+    public static Double cartAmount(User user) {
+        Cart cart = Cart.findCartByUser(user);
+        Double amount = 0.0;
+
+        for(Product p: cart.products) {
+            amount += p.price;
+        }
+        return amount;
+    }
 }
