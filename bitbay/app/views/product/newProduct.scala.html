@@ -38,15 +38,16 @@
         <label for="manufacturer">Manufacturer:</label>
         <input type="text" class="form-control" id="manufacturer" name="manufacturer" onfocusout="validateProduct()">
       </div>
-      <div class="form-group">
-      <label for="selling-type">Type of selling:</label>
-      <input type="text" class="form-control" id="selling-type" name="selling-type" onfocusout="validateProduct()">
-      </div>
+      <select class="form-control placeholder" name="type" onchange="validateRegistration()">
+        <option value="0" selected disabled>Please select sale type</option>
+        <option value="1">Regular</option>
+        <option value="2">Auction</option>
+      </select>
         <div class="form-group">
         <label for="description">Description:</label>
         <textarea class="form-control" rows="5" id="description" name="description" onfocusout="validateProduct()"></textarea>
       </div>
-      <p style="font-size: 10px; color: red"> All * fields are required </p>
+      <p style="font-size: 12px; color: red"> All * fields are required </p>
         <div class="form-group">
             <label for="exampleInputFile">Image select:</label>
             <input type="file" name="pictures" accept="image/*" multiple>
