@@ -24,6 +24,8 @@ public class Comment extends Model{
     public User user;
     @ManyToOne
     public Product product;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Thumb> thumbs;
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date commentDate = new Date();
@@ -52,6 +54,11 @@ public class Comment extends Model{
     public static List<Comment> sortCommentByDate(Product product){
         List<Comment> sortedByDate = Comment.finder.where().eq("product", product).orderBy("commentDate desc").findList();
         return sortedByDate;
+    }
+
+    public static Comment getCommentById(Integer id) {
+        Comment comment = Comment.finder.where().eq("id", id).findUnique();
+        return comment;
     }
 
 }

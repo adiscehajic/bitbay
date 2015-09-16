@@ -89,13 +89,13 @@ public class ProductController extends Controller {
             for (FilePart picture : pictures) {
                 String fileName = picture.getFilename();
                 File file = picture.getFile();
-            try {
-                FileUtils.moveFile(file, new File(Play.application().path() + "/public/images/products/" + fileName));
-                Image image = new Image(fileName, product);
-                Ebean.save(image);
-            } catch (IOException e) {
-                Logger.info(e.getMessage());
-            }
+                try {
+                    FileUtils.moveFile(file, new File(Play.application().path() + "/public/images/products/" + fileName));
+                    Image image = new Image(fileName, product);
+                    Ebean.save(image);
+                } catch (IOException e) {
+                    Logger.info(e.getMessage());
+                }
             }
         }
         return redirect(routes.Users.index());

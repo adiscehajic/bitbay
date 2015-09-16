@@ -2,7 +2,9 @@ package controllers;
 
 import models.Comment;
 import models.Product;
+import models.Thumb;
 import models.User;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import com.avaje.ebean.Ebean;
@@ -28,6 +30,26 @@ public class CommentController extends Controller {
         Ebean.save(c);
 
         return redirect(routes.ProductController.getProduct(id));
+
+    }
+
+
+    public Result saveThumbUp() {
+        DynamicForm form = Form.form().bindFromRequest();
+
+        String commentId = form.data().get("comment");
+        String userEmail= form.data().get("user");
+        String thumb = form.data().get("thumb");
+
+        Comment comment = Comment.getCommentById(Integer.parseInt(commentId));
+        User user = User.getUserByEmail(userEmail);
+        Boolean thumbUp = Boolean.parseBoolean(thumb);
+
+        Thumb t = new Thumb(comment, user, thumbUp);
+
+        t.save();
+
+        return ok("1");
 
     }
 
