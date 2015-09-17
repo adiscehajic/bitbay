@@ -4,20 +4,20 @@
 # --- !Ups
 
 create table cart (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   user_id                   integer,
   constraint uq_cart_user_id unique (user_id),
   constraint pk_cart primary key (id))
 ;
 
 create table category (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   name                      varchar(255),
   constraint pk_category primary key (id))
 ;
 
 create table comment (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   title                     varchar(255),
   text                      varchar(255),
   user_id                   integer,
@@ -28,20 +28,20 @@ create table comment (
 ;
 
 create table country (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   name                      varchar(255),
   constraint pk_country primary key (id))
 ;
 
 create table image (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   path                      varchar(255),
   product_id                integer,
   constraint pk_image primary key (id))
 ;
 
 create table product (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   user_id                   integer,
   name                      varchar(255),
   description               varchar(255),
@@ -56,16 +56,16 @@ create table product (
 ;
 
 create table thumb (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   comment_id                integer,
   user_id                   integer,
-  is_up                     tinyint(1) default 0,
+  is_up                     boolean,
   constraint uq_thumb_user_id unique (user_id),
   constraint pk_thumb primary key (id))
 ;
 
 create table user (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   first_name                varchar(255),
   last_name                 varchar(255),
   email                     varchar(255),
@@ -83,7 +83,7 @@ create table user (
 ;
 
 create table user_type (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   name                      varchar(255),
   constraint pk_user_type primary key (id))
 ;
@@ -94,6 +94,24 @@ create table cart_product (
   product_id                     integer not null,
   constraint pk_cart_product primary key (cart_id, product_id))
 ;
+create sequence cart_seq;
+
+create sequence category_seq;
+
+create sequence comment_seq;
+
+create sequence country_seq;
+
+create sequence image_seq;
+
+create sequence product_seq;
+
+create sequence thumb_seq;
+
+create sequence user_seq;
+
+create sequence user_type_seq;
+
 alter table cart add constraint fk_cart_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
 create index ix_cart_user_1 on cart (user_id);
 alter table comment add constraint fk_comment_user_2 foreign key (user_id) references user (id) on delete restrict on update restrict;
@@ -123,27 +141,45 @@ alter table cart_product add constraint fk_cart_product_product_02 foreign key (
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
+SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table cart;
+drop table if exists cart;
 
-drop table cart_product;
+drop table if exists cart_product;
 
-drop table category;
+drop table if exists category;
 
-drop table comment;
+drop table if exists comment;
 
-drop table country;
+drop table if exists country;
 
-drop table image;
+drop table if exists image;
 
-drop table product;
+drop table if exists product;
 
-drop table thumb;
+drop table if exists thumb;
 
-drop table user;
+drop table if exists user;
 
-drop table user_type;
+drop table if exists user_type;
 
-SET FOREIGN_KEY_CHECKS=1;
+SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists cart_seq;
+
+drop sequence if exists category_seq;
+
+drop sequence if exists comment_seq;
+
+drop sequence if exists country_seq;
+
+drop sequence if exists image_seq;
+
+drop sequence if exists product_seq;
+
+drop sequence if exists thumb_seq;
+
+drop sequence if exists user_seq;
+
+drop sequence if exists user_type_seq;
 

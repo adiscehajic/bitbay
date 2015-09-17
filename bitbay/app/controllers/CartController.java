@@ -20,8 +20,7 @@ public class CartController extends Controller {
 
     public Result addToCart(Integer productId){
         Product product = Product.getProductById(productId);
-
-
+        
         User user = User.getUserByEmail(session().get("email"));
         Cart cart = Cart.findCartByUser(user);
 
