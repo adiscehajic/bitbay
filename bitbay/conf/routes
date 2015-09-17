@@ -12,7 +12,7 @@ POST        /signin                     @controllers.Users.validate()
 GET         /logout                     @controllers.Users.logout()
 
 GET         /product/new                @controllers.ProductController.newProduct()
-POST        /product/thumbUp            @controllers.CommentController.saveThumbUp()
+POST        /product/thumb              @controllers.CommentController.saveThumbUp()
 GET         /product/:id                @controllers.ProductController.getProduct(id: Integer)
 POST        /product/:id                @controllers.CommentController.saveComment(id: Integer)
 GET         /product/delete/:id         @controllers.ProductController.deleteProduct(id: Integer)
@@ -36,6 +36,7 @@ GET         /user/cart/delete:id        @controllers.CartController.removeFromCa
 GET         /user/products              @controllers.Users.getAllUserProducts()
 GET         /user/:id                   @controllers.Users.getUser(id: Integer)
 GET         /user/delete/:id            @controllers.Users.deleteUser(id: Integer)
+DELETE      /user/delete/:id            @controllers.Users.deleteUserAccount(id: Integer)
 GET         /user/edit/:id              @controllers.Users.editUser(id: Integer)
 POST        /user/edit/:id              @controllers.Users.updateUser(id: Integer)
 

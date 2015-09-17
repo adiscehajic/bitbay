@@ -59,8 +59,12 @@ create table thumb (
   id                        integer not null,
   comment_id                integer,
   user_id                   integer,
+<<<<<<< HEAD
   is_up                     boolean,
   constraint uq_thumb_user_id unique (user_id),
+=======
+  is_up                     tinyint(1) default 0,
+>>>>>>> 1e01a9411aadc5f56896977b71bc91b6d775da9f
   constraint pk_thumb primary key (id))
 ;
 
@@ -138,6 +142,7 @@ create index ix_user_country_10 on user (country_id);
 alter table cart_product add constraint fk_cart_product_cart_01 foreign key (cart_id) references cart (id) on delete restrict on update restrict;
 
 alter table cart_product add constraint fk_cart_product_product_02 foreign key (product_id) references product (id) on delete restrict on update restrict;
+<<<<<<< HEAD
 
 # --- !Downs
 
@@ -160,6 +165,12 @@ drop table if exists product;
 drop table if exists thumb;
 
 drop table if exists user;
+=======
+
+# --- !Downs
+
+SET FOREIGN_KEY_CHECKS=0;
+>>>>>>> 1e01a9411aadc5f56896977b71bc91b6d775da9f
 
 drop table if exists user_type;
 

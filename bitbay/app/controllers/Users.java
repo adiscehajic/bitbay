@@ -181,6 +181,19 @@ public class Users extends Controller {
     }
 
     /**
+     * This method delete selected user
+     * @param id - ID of selected user
+     */
+    public Result deleteUserAccount(Integer id){
+        User user = User.findById(id);
+        Ebean.delete(user);
+        session().clear();
+
+        return redirect(routes.Users.index());
+
+    }
+
+    /**
      * This method find and return user by ID
      * @param id - ID of wanted user
      * @return - user with selected ID

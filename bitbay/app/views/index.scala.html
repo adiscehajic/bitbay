@@ -3,10 +3,10 @@
 @main("bitbay Home", User.getUserByEmail(session.get("email"))) {
 
     <div class="jumbotron">
-        @if(name == null) {
+        @if(session.get("email") == null) {
             <h1>Welcome</h1>
         } else {
-            <h1>Welcome  @name</h1>
+            <h1>Welcome  @User.getUserByEmail(session.get("email")).firstName</h1>
             <h4>Your login was succesfull!</h4>
         }
 
@@ -23,14 +23,20 @@
     <div class="row">
     @for(product <- products) {
         <div class="col-sm-6 col-md-3 col-lg-3">
-            <div class="thumbnail" style="height:300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"">
-                <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail"><img class="img-responsive" style="height: 200px;" src="@routes.Assets.versioned("images/products/" + Image.getImagePath(product))" ></a>
+            <div class="thumbnail" style="height:400px;" id="ellipsis">
+                <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;"><img class="img-responsive" style="height: 230px;" src="@routes.Assets.versioned("images/products/" + Image.getImagePath(product))" ></a>
                 <div class="caption">
-                    <h3><a href="@routes.ProductController.getProduct(product.id)">@product.name</a></h3>
+                    <h3><a href="@routes.ProductController.getProduct(product.id)" style="margin-top: 10px;">@product.name</a></h3>
                     <p>@product.description</p>
                 </div>
             </div>
         </div>
     }
     </div>
+
+    <script >
+        $(document).ready(function() {
+	    $("#ellipsis").dotdotdot();
+        });
+    </script>
 }

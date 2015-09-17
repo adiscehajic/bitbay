@@ -18,7 +18,7 @@ public class Thumb extends Model {
     public Integer id;
     @ManyToOne
     public Comment comment;
-    @OneToOne
+    @ManyToOne
     public User user;
 
     public Boolean isUp;
@@ -45,6 +45,14 @@ public class Thumb extends Model {
         return thumbsDown.size();
     }
 
+    public static Thumb getThumbByUserAndComment(User user, Comment comment) {
+        Thumb thumb = Thumb.finder.where().eq("user", user).where().eq("comment", comment).findUnique();
+        return thumb;
+    }
+
+    public String toString() {
+        return String.format("%d - %s - %s", id, user.firstName, comment.title);
+    }
 
 
 }

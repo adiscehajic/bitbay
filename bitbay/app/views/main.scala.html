@@ -7,12 +7,15 @@
         <title>@title</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/jquery-confirm.min.css")">
         <link rel="shortcut icon" type="image/ico" href="@routes.Assets.versioned("images/favicon.ico")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/productProfile.css")">
         <script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/bootbox.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/jquery-confirm.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("javascripts/createProductValidator.js")" type="text/javascript"></script>
-
+        <script src="@routes.Assets.versioned("javascripts/jquery.dotdotdot.min.js")" type="text/javascript"></script>
     </head>
     <body onload="validateProduct()">
         <nav class="navbar navbar-default">
@@ -54,14 +57,20 @@
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                         @if(session.get("email") == null) {
-                                <li><a href="signin"><span class="glyphicon glyphicon-log-in"></span>  Sign in</a></li>
-                                <li><a href="signup"><span class="glyphicon glyphicon-registration-mark"></span>  Sign up</a></li>
+                                <li><a href="@routes.Users.signIn()"><span class="glyphicon glyphicon-log-in"></span>  Sign in</a></li>
+                                <li><a href="@routes.Users.signup()"><span class="glyphicon glyphicon-registration-mark"></span>  Sign up</a></li>
                             } else {
+<<<<<<< HEAD
                             <li><a href="@routes.Users.getUser(user.id)"> <span class="glyphicon glyphicon-user"></span>  @user.firstName (@user.userType.name)</a></li>
                            @if(user.userType.id == 2) {
                                <li><a href="@routes.CartController.getCart()"> <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
                            }
                             <li><a href="@routes.Users.logout()"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+=======
+                                <li><a href="@routes.Users.getUser(user.id)"> <span class="glyphicon glyphicon-user"></span>  @user.firstName (@user.userType.name)</a></li>
+                                <li><a href="@routes.CartController.getCart()"> <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+                                <li><a href="@routes.Users.logout()"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+>>>>>>> 1e01a9411aadc5f56896977b71bc91b6d775da9f
                         }
                     </ul>
                 </div><!-- /.navbar-collapse -->
