@@ -1,0 +1,16 @@
+.btn-primary {
+	margin-top:10px;
+	margin-bottom:10px;
+	float: none;
+}
+
+.wrapper.col-md-3 {
+	border-radius: 8px;
+	background-color:#FFFFFC;
+	border: 1px solid #4F4F4E;
+	margin-right: 30px;
+	margin-left: 30px;
+}
+
+
+

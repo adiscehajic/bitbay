@@ -1,16 +1,26 @@
 package controllers;
 
+
+import helpers.CurrentSeller;
+import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.index;
 import views.html.signup;
 import views.html.signIn;
+import views.html.user.userEdit;
+import views.html.user.userProfile;
 import java.lang.*;
-
+import java.util.List;
+import java.util.Date;
 import com.avaje.ebean.Ebean;
 import models.*;
+import views.html.user.userProducts;
+import views.html.user.userCart;
+import models.Country;
 
 import javax.persistence.PersistenceException;
 
@@ -26,8 +36,9 @@ public class Users extends Controller {
     private String name;
 
     public Result index() {
+        List<Product> products = Product.findAll();
         Logger.info(session().get("email"));
-        return ok(index.render(name));
+        return ok(index.render(name, products));
     }
 
     /**
@@ -35,8 +46,9 @@ public class Users extends Controller {
      * @return
      */
     public Result signup() {
+        Form<User> boundForm = userRegistration.bindFromRequest();
         if (session().get("email") == null) {
-            return ok(signup.render(userRegistration));
+            return badRequest(signup.render(boundForm));
         } else {
             return redirect(routes.Users.index());
         }
@@ -64,6 +76,9 @@ public class Users extends Controller {
         String email = boundForm.bindFromRequest().field("email").value();
         String password = boundForm.bindFromRequest().field("password").value();
         String confirmPassword = boundForm.bindFromRequest().field("confirmPassword").value();
+        String type = boundForm.bindFromRequest().field("type").value();
+        UserType userType = UserType.getUserTypeById(Integer.parseInt(type));
+        Logger.info(type);
 
         if (firstName.equals("")) {
             flash("errorFirstName", "Please input first name.");
@@ -77,7 +92,7 @@ public class Users extends Controller {
         // new user and storing him into database.
         if (password.equals(confirmPassword) && password != "" && password.length() >= 8) {
             // Creating new user.
-            User user = new User(null, firstName, lastName, email, password);
+            User user = new User(null, firstName, lastName, email, password, userType);
             // Saving new user into database.
             try {
                 Ebean.save(user);
@@ -89,12 +104,13 @@ public class Users extends Controller {
             session().clear();
             session("email", email);
             // Redirecting to the main page.
-            return ok(index.render(user.firstName));
+            return redirect(routes.Users.index());
         } else {
             flash("error", "Password must have min. 8 characters and must match.");
             return badRequest(signup.render(userRegistration));
         }
     }
+
 
     /**
      * Reads inputed values that are inputed on sign in page and validates them.
@@ -105,8 +121,13 @@ public class Users extends Controller {
         Form<User> boundForm = userRegistration.bindFromRequest();
         // Reading inputed values and storing them into string variables.
         String email = boundForm.bindFromRequest().field("email").value();
-
         String password = boundForm.bindFromRequest().field("password").value();
+
+      //  if (boundForm.hasErrors()) {
+        //    flash("signInError", "Wrong input!");
+         //   return badRequest(signIn.render(boundForm));
+       // }
+
         // Calling method authenticate and creating new user.
 
         if (email.equals("") || password.equals("")) {
@@ -114,6 +135,8 @@ public class Users extends Controller {
             return ok(signIn.render(userRegistration));
         }
         User user = User.authenticate(email,password);
+
+
         // Checking if the user exists. If the inputed email and password are correct
         // redirecting to the main page, othewise opens sign in page.
 
@@ -124,30 +147,145 @@ public class Users extends Controller {
             flash("errorNoInput", "Please input email and password.");
             return ok(signIn.render(userRegistration));
         } else if (user != null) {
+            if (user.userType.id == 1) {
+                return redirect(routes.Users.signIn());
+            }
             session().clear();
             session("email", email);
-            return ok(index.render(user.firstName));
+            return redirect(routes.Users.index());
         } else {
             return null;
         }
 
     }
 
+    /**
+     * Method that ends current session
+     */
     public Result logout() {
         session().clear();
         flash("successLogout", "You have successfully logged out!");
         return redirect(routes.Users.signIn());
     }
 
+    /**
+     * This method delete selected user
+     * @param id - ID of selected user
+     */
     public Result deleteUser(Integer id){
-//        User user = User.findById(id);
-//        deleteUser().user;
-        return TODO;
+        User user = User.findById(id);
+        Ebean.delete(user);
+
+        return redirect(routes.AdminController.adminUsers());
+
     }
 
-    public Result editUser(Integer id){
+    /**
+     * This method delete selected user
+     * @param id - ID of selected user
+     */
+    public Result deleteUserAccount(Integer id){
+        User user = User.findById(id);
+        Ebean.delete(user);
+        session().clear();
 
-        return TODO;
+        return redirect(routes.Users.index());
+
+    }
+
+    /**
+     * This method find and return user by ID
+     * @param id - ID of wanted user
+     * @return - user with selected ID
+     */
+    public Result getUser(Integer id){
+        String email = session().get("email");
+        User user =  User.getUserByEmail(email);
+
+        return ok(userProfile.render(user));
+
+    }
+
+
+    /**
+     * Mehtod for changing user data
+     * @param id - ID of selected user
+     * @return - User with selected ID
+     */
+    public Result editUser(Integer id) {
+       String email = session().get("email");
+       User user = User.getUserByEmail(email);
+        List<Country> countries = Country.findAllCountries();
+        if (user != null) {
+            return ok(userEdit.render(user, countries));
+        } else {
+            return redirect(routes.Users.signIn());
+        }
+    }
+
+    /**
+     * Method for updating user information
+     * @param id - ID of selected user
+     */
+    public Result updateUser(Integer id){
+
+        String email = session().get("email");
+        User user = User.getUserByEmail(email);
+
+        Form<User> boundForm = userRegistration.bindFromRequest();
+
+        //Collecting data from user edit page
+        String name = boundForm.bindFromRequest().field("firstName").value();
+        String lastName = boundForm.bindFromRequest().field("lastName").value();
+        String pass = boundForm.bindFromRequest().field("password").value();
+        String conPass = boundForm.bindFromRequest().field("confirmPassword").value();
+        String countryName = boundForm.bindFromRequest().field("country").value();
+        String city = boundForm.bindFromRequest().field("city").value();
+        String address = boundForm.bindFromRequest().field("address").value();
+
+        Logger.info(countryName);
+        //Checking if any user information was changed
+        if(!name.equals(user.firstName)){
+            user.firstName = name;
+        }
+
+        if(!lastName.equals(user.lastName)){
+            user.lastName = lastName;
+        }
+
+        if(pass.equals(conPass)){
+            user.password = BCrypt.hashpw(pass, BCrypt.gensalt());
+        }
+
+
+                user.country = Country.findCountryByName(countryName);
+
+
+
+
+        if(!city.equals(user.city)){
+            user.city = city;
+        }
+
+        if(!address.equals(user.address)){
+            user.address = address;
+        }
+        //Updating time when profile information has been changed
+        user.updated= new Date();
+        Ebean.update(user);
+
+        return redirect(routes.Users.getUser(user.id));
+    }
+
+    @Security.Authenticated(CurrentSeller.class)
+    public Result getAllUserProducts() {
+        List<Product> products = Product.findAllProductsByUser(session().get("email"));
+        User user = User.getUserByEmail(session().get("email"));
+        if (user != null) {
+            return ok(userProducts.render(products, user));
+        } else {
+            return redirect(routes.Users.signIn());
+        }
     }
 
 }

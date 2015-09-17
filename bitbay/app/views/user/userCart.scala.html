@@ -1,0 +1,53 @@
+@(products : List[Product])(user: User)
+
+@import helpers.SessionHelper;
+
+@main("Cart", user) {
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">@user.firstName's Cart</div>
+        </div>
+        <div class="panel-body">
+        @if(products == null || products.length == 0) {
+            <h2 align="center"> Your cart is empty! </h2>
+            <br>
+            <a href="@routes.Users.index()"><button class="btn btn-primary center-block"> Homepage </button></a>
+        } else {
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th> Product </th>
+                        <th></th>
+                        <th> Quantity </th>
+                        <th> Price </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(product <- products) {
+                        <tr>
+                            <td class="cartData"><a href="@routes.ProductController.getProduct(product.id)"><img src="@routes.Assets.versioned("images/" + Image.getImagePath(product))" width="150" height="100"/></a></td>
+                            <td class="cartData" style="font-size : 17 px"><a href="@routes.ProductController.getProduct(product.id)"> @product.name </a></td>
+                            <td class="cartData"> <input type="number" id="replyNumber" data-bind="value:replyNumber" min="1" max="@product.quantity" value="1"> </td>
+                            <td class="cartData"> @product.price KM</td>
+                            <td class="cartData"><a href="@routes.CartController.removeFromCart(product.id)"><span class="glyphicon glyphicon-remove" style="font-size : 20 px"></span></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4" align="center">
+                    <label> Total: @Cart.cartAmount(user) KM </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4" align="center">
+                <button class="btn btn-primary"> Checkout </button></div>
+            </div>
+            }
+        </div>
+    </div>
+}

@@ -1,0 +1,25 @@
+@(categories: java.util.List[Category])
+
+@adminIndex {
+	<h1> Category table </h1>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th> Caregory name </th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@for(category <- categories) {
+				<tr>
+					<td> @category.name </td>
+					<td>
+						<a href="@routes.CategoryController.editCategory(category.id)"><button type="submit"><span class="glyphicon glyphicon-pencil"></span></button></a>
+						<a href="@routes.CategoryController.deleteCategory(category.id)"><button type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<a href="@routes.CategoryController.newCategory()"><button class="btn btn-default"> Add new category </button></a>
+}
