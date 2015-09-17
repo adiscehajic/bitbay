@@ -70,3 +70,22 @@ function validateCategory(){
     }
     selCategory.style.borderColor = "lightgray";
 }
+
+function quantityValidator() {
+
+    var element = document.getElementsByName("inpQuantity")[0];
+    var value = document.getElementsByName("inpQuantity")[0].value;
+    var min = parseInt(element.getAttribute("min")) || 0;
+    var max = parseInt(element.getAttribute("max")) || 0;
+
+        if (value < min) {
+            element.value = min;
+        } else if (value > max) {
+            element.value = max;
+        }
+
+
+
+}
+
+

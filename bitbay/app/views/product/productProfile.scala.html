@@ -55,7 +55,7 @@
 							<tr>
 								<td>
 									<form action="@routes.CartController.addToCart(product.id)" method="POST">
-										<button type="submit "class="btn btn-primary"> Add to chart </button>
+										<button type="submit "class="btn btn-primary" style="margin-bottom: 20px"> Add to chart </button>
 									</form>
 								</td>
 							</tr>
@@ -140,7 +140,7 @@
 													<span style = "margin-right : 10 px ; ">Was this review helpful to you?</span>
 													<a href=""> <span id="thumbs-up" class="glyphicon glyphicon-thumbs-up" style = " padding-left:10px;padding-right:10px;font-size: 17px;"> @Thumb.getNumberThumbsUp(comment)</span></a>
 													<a href=""> <span id="thumbs-down" class="glyphicon glyphicon-thumbs-down" style = " padding-right:10px;font-size: 17px;"> @Thumb.getNumberThumbsDown(comment)</span></a>
-													
+
 												</td>
 											</tr>
 										}
