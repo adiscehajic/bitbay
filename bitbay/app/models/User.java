@@ -5,13 +5,10 @@ import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
 import java.util.Date;
 import play.data.format.Formats;
-import com.avaje.ebean.Model.Finder;
 
 import javax.persistence.*;
 
 import java.lang.String;
-import java.lang.Integer;
-import java.util.List;
 
 
 /**
@@ -26,7 +23,6 @@ public class User extends Model {
 
     @Constraints.MaxLength(255)
     @Constraints.Required
-    @Constraints.Pattern("[a-z A-Z]")
     public String firstName;
 
     @Constraints.MaxLength(255)
@@ -45,22 +41,19 @@ public class User extends Model {
     public String password;
 
     @ManyToOne
-    @Constraints.Required
     public UserType userType;
 
     @ManyToOne
-    public Country country;
+    public Country userCountry;
 
     @Constraints.MaxLength(255)
-    public String city;
-
     public Integer zip;
 
     @Constraints.MaxLength(255)
-    public String address;
+    public String City;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Product> products;
+    @Constraints.MaxLength(255)
+    public String address;
 
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
@@ -70,11 +63,15 @@ public class User extends Model {
     @Column(columnDefinition = "datetime")
     public Date updated = new Date();
 
+
     public String token;
+
+
+
 
     // Declaring variable.
     private static Finder<String, User> finder =
-            new Finder<>(User.class);
+            new Finder<>(String.class, User.class);
 
     /**
      * Constructor.
@@ -89,13 +86,12 @@ public class User extends Model {
      * @param email - Email of the user.
      * @param password - Password of the user.
      */
-    public User(Integer id, String firstName, String lastName, String email, String password, UserType userType) {
+    public User(Integer id, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
-        this.userType = userType;
     }
 
     /**
@@ -125,14 +121,14 @@ public class User extends Model {
         }
     }
 
-    public static User findById(Integer id){
-        User user = User.finder.where().eq("id", id).findUnique();
-        if(user != null){
-            return user;
-        }else{
-            return null;
-        }
-    }
+//    public static User findById(Integer id){
+//        User user = User.finder.where().eq("id", id).findUnique();
+//        if(user != null){
+//            return user;
+//        }else{
+//            return null;
+//        }
+//    }
 
     //TODO
 //    public static Result deleteUser(Integer id){
@@ -144,10 +140,7 @@ public class User extends Model {
 //       // }
 //        return TODO;
 //    }
-    public static List<User> findAll() {
-        List<User> users = finder.where().ne("userType.id", 1).findList();
-        return users;
-    }
+
 
     /**
      * Prints the information about user first name and last name.

@@ -1,6 +1,6 @@
 package models;
 
-import com.avaje.ebean.Model.Finder;
+import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 import javax.persistence.*;
 import java.lang.String;
@@ -14,11 +14,4 @@ public class UserType {
 
     @Constraints.MaxLength(255)
     public String name;
-
-    private static Finder<String, UserType> finder = new Finder<>(UserType.class);
-
-    public static UserType getUserTypeById(Integer id) {
-        UserType ut = UserType.finder.where().eq("id", id).findUnique();
-        return ut;
-    }
 }

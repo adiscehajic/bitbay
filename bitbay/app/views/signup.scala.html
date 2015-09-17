@@ -47,23 +47,14 @@
 											}
 											<div class="col-md-3">
 
-												<p class="paragraph"> First name * </p>
-												<input class="form-control" onkeypress="return isAlphaKey(event);" onkeyup="validateRegistration()" onfocusout="checkName()" id="ex3" type="letter" name="first-name" value="@userRegistration("first-name").value">
+												<p class="paragraph"> First name </p>
+												<input class="form-control" onkeyup="validateRegistration()" onfocusout="checkName()" id="ex3" type="text" name="first-name">
 											</div>
 
 											<div class="col-md-3">
 
-												<p class="paragraph"> Last name * </p>
-												<input class="form-control" onkeypress="return isAlphaKey(event);" onkeyup="validateRegistration()" onfocusout="checkSurname()" id="ex3" type="text" name="last-name" value="@userRegistration("last-name").value">
-											</div>
-
-											<div class="col-md-3">
-												<p class="paragraph">Account type * </p>
-												<select class="form-control placeholder" name="type" onchange="validateRegistration()" value="@userRegistration("type").value">
-													<option value="0" selected disabled>Please select type</option>
-													<option value="3">Seller</option>
-													<option value="2">Buyer</option>
-												</select>
+												<p class="paragraph"> Last name </p>
+												<input class="form-control" onkeyup="validateRegistration()" onfocusout="checkSurname()" id="ex3" type="text" name="last-name">
 											</div>
 										</div>
 										<div id="rowEmail">
@@ -75,8 +66,8 @@
 													@flash.get("errorEmail")
 													</div>
 												}
-													<p class="paragraph"> Email * </p>
-													<input class="form-control" id="inputSuccess2" onkeyup="validateRegistration()" onfocusout="checkEmail()" aria-describedby="inputSuccess2Status" type="email" name="email" value="@userRegistration("email").value" required>
+													<p class="paragraph"> Email </p>
+													<input class="form-control" id="inputSuccess2" onkeyup="validateRegistration()" onfocusout="checkEmail()" aria-describedby="inputSuccess2Status" type="email" name="email" required>
 												</div>
 											</div>
 										</div>
@@ -92,18 +83,17 @@
 													@flash.get("errorPassword")
 													</div>
 												}
-												<p class="paragraph" id="pass"> Create password * </p>
+												<p class="paragraph" id="pass"> Create password </p>
 												<input class="form-control" id="pass-input" onkeyup="validateRegistration()" onfocusout="checkPassword()" type="password" name="password">
 												<p style="font-size:9px; margin: 0 0 10px 5px;">(min. 8 characters)</p>
 											</div>
 										</div>
-										<div class="row" style="margin-bottom: 7px">
+										<div class="row">
 											<div class="col-md-3">
-												<p class="paragraph"> Confirm password * </p>
+												<p class="paragraph"> Confirm password </p>
 												<input class="form-control" id="ex3" onkeyup="validateRegistration()" onfocusout="checkMatching()" type="password" name="confirmPassword">
 											</div>
 										</div>
-										<p style="font-size: 10px; color:red; margin-bottom: 10px"> All * fields are required </p>
 										<div class="row">
 											<div class="col-md-9" style="padding-left:0px">
 												<p class="confirmPar"> By clicking Register, you agree that you have read and accepted the bitbay <a href="">User Agreement</a> and <a href="">User Privacy Notice </a> and that you are at least 18 years old. </p>
@@ -132,6 +122,6 @@
 				</div>
 			</div>
 		</div>
-	</body>
-</html>
+			</body>
+		</html>
 

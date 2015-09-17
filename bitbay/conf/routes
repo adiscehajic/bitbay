@@ -3,51 +3,21 @@
 # ~~~~
 
 # Home page
-GET         /                           @controllers.Users.index()
-POST        /                           @controllers.CartController.addToCart(id: Integer)
-GET         /signup                     @controllers.Users.signup()
-POST        /signup                     @controllers.Users.newUser()
-GET         /signin                     @controllers.Users.signIn()
-POST        /signin                     @controllers.Users.validate()
-GET         /logout                     @controllers.Users.logout()
-
-GET         /product/new                @controllers.ProductController.newProduct()
-POST        /product/thumbUp            @controllers.CommentController.saveThumbUp()
-GET         /product/:id                @controllers.ProductController.getProduct(id: Integer)
-POST        /product/:id                @controllers.CommentController.saveComment(id: Integer)
-GET         /product/delete/:id         @controllers.ProductController.deleteProduct(id: Integer)
-POST        /product/new/               @controllers.ProductController.saveProduct()
-GET         /product/edit/:id           @controllers.ProductController.editProduct(id: Integer)
-POST        /product/edit/:id           @controllers.ProductController.updateProduct(id: Integer)
+GET         /                    @controllers.Users.index()
+GET         /signup              @controllers.Users.signup()
+POST        /signup              @controllers.Users.newUser()
+GET         /signin              @controllers.Users.signIn()
+POST        /signin              @controllers.Users.validate()
+GET         /logout              @controllers.Users.logout()
 
 
-GET         /admin                      @controllers.AdminController.adminLogin()
-GET         /admin/logout               @controllers.AdminController.adminLogout()
-GET         /admin/index                @controllers.AdminController.adminIndex()
-POST        /admin/index                @controllers.AdminController.validateLogin()
-GET         /admin/users                @controllers.AdminController.adminUsers()
-GET         /admin/categories           @controllers.AdminController.adminCategories()
-GET         /admin/products             @controllers.AdminController.adminProducts()
-GET         /admin/products/:id         @controllers.ProductController.deleteProductAdmin(id: Integer)
+GET         /product/:id         @controllers.ProductController.getProduct(id: Integer)
+GET         /product/new/        @controllers.ProductController.newProduct()
+GET         /product/delete/:id  @controllers.ProductController.deleteProduct(id: Integer)
 
 
-GET         /user/cart                  @controllers.CartController.getCart()
-GET         /user/cart/delete:id        @controllers.CartController.removeFromCart(id: Integer)
-GET         /user/products              @controllers.Users.getAllUserProducts()
-GET         /user/:id                   @controllers.Users.getUser(id: Integer)
-GET         /user/delete/:id            @controllers.Users.deleteUser(id: Integer)
-DELETE      /user/delete/:id            @controllers.Users.deleteUserAccount(id: Integer)
-GET         /user/edit/:id              @controllers.Users.editUser(id: Integer)
-POST        /user/edit/:id              @controllers.Users.updateUser(id: Integer)
-
-
-GET         /category                   @controllers.CategoryController.list()
-GET         /category/new               @controllers.CategoryController.newCategory()
-GET         /category/edit/:id          @controllers.CategoryController.editCategory(id:Integer)
-GET         /category/delete/:id        @controllers.CategoryController.deleteCategory(id:Integer)
-POST        /category/new               @controllers.CategoryController.saveCategory()
-POST        /category/edit/:id          @controllers.CategoryController.updateCategory(id:Integer)
-
+GET         /user/delete/:id     controllers.Users.deleteUser(id: Integer)
+GET         /user/edit/:id       controllers.Users.editUser(id: Integer)
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
