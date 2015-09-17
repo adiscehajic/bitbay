@@ -12,7 +12,7 @@ POST        /signin                     @controllers.Users.validate()
 GET         /logout                     @controllers.Users.logout()
 
 GET         /product/new                @controllers.ProductController.newProduct()
-POST        /product/thumbUp            @controllers.CommentController.saveThumbUp()
+POST        /product/thumb              @controllers.CommentController.saveThumbUp()
 GET         /product/:id                @controllers.ProductController.getProduct(id: Integer)
 POST        /product/:id                @controllers.CommentController.saveComment(id: Integer)
 GET         /product/delete/:id         @controllers.ProductController.deleteProduct(id: Integer)
