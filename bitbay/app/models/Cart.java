@@ -19,8 +19,8 @@ public class Cart extends Model{
     @OneToOne
     public User user;
 
-    @ManyToMany
-    public List<Product> products;
+    @ManyToOne
+    public List<CartItem> cartItems;
 
     private static Finder<String, Cart> finder = new Finder<String, Cart>(Cart.class);
 
@@ -28,9 +28,9 @@ public class Cart extends Model{
 
     }
 
-    public Cart (User user, List<Product> products){
+    public Cart (User user, List<CartItem> cartItems){
         this.user = user;
-        this.products = products;
+        this.cartItems = cartItems;
     }
 
 
@@ -44,8 +44,8 @@ public class Cart extends Model{
         Cart cart = Cart.findCartByUser(user);
         Double amount = 0.0;
 
-        for(Product p: cart.products) {
-            amount += p.price;
+        for(CartItem c: cart.cartItems) {
+            amount += c.price;
         }
         return amount;
     }
