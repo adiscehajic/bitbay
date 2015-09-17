@@ -36,6 +36,7 @@ GET         /user/cart/delete:id        @controllers.CartController.removeFromCa
 GET         /user/products              @controllers.Users.getAllUserProducts()
 GET         /user/:id                   @controllers.Users.getUser(id: Integer)
 GET         /user/delete/:id            @controllers.Users.deleteUser(id: Integer)
+DELETE      /user/delete/:id            @controllers.Users.deleteUserAccount(id: Integer)
 GET         /user/edit/:id              @controllers.Users.editUser(id: Integer)
 POST        /user/edit/:id              @controllers.Users.updateUser(id: Integer)
 
