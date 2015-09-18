@@ -31,6 +31,8 @@ public class ProductController extends Controller {
         Product product = Product.getProductById(id);
         String path = Image.getImagePath(product);
 
+        Logger.info("Product id je: " + product.id);
+
         List<Comment> comments = Comment.sortCommentByDate(product);
         List<Comment> topComments = Thumb.getMostLikedComment(product);
 
