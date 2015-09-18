@@ -1,11 +1,13 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.Logger;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,6 +50,42 @@ public class Thumb extends Model {
     public static Thumb getThumbByUserAndComment(User user, Comment comment) {
         Thumb thumb = Thumb.finder.where().eq("user", user).where().eq("comment", comment).findUnique();
         return thumb;
+    }
+
+    public static List<Comment> getMostLikedComment(Product product) {
+     //   Integer commentNumber = Thumb.finder.where().eq("is_up", 1).orderBy("comment_id").find();
+
+        List<Comment> commentList = Comment.findAllCommentByProduct(product);
+
+        int maxFirst = 0;
+        Comment commentFirst = null;
+        int maxSecond = 0;
+        Comment commentSecond = null;
+
+        for (int i = 1; i <= commentList.size(); i++) {
+            Comment comment = Comment.getCommentById(i);
+            List<Thumb> comments = Thumb.finder.where().eq("comment", comment).where().eq("isUp", true).findList();
+            Logger.info("Velicina niza je: " + comments.size());
+            if (comments.size() > maxFirst) {
+                maxFirst = comments.size();
+                commentFirst = comment;
+            } else if (comments.size() != maxFirst && comments.size() > maxSecond) {
+                maxSecond = comments.size();
+                commentSecond = comment;
+            }
+        }
+
+        Logger.info("Max prvi je: " + maxFirst);
+        Logger.info("Max prvi je: " + maxSecond);
+        List<Comment> topComments = new ArrayList<>();
+        if (commentFirst != null) {
+            topComments.add(commentFirst);
+        }
+        if (commentSecond != null) {
+            topComments.add(commentSecond);
+        }
+
+        return topComments;
     }
 
     public String toString() {
