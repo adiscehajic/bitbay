@@ -37,7 +37,8 @@ public class Users extends Controller {
 
     public Result index() {
         List<Product> products = Product.findAll();
-        Logger.info(session().get("email"));
+
+
         return ok(index.render(name, products));
     }
 
