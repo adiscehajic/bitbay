@@ -73,19 +73,21 @@ function validateCategory(){
 
 function quantityValidator() {
 
-    var element = document.getElementsByName("inpQuantity")[0];
-    var value = document.getElementsByName("inpQuantity")[0].value;
-    var min = parseInt(element.getAttribute("min")) || 0;
-    var max = parseInt(element.getAttribute("max")) || 0;
+    var elements = document.getElementsByName("quantity");
+    var values = document.getElementsByName("quantity");
 
+
+    for(var i = 0; i < values.length; i++) {
+        var value = values.item(i).value;
+        var element = elements.item(i);
+        var min = parseInt(element.getAttribute("min")) || 0;
+        var max = parseInt(element.getAttribute("max")) || 0;
         if (value < min) {
             element.value = min;
         } else if (value > max) {
             element.value = max;
         }
-
-
-
+    }
 }
 
 
