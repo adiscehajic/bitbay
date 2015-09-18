@@ -4,6 +4,7 @@ import models.Comment;
 import models.Product;
 import models.Thumb;
 import models.User;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -37,20 +38,29 @@ public class CommentController extends Controller {
     public Result saveThumbUp() {
         DynamicForm form = Form.form().bindFromRequest();
 
-        String commentId = form.data().get("comment");
-        String userEmail= form.data().get("user");
-        String thumb = form.data().get("thumb");
+        String commentId = form.data().get("comm");
+        String thumbString = form.data().get("thumb");
 
-        Comment comment = Comment.getCommentById(Integer.parseInt(commentId));
-        User user = User.getUserByEmail(userEmail);
-        Boolean thumbUp = Boolean.parseBoolean(thumb);
+        Logger.info(commentId);
 
-        Thumb t = new Thumb(comment, user, thumbUp);
+        if (commentId != null) {
+            Comment comment = Comment.getCommentById(Integer.parseInt(commentId));
+            User user = User.getUserByEmail(session().get("email"));
+            Boolean thumb = Boolean.parseBoolean(thumbString);
 
-        t.save();
+            Thumb tmb = Thumb.getThumbByUserAndComment(user, comment);
 
+            if (tmb != null){
+                tmb.isUp = thumb;
+                tmb.update();
+                return ok("2");
+            }else{
+                Thumb t = new Thumb(comment, user, thumb);
+                t.save();
+                return ok("1");
+            }
+        }
         return ok("1");
-
     }
 
 

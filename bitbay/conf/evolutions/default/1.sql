@@ -69,7 +69,6 @@ create table thumb (
   comment_id                integer,
   user_id                   integer,
   is_up                     tinyint(1) default 0,
-  constraint uq_thumb_user_id unique (user_id),
   constraint pk_thumb primary key (id))
 ;
 

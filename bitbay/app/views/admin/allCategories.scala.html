@@ -15,9 +15,37 @@
 					<td> @category.name </td>
 					<td>
 						<a href="@routes.CategoryController.editCategory(category.id)"><button type="submit"><span class="glyphicon glyphicon-pencil"></span></button></a>
-						<a href="@routes.CategoryController.deleteCategory(category.id)"><button type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
+						<a ><button type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
 					</td>
 				</tr>
+
+				<script >
+                      $(document).ready(function(){
+                      $('#deleteProduct').click(function(){
+                         $.confirm({
+                            title: 'Do you want to delete ' +'@category.name' + ' ?',
+                            theme: 'black',
+                            content: false,
+                            confirmButtonClass: 'btn-danger',
+                            cancelButtonClass: 'btn-info',
+                            confirmButton: 'Delete',
+                            cancelButton: 'Cancel',
+                               confirm: function(){
+                                $.ajax({
+                                   url: '@routes.CategoryController.deleteCategory(category.id)',
+                                   method: 'GET',
+                                    }).success(function(){
+						             window.location.replace("@routes.AdminController.adminCategories()");
+                                      }).error(function(response){
+                                      alert(response.responseText);
+                                       });
+                                       },
+                                      cancel: function(){
+                                    }
+                               });
+                             })
+                         })
+                     </script>
 			}
 		</tbody>
 	</table>

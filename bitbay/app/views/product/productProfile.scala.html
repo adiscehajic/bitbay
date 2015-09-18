@@ -125,19 +125,73 @@
 										</tr>
 									</thead>
 									<tbody>
-										@for(comment <- comments) {
+									@for(comment <- comments) {
+										<form action="" method="post">
 											<tr>
 												<td>
 													<a href=""><h3>@comment.title</h3></a>
-													<p class = "person">By @comment.user.firstName @comment.user.lastName on @comment.commentDate</p>
-													<p style = "margin-bottom : 20 px ;" name = "text">@comment.text</p>
-													<span style = "margin-right : 10 px ; ">Was this review helpful to you?</span>
-													<a href=""> <span id="thumbs-up" class="glyphicon glyphicon-thumbs-up" style = " padding-left:10px;padding-right:10px;font-size: 17px;"> @Thumb.getNumberThumbsUp(comment)</span></a>
-													<a href=""> <span id="thumbs-down" class="glyphicon glyphicon-thumbs-down" style = " padding-right:10px;font-size: 17px;"> @Thumb.getNumberThumbsDown(comment)</span></a>
+													<p class="person">By @comment.user.firstName @comment.user.lastName on @comment.commentDate</p>
+													<p style = "margin-bottom: 20px ;" name="text">@comment.text</p>
+													<span style = "margin-right: 10px ; ">Was this review helpful to you?</span>
 
+													<a id="like@comment.id"> <span id="thumbs-up@comment.id" class="glyphicon glyphicon-thumbs-up" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsUp(comment)</span></a>
+													<a id="dislike@comment.id"> <span id="thumbs-down@comment.id" class="glyphicon glyphicon-thumbs-down" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsDown(comment)</span></a>
 												</td>
 											</tr>
-										}
+										</form>
+
+										<script>
+
+												$(document).ready(function() {
+												var comm = @comment.id;
+												var thumbUp = "true";
+												var thumbDown = "false";
+													$("#like" + comm).click(function(e) {
+														e.preventDefault();
+														$.ajax({
+															type: "post",
+															url: "@routes.CommentController.saveThumbUp()",
+															data: "comm=" + comm + "&thumb=" + thumbUp
+														}).success(function(response) {
+															if (response === "1") {
+																var number = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id)) + 1;
+																$("#thumbs-up" + comm).html(number);
+															} else if(response === "2") {
+																var number1 = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id));
+																$("#thumbs-up" + comm).html(number1);
+																var number2 = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id));
+																$("#thumbs-down" + comm).html(number2);
+															}
+															$("#dislike" + comm).css('color', 'blue');
+															$("#like" + comm).css('color', 'grey');
+														})
+													})
+
+													$("#dislike" + comm).click(function(e) {
+														e.preventDefault();
+														$.ajax({
+															type: "post",
+															url: "@routes.CommentController.saveThumbUp()",
+															data: "comm=" + comm + "&thumb=" + thumbDown
+														}).success(function(response) {
+															if (response === "1") {
+																var number = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id)) + 1;
+																$("#thumbs-down" + comm).html(number);
+
+															} else if (response === "2") {
+																var number1 = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id)) + 1;
+																$("#thumbs-down" + comm).html(number1);
+																var number2 = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id)) - 1;
+																$("#thumbs-up" + comm).html(number2);
+															}
+															$("#like" + comm).css('color', 'blue');
+															$("#dislike" + comm).css('color', 'grey');
+														})
+													})
+
+												});
+											</script>
+									}
 									</tbody>
 								</table>
 							</div>

@@ -20,9 +20,37 @@
 				<td> @product.user.email </td>
 				<td> @product.price </td>
 				<td>
-					<a href="@routes.ProductController.deleteProductAdmin(product.id)"><span class="glyphicon glyphicon-trash"></span></a>
+					<a><span class="glyphicon glyphicon-trash"></span></a>
 				</td>
 			</tr>
+
+				<script >
+                      $(document).ready(function(){
+                      $('#deleteProduct').click(function(){
+                         $.confirm({
+                            title: 'Do you want to delete ' +'@product.name' + ' ?',
+                            theme: 'black',
+                            content: false,
+                            confirmButtonClass: 'btn-danger',
+                            cancelButtonClass: 'btn-info',
+                            confirmButton: 'Delete',
+                            cancelButton: 'Cancel',
+                               confirm: function(){
+                                $.ajax({
+                                   url: '@routes.ProductController.deleteProductAdmin(product.id)',
+                                   method: 'GET',
+                                    }).success(function(){
+						             window.location.replace("@routes.AdminController.adminProducts()");
+                                      }).error(function(response){
+                                      alert(response.responseText);
+                                       });
+                                       },
+                                      cancel: function(){
+                                    }
+                               });
+                             })
+                         })
+                     </script>
 			}
 		</tbody>
 	</table>

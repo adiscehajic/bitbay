@@ -3,6 +3,7 @@
 # ~~~~
 
 # Home page
+
 GET           /                           @controllers.Users.index()
 GET           /signup                     @controllers.Users.signup()
 POST          /signup                     @controllers.Users.newUser()
