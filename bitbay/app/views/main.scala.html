@@ -28,7 +28,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="pull-left" href="/"> <img alt="Brand" src="@routes.Assets.versioned("images/logo.png")"></a>
+                    <a class="pull-left" href="@routes.Users.index()"> <img alt="Brand" src="@routes.Assets.versioned("images/logo.png")"></a>
                 </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -60,9 +60,13 @@
                                 <li><a href="@routes.Users.signIn()"><span class="glyphicon glyphicon-log-in"></span>  Sign in</a></li>
                                 <li><a href="@routes.Users.signup()"><span class="glyphicon glyphicon-registration-mark"></span>  Sign up</a></li>
                             } else {
-                                <li><a href="@routes.Users.getUser(user.id)"> <span class="glyphicon glyphicon-user"></span>  @user.firstName (@user.userType.name)</a></li>
+
+                            <li><a href="@routes.Users.getUser(user.id)"> <span class="glyphicon glyphicon-user"></span>  @user.firstName (@user.userType.name)</a></li>
+                            @if(user.userType.id == 2) {
                                 <li><a href="@routes.CartController.getCart()"> <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
-                                <li><a href="@routes.Users.logout()"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                            }
+                            <li><a href="@routes.Users.logout()"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
                         }
                     </ul>
                 </div><!-- /.navbar-collapse -->
