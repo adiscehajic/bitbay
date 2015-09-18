@@ -22,7 +22,7 @@ public class Comment extends Model{
     public String title;
     @Constraints.Required
     public String text;
-    @OneToMany
+    @ManyToOne
     public User user;
     @ManyToOne
     public Product product;

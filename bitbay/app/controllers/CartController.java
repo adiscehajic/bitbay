@@ -1,5 +1,6 @@
 package controllers;
 
+import helpers.CurrentBuyer;
 import models.*;
 import play.Logger;
 import play.data.Form;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 /**
  * Created by neo on 9/15/15.
  */
+
+@Security.Authenticated(CurrentBuyer.class)
 public class CartController extends Controller {
 
     private static Form<CartItem> itemForm = Form.form(CartItem.class);

@@ -56,14 +56,14 @@ public class Thumb extends Model {
      //   Integer commentNumber = Thumb.finder.where().eq("is_up", 1).orderBy("comment_id").find();
 
         List<Comment> commentList = Comment.findAllCommentByProduct(product);
-
+        Logger.info("Broj comentara produkta " + product.id + " je " + commentList.size());
         int maxFirst = 0;
         Comment commentFirst = null;
         int maxSecond = 0;
         Comment commentSecond = null;
 
-        for (int i = 1; i <= commentList.size(); i++) {
-            Comment comment = Comment.getCommentById(i);
+        for (int i = 0; i < commentList.size(); i++) {
+            Comment comment = commentList.get(i);
             List<Thumb> comments = Thumb.finder.where().eq("comment", comment).where().eq("isUp", true).findList();
             Logger.info("Velicina niza je: " + comments.size());
             if (comments.size() > maxFirst) {
@@ -76,7 +76,7 @@ public class Thumb extends Model {
         }
 
         Logger.info("Max prvi je: " + maxFirst);
-        Logger.info("Max prvi je: " + maxSecond);
+        Logger.info("Max prvi je: " + maxSecond );
         List<Comment> topComments = new ArrayList<>();
         if (commentFirst != null) {
             topComments.add(commentFirst);

@@ -1,6 +1,7 @@
 package controllers;
 
 
+import helpers.CurrentBuyerSeller;
 import helpers.CurrentSeller;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
@@ -199,6 +200,7 @@ public class Users extends Controller {
      * @param id - ID of wanted user
      * @return - user with selected ID
      */
+    @Security.Authenticated(CurrentBuyerSeller.class)
     public Result getUser(Integer id){
         String email = session().get("email");
         User user =  User.getUserByEmail(email);
@@ -213,6 +215,7 @@ public class Users extends Controller {
      * @param id - ID of selected user
      * @return - User with selected ID
      */
+    @Security.Authenticated(CurrentBuyerSeller.class)
     public Result editUser(Integer id) {
        String email = session().get("email");
        User user = User.getUserByEmail(email);
@@ -228,6 +231,7 @@ public class Users extends Controller {
      * Method for updating user information
      * @param id - ID of selected user
      */
+    @Security.Authenticated(CurrentBuyerSeller.class)
     public Result updateUser(Integer id){
 
         String email = session().get("email");

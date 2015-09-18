@@ -54,7 +54,7 @@
 							<tr class="blank_row"></tr>
 							<tr>
 								<td>
-									@if((User.getUserByEmail(session.get("email"))).userType.id == 2) {
+									@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
 										<form action="@routes.CartController.addToCart(product.id)" method="POST">
 											<button type="submit " class="btn btn-primary" style="margin-bottom : 20 px">
 												Add to chart </button>
@@ -79,6 +79,7 @@
 						</div>
 						<div id="menu2" class="tab-pane fade">
 
+						@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
 							<div class="page-header">
 								<h2>Your Comment </h2>
 							</div>
@@ -95,7 +96,7 @@
 								</div>
 								</form>
 								<table class="table">
-
+								}
 									<thead>
 
 										<tr>
@@ -113,10 +114,61 @@
 												<p class = "person">By @comment.user.firstName @comment.user.lastName on @comment.commentDate</p>
 												<p style = "margin-bottom:20px;">@comment.text</p>
 												<span style = "margin-right:6px; ">Was this review helpful to you?</span>
-												<a class="like@comment.id"> <span id="thumbs-up@comment.id" class="glyphicon glyphicon-thumbs-up" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsUp(comment)</span></a>
-												<a class="dislike@comment.id"> <span id="thumbs-down@comment.id" class="glyphicon glyphicon-thumbs-down" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsDown(comment)</span></a>
+												<a id="like@comment.id"> <span id="thumbs-up@comment.id" class="glyphicon glyphicon-thumbs-up" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsUp(comment)</span></a>
+												<a id="dislike@comment.id"> <span id="thumbs-down@comment.id" class="glyphicon glyphicon-thumbs-down" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsDown(comment)</span></a>
 											</td>
 												</tr>
+											<script>
+
+												$(document).ready(function() {
+												var comm = @comment.id;
+												var thumbUp = "true";
+												var thumbDown = "false";
+													$("#like" + comm).click(function(e) {
+														e.preventDefault();
+														$.ajax({
+															type: "post",
+															url: "@routes.CommentController.saveThumbUp()",
+															data: "comm=" + comm + "&thumb=" + thumbUp
+														}).success(function(response) {
+															if (response === "1") {
+																var number = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id)) + 1;
+																$("#thumbs-up" + comm).html(number);
+															} else if(response === "2") {
+																var number1 = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id));
+																$("#thumbs-up" + comm).html(number1);
+																var number2 = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id));
+																$("#thumbs-down" + comm).html(number2);
+															}
+															$("#dislike" + comm).css('color', 'blue');
+															$("#like" + comm).css('color', 'grey');
+														})
+													})
+
+													$("#dislike" + comm).click(function(e) {
+														e.preventDefault();
+														$.ajax({
+															type: "post",
+															url: "@routes.CommentController.saveThumbUp()",
+															data: "comm=" + comm + "&thumb=" + thumbDown
+														}).success(function(response) {
+															if (response === "1") {
+																var number = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id)) + 1;
+																$("#thumbs-down" + comm).html(number);
+
+															} else if (response === "2") {
+																var number1 = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id)) + 1;
+																$("#thumbs-down" + comm).html(number1);
+																var number2 = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id)) - 1;
+																$("#thumbs-up" + comm).html(number2);
+															}
+															$("#like" + comm).css('color', 'blue');
+															$("#dislike" + comm).css('color', 'grey');
+														})
+													})
+
+												});
+											</script>
 
 											}
 									</tbody>
@@ -138,8 +190,8 @@
 													<p style = "margin-bottom:20px;">@comment.text</p>
 													<span style = "margin-right:6px; ">Was this review helpful to you?</span>
 
-													<a class="like@comment.id"> <span id="thumbs-up@comment.id" class="glyphicon glyphicon-thumbs-up" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsUp(comment)</span></a>
-													<a class="dislike@comment.id"> <span id="thumbs-down@comment.id" class="glyphicon glyphicon-thumbs-down" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsDown(comment)</span></a>
+													<a id="like@comment.id"> <span id="thumbs-up@comment.id" class="glyphicon glyphicon-thumbs-up" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsUp(comment)</span></a>
+													<a id="dislike@comment.id"> <span id="thumbs-down@comment.id" class="glyphicon glyphicon-thumbs-down" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsDown(comment)</span></a>
 												</td>
 											</tr>
 										</form>
@@ -150,7 +202,7 @@
 												var comm = @comment.id;
 												var thumbUp = "true";
 												var thumbDown = "false";
-													$(".like" + comm).click(function(e) {
+													$("#like" + comm).click(function(e) {
 														e.preventDefault();
 														$.ajax({
 															type: "post",
@@ -166,12 +218,12 @@
 																var number2 = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id));
 																$("#thumbs-down" + comm).html(number2);
 															}
-															$(".dislike" + comm).css('color', 'blue');
-															$(".like" + comm).css('color', 'grey');
+															$("#dislike" + comm).css('color', 'blue');
+															$("#like" + comm).css('color', 'grey');
 														})
 													})
 
-													$(".dislike" + comm).click(function(e) {
+													$("#dislike" + comm).click(function(e) {
 														e.preventDefault();
 														$.ajax({
 															type: "post",
@@ -188,8 +240,8 @@
 																var number2 = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id)) - 1;
 																$("#thumbs-up" + comm).html(number2);
 															}
-															$(".like" + comm).css('color', 'blue');
-															$(".dislike" + comm).css('color', 'grey');
+															$("#like" + comm).css('color', 'blue');
+															$("#dislike" + comm).css('color', 'grey');
 														})
 													})
 
