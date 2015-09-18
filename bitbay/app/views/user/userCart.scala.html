@@ -26,13 +26,15 @@
                 </thead>
                 <tbody>
                     @for(cartItem <- cartItems) {
+                        <form method="POST" action="@routes.CartController.updateItemQuantity(cartItem.id)" name="myForm">
                         <tr>
-                            <td class="cartData"><a href="@routes.ProductController.getProduct(cartItem.product.id)"><img src="@routes.Assets.versioned("images/" + Image.getImagePath(cartItem.product))" width="150" height="100"/></a></td>
-                            <td class="cartData" style="font-size : 17 px"><a href="@routes.ProductController.getProduct(cartItem.product.id))"> @cartItem.product.name </a></td>
-                            <td class="cartData"> <input type="number" id="replyNumber" data-bind="value:replyNumber" onfocusout="quantityValidator()" min="1" max="@cartItem.product.quantity" value="1" name="inpQuantity"> </td>
+                            <td class="cartData" width="150px"><a href="@routes.ProductController.getProduct(cartItem.product.id)"><img src="@routes.Assets.versioned("images/" + Image.getImagePath(cartItem.product))" width="150" height="100"/></a></td>
+                            <td class="cartData" style="font-size : 17px"><a href="@routes.ProductController.getProduct(cartItem.product.id)"> @cartItem.product.name </a></td>
+                            <td class="cartData"><input type="number" id="replyNumber" data-bind="value:replyNumber" onfocusout="quantityValidator()" min="1" max="@cartItem.product.quantity" value="@cartItem.quantity" name="quantity"><br><button type="submit">Update</button></td>
                             <td class="cartData"> @cartItem.price KM</td>
-                            <td class="cartData"><a href="@routes.CartController.removeFromCart(cartItem.product.id)"><span class="glyphicon glyphicon-remove" style="font-size : 20 px"></span></a></td>
+                            <td class="cartData"><a href="@routes.CartController.removeFromCart(cartItem.id)"><span class="glyphicon glyphicon-remove" style="font-size : 20 px"></span></a></td>
                         </tr>
+                        </form>
                     }
                 </tbody>
             </table>

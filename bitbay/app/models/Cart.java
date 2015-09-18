@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import com.avaje.ebean.Model.Finder;
 import javax.persistence.Entity;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,13 +20,12 @@ public class Cart extends Model{
     @OneToOne
     public User user;
 
-    @ManyToOne
+    @ManyToMany(cascade = CascadeType.ALL)
     public List<CartItem> cartItems;
 
     private static Finder<String, Cart> finder = new Finder<String, Cart>(Cart.class);
 
     public Cart(){
-
     }
 
     public Cart (User user, List<CartItem> cartItems){

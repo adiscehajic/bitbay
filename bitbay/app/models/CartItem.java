@@ -14,9 +14,8 @@ public class CartItem extends Model {
     @Id
     public Integer id;
 
-
+    @OneToOne
     public Product product;
-
 
     public Integer quantity;
 
@@ -44,4 +43,10 @@ public class CartItem extends Model {
         CartItem cartItem = CartItem.finder.where().eq("id", id).findUnique();
         return cartItem;
     }
+
+    public static CartItem getCartItemByProduct(Product product) {
+        CartItem cartItem = CartItem.finder.where().eq("product", product).findUnique();
+        return cartItem;
+    }
+
 }

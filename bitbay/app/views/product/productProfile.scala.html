@@ -54,9 +54,12 @@
 							<tr class="blank_row"></tr>
 							<tr>
 								<td>
-									<form action="@routes.CartController.addToCart(product.id)" method="POST">
-										<button type="submit "class="btn btn-primary" style="margin-bottom: 20px"> Add to chart </button>
-									</form>
+									@if((User.getUserByEmail(session.get("email"))).userType.id == 2) {
+										<form action="@routes.CartController.addToCart(product.id)" method="POST">
+											<button type="submit " class="btn btn-primary" style="margin-bottom : 20 px">
+												Add to chart </button>
+										</form>
+									}
 								</td>
 							</tr>
 						</tbody>
@@ -68,20 +71,11 @@
 				<div class="col-md-10">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#about">About</a></li>
-						<li><a data-toggle="tab" href="#menu1">Specifications</a></li>
 						<li><a data-toggle="tab" href="#menu2">Comments (@comments.size)</a></li>
 					</ul>
-
 					<div class="tab-content">
 						<div id="about" class="tab-pane fade in active">
-							<p>@product.description</p>
-						</div>
-						<div id="menu1" class="tab-pane fade">
-							<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
-								Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced
-								in their exact original form, accompanied by English versions from the 1914 translation by H.
-								Rackham.
-							</p>
+							<br><p>@product.description</p>
 						</div>
 						<div id="menu2" class="tab-pane fade">
 
