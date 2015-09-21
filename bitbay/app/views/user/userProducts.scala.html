@@ -25,12 +25,12 @@
                     <td> @product.price </td>
                     <td>
                         <a href="@routes.ProductController.editProduct(product.id)"><button type="submit"><span class="glyphicon glyphicon-edit"></span></button></a>
-                        <a id="deleteProduct"><button type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
+                        <a id="deleteProduct@product.id"><button type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
                     </td>
                  </tr>
                     <script >
                       $(document).ready(function(){
-                      $('#deleteProduct').click(function(){
+                      $('#deleteProduct@product.id').click(function(){
                          $.confirm({
                             title: 'Do you want to delete ' +'@product.name' + ' ?',
                             theme: 'white',
@@ -44,7 +44,7 @@
                                    url: '@routes.ProductController.deleteProduct(product.id)',
                                    method: 'GET',
                                     }).success(function(){
-						             window.location.replace("@routes.Users.getAllUserProducts()");
+						             window.location.replace('@routes.Users.getAllUserProducts()');
                                       }).error(function(response){
                                       alert(response.responseText);
                                        });

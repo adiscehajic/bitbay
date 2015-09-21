@@ -20,13 +20,13 @@
 				<td> @product.user.email </td>
 				<td> @product.price </td>
 				<td>
-					<a><span class="glyphicon glyphicon-trash"></span></a>
+					<a id="adminDeleteProduct@product.id"><span class="glyphicon glyphicon-trash"></span></a>
 				</td>
 			</tr>
 
 				<script >
                       $(document).ready(function(){
-                      $('#deleteProduct').click(function(){
+                      $('#adminDeleteProduct@product.id').click(function(){
                          $.confirm({
                             title: 'Do you want to delete ' +'@product.name' + ' ?',
                             theme: 'black',

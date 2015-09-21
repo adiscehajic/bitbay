@@ -32,7 +32,6 @@ create table comment (
   user_id                   integer,
   product_id                integer,
   comment_date              datetime,
-  constraint uq_comment_user_id unique (user_id),
   constraint pk_comment primary key (id))
 ;
 

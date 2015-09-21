@@ -15,13 +15,13 @@
 					<td> @category.name </td>
 					<td>
 						<a href="@routes.CategoryController.editCategory(category.id)"><button type="submit"><span class="glyphicon glyphicon-pencil"></span></button></a>
-						<a ><button type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
+						<a id="deleteAdminCategory@category.id"><button type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
 					</td>
 				</tr>
 
 				<script >
                       $(document).ready(function(){
-                      $('#deleteProduct').click(function(){
+                      $('#deleteAdminCategory@category.id').click(function(){
                          $.confirm({
                             title: 'Do you want to delete ' +'@category.name' + ' ?',
                             theme: 'black',

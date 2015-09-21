@@ -31,9 +31,18 @@ public class ProductController extends Controller {
         Product product = Product.getProductById(id);
         String path = Image.getImagePath(product);
 
-        List<Comment> comments = Comment.sortCommentByDate(product);
+        Logger.info("Product id je: " + product.id);
 
-        return ok(productProfile.render(product, path, comments));
+        List<Comment> comments = Comment.sortCommentByDate(product);
+        List<Comment> topComments = Thumb.getMostLikedComment(product);
+
+        if (topComments.size() > 0) {
+            for (int i = 0; i < topComments.size(); i++) {
+                comments.remove(topComments.get(i));
+            }
+        }
+
+        return ok(productProfile.render(product, path, comments, topComments));
     }
 
     @Security.Authenticated(CurrentSeller.class)

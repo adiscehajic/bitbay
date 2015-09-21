@@ -56,10 +56,12 @@
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        @if(session.get("email") == null) {
+                        @if(session.get("email") == null || User.getUserByEmail(session().get("email")).userType.id == 1) {
                                 <li><a href="@routes.Users.signIn()"><span class="glyphicon glyphicon-log-in"></span>  Sign in</a></li>
                                 <li><a href="@routes.Users.signup()"><span class="glyphicon glyphicon-registration-mark"></span>  Sign up</a></li>
-                            } else {
+                            }
+                        @if(session.get("email") != null && (User.getUserByEmail(session().get("email")).userType.id == 2 || User.getUserByEmail(session().get("email")).userType.id == 3)) {
+
                             <li><a href="@routes.Users.getUser(user.id)"> <span class="glyphicon glyphicon-user"></span>  @user.firstName (@user.userType.name)</a></li>
                            @if(user.userType.id == 2) {
                                <li><a href="@routes.CartController.getCart()"> <span class="glyphicon glyphicon-shopping-cart"></span></a></li>

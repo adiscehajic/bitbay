@@ -1,4 +1,4 @@
-@(product: Product)(path: String)(comments:List[Comment])
+@(product: Product)(path: String)(comments:List[Comment])(topComments: List[Comment])
 
 @main("Product", User.getUserByEmail(session.get("email"))) {
 		<div class="container">
@@ -38,9 +38,9 @@
 								<td>@product.manufacturer</td>
 							</tr>
 							<tr>
-								<td>Avability:</td>
+								<td>Availability:</td>
 
-								<td>No</td>
+								<td>Yes</td>
 
 							</tr>
 							<tr class="blank_row"></tr>
@@ -54,10 +54,10 @@
 							<tr class="blank_row"></tr>
 							<tr>
 								<td>
-									@if((User.getUserByEmail(session.get("email"))).userType.id == 2) {
+									@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
 										<form action="@routes.CartController.addToCart(product.id)" method="POST">
 											<button type="submit " class="btn btn-primary" style="margin-bottom : 20 px">
-												Add to chart </button>
+												Add to cart </button>
 										</form>
 									}
 								</td>
@@ -71,7 +71,7 @@
 				<div class="col-md-10">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#about">About</a></li>
-						<li><a data-toggle="tab" href="#menu2">Comments (@comments.size)</a></li>
+						<li><a data-toggle="tab" href="#menu2">Comments (@(comments.size + topComments.size))</a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="about" class="tab-pane fade in active">
@@ -79,6 +79,7 @@
 						</div>
 						<div id="menu2" class="tab-pane fade">
 
+						@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
 							<div class="page-header">
 								<h2>Your Comment </h2>
 							</div>
@@ -95,7 +96,7 @@
 								</div>
 								</form>
 								<table class="table">
-
+								}
 									<thead>
 
 										<tr>
@@ -104,17 +105,72 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
+
+										@for(comment <- topComments){
+
+											<tr>
 											<td>
-												<a href=""><h4>Good book</h4></a>
-												<p class = "person">By Claire Barnell on 13.07.2015</p>
-												<p style = "margin-bottom:20px;">You can read this book in one sitting and it will give you a very good feel for Bootstrap. Definitely worth the money, especially in comparison to other much more expensive books.<br /><br />One suggestion and something that I couldn't find within the book, but maybe I just missed it. I had troubles making images responsive, even after trying to override the CSS, and eventually found the solution on stack overflow. I recommend using the &#34;img-responsive&#34; class within your image tags which will do the trick. There might be better ways to do it, but this worked for me. For example, &#60;img src=&#34;picture.jpg&#34; class=&#34;img-responsive&#34; alt=&#34;&#34; &#62;</p>
+												<a href=""><h4>@comment.title</h4></a>
+												<p class = "person">By @comment.user.firstName @comment.user.lastName on @comment.commentDate</p>
+												<p style = "margin-bottom:20px;">@comment.text</p>
 												<span style = "margin-right:6px; ">Was this review helpful to you?</span>
-												<a href=""> <span class="glyphicon glyphicon-thumbs-up" style = " padding-left:6px;padding-right:10px;font-size: 17px;"> </span></a>
-												<a href=""> <span class="glyphicon glyphicon-thumbs-down" style = "padding-right:10px;font-size: 17px;"></span></a>
-
+												<a id="like@comment.id"> <span id="thumbs-up@comment.id" class="glyphicon glyphicon-thumbs-up" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsUp(comment)</span></a>
+												<a id="dislike@comment.id"> <span id="thumbs-down@comment.id" class="glyphicon glyphicon-thumbs-down" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsDown(comment)</span></a>
 											</td>
+												</tr>
+											<script>
 
+												$(document).ready(function() {
+												var comm = @comment.id;
+												var thumbUp = "true";
+												var thumbDown = "false";
+													$("#like" + comm).click(function(e) {
+														e.preventDefault();
+														$.ajax({
+															type: "post",
+															url: "@routes.CommentController.saveThumbUp()",
+															data: "comm=" + comm + "&thumb=" + thumbUp
+														}).success(function(response) {
+															if (response === "1") {
+																var number = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id)) + 1;
+																$("#thumbs-up" + comm).html(number);
+															} else if(response === "2") {
+																var number1 = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id));
+																$("#thumbs-up" + comm).html(number1);
+																var number2 = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id));
+																$("#thumbs-down" + comm).html(number2);
+															}
+															$("#dislike" + comm).css('color', 'blue');
+															$("#like" + comm).css('color', 'grey');
+														})
+													})
+
+													$("#dislike" + comm).click(function(e) {
+														e.preventDefault();
+														$.ajax({
+															type: "post",
+															url: "@routes.CommentController.saveThumbUp()",
+															data: "comm=" + comm + "&thumb=" + thumbDown
+														}).success(function(response) {
+															if (response === "1") {
+																var number = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id)) + 1;
+																$("#thumbs-down" + comm).html(number);
+
+															} else if (response === "2") {
+																var number1 = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id)) + 1;
+																$("#thumbs-down" + comm).html(number1);
+																var number2 = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id)) - 1;
+																$("#thumbs-up" + comm).html(number2);
+															}
+															$("#like" + comm).css('color', 'blue');
+															$("#dislike" + comm).css('color', 'grey');
+														})
+													})
+
+												});
+											</script>
+
+											}
 									</tbody>
 								</table>
 
@@ -129,10 +185,10 @@
 										<form action="" method="post">
 											<tr>
 												<td>
-													<a href=""><h3>@comment.title</h3></a>
-													<p class="person">By @comment.user.firstName @comment.user.lastName on @comment.commentDate</p>
-													<p style = "margin-bottom: 20px ;" name="text">@comment.text</p>
-													<span style = "margin-right: 10px ; ">Was this review helpful to you?</span>
+													<a href=""><h4>@comment.title</h4></a>
+													<p class = "person">By @comment.user.firstName @comment.user.lastName on @comment.commentDate</p>
+													<p style = "margin-bottom:20px;">@comment.text</p>
+													<span style = "margin-right:6px; ">Was this review helpful to you?</span>
 
 													<a id="like@comment.id"> <span id="thumbs-up@comment.id" class="glyphicon glyphicon-thumbs-up" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsUp(comment)</span></a>
 													<a id="dislike@comment.id"> <span id="thumbs-down@comment.id" class="glyphicon glyphicon-thumbs-down" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsDown(comment)</span></a>

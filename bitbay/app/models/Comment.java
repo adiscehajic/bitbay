@@ -1,10 +1,12 @@
 package models;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+import com.avaje.ebean.SqlQuery;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 
@@ -20,7 +22,7 @@ public class Comment extends Model{
     public String title;
     @Constraints.Required
     public String text;
-    @OneToOne
+    @ManyToOne
     public User user;
     @ManyToOne
     public Product product;
@@ -60,5 +62,7 @@ public class Comment extends Model{
         Comment comment = Comment.finder.where().eq("id", id).findUnique();
         return comment;
     }
+
+
 
 }

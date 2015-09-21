@@ -15,7 +15,7 @@ GET           /product/new                @controllers.ProductController.newProd
 POST          /product/thumbUp            @controllers.CommentController.saveThumbUp()
 GET           /product/:id                @controllers.ProductController.getProduct(id: Integer)
 POST          /product/:id                @controllers.CartController.addToCart(id: Integer)
-POST          /product/:id                @controllers.CommentController.saveComment(id: Integer)
+POST          /product/comment/:id        @controllers.CommentController.saveComment(id: Integer)
 GET           /product/delete/:id         @controllers.ProductController.deleteProduct(id: Integer)
 POST          /product/new/               @controllers.ProductController.saveProduct()
 GET           /product/edit/:id           @controllers.ProductController.editProduct(id: Integer)
