@@ -12,6 +12,7 @@ import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import play.mvc.Security;
+import views.html.category.viewProductsByCategory;
 import views.html.product.newProduct;
 import views.html.product.editProduct;
 import views.html.product.productProfile;
@@ -141,6 +142,13 @@ public class ProductController extends Controller {
         Ebean.update(product);
 
         return redirect(routes.ProductController.getProduct(product.id));
+    }
+
+    public Result viewProductsByCategory(Integer id) {
+        Category category = Category.getCategoryById(id);
+        List<Product> products = Product.findAllProductsByCategory(category);
+
+        return ok(viewProductsByCategory.render(products, category));
     }
 
 }

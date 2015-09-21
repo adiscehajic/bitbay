@@ -20,6 +20,7 @@ GET           /product/delete/:id         @controllers.ProductController.deleteP
 POST          /product/new/               @controllers.ProductController.saveProduct()
 GET           /product/edit/:id           @controllers.ProductController.editProduct(id: Integer)
 POST          /product/edit/:id           @controllers.ProductController.updateProduct(id: Integer)
+GET           /products/category          @controllers.ProductController.viewProductsByCategory(id: Integer)
 
 
 GET           /admin                      @controllers.AdminController.adminLogin()
@@ -49,6 +50,7 @@ GET           /category/edit/:id          @controllers.CategoryController.editCa
 GET           /category/delete/:id        @controllers.CategoryController.deleteCategory(id:Integer)
 POST          /category/new               @controllers.CategoryController.saveCategory()
 POST          /category/edit/:id          @controllers.CategoryController.updateCategory(id:Integer)
+
 
 
 # Map static resources from the /public folder to the /assets URL path
