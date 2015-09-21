@@ -37,6 +37,7 @@ public class Users extends Controller {
     private String name;
 
     public Result index() {
+        List<Category> categories = Category.findAll();
         List<Product> products = Product.findAll();
 
 

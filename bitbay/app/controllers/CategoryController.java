@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.avaje.ebean.Ebean;
 import models.*;
+import views.html.category.viewProductsByCategory;
 
 
 /**
@@ -38,7 +39,7 @@ public class CategoryController extends Controller {
     }
 
     /**
-     * Method for makeing changes on single Category
+     * Method for making changes on single Category
      * @param id - ID of selected Category
      * @return
      */
