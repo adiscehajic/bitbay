@@ -9,6 +9,7 @@ function validateProduct() {
     var quantity = document.getElementsByName("quantity")[0].value;
     var button = document.getElementsByName("submitButton")[0];
 
+
     button.disabled = true;
 
     if(category == 0) {
@@ -25,6 +26,7 @@ function validateProduct() {
         return;
     }
     button.disabled = false;
+
 }
 
 function validateName() {
@@ -88,6 +90,30 @@ function quantityValidator() {
             element.value = max;
         }
     }
+}
+
+function validateEditing() {
+    var name = document.getElementsByName("name")[0].value;
+    var price = document.getElementsByName("price")[0].value;
+    var quantity = document.getElementsByName("quantity")[0].value;
+    var sellingType = document.getElementsByName("selling-type")[0].value;
+    var button = document.getElementsByName("save")[0];
+
+    button.disabled = true;
+
+    if(name.length == 0) {
+        button.disabled = true;
+        return;
+    } else if(price <= 0) {
+        button.disabled = true;
+        return;
+    } else if(quantity <= 0 || quantity == null) {
+        button.disabled = true;
+        return;
+    }
+    button.disabled = false;
+
+
 }
 
 
