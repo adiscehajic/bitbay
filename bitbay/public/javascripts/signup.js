@@ -118,3 +118,19 @@ function isAlphaKey(evt){
         return false;
     }
 }
+
+function editUser() {
+    var name = document.getElementsByName("firstName")[0].value;
+    var surname = document.getElementsByName("lastName")[0].value;
+    var save = document.getElementsByName("save")[0];
+
+    save.disabled = true;
+
+    if(name.length < 1 || surname.length < 1) {
+        save.disabled = true;
+        return;
+    }
+
+    save.disabled = false;
+
+}
