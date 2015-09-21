@@ -3,7 +3,7 @@
 
 @main("Product", User.getUserByEmail(session.get("email"))) {
 
-  <div class="container">
+  <div class="container" onfocus="validateEditing">
 
   @helper.form(action = routes.ProductController.updateProduct(product.id)) {
     <div class="col-md-3"></div>
@@ -12,30 +12,30 @@
 
       <div class="form-group">
         <label for="product-name">Product Name:</label>
-        <input type="text" class="form-control" id="product-name" name="name" value="@product.name">
+        <input type="text" class="form-control" id="product-name" name="name" value="@product.name" onfocusout="validateName()" oninput="validateEditing()">
       </div>
       <div class="form-group">
         <label for="price">Price:</label>
-        <input type="text" class="form-control" id="price" name="price" value="@product.price">
+        <input type="number" id="replyNumber" data-bind="value:replyNumber" class="form-control" id="price" name="price" value="@product.price" onfocusout="validatePrice()" oninput="validateEditing()">
       </div>
       <div class="form-group">
         <label for="quantity">Quantity:</label>
-        <input type="text" class="form-control" id="quantity" name="quantity" value="@product.quantity">
+        <input type="number" id="replyNumber" data-bind="value:replyNumber" class="form-control" id="quantity" name="quantity" value="@product.quantity" onfocusout="validateQuantity()" oninput="validateEditing()">
       </div>
       <div class="form-group">
         <label for="manufacturer">Manufacturer:</label>
-        <input type="text" class="form-control" id="manufacturer" name="manufacturer" value="@product.manufacturer">
+        <input type="text" class="form-control" id="manufacturer" name="manufacturer" value="@product.manufacturer" oninput="validateEditing()">
       </div>
       <div class="form-group">
         <label for="selling-type">Type of selling:</label>
-        <input type="text" class="form-control" id="selling-type" name="selling-type" value="@product.sellingType">
+        <input type="text" class="form-control" id="selling-type" name="selling-type" value="@product.sellingType" oninput="validateEditing()">
       </div>
       <div class="form-group">
         <label for="description">Description:</label>
-        <textarea class="form-control" rows="5" id="description" name="description">@product.description</textarea >
+        <textarea class="form-control" rows="5" id="description" name="description" oninput="validateEditing()">@product.description</textarea>
       </div>
 
-      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="submit" class="btn btn-primary" name="save">Save</button>
       <a href="@routes.ProductController.getProduct(product.id)" class="btn btn-primary">Cancel</a>
 
       }
