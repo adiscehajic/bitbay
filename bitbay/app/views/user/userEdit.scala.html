@@ -36,7 +36,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <input type="text" class="form-control" onkeypress="return isAlphaKey(event);"  placeholder="First Name" name="firstName" value="@user.firstName">
+                                                <input type="text" class="form-control" onfocusout="editUser()" onkeypress="return isAlphaKey(event);"  placeholder="First Name" name="firstName" value="@user.firstName">
                                             </div>
                                         </div>
 
@@ -44,12 +44,12 @@
                                             <div class="col-lg-4">
                                                 <div class="panel panel-primary">
                                                     <div class="panel-heading">
-                                                        <div class="panel-title" align="center" >Last Name</div>
+                                                        <div class="panel-title" align="center">Last Name</div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <input type="text" class="form-control" onkeypress="return isAlphaKey(event);"  placeholder="Last Name" name="lastName" value="@user.lastName">
+                                                <input type="text" class="form-control" onfocusout="editUser()" onkeypress="return isAlphaKey(event);"  placeholder="Last Name" name="lastName" value="@user.lastName">
                                             </div>
                                         </div>
 
@@ -132,7 +132,7 @@
 
                         <div class="panel-footer" align="center">
                             <span >
-                                <button type="submit" class="btn btn-lg btn-primary">Save</button>
+                                <button type="submit" class="btn btn-lg btn-primary" name="save">Save</button>
                                 <a href="@routes.Users.getUser(user.id)"  class="btn btn-lg btn-primary">Cancel</a>
                             </span>
                         </div>
