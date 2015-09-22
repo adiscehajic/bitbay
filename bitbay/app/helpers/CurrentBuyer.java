@@ -26,6 +26,6 @@ public class CurrentBuyer extends Security.Authenticator {
 
     @Override
     public Result onUnauthorized(Http.Context ctx) {
-        return redirect(routes.Users.signIn());
+        return redirect(routes.ApplicationController.signIn());
     }
 }

@@ -167,7 +167,7 @@
                                    method: 'DELETE',
                                     }).success(function(){
                                      alert('Account successfully deleted!');
-						             window.location.replace("@routes.Users.index()");
+						             window.location.replace("@routes.ApplicationController.index()");
                                       }).error(function(response){
                                       alert(response.responseText);
                                        });

@@ -86,6 +86,9 @@ public class ProductController extends Controller {
         String quantity = boundForm.bindFromRequest().field("quantity").value();
         String sellingType = boundForm.bindFromRequest().field("type").value();
 
+        Logger.info(price);
+        Logger.info(quantity);
+
         Category category = Category.getCategoryByName(categoryValue);
 
         Product product = new Product(user, name, description, manufacturer, category, Double.parseDouble(price), Integer.parseInt(quantity), sellingType);
@@ -108,7 +111,7 @@ public class ProductController extends Controller {
                 }
             }
         }
-        return redirect(routes.Users.index());
+        return redirect(routes.ApplicationController.index());
     }
 
     @Security.Authenticated(CurrentSeller.class)

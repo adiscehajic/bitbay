@@ -28,7 +28,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="pull-left" href="@routes.Users.index()"> <img alt="Brand" src="@routes.Assets.versioned("images/logo.png")"></a>
+                    <a class="pull-left" href="@routes.ApplicationController.index()"> <img alt="Brand" src="@routes.Assets.versioned("images/logo.png")"></a>
                 </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -53,8 +53,8 @@
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                         @if(session.get("email") == null || User.getUserByEmail(session().get("email")).userType.id == 1) {
-                                <li><a href="@routes.Users.signIn()"><span class="glyphicon glyphicon-log-in"></span>  Sign in</a></li>
-                                <li><a href="@routes.Users.signup()"><span class="glyphicon glyphicon-registration-mark"></span>  Sign up</a></li>
+                                <li><a href="@routes.ApplicationController.signIn()"><span class="glyphicon glyphicon-log-in"></span>  Sign in</a></li>
+                                <li><a href="@routes.ApplicationController.signup()"><span class="glyphicon glyphicon-registration-mark"></span>  Sign up</a></li>
                             }
                         @if(session.get("email") != null && (User.getUserByEmail(session().get("email")).userType.id == 2 || User.getUserByEmail(session().get("email")).userType.id == 3)) {
                             <li class="dropdown">
@@ -67,7 +67,7 @@
                                    @if(user.userType.id == 3) {
                                        <li><a href="@routes.Users.getAllUserProducts()"> <span class="glyphicon glyphicon-list"></span> Products </a></li>
                                    }
-                                    <li><a href="@routes.Users.logout()"> <span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
+                                    <li><a href="@routes.ApplicationController.logout()"> <span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
                                 </ul>
                             </li>
                         }
