@@ -1,6 +1,6 @@
 @(products: List[Product])(category: Category)
 
-@main("Products", User.getUserByEmail(session.get("email"))) {
+@main("Products") {
     <div class="panel panel-primary">
   <div class="panel-heading">
            @category.name

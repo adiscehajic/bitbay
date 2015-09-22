@@ -1,7 +1,7 @@
 @(user: User)(countries: List[Country])
 @import helper._
 
-@main("User Profile", User.getUserByEmail(session.get("email"))) {
+@main("User Profile") {
     <script src="@routes.Assets.versioned("javascripts/signup.js")" type="text/javascript"></script>
     <div class="container">
 

@@ -48,16 +48,18 @@ public class CommentController extends Controller {
             User user = User.getUserByEmail(session().get("email"));
             Boolean thumb = Boolean.parseBoolean(thumbString);
 
-            Thumb tmb = Thumb.getThumbByUserAndComment(user, comment);
+            if (user != null) {
+                Thumb tmb = Thumb.getThumbByUserAndComment(user, comment);
 
-            if (tmb != null){
-                tmb.isUp = thumb;
-                tmb.update();
-                return ok("2");
-            }else{
-                Thumb t = new Thumb(comment, user, thumb);
-                t.save();
-                return ok("1");
+                if (tmb != null) {
+                    tmb.isUp = thumb;
+                    tmb.update();
+                    return ok("2");
+                } else {
+                    Thumb t = new Thumb(comment, user, thumb);
+                    t.save();
+                    return ok("1");
+                }
             }
         }
         return ok("1");

@@ -5,6 +5,15 @@ import models.UserType;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Application;
 import play.GlobalSettings;
+import play.mvc.Result;
+import play.libs.F;
+import play.mvc.Http;
+import play.*;
+import play.mvc.*;
+import play.mvc.Http.*;
+
+import static play.mvc.Results.badRequest;
+import static play.mvc.Results.notFound;
 
 /**
  * Created by Adis Cehajic on 9/22/2015.
@@ -85,5 +94,15 @@ public class Global extends GlobalSettings {
             categoryTwo.save();
             categoryThree.save();
         }
+    }
+
+    @Override
+    public F.Promise<Result> onHandlerNotFound(Http.RequestHeader requestHeader) {
+        return F.Promise.<Result>pure(notFound(views.html.notFound.render()));
+    }
+
+    @Override
+    public F.Promise<Result> onBadRequest(RequestHeader request, String error) {
+        return F.Promise.<Result>pure(badRequest(views.html.notFound.render()));
     }
 }
