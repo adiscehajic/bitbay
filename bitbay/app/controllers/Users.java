@@ -115,41 +115,45 @@ public class Users extends Controller {
         String countryName = boundForm.bindFromRequest().field("country").value();
         String city = boundForm.bindFromRequest().field("city").value();
         String address = boundForm.bindFromRequest().field("address").value();
-
+        List<Country> countries = Country.findAllCountries();
         Logger.info(countryName);
         //Checking if any user information was changed
         try {
             if (!firstName.equals(user.firstName)) {
                 for (char c : firstName.toCharArray()) {
                     if (Character.isDigit(c)) {
+                        flash("updateUserNameDiggitError","Name can't contain diggits.");
                         throw new Exception();
                     }
                 }
                 if (firstName.isEmpty()) {
+                    flash("updateUserNameEmptyError","Name can't be empty string.");
                         throw new Exception();
                 } else {
                     user.firstName = firstName;
                 }
             }
         }catch (Exception e){
-            flash("Error");
+            return badRequest(userEdit.render(user, countries));
         }
 
         try {
             if (!lastName.equals(user.lastName)) {
                 for (char c : lastName.toCharArray()) {
                     if (Character.isDigit(c)) {
+                        flash("updateUserLastNameDiggitError","Last name can't contain diggits.");
                         throw new Exception();
                     }
                 }
                 if (lastName.isEmpty()) {
+                    flash("updateUserLastNameEmptyError","Last name can't be empty string.");
                     throw new Exception();
                 } else {
                     user.lastName = lastName;
                 }
             }
         }catch (Exception e){
-            flash("Error");
+            return badRequest(userEdit.render(user, countries));
         }
 
         if(pass.equals(conPass)) {
