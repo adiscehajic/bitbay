@@ -1,12 +1,13 @@
-@(name: String)(implicit products: java.util.List[Product])
+@import helpers.SessionHelper
+@(implicit products: java.util.List[Product])
 
-@main("bitbay Home", User.getUserByEmail(session.get("email"))) {
+@main("bitbay Home") {
 
     <div class="jumbotron">
-        @if(session.get("email") == null) {
+        @if(!SessionHelper.isAuthenticated) {
             <h1>Welcome</h1>
         } else {
-            <h1>Welcome  @User.getUserByEmail(session.get("email")).firstName</h1>
+            <h1>Welcome  @SessionHelper.currentUser().firstName</h1>
             <h4>Your login was succesfull!</h4>
         }
 

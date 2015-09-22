@@ -10,21 +10,21 @@
       <div class = "row" style="margin-right: 0px">
         <div class="col-md-6">
           <label style = "margin-left : 20 px ; font-weight : normal ;"> Category name: </label>
-          <input type="text" class="form-control" id="exampleInputEmail1" name="categoryName" oninput="validateCategory()">
-            @if(flash.containsKey("saveCategoryDigitError")) {
+            <input type="text" class="form-control" id="exampleInputEmail1" name="categoryName" oninput="validateCategory()" onkeypress="return isAlphaKey(event);">
 
-            <p  style="color: red;">
-            @flash.get("saveCategoryDigitError")
-            </p>
-        }
+            @if(flash.containsKey("saveCategoryDigitError")) {
+                <p  style="color: red;">
+                    @flash.get("saveCategoryDigitError")
+                </p>
+            }
             @if(flash.containsKey("saveCategoryEqualError")){
                 <p  style="color: red;">
-                @flash.get("saveCategoryEqualError")
+                    @flash.get("saveCategoryEqualError")
                 </p>
             }
             @if(flash.containsKey("saveCategoryEmptyError")){
                 <p  style="color: red;">
-                @flash.get("saveCategoryEmptyError")
+                    @flash.get("saveCategoryEmptyError")
                 </p>
             }
         </div>

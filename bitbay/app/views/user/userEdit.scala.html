@@ -1,7 +1,7 @@
 @(user: User)(implicit countries: java.util.List[Country] = Country.findAllCountries())
 @import helper._
 
-@main("User Profile", User.getUserByEmail(session.get("email"))) {
+@main("User Profile") {
     <script src="@routes.Assets.versioned("javascripts/signup.js")" type="text/javascript"></script>
     <div class="container">
 

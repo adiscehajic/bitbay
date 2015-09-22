@@ -1,12 +1,15 @@
 @(product: Product)(path: String)(comments:List[Comment])(topComments: List[Comment])
 
-@main("Product", User.getUserByEmail(session.get("email"))) {
-	<div class="container" id="wrapper" style="margin-bottom:50px">
-		<div class="row">
-			<div class="col-md-1"></div>
-			<div class="col-md-4" style="margin-right: 5%">
-				<div class="thumbnail">
-					<img src="@routes.Assets.versioned("images/products/" + path)"/>
+@main("Product") {
+		<div class="container">
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-4" style="margin-right: 5%">
+					<div class="thumbnail">
+
+						<img src="@routes.Assets.versioned("images/products/" + path)"/>
+
+					</div>
 				</div>
 			</div>
 			<div class="col-md-6" id="userInfo">
