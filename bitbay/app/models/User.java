@@ -30,8 +30,8 @@ public class User extends Model {
     public String firstName;
 
     @Constraints.MaxLength(255)
-    @Constraints.Required
     @Constraints.Pattern("^[a-z A-Z]+$")
+    @Constraints.Required
     public String lastName;
 
     @Column(unique = true)
