@@ -48,8 +48,30 @@ public class CategoryController extends Controller {
         Form<Category> boundForm = categoryForm.bindFromRequest();
         String name = boundForm.bindFromRequest().field("categoryName").value();
 
-        if(!name.equals(c.name)) {
-            c.name = name;
+        try {
+            List<Category> categories = Category.findAll();
+            for(Category category: categories){
+                if(category.name.equals(name)){
+                    flash("editCategoryEqualError", "Category already exists.");
+                    throw new Exception();
+                }
+            }
+            if (!name.equals(c.name)) {
+                for (char ch : name.toCharArray()) {
+                    if (Character.isDigit(ch)) {
+                        flash("editCategoryDigitError", "Category name can't contain digits.");
+                        throw new Exception();
+                    }
+                }
+                if(name.isEmpty()){
+                    flash("editCategoryEmptyError", "Category name can't be empty string.");
+                    throw new Exception();
+                }else{
+                    c.name = name;
+                }
+            }
+        }catch (Exception e){
+        return badRequest(editCategory.render(c));
         }
         Ebean.update(c);
         return redirect(routes.AdminController.adminCategories());
@@ -81,9 +103,33 @@ public class CategoryController extends Controller {
         Form<Category> boundForm = categoryForm.bindFromRequest();
 
         String name = boundForm.bindFromRequest().field("categoryName").value();
-        Logger.info(name);
-        Category c = new Category(name);
-        Ebean.save(c);
+
+        try {
+            List<Category> categories = Category.findAll();
+            for(Category category: categories){
+                if(category.name.equals(name)){
+                    flash("saveCategoryEqualError", "Category already exists.");
+                    throw new Exception();
+                }
+            }
+                for (char ch : name.toCharArray()) {
+                    if (Character.isDigit(ch)) {
+                        flash("saveCategoryDigitError", "Category name can't contain digits.");
+                        throw new Exception();
+                    }
+                }
+                if(name.isEmpty()){
+                    flash("saveCategoryEmptyError", "Category name can't be empty string.");
+                    throw new Exception();
+                }else{
+                    Category c = new Category(name);
+                    Ebean.save(c);
+                }
+        }catch (Exception e){
+            return badRequest(newCategory.render());
+        }
+
+
 
         List<Category> list = Category.findAll();
         return redirect(routes.AdminController.adminCategories());

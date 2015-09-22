@@ -11,7 +11,23 @@
     <div class = "row">
       <div class="col-md-6">
         <label style = "margin-left : 20 px ; font-weight : normal ;"> Category name: </label>
-        <input type="text" class="form-control" id="exampleInputEmail1" name="categoryName" value="@category.name" oninput="validateCategory()" onkeypress="return isAlphaKey(event);">
+          <input type="text" class="form-control" id="exampleInputEmail1" name="categoryName" value="@category.name" oninput="validateCategory()" onkeypress="return isAlphaKey(event);">
+
+          @if(flash.containsKey("editCategoryDigitError")) {
+          <p  style="color: red;">
+            @flash.get("editCategoryDigitError")
+          </p>
+        }
+        @if(flash.containsKey("editCategoryEqualError")){
+          <p  style="color: red;">
+             @flash.get("editCategoryEqualError")
+          </p>
+        }
+        @if(flash.containsKey("editCategoryEmptyError")){
+          <p  style="color: red;">
+            @flash.get("editCategoryEmptyError")
+          </p>
+        }
       </div>
     </div>
       <!--Buttons-->
