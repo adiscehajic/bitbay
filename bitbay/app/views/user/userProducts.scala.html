@@ -19,7 +19,7 @@
               <btable>
                 @for(product <- products) {
                  <tr>
-                    <td> @product.name </td>
+                    <td><a href="@routes.ProductController.getProduct(product.id)">@product.name</a></td>
                     <td> @product.category.name </td>
                     <td> @product.quantity</td>
                     <td> @product.price </td>
