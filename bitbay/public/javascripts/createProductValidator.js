@@ -112,8 +112,7 @@ function validateEditing() {
         return;
     }
     button.disabled = false;
-
-
 }
+
 
 

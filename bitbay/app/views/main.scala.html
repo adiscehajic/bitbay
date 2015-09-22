@@ -57,17 +57,17 @@
                                 <li><a href="@routes.ApplicationController.signup()"><span class="glyphicon glyphicon-registration-mark"></span>  Sign up</a></li>
                             }
                         @if(session.get("email") != null && (User.getUserByEmail(session().get("email")).userType.id == 2 || User.getUserByEmail(session().get("email")).userType.id == 3)) {
+                            @if(user.userType.id == 2) {
+                                <li><a href="@routes.CartController.getCart()"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 17px"></span></a></li>
+                            }
+                            @if(user.userType.id == 3) {
+                                <li><a href="@routes.Users.getAllUserProducts()"> <span class="glyphicon glyphicon-list"></span></a></li>
+                            }
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> @user.firstName (@user.userType.name) <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="@routes.Users.getUser(user.id)"> <span class="glyphicon glyphicon-user"></span>  Profile </a></li>
-                                   @if(user.userType.id == 2) {
-                                       <li><a href="@routes.CartController.getCart()"> <span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
-                                   }
-                                   @if(user.userType.id == 3) {
-                                       <li><a href="@routes.Users.getAllUserProducts()"> <span class="glyphicon glyphicon-list"></span> Products </a></li>
-                                   }
-                                    <li><a href="@routes.ApplicationController.logout()"> <span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
+                                    <li><a href="@routes.Users.logout()"> <span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
                                 </ul>
                             </li>
                         }
