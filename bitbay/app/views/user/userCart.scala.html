@@ -1,5 +1,4 @@
 @(cartItems : List[CartItem])(user: User)
-
 @import helpers.SessionHelper;
 
 @main("Cart", user) {
@@ -12,7 +11,7 @@
         @if(cartItems == null || cartItems.length == 0) {
             <h2 align="center"> Your cart is empty! </h2>
             <br>
-            <a href="@routes.Users.index()"><button class="btn btn-primary center-block"> Homepage </button></a>
+            <a href="@routes.ApplicationController.index()"><button class="btn btn-primary center-block"> Homepage </button></a>
         } else {
             <table class="table table-hover">
                 <thead>

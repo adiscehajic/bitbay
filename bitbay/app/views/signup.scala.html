@@ -1,5 +1,6 @@
-@(userRegistration: Form[User])
-@import helper._
+@import controllers.ApplicationController.Registration
+@(userRegistration: Form[Registration])
+
 	<!DOCTYPE html>
 		<html>
 			<head>
@@ -32,9 +33,14 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div id="inputs">
-								@helper.form(action = routes.Users.newUser()) {
+								<form class="form-signin" method="POST" action="@routes.ApplicationController.newUser()">
 									<div class="container">
 										<div class="row">
+											@if(flash.containsKey("errorUserExists")) {
+												<div class="alert alert-danger" style="margin-top: 20px; width: 96%">
+												@flash.get("errorUserExists")
+												</div>
+											}
 											@if(flash.containsKey("errorFirstName")) {
 												<div class="alert alert-warning" style="width: 47%; margin-left: 15px;">
 													@flash.get("errorFirstName")
@@ -61,8 +67,8 @@
 												<p class="paragraph">Account type * </p>
 												<select class="form-control placeholder" name="type" onchange="validateRegistration()" value="@userRegistration("type").value">
 													<option value="0" selected disabled>Please select type</option>
-													<option value="3">Seller</option>
 													<option value="2">Buyer</option>
+													<option value="3">Seller</option>
 												</select>
 											</div>
 										</div>
@@ -111,13 +117,13 @@
 											</div>
 										</div>
 									</div>
-								}
+								</form>
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="row">
 									<p class="confirmPar" style="margin-top:10px"> Already have an Account? </p>
-									<a href="/signin"><button class="btn btn-default btn-md" style="margin: 0px 0px 15px 15px"> Sign in </button></a>
+									<a href="@routes.ApplicationController.signIn()"><button class="btn btn-default btn-md" style="margin: 0px 0px 15px 15px"> Sign in </button></a>
 								</div>
 							</div>	
 						</div>

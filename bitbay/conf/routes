@@ -4,12 +4,12 @@
 
 # Home page
 
-GET           /                           @controllers.Users.index()
-GET           /signup                     @controllers.Users.signup()
-POST          /signup                     @controllers.Users.newUser()
-GET           /signin                     @controllers.Users.signIn()
-POST          /signin                     @controllers.Users.validate()
-GET           /logout                     @controllers.Users.logout()
+GET           /                           @controllers.ApplicationController.index()
+GET           /signup                     @controllers.ApplicationController.signup()
+POST          /signup                     @controllers.ApplicationController.newUser()
+GET           /signin                     @controllers.ApplicationController.signIn()
+POST          /signin                     @controllers.ApplicationController.validateSignIn()
+GET           /logout                     @controllers.ApplicationController.logout()
 
 GET           /product/new                @controllers.ProductController.newProduct()
 POST          /product/thumbUp            @controllers.CommentController.saveThumbUp()
