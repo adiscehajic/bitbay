@@ -115,8 +115,18 @@
 									<div class="form-group">
 										<label for="usr" style = "margin-top:40px;">Tittle:</label>
 										<input type="text" class="form-control" id="usr"  name="title">
+										@if(flash.containsKey("saveCommentEmptyTitleError")) {
+											<p  style="color: red;">
+											@flash.get("saveCommentEmptyTitleError")
+											</p>
+										}
 										<label for="comment" style = "margin-top:30px;">Comment:</label>
 										<textarea class="form-control" rows="5" id="comment"  name="comment"></textarea>
+										@if(flash.containsKey("saveCommentEmptyTextError")) {
+											<p  style="color: red;">
+											@flash.get("saveCommentEmptyTextError")
+											</p>
+										}
 									</div>
 									<div class = "row pull-right" >
 										<button type="submit" class="btn btn-primary" style = "margin-right:14px;">Submit</button>

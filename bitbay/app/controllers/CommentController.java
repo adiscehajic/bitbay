@@ -4,6 +4,7 @@ import models.Comment;
 import models.Product;
 import models.Thumb;
 import models.User;
+import org.w3c.dom.stylesheets.LinkStyle;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -11,6 +12,9 @@ import play.mvc.Controller;
 import com.avaje.ebean.Ebean;
 
 import play.mvc.Result;
+import views.html.product.productProfile;
+
+import java.util.List;
 
 
 /**
@@ -26,6 +30,19 @@ public class CommentController extends Controller {
         String text = boundForm.bindFromRequest().field("comment").value();
         Product product = Product.getProductById(id);
         User user = User.getUserByEmail(session("email"));
+        List<Comment> comments = Comment.findAllCommentByProduct(product);
+        try{
+            if(title.isEmpty()){
+                flash("saveCommentEmptyTitleError", "Please enter comment title.");
+                throw new Exception();
+            }
+            if(text.isEmpty()){
+                flash("saveCommentEmptyTextError", "Please enter your comment");
+                throw new Exception();
+            }
+        }catch (Exception e){
+            return redirect(routes.ProductController.getProduct(id));
+        }
 
         Comment c = new Comment(title,text, user, product);
         Ebean.save(c);
