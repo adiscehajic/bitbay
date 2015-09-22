@@ -1,4 +1,4 @@
-@(user: User)(countries: List[Country])
+@(user: User)(implicit countries: java.util.List[Country] = Country.findAllCountries())
 @import helper._
 
 @main("User Profile", User.getUserByEmail(session.get("email"))) {
@@ -26,6 +26,12 @@
                                     <h3>Edit</h3>
 
                                     <div class="form-horizontal">
+                                        @if(flash.containsKey("userUpdateError")) {
+                                            <div class="alert alert-danger">
+                                            @flash.get("userUpdateError")
+                                            </div>
+                                        }
+
 
                                         <div class="form-group">
                                             <div class="col-lg-4">

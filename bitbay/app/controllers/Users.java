@@ -29,8 +29,8 @@ import javax.persistence.PersistenceException;
 /**
  * Created by adis.cehajic on 02/09/15.
  */
-public class Users extends Controller {
 
+public class Users extends Controller {
     // Declaring variable.
     private static final Form<User> userRegistration = Form.form(User.class);
 
@@ -106,8 +106,9 @@ public class Users extends Controller {
 
         Form<User> boundForm = userRegistration.bindFromRequest();
 
+
         //Collecting data from user edit page
-        String name = boundForm.bindFromRequest().field("firstName").value();
+        String firstName = boundForm.bindFromRequest().field("firstName").value();
         String lastName = boundForm.bindFromRequest().field("lastName").value();
         String pass = boundForm.bindFromRequest().field("password").value();
         String conPass = boundForm.bindFromRequest().field("confirmPassword").value();
@@ -117,16 +118,46 @@ public class Users extends Controller {
 
         Logger.info(countryName);
         //Checking if any user information was changed
-        if(!name.equals(user.firstName)){
-            user.firstName = name;
+        try {
+            if (!firstName.equals(user.firstName)) {
+                for (char c : firstName.toCharArray()) {
+                    if (Character.isDigit(c)) {
+                        throw new Exception();
+                    }
+                }
+                if (firstName.isEmpty()) {
+                        throw new Exception();
+                } else {
+                    user.firstName = firstName;
+                }
+            }
+        }catch (Exception e){
+            flash("Error");
         }
 
-        if(!lastName.equals(user.lastName)){
-            user.lastName = lastName;
+        try {
+            if (!lastName.equals(user.lastName)) {
+                for (char c : lastName.toCharArray()) {
+                    if (Character.isDigit(c)) {
+                        throw new Exception();
+                    }
+                }
+                if (lastName.isEmpty()) {
+                    throw new Exception();
+                } else {
+                    user.lastName = lastName;
+                }
+            }
+        }catch (Exception e){
+            flash("Error");
         }
 
-        if(pass.equals(conPass)){
-            user.password = BCrypt.hashpw(pass, BCrypt.gensalt());
+        if(pass.equals(conPass)) {
+            if (pass.isEmpty() || pass.length() < 8) {
+               
+            }else{
+                user.password = BCrypt.hashpw(pass, BCrypt.gensalt());
+            }
         }
 
 
