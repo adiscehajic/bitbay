@@ -27,15 +27,12 @@ import javax.persistence.PersistenceException;
 
 
 /**
- * Created by adis.cehajic on 02/09/15.
+ * Created by Adis Cehajic on 02/09/15.
  */
 
 public class Users extends Controller {
     // Declaring variable.
     private static final Form<User> userRegistration = Form.form(User.class);
-
-    private String name;
-
 
     /**
      * This method delete selected user

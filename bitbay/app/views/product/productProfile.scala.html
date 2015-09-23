@@ -1,7 +1,7 @@
 @(product: Product)(path: String)(comments:List[Comment])(topComments: List[Comment])
 
 @main("Product") {
-		<div class="container">
+		<div class="container" id="wrapper">
 			<div class="row">
 				<div class="col-md-1"></div>
 				<div class="col-md-4" style="margin-right: 5%">
@@ -11,7 +11,7 @@
 
 					</div>
 				</div>
-			</div>
+
 			<div class="col-md-6" id="userInfo">
 				<h2>@product.name</h2>
 				<table>
@@ -268,7 +268,6 @@
 							}
 							</tbody>
 						</table>
-					</div>
 					</div>
 				</div>
 			</div>

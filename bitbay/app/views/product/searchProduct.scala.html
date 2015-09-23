@@ -1,0 +1,24 @@
+@(products: java.util.List[Product])
+
+@main("Search Result") {
+    <div class="container" id="main">
+    @for(product <- products){
+
+        <div class = "row" id="row1">
+            <div class = "col-md-4">
+                <a href="@routes.ProductController.getProduct(product.id)"><img src="img/wallsticker.jpg"></a>
+            </div>
+
+            <div class = "col-md-8">
+                <a href="@routes.ProductController.getProduct(product.id)"><h4>@product.name</h4></a>
+                <div class = "col-md-12" style = "margin-top: 20px; padding-left:0px;">
+                    <p style = "font-weight:bold;">Price: @product.price KM</p>
+                    <p style = "color: #777">From: @product.manufacturer</p>
+                    <p style = "font-weight:bold;">Free international shipping</p>
+                </div>
+            </div>
+        </div>
+
+    }
+    </div>
+}

@@ -84,5 +84,10 @@ public class Product extends Model {
         return products;
     }
 
+    public static List<Product>searchProductByName(String name){
+        List<Product>product = Product.finder.where().contains("name", name).findList();
+
+        return product;
+    }
 
 }
