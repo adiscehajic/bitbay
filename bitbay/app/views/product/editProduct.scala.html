@@ -50,11 +50,10 @@
           @flash.get("editProductManufacturerError")
           </p>
         }
-        @if(flash.containsKey("editProductManufacturerEmptyError")) {
           <p style="color : red ;">
           @flash.get("editProductManufacturerEmptyError")
           </p>
-        }
+
       </div>
       <label for="selling=type">Type of selling:*</label>
       <select id="selling=type" class="form-control placeholder" name="type" onchange="validateRegistration()">

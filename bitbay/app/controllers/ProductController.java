@@ -1,16 +1,19 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.cloudinary.Cloudinary;
 import helpers.CurrentSeller;
 import models.*;
 import play.Logger;
 import play.Play;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
+import views.html.category.viewProductsByCategory;
 import views.html.product.newProduct;
 import views.html.product.editProduct;
 import views.html.product.productProfile;
@@ -18,6 +21,7 @@ import views.html.product.searchProduct;
 import views.html.user.userProducts;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -164,7 +168,7 @@ public class ProductController extends Controller {
         String manufacturer = boundForm.bindFromRequest().field("manufacturer").value();
         String price = boundForm.bindFromRequest().field("price").value();
         String quantity = boundForm.bindFromRequest().field("quantity").value();
-        String sellingType = boundForm.bindFromRequest().field("selling-type").value();
+        String sellingType = boundForm.bindFromRequest().field("type").value();
 
         List<Category> categories = Category.findAll();
 
@@ -237,5 +241,23 @@ public class ProductController extends Controller {
         return ok(searchProduct.render(products));
     }
 
+    public Result autocompleteSearch() {
+        Form<Product> boundForm = productForm.bindFromRequest();
+
+        String name = boundForm.bindFromRequest().field("search").value();
+
+        Logger.info(name);
+        List<Product> products = Product.searchProductByName(name);
+
+        List<String> names = new ArrayList<>();
+
+        for (int i = 0; i < products.size(); i++) {
+           names.add(products.get(i).name);
+        }
+
+        JsonNode object = Json.toJson(names);
+
+        return ok(object);
+    }
 
 }
