@@ -12,6 +12,7 @@ import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import play.mvc.Security;
+import scala.Char;
 import views.html.category.viewProductsByCategory;
 import views.html.product.newProduct;
 import views.html.product.editProduct;
@@ -87,10 +88,49 @@ public class ProductController extends Controller {
         String quantity = boundForm.bindFromRequest().field("quantity").value();
         String sellingType = boundForm.bindFromRequest().field("type").value();
 
-        Logger.info(price);
-        Logger.info(quantity);
-
         Category category = Category.getCategoryByName(categoryValue);
+        List<Category> categories = Category.findAll();
+
+        if (name.isEmpty()) {
+            flash("saveProductNameError", "Please enter product name.");
+            return badRequest(newProduct.render(categories));
+        }
+
+            if(!manufacturer.matches("^[a-z A-Z]*$")){
+                flash("saveProductManufacturerError","Manufacturer must contain only letters.");
+                return badRequest(newProduct.render(categories));
+            }
+
+        if (manufacturer.isEmpty()){
+            flash("saveProductManufacturerEmptyError", "Please enter manufacturer");
+            return badRequest(newProduct.render(categories));
+        }
+
+       if(Integer.parseInt(price)<=0){
+           flash("saveCategoryLowPriceError", "Price can't be 0 or lower.");
+           return badRequest(newProduct.render(categories));
+
+       }
+
+        if(price.isEmpty()){
+            flash("saveProductEmptyPriceError", "Please enter price.");
+            return badRequest(newProduct.render(categories));
+        }
+
+        if(quantity.isEmpty()){
+            flash("saveProductEmptyQuantityError", "Please enter product quantity.");
+            return badRequest(newProduct.render(categories));
+        }
+
+        if(categoryValue == null){
+            flash("saveCategoryEmptyCategoryError", "Please select category.");
+            return badRequest(newProduct.render(categories));
+        }
+
+        if(sellingType == null){
+            flash("saveCategoryEmptySellingTypeyError", "Please select selling type.");
+            return badRequest(newProduct.render(categories));
+        }
 
         Product product = new Product(user, name, description, manufacturer, category, Double.parseDouble(price), Integer.parseInt(quantity), sellingType);
 
@@ -135,6 +175,46 @@ public class ProductController extends Controller {
         String price = boundForm.bindFromRequest().field("price").value();
         String quantity = boundForm.bindFromRequest().field("quantity").value();
         String sellingType = boundForm.bindFromRequest().field("selling-type").value();
+
+        List<Category> categories = Category.findAll();
+
+        if (name.isEmpty()) {
+            flash("editProductNameError", "Please enter product name.");
+            return badRequest(editProduct.render(product));
+        }
+
+        for(char ch:manufacturer.toCharArray()){
+            if(Character.isDigit(ch)){
+                flash("editProductManufacturerError","Manufacturer must contain only letters.");
+                return badRequest(editProduct.render(product));
+            }
+        }
+
+        if (manufacturer.isEmpty()){
+            flash("editProductManufacturerEmptyError", "Please enter manufacturer");
+            return badRequest(editProduct.render(product));
+        }
+
+        if(Double.parseDouble(price)<=0){
+            flash("editCategoryLowPriceError", "Price can't be 0 or lower.");
+            return badRequest(editProduct.render(product));
+
+        }
+
+        if(price.isEmpty()){
+            flash("editProductEmptyPriceError", "Please enter price.");
+            return badRequest(editProduct.render(product));
+        }
+
+        if(Integer.parseInt(quantity)<0){
+            flash("editProductEmptyQuantityError", "Quantity can't be 0 or lower.");
+            return badRequest(editProduct.render(product));
+        }
+
+        if(sellingType == null){
+            flash("editCategoryEmptySellingTypeyError", "Please select selling type.");
+            return badRequest(editProduct.render(product));
+        }
 
         product.name = name;
         product.description = description;

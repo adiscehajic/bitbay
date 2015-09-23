@@ -15,33 +15,75 @@
       <div class="form-group">
         <label for="product-name">Category: * </label>
         <select class="form-control placeholder" name="category" onclick="validateProduct()" onfocusout="validateCategory()">
+
           <option value="0" selected disabled >Please select type</option>
           @for(category <- categories) {
             <option value="@category.name">@category.name</option>
-        }
+          }
         </select>
+        @if(flash.containsKey("saveCategoryEmptyCategoryError")) {
+        <p style="color : red ;">
+        @flash.get("saveCategoryEmptyCategoryError")
+        </p>
+      }
       </div>
       <div class="form-group">
         <label for="product-name">Product Name: * </label>
         <input type="text" class="form-control" id="product-name" name="name" onfocusout="validateName()" onchange="validateProduct()">
+        @if(flash.containsKey("saveProductNameError")) {
+          <p style="color : red ;">
+          @flash.get("saveProductNameError")
+          </p>
+        }
       </div>
       <div class="form-group">
         <label for="price">Price: * </label>
         <input type="number" id="replyNumber" data-bind="value:replyNumber" class="form-control" name="price" onfocusout="validatePrice()" onchange="validateProduct()">
+        @if(flash.containsKey("saveCategoryLowPriceError")) {
+          <p style="color : red ;">
+          @flash.get("saveCategoryLowPriceError")
+          </p>
+        }
+        @if(flash.containsKey("saveProductEmptyPriceError")) {
+          <p style="color : red ;">
+          @flash.get("saveProductEmptyPriceError")
+          </p>
+        }
       </div>
       <div class="form-group">
         <label for="quantity">Quantity: * </label>
         <input type="number" id="replyNumber" data-bind="value:replyNumber" class="form-control" name="quantity" onfocusout="validateQuanity()" onchange="validateProduct()">
+        @if(flash.containsKey("saveProductEmptyQuantityError")) {
+          <p style="color : red ;">
+          @flash.get("saveProductEmptyQuantityError")
+          </p>
+        }
       </div>
       <div class="form-group">
-        <label for="manufacturer">Manufacturer:</label>
+        <label for="manufacturer">Manufacturer:*</label>
         <input type="text" class="form-control" id="manufacturer" name="manufacturer" onfocusout="validateProduct()">
+        @if(flash.containsKey("saveProductManufacturerError")) {
+          <p style="color : red ;">
+          @flash.get("saveProductManufacturerError")
+          </p>
+        }
+        @if(flash.containsKey("saveProductManufacturerEmptyError")) {
+          <p style="color : red ;">
+          @flash.get("saveProductManufacturerEmptyError")
+          </p>
+        }
       </div>
-      <select class="form-control placeholder" name="type" onchange="validateRegistration()">
+      <label for="selling=type">Type of selling:*</label>
+      <select id="selling=type" class="form-control placeholder" name="type" onchange="validateRegistration()">
         <option value="0" selected disabled>Please select sale type</option>
         <option value="1">Regular</option>
         <option value="2">Auction</option>
       </select>
+      @if(flash.containsKey("saveCategoryEmptySellingTypeyError")) {
+        <p style="color : red ;">
+        @flash.get("saveCategoryEmptySellingTypeyError")
+        </p>
+      }
         <div class="form-group">
         <label for="description">Description:</label>
         <textarea class="form-control" rows="5" id="description" name="description" onfocusout="validateProduct()"></textarea>
