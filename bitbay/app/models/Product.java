@@ -34,7 +34,7 @@ public class Product extends Model {
     public Integer quantity;
     public String sellingType;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Image> images;
+    public List<Image> images;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments;
     @Formats.DateTime(pattern = "dd/MM/yyyy")

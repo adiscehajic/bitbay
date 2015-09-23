@@ -43,7 +43,9 @@ create table country (
 
 create table image (
   id                        integer auto_increment not null,
-  path                      varchar(255),
+  public_id                 varchar(255),
+  secret_image_url          varchar(255),
+  image_url                 varchar(255),
   product_id                integer,
   constraint pk_image primary key (id))
 ;

@@ -1,10 +1,12 @@
 package controllers;
 
 
+import com.cloudinary.Cloudinary;
 import helpers.CurrentBuyerSeller;
 import helpers.CurrentSeller;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
+import play.Play;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -29,10 +31,19 @@ import javax.persistence.PersistenceException;
 /**
  * Created by Adis Cehajic on 02/09/15.
  */
-
 public class Users extends Controller {
+
     // Declaring variable.
     private static final Form<User> userRegistration = Form.form(User.class);
+
+    private String name;
+
+    public Result index() {
+        List<Product> products = Product.findAll();
+
+
+        return ok(index.render(name, products));
+    }
 
     /**
      * This method delete selected user
