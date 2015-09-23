@@ -36,15 +36,6 @@ public class Users extends Controller {
     // Declaring variable.
     private static final Form<User> userRegistration = Form.form(User.class);
 
-    private String name;
-
-    public Result index() {
-        List<Product> products = Product.findAll();
-
-
-        return ok(index.render(name, products));
-    }
-
     /**
      * This method delete selected user
      * @param id - ID of selected user

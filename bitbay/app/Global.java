@@ -1,5 +1,7 @@
 import com.avaje.ebean.Ebean;
+import com.cloudinary.Cloudinary;
 import models.Category;
+import models.Image;
 import models.User;
 import models.UserType;
 import org.mindrot.jbcrypt.BCrypt;
@@ -23,6 +25,8 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(Application application) {
         super.onStart(application);
+
+        Image.cloudinary = new Cloudinary("cloudinary://"+ Play.application().configuration().getString("cloudinary.string"));
 
         if (Ebean.find(UserType.class).findRowCount() == 0) {
 

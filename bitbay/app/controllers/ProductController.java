@@ -19,6 +19,7 @@ import views.html.product.editProduct;
 import views.html.product.productProfile;
 import views.html.product.searchProduct;
 import views.html.user.userProducts;
+import views.html.category.viewProductsByCategory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -146,7 +147,7 @@ public class ProductController extends Controller {
             Image image = Image.create(file, product.id);
             image.save();
         }
-        return redirect(routes.Users.index());
+        return redirect(routes.ApplicationController.index());
     }
 
     @Security.Authenticated(CurrentSeller.class)
