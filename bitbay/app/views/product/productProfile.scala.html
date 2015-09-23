@@ -3,18 +3,18 @@
 @main("Product") {
 		<div class="container" id="wrapper">
 			<div class="row">
-				<div class="col-md-1"></div>
-				<div class="col-md-4" style="margin-right: 5%">
+
+				<div class="col-md-6">
 					<div class="thumbnail">
 
 					@for(image <- product.images) {
-						<img class="img-responsive" src="@image.getSize(480,360)" >
+						<img class="img-responsive" src="@image.getSize(576,486)" >
 					}
 
 					</div>
 				</div>
 
-			<div class="col-md-6" id="userInfo">
+			<div class="col-md-5 " id="userInfo">
 				<h2>@product.name</h2>
 				<table>
 					<tbody>
@@ -76,8 +76,8 @@
 			</div>
 		</div>
 		<div class="row" >
-			<div class="col-md-5" style="margin-right: 5%"></div>
-			<div class="col-md-6" style="margin-top:20px" id="deliveryWrapper">
+
+			<div class="col-md-5 col-md-offset-6" style="margin-top:20px" id="deliveryWrapper">
 				<table>
 					<tbody>
 						<tr>
@@ -97,8 +97,8 @@
 			</div>
 		</div>
 		<div class="row" >
-			<div class="col-md-1"></div>
-			<div class="col-md-10">
+
+			<div class="col-md-12">
 				<ul class="nav nav-tabs">
 					<li class="active"><a data-toggle="tab" href="#about">About</a></li>
 					<li><a data-toggle="tab" href="#menu2">Comments (@(comments.size + topComments.size))</a></li>
@@ -284,6 +284,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 
 }
