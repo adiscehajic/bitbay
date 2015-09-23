@@ -13,6 +13,7 @@ GET           /logout                     @controllers.ApplicationController.log
 
 GET           /product/new                @controllers.ProductController.newProduct()
 POST          /product/thumbUp            @controllers.CommentController.saveThumbUp()
+GET           /product/search             @controllers.ProductController.searchProduct()
 GET           /product/:id                @controllers.ProductController.getProduct(id: Integer)
 POST          /product/:id                @controllers.CartController.addToCart(id: Integer)
 POST          /product/comment/:id        @controllers.CommentController.saveComment(id: Integer)

@@ -16,6 +16,7 @@ import views.html.category.viewProductsByCategory;
 import views.html.product.newProduct;
 import views.html.product.editProduct;
 import views.html.product.productProfile;
+import views.html.product.searchProduct;
 import views.html.user.userProducts;
 import java.io.File;
 import java.io.IOException;
@@ -153,5 +154,18 @@ public class ProductController extends Controller {
 
         return ok(viewProductsByCategory.render(products, category));
     }
+
+    public Result searchProduct(){
+
+        Form<Product> boundForm = productForm.bindFromRequest();
+        String name = boundForm.bindFromRequest().field("search").value();
+
+        List<Product> products = Product.searchProductByName(name);
+
+        Logger.info(products.get(0).name);
+
+        return ok(searchProduct.render(products));
+    }
+
 
 }
