@@ -1,23 +1,22 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import com.cloudinary.Cloudinary;
 import helpers.CurrentSeller;
 import models.*;
-import org.apache.commons.io.FileUtils;
 import play.Logger;
 import play.Play;
 import play.data.Form;
 import play.mvc.Controller;
-import play.mvc.Http.MultipartFormData;
-import play.mvc.Http.MultipartFormData.FilePart;
+import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.product.newProduct;
 import views.html.product.editProduct;
+import views.html.product.newProduct;
 import views.html.product.productProfile;
 import views.html.user.userProducts;
+
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -75,7 +74,7 @@ public class ProductController extends Controller {
     @Security.Authenticated(CurrentSeller.class)
     public Result saveProduct() {
         Form<Product> boundForm = productForm.bindFromRequest();
-
+        Image.cloudinary = new Cloudinary("cloudinary://"+ Play.application().configuration().getString("cloudinary.string"));
         User user = User.getUserByEmail(session().get("email"));
         String name = boundForm.bindFromRequest().field("name").value();
         String description = boundForm.bindFromRequest().field("description").value();
@@ -88,25 +87,18 @@ public class ProductController extends Controller {
         Category category = Category.getCategoryByName(categoryValue);
 
         Product product = new Product(user, name, description, manufacturer, category, Double.parseDouble(price), Integer.parseInt(quantity), sellingType);
+        product.save();
 
-        Ebean.save(product);
 
-        MultipartFormData body = request().body().asMultipartFormData();
-        List<FilePart> pictures = body.getFiles();
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart filePart = body.getFile("image");
 
-        if (pictures != null) {
-            for (FilePart picture : pictures) {
-                String fileName = picture.getFilename();
-                File file = picture.getFile();
-                try {
-                    FileUtils.moveFile(file, new File(Play.application().path() + "/public/images/products/" + fileName));
-                    Image image = new Image(fileName, product);
-                    Ebean.save(image);
-                } catch (IOException e) {
-                    Logger.info(e.getMessage());
-                }
-            }
+        if (filePart != null) {
+            File file = filePart.getFile();
+            Image image = Image.create(file, product.id);
+            image.save();
         }
+
         return redirect(routes.Users.index());
     }
 
@@ -138,7 +130,7 @@ public class ProductController extends Controller {
         product.quantity = Integer.parseInt(quantity);
         product.sellingType = sellingType;
 
-        Ebean.update(product);
+        product.update();
 
         return redirect(routes.ProductController.getProduct(product.id));
     }

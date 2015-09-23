@@ -24,7 +24,10 @@
     @for(product <- products) {
         <div class="col-sm-6 col-md-3 col-lg-3">
             <div class="thumbnail" style="height:400px;" id="ellipsis">
-                <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;"><img class="img-responsive" style="height: 230px;" src="@routes.Assets.versioned("images/products/" + Image.getImagePath(product))" ></a>
+                <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+                    @for(image <- product.images) {
+                        <img class="img-responsive" src="@image.getThumbnail(400,360)" ></a>
+                }
                 <div class="caption">
                     <h3><a href="@routes.ProductController.getProduct(product.id)" style="margin-top: 10px;">@product.name</a></h3>
                     <p>@product.description</p>

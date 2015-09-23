@@ -1,10 +1,12 @@
 package controllers;
 
 
+import com.cloudinary.Cloudinary;
 import helpers.CurrentBuyerSeller;
 import helpers.CurrentSeller;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
+import play.Play;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -38,6 +40,7 @@ public class Users extends Controller {
 
     public Result index() {
         List<Product> products = Product.findAll();
+        Image.cloudinary = new Cloudinary("cloudinary://"+ Play.application().configuration().getString("cloudinary.string"));
 
 
         return ok(index.render(name, products));
