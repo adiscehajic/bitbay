@@ -59,35 +59,44 @@ public class CategoryController extends Controller {
      *         warning message occurs.
      */
     public Result updateCategory(Integer id){
-        Category c = Category.getCategoryById(id);
+        // Finding selected category from database.
+        Category category = Category.getCategoryById(id);
+        // Declaring category form.
         Form<Category> boundForm = categoryForm.bindFromRequest();
+        // Declaring string variable that represents inputed name of the category.
         String name = boundForm.bindFromRequest().field("categoryName").value();
 
         try {
+            // Declaring list of all categories.
             List<Category> categories = Category.findAll();
-            for(Category category: categories){
-                if(category.name.equals(name)){
-                    flash("editCategoryEqualError", "Category already exists.");
+            // Going trough all categories and checking if there is already category with same name.
+            for(Category cat: categories){
+                if(cat.name.equals(name)){
+                    flash("saveCategoryEqualError", "Category already exists.");
                     throw new Exception();
                 }
             }
-            if (!name.equals(c.name)) {
-                    if (!name.matches("^[a-z A-Z]*$")) {
-                        flash("editCategoryDigitError", "Category name can't contain digits.");
-                        throw new Exception();
-                    }
-
-                if(name.isEmpty()){
-                    flash("editCategoryEmptyError", "Category name can't be empty string.");
-                    throw new Exception();
-                }else{
-                    c.name = name;
-                }
+            // Checking does the inputed name contains letters.
+            if (!name.matches("^[a-z A-Z]*$")) {
+                flash("saveCategoryDigitError", "Category name can't contain digits.");
+                throw new Exception();
+            }
+            // Checking if anything is inputed.
+            if(name.isEmpty()){
+                flash("saveCategoryEmptyError", "Category name can't be empty string.");
+                throw new Exception();
+            }else{
+                // Creating new category with inputed name and saving it into database.
+                Category c = new Category(name);
+                c.save();
             }
         }catch (Exception e){
-        return badRequest(editCategory.render(c));
+            Logger.info("ERROR: Registration failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
+            return badRequest(editCategory.render(category));
         }
-        Ebean.update(c);
+        // Editing selected category.
+        category.update();
+        // Redirecting to the administrator panel page where all categories are listed.
         return redirect(routes.AdminController.adminCategories());
     }
 
@@ -122,38 +131,40 @@ public class CategoryController extends Controller {
      * are listed, othervise warning message occurs.
      */
     public Result saveCategory(){
+        // Declaring category form.
         Form<Category> boundForm = categoryForm.bindFromRequest();
-
+        // Declaring string variable that represents inputed name of the category.
         String name = boundForm.bindFromRequest().field("categoryName").value();
 
         try {
+            // Declaring list of all categories.
             List<Category> categories = Category.findAll();
+            // Going trough all categories and checking if there is already category with same name.
             for(Category category: categories){
                 if(category.name.equals(name)){
                     flash("saveCategoryEqualError", "Category already exists.");
                     throw new Exception();
                 }
             }
-                    if (!name.matches("^[a-z A-Z]*$")) {
-                        flash("saveCategoryDigitError", "Category name can't contain digits.");
-                        throw new Exception();
-                    }
-                if(name.isEmpty()){
-                    flash("saveCategoryEmptyError", "Category name can't be empty string.");
-                    throw new Exception();
-                }else{
-                    Category c = new Category(name);
-                    Ebean.save(c);
-                }
+            // Checking does the inputed name contains letters.
+            if (!name.matches("^[a-z A-Z]*$")) {
+                flash("saveCategoryDigitError", "Category name can't contain digits.");
+                throw new Exception();
+            }
+            // Checking if anything is inputed.
+            if(name.isEmpty()){
+                flash("saveCategoryEmptyError", "Category name can't be empty string.");
+                throw new Exception();
+            }else{
+                // Creating new category with inputed name and saving it into database.
+                Category category = new Category(name);
+                category.save();
+            }
         }catch (Exception e){
+            Logger.info("ERROR: Registration failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
             return badRequest(newCategory.render());
         }
-
-
-
-        List<Category> list = Category.findAll();
+        // Redirecting to the administrator panel page where all categories are listed.
         return redirect(routes.AdminController.adminCategories());
     }
-
 }
-
