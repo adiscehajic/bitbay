@@ -26,10 +26,11 @@ public class User extends Model {
 
     @Constraints.MaxLength(255)
     @Constraints.Required
-    @Constraints.Pattern("[a-z A-Z]")
+    @Constraints.Pattern("^[a-z A-Z]+$")
     public String firstName;
 
     @Constraints.MaxLength(255)
+    @Constraints.Pattern("^[a-z A-Z]+$")
     @Constraints.Required
     public String lastName;
 
@@ -110,7 +111,6 @@ public class User extends Model {
         // Checking if the loaded user exists and if his password corresponds to the inputed password.
         if (user != null && BCrypt.checkpw(password, user.password)) {
             return user;
-
         } else {
             return null;
         }

@@ -22,19 +22,12 @@ public class Category extends Model {
 
     @OneToMany
     private List<Product> products;
-//    public Integer parent_id;
-//    public Integer status_id;
 
     private static Finder<String, Category> finder =
             new Finder<>(Category.class);
 
 
-//    public Category(String name, Integer parent_id, Integer status_id){
-//
-//        this.name = name;
-//        this.parent_id = parent_id;
-//        this.status_id = status_id;
-//    }
+
 
     public Category(String name) {
         this.name = name;
@@ -51,7 +44,7 @@ public class Category extends Model {
     }
 
     public static List<Category> findAll() {
-        List<Category> categories = finder.orderBy("name asc").findList();
+        List<Category> categories = finder.orderBy("name asc").where().ne("id", 1).findList();
         return categories;
     }
 

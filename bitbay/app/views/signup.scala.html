@@ -1,5 +1,6 @@
-@(userRegistration: Form[User])
-@import helper._
+@import controllers.ApplicationController.Registration
+@(userRegistration: Form[Registration])
+
 	<!DOCTYPE html>
 		<html>
 			<head>
@@ -32,27 +33,30 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div id="inputs">
-								@helper.form(action = routes.Users.newUser()) {
+								<form class="form-signin" method="POST" action="@routes.ApplicationController.newUser()">
 									<div class="container">
 										<div class="row">
-											@if(flash.containsKey("errorFirstName")) {
-												<div class="alert alert-warning" style="width: 47%; margin-left: 15px;">
-													@flash.get("errorFirstName")
+											@if(flash.containsKey("signUpError")) {
+												<div class="alert alert-danger" style="margin-top: 20px; margin-left: 15px; width: 94%">
+												@flash.get("signUpError")
 												</div>
 											}
-											@if(flash.containsKey("errorLastName")) {
-												<div class="alert alert-warning" style="width: 47%; margin-left: 15px;">
-													@flash.get("errorLastName")
+											@if(flash.containsKey("nameError")) {
+												<div class="alert alert-danger" style="margin-top: 20px; margin-left: 15px; width: 94%">
+												@flash.get("nameError")
+												</div>
+											}
+											@if(flash.containsKey("errorUserExists")) {
+												<div class="alert alert-danger" style="margin-top: 20px; margin-left: 15px; width: 94%">
+												@flash.get("errorUserExists")
 												</div>
 											}
 											<div class="col-md-3">
-
 												<p class="paragraph"> First name * </p>
 												<input class="form-control" onkeypress="return isAlphaKey(event);" onkeyup="validateRegistration()" onfocusout="checkName()" id="ex3" type="letter" name="first-name" value="@userRegistration("first-name").value">
 											</div>
 
 											<div class="col-md-3">
-
 												<p class="paragraph"> Last name * </p>
 												<input class="form-control" onkeypress="return isAlphaKey(event);" onkeyup="validateRegistration()" onfocusout="checkSurname()" id="ex3" type="text" name="last-name" value="@userRegistration("last-name").value">
 											</div>
@@ -61,8 +65,8 @@
 												<p class="paragraph">Account type * </p>
 												<select class="form-control placeholder" name="type" onchange="validateRegistration()" value="@userRegistration("type").value">
 													<option value="0" selected disabled>Please select type</option>
-													<option value="3">Seller</option>
 													<option value="2">Buyer</option>
+													<option value="3">Seller</option>
 												</select>
 											</div>
 										</div>
@@ -71,10 +75,10 @@
 											<div class="row">
 												<div class="col-md-4">
 													@if(flash.containsKey("errorEmail")) {
-													<div class="alert alert-danger" style="margin-top: 20px; width: 96%">
-													@flash.get("errorEmail")
-													</div>
-												}
+														<div class="alert alert-danger" style="margin-top: 20px; width: 96%">
+															@flash.get("errorEmail")
+														</div>
+													}
 													<p class="paragraph"> Email * </p>
 													<input class="form-control" id="inputSuccess2" onkeyup="validateRegistration()" onfocusout="checkEmail()" aria-describedby="inputSuccess2Status" type="email" name="email" value="@userRegistration("email").value" required>
 												</div>
@@ -84,12 +88,12 @@
 											<div class="col-md-3">
 												@if(flash.containsKey("error")) {
 													<div class="alert alert-warning" style="margin-top: 20px; width: 96%">
-													@flash.get("error")
+														@flash.get("error")
 													</div>
 												}
 												@if(flash.containsKey("errorPassword")) {
 													<div class="alert alert-danger" style="margin-top: 20px; width: 96%">
-													@flash.get("errorPassword")
+														@flash.get("errorPassword")
 													</div>
 												}
 												<p class="paragraph" id="pass"> Create password * </p>
@@ -111,13 +115,13 @@
 											</div>
 										</div>
 									</div>
-								}
+								</form>
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="row">
 									<p class="confirmPar" style="margin-top:10px"> Already have an Account? </p>
-									<a href="/signin"><button class="btn btn-default btn-md" style="margin: 0px 0px 15px 15px"> Sign in </button></a>
+									<a href="@routes.ApplicationController.signIn()"><button class="btn btn-default btn-md" style="margin: 0px 0px 15px 15px"> Sign in </button></a>
 								</div>
 							</div>	
 						</div>

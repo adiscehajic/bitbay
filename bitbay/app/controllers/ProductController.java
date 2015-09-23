@@ -11,12 +11,13 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.product.editProduct;
 import views.html.product.newProduct;
+import views.html.product.editProduct;
 import views.html.product.productProfile;
+import views.html.product.searchProduct;
 import views.html.user.userProducts;
-
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -85,10 +86,53 @@ public class ProductController extends Controller {
         String sellingType = boundForm.bindFromRequest().field("type").value();
 
         Category category = Category.getCategoryByName(categoryValue);
+        List<Category> categories = Category.findAll();
+
+        if (name.isEmpty()) {
+            flash("saveProductNameError", "Please enter product name.");
+            return badRequest(newProduct.render(categories));
+        }
+
+            if(!manufacturer.matches("^[a-z A-Z]*$")){
+                flash("saveProductManufacturerError","Manufacturer must contain only letters.");
+                return badRequest(newProduct.render(categories));
+            }
+
+        if (manufacturer.isEmpty()){
+            flash("saveProductManufacturerEmptyError", "Please enter manufacturer");
+            return badRequest(newProduct.render(categories));
+        }
+
+       if(Integer.parseInt(price)<=0){
+           flash("saveCategoryLowPriceError", "Price can't be 0 or lower.");
+           return badRequest(newProduct.render(categories));
+
+       }
+
+        if(price.isEmpty()){
+            flash("saveProductEmptyPriceError", "Please enter price.");
+            return badRequest(newProduct.render(categories));
+        }
+
+        if(quantity.isEmpty()){
+            flash("saveProductEmptyQuantityError", "Please enter product quantity.");
+            return badRequest(newProduct.render(categories));
+        }
+
+        if(categoryValue == null){
+            flash("saveCategoryEmptyCategoryError", "Please select category.");
+            return badRequest(newProduct.render(categories));
+        }
+
+        if(sellingType == null){
+            flash("saveCategoryEmptySellingTypeyError", "Please select selling type.");
+            return badRequest(newProduct.render(categories));
+        }
 
         Product product = new Product(user, name, description, manufacturer, category, Double.parseDouble(price), Integer.parseInt(quantity), sellingType);
         product.save();
 
+        Ebean.save(product);
 
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart filePart = body.getFile("image");
@@ -98,7 +142,6 @@ public class ProductController extends Controller {
             Image image = Image.create(file, product.id);
             image.save();
         }
-
         return redirect(routes.Users.index());
     }
 
@@ -123,6 +166,46 @@ public class ProductController extends Controller {
         String quantity = boundForm.bindFromRequest().field("quantity").value();
         String sellingType = boundForm.bindFromRequest().field("selling-type").value();
 
+        List<Category> categories = Category.findAll();
+
+        if (name.isEmpty()) {
+            flash("editProductNameError", "Please enter product name.");
+            return badRequest(editProduct.render(product));
+        }
+
+        for(char ch:manufacturer.toCharArray()){
+            if(Character.isDigit(ch)){
+                flash("editProductManufacturerError","Manufacturer must contain only letters.");
+                return badRequest(editProduct.render(product));
+            }
+        }
+
+        if (manufacturer.isEmpty()){
+            flash("editProductManufacturerEmptyError", "Please enter manufacturer");
+            return badRequest(editProduct.render(product));
+        }
+
+        if(Double.parseDouble(price)<=0){
+            flash("editCategoryLowPriceError", "Price can't be 0 or lower.");
+            return badRequest(editProduct.render(product));
+
+        }
+
+        if(price.isEmpty()){
+            flash("editProductEmptyPriceError", "Please enter price.");
+            return badRequest(editProduct.render(product));
+        }
+
+        if(Integer.parseInt(quantity)<0){
+            flash("editProductEmptyQuantityError", "Quantity can't be 0 or lower.");
+            return badRequest(editProduct.render(product));
+        }
+
+        if(sellingType == null){
+            flash("editCategoryEmptySellingTypeyError", "Please select selling type.");
+            return badRequest(editProduct.render(product));
+        }
+
         product.name = name;
         product.description = description;
         product.manufacturer = manufacturer;
@@ -134,5 +217,25 @@ public class ProductController extends Controller {
 
         return redirect(routes.ProductController.getProduct(product.id));
     }
+
+    public Result viewProductsByCategory(Integer id) {
+        Category category = Category.getCategoryById(id);
+        List<Product> products = Product.findAllProductsByCategory(category);
+
+        return ok(viewProductsByCategory.render(products, category));
+    }
+
+    public Result searchProduct(){
+
+        Form<Product> boundForm = productForm.bindFromRequest();
+        String name = boundForm.bindFromRequest().field("search").value();
+
+        List<Product> products = Product.searchProductByName(name);
+
+        Logger.info(products.get(0).name);
+
+        return ok(searchProduct.render(products));
+    }
+
 
 }

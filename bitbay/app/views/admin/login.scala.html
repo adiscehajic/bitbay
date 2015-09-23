@@ -1,4 +1,7 @@
 @import helper._
+@import controllers.ApplicationController.Registration
+
+@(implicit adminForm: Form[Registration])
 <!DOCTYPE html>
 <html>
 	<head>
@@ -22,10 +25,11 @@
 			<div class="wrapper col-md-3">
 				<div class="container">
 					@helper.form(action = routes.AdminController.validateLogin()) {
+
 					<div class="row" style="width:93%">
 						<div class="col-md-3" style="padding-top:10px">
 							<label> Email </label>
-							<input class="form-control" type="email" name="email">
+							<input class="form-control" type="email" name="email" value="@adminForm("email").value">
 						</div>
 					</div>
 					<div class="row" style="width:93%">
@@ -34,7 +38,13 @@
 							<input class="form-control" type="password" name="password" >
 						</div>
 					</div>
+
 					<div class="row">
+						@if(flash.containsKey("adminError")) {
+							<p style="color: red; margin-left: 15px;">
+							@flash.get("adminError")
+							</p>
+						}
 						<div class="col-md-1">
 						</div>
 						<div class="col-md-1">

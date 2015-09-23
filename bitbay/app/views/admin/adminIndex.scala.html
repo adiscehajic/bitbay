@@ -1,5 +1,5 @@
 @import helpers.SessionHelper
-@(content: Html)(implicit currentUser: User = SessionHelper.currentUser(ctx()))
+@(content: Html)(implicit currentUser: User = SessionHelper.currentUser())
 
 <!DOCTYPE html>
 <html>
@@ -10,6 +10,7 @@
 		<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/newCategory.css")">
 		<link rel="shortcut icon" type="image/ico" href="@routes.Assets.versioned("images/favicon.ico")">
 		<script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")" type="text/javascript"></script>
+		<script src="@routes.Assets.versioned("javascripts/adminPanel.js")" type="text/javascript"></script>
 		<script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")" type="text/javascript"></script>
 		<script src="@routes.Assets.versioned("javascripts/jquery-confirm.min.js")" type="text/javascript"></script>
 		<title> Admin Panel </title>

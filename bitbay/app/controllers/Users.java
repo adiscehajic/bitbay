@@ -29,7 +29,7 @@ import javax.persistence.PersistenceException;
 
 
 /**
- * Created by adis.cehajic on 02/09/15.
+ * Created by Adis Cehajic on 02/09/15.
  */
 public class Users extends Controller {
 
@@ -40,137 +40,9 @@ public class Users extends Controller {
 
     public Result index() {
         List<Product> products = Product.findAll();
-        Image.cloudinary = new Cloudinary("cloudinary://"+ Play.application().configuration().getString("cloudinary.string"));
 
 
         return ok(index.render(name, products));
-    }
-
-    /**
-     * Opens page with sign up content.
-     * @return
-     */
-    public Result signup() {
-        Form<User> boundForm = userRegistration.bindFromRequest();
-        if (session().get("email") == null) {
-            return badRequest(signup.render(boundForm));
-        } else {
-            return redirect(routes.Users.index());
-        }
-    }
-
-    /**
-     * Opens page with sign in content.
-     * @return
-     */
-    public Result signIn() {
-        return ok(signIn.render(userRegistration));
-    }
-
-    /**
-     * Reads inputed values that are inputed on sign up page and inputing them into the database.
-     * @return
-     */
-    public Result newUser() {
-        // Connecting with sign up form.
-        Form<User> boundForm = userRegistration.bindFromRequest();
-
-        // Reading inputed values and storing them into string variables.
-        String firstName = boundForm.bindFromRequest().field("first-name").value();
-        String lastName = boundForm.bindFromRequest().field("last-name").value();
-        String email = boundForm.bindFromRequest().field("email").value();
-        String password = boundForm.bindFromRequest().field("password").value();
-        String confirmPassword = boundForm.bindFromRequest().field("confirmPassword").value();
-        String type = boundForm.bindFromRequest().field("type").value();
-        UserType userType = UserType.getUserTypeById(Integer.parseInt(type));
-        Logger.info(type);
-
-        if (firstName.equals("")) {
-            flash("errorFirstName", "Please input first name.");
-            return ok(signup.render(userRegistration));
-        } else if (lastName.equals("")) {
-            flash("errorLastName", "Please input last name.");
-            return ok(signup.render(userRegistration));
-        }
-
-        // Checking are the inputed password and confirm password equal, and if they are creating
-        // new user and storing him into database.
-        if (password.equals(confirmPassword) && password != "" && password.length() >= 8) {
-            // Creating new user.
-            User user = new User(null, firstName, lastName, email, password, userType);
-            // Saving new user into database.
-            try {
-                Ebean.save(user);
-            } catch (PersistenceException e) {
-                flash("errorEmail", "Email already exists.");
-                return badRequest(signup.render(boundForm));
-            }
-
-            session().clear();
-            session("email", email);
-            // Redirecting to the main page.
-            return redirect(routes.Users.index());
-        } else {
-            flash("error", "Password must have min. 8 characters and must match.");
-            return badRequest(signup.render(userRegistration));
-        }
-    }
-
-
-    /**
-     * Reads inputed values that are inputed on sign in page and validates them.
-     * @return
-     */
-    public Result validate() {
-        // Connecting with sign in form.
-        Form<User> boundForm = userRegistration.bindFromRequest();
-        // Reading inputed values and storing them into string variables.
-        String email = boundForm.bindFromRequest().field("email").value();
-        String password = boundForm.bindFromRequest().field("password").value();
-
-      //  if (boundForm.hasErrors()) {
-        //    flash("signInError", "Wrong input!");
-         //   return badRequest(signIn.render(boundForm));
-       // }
-
-        // Calling method authenticate and creating new user.
-
-        if (email.equals("") || password.equals("")) {
-            flash("errorNoInput", "Please input email and password.");
-            return ok(signIn.render(userRegistration));
-        }
-        User user = User.authenticate(email,password);
-
-
-        // Checking if the user exists. If the inputed email and password are correct
-        // redirecting to the main page, othewise opens sign in page.
-
-        if (user == null) {
-            flash("errorEmail", "Wrong email or password.");
-            return ok(signIn.render(userRegistration));
-        } else if (user.toString().equals(" ")) {
-            flash("errorNoInput", "Please input email and password.");
-            return ok(signIn.render(userRegistration));
-        } else if (user != null) {
-            if (user.userType.id == 1) {
-                return redirect(routes.Users.signIn());
-            }
-            session().clear();
-            session("email", email);
-            return redirect(routes.Users.index());
-        } else {
-            return null;
-        }
-
-    }
-
-    /**
-     * Method that ends current session
-     */
-    public Result logout() {
-        session().clear();
-        flash("successLogout", "You have successfully logged out!");
-        return redirect(routes.Users.signIn());
     }
 
     /**
@@ -194,7 +66,7 @@ public class Users extends Controller {
         Ebean.delete(user);
         session().clear();
 
-        return redirect(routes.Users.index());
+        return redirect(routes.ApplicationController.index());
 
     }
 
@@ -226,7 +98,7 @@ public class Users extends Controller {
         if (user != null) {
             return ok(userEdit.render(user, countries));
         } else {
-            return redirect(routes.Users.signIn());
+            return redirect(routes.ApplicationController.signIn());
         }
     }
 
@@ -242,27 +114,58 @@ public class Users extends Controller {
 
         Form<User> boundForm = userRegistration.bindFromRequest();
 
+
         //Collecting data from user edit page
-        String name = boundForm.bindFromRequest().field("firstName").value();
+        String firstName = boundForm.bindFromRequest().field("firstName").value();
         String lastName = boundForm.bindFromRequest().field("lastName").value();
         String pass = boundForm.bindFromRequest().field("password").value();
         String conPass = boundForm.bindFromRequest().field("confirmPassword").value();
         String countryName = boundForm.bindFromRequest().field("country").value();
         String city = boundForm.bindFromRequest().field("city").value();
         String address = boundForm.bindFromRequest().field("address").value();
-
+        List<Country> countries = Country.findAllCountries();
         Logger.info(countryName);
         //Checking if any user information was changed
-        if(!name.equals(user.firstName)){
-            user.firstName = name;
+        try {
+            if (!firstName.equals(user.firstName)) {
+                    if (!firstName.matches("^[a-z A-Z]*$")) {
+                        flash("updateUserNameDiggitError","Name can't contain diggits.");
+                        throw new Exception();
+                    }
+                if (firstName.isEmpty()) {
+                    flash("updateUserNameEmptyError","Name can't be empty string.");
+                        throw new Exception();
+                } else {
+                    user.firstName = firstName;
+                }
+            }
+        }catch (Exception e){
+            return badRequest(userEdit.render(user, countries));
         }
 
-        if(!lastName.equals(user.lastName)){
-            user.lastName = lastName;
+        try {
+            if (!lastName.equals(user.lastName)) {
+                    if (!lastName.matches("^[a-z A-Z]*$")) {
+                        flash("updateUserLastNameDiggitError","Last name can't contain diggits.");
+                        throw new Exception();
+                    }
+                if (lastName.isEmpty()) {
+                    flash("updateUserLastNameEmptyError","Last name can't be empty string.");
+                    throw new Exception();
+                } else {
+                    user.lastName = lastName;
+                }
+            }
+        }catch (Exception e){
+            return badRequest(userEdit.render(user, countries));
         }
 
-        if(pass.equals(conPass)){
-            user.password = BCrypt.hashpw(pass, BCrypt.gensalt());
+        if(pass.equals(conPass)) {
+            if (pass.isEmpty() || pass.length() < 8) {
+               
+            }else{
+                user.password = BCrypt.hashpw(pass, BCrypt.gensalt());
+            }
         }
 
 
@@ -292,7 +195,7 @@ public class Users extends Controller {
         if (user != null) {
             return ok(userProducts.render(products, user));
         } else {
-            return redirect(routes.Users.signIn());
+            return redirect(routes.ApplicationController.signIn());
         }
     }
 
