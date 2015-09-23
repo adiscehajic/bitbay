@@ -7,7 +7,9 @@
 				<div class="col-md-4" style="margin-right: 5%">
 					<div class="thumbnail">
 
-						<img src="@routes.Assets.versioned("images/products/" + path)"/>
+					@for(image <- product.images) {
+						<img class="img-responsive" src="@image.getSize(480,360)" >
+					}
 
 					</div>
 				</div>
