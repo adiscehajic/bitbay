@@ -57,12 +57,11 @@ public class CategoryController extends Controller {
                 }
             }
             if (!name.equals(c.name)) {
-                for (char ch : name.toCharArray()) {
-                    if (Character.isDigit(ch)) {
+                    if (!name.matches("^[a-z A-Z]*$")) {
                         flash("editCategoryDigitError", "Category name can't contain digits.");
                         throw new Exception();
                     }
-                }
+
                 if(name.isEmpty()){
                     flash("editCategoryEmptyError", "Category name can't be empty string.");
                     throw new Exception();
@@ -112,12 +111,10 @@ public class CategoryController extends Controller {
                     throw new Exception();
                 }
             }
-                for (char ch : name.toCharArray()) {
-                    if (Character.isDigit(ch)) {
+                    if (!name.matches("^[a-z A-Z]*$")) {
                         flash("saveCategoryDigitError", "Category name can't contain digits.");
                         throw new Exception();
                     }
-                }
                 if(name.isEmpty()){
                     flash("saveCategoryEmptyError", "Category name can't be empty string.");
                     throw new Exception();

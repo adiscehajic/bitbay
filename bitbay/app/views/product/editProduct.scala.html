@@ -13,23 +13,60 @@
       <div class="form-group">
         <label for="product-name">Product Name:</label>
         <input type="text" class="form-control" id="product-name" name="name" value="@product.name" onfocusout="validateName()" oninput="validateEditing()">
+        @if(flash.containsKey("editProductNameError")) {
+          <p style="color : red ;">
+          @flash.get("editProductNameError")
+          </p>
+        }
       </div>
       <div class="form-group">
         <label for="price">Price:</label>
         <input type="number" id="replyNumber" data-bind="value:replyNumber" class="form-control" id="price" name="price" value="@product.price" onfocusout="validatePrice()" oninput="validateEditing()">
+        @if(flash.containsKey("editCategoryLowPriceError")) {
+          <p style="color : red ;">
+          @flash.get("editCategoryLowPriceError")
+          </p>
+        }
+        @if(flash.containsKey("editProductEmptyPriceError")) {
+          <p style="color : red ;">
+          @flash.get("editProductEmptyPriceError")
+          </p>
+        }
       </div>
       <div class="form-group">
         <label for="quantity">Quantity:</label>
         <input type="number" id="replyNumber" data-bind="value:replyNumber" class="form-control" id="quantity" name="quantity" value="@product.quantity" onfocusout="validateQuantity()" oninput="validateEditing()">
+        @if(flash.containsKey("editProductEmptyQuantityError")) {
+          <p style="color : red ;">
+          @flash.get("editProductEmptyQuantityError")
+          </p>
+        }
       </div>
       <div class="form-group">
         <label for="manufacturer">Manufacturer:</label>
         <input type="text" class="form-control" id="manufacturer" name="manufacturer" value="@product.manufacturer" oninput="validateEditing()">
+        @if(flash.containsKey("editProductManufacturerError")) {
+          <p style="color : red ;">
+          @flash.get("editProductManufacturerError")
+          </p>
+        }
+        @if(flash.containsKey("editProductManufacturerEmptyError")) {
+          <p style="color : red ;">
+          @flash.get("editProductManufacturerEmptyError")
+          </p>
+        }
       </div>
-      <div class="form-group">
-        <label for="selling-type">Type of selling:</label>
-        <input type="text" class="form-control" id="selling-type" name="selling-type" value="@product.sellingType" oninput="validateEditing()">
-      </div>
+      <label for="selling=type">Type of selling:*</label>
+      <select id="selling=type" class="form-control placeholder" name="type" onchange="validateRegistration()">
+        <option value="0" selected disabled>Please select sale type</option>
+        <option value="1">Regular</option>
+        <option value="2">Auction</option>
+      </select>
+      @if(flash.containsKey("editCategoryEmptySellingTypeyError")) {
+        <p style="color : red ;">
+        @flash.get("editCategoryEmptySellingTypeyError")
+        </p>
+      }
       <div class="form-group">
         <label for="description">Description:</label>
         <textarea class="form-control" rows="5" id="description" name="description" oninput="validateEditing()">@product.description</textarea>
