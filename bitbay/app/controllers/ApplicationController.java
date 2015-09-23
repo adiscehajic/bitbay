@@ -198,6 +198,8 @@ public class ApplicationController extends Controller {
 
     /**
      * Clears current sessions and prints message.
+     *
+     * @return Page where user that is administrator can sign in.
      */
     public Result logout() {
         session().clear();

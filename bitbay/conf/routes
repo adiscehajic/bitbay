@@ -45,13 +45,11 @@ GET           /user/edit/:id              @controllers.Users.editUser(id: Intege
 POST          /user/edit/:id              @controllers.Users.updateUser(id: Integer)
 
 
-GET           /category                   @controllers.CategoryController.list()
 GET           /category/new               @controllers.CategoryController.newCategory()
 GET           /category/edit/:id          @controllers.CategoryController.editCategory(id:Integer)
 GET           /category/delete/:id        @controllers.CategoryController.deleteCategory(id:Integer)
 POST          /category/new               @controllers.CategoryController.saveCategory()
 POST          /category/edit/:id          @controllers.CategoryController.updateCategory(id:Integer)
-
 
 
 # Map static resources from the /public folder to the /assets URL path

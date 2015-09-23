@@ -44,7 +44,7 @@ public class Category extends Model {
     }
 
     public static List<Category> findAll() {
-        List<Category> categories = finder.orderBy("name asc").findList();
+        List<Category> categories = finder.orderBy("name asc").where().ne("id", 1).findList();
         return categories;
     }
 
