@@ -65,7 +65,7 @@ public class ProductController extends Controller {
         }
 
         User user = User.getUserByEmail(session().get("email"));
-        List<Product> products = Product.findAllProductsByUser(user.email);
+        List<Product> products = Product.findAllProductsByUser(user);
         return ok(userProducts.render(products, user));
     }
 

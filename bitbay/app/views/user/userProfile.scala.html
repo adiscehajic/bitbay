@@ -141,7 +141,7 @@
                                     <a href="@routes.Users.getAllUserProducts()"><button type="submit" class="btn btn-lg btn-primary" >
                                         Products</button></a>
                                 }
-                                <a href="@routes.Users.editUser(user.id)" title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning"><i class="glyphicon glyphicon-edit" style="font-size : 20 px"></i>
+                                <a href="@routes.Users.editUser()" title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning"><i class="glyphicon glyphicon-edit" style="font-size : 20 px"></i>
                                     Edit</a>
                                 <a id="deleteUser" title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-remove" style="font-size : 20 px"></i>
                                     Delete</a>
@@ -163,10 +163,9 @@
                              backgroundDismiss: false,
                                confirm: function(){
                                 $.ajax({
-                                   url: '@routes.Users.deleteUserAccount(user.id)',
+                                   url: '@routes.Users.deleteUserAccount()',
                                    method: 'DELETE',
                                     }).success(function(){
-                                     alert('Account successfully deleted!');
 						             window.location.replace("@routes.ApplicationController.index()");
                                       }).error(function(response){
                                       alert(response.responseText);
