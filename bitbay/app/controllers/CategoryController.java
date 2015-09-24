@@ -127,7 +127,7 @@ public class CategoryController extends Controller {
      * category name. If the inputed category name already exists in the database or if the inputed category name is
      * not in the rigth format warning message occurs.
      *
-     * @return If the create of the new category is successful renders administrator panel page where all categories
+     * @return If create of the new category is successful renders administrator panel page where all categories
      * are listed, othervise warning message occurs.
      */
     public Result saveCategory(){

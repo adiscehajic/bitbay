@@ -35,15 +35,15 @@ GET           /admin/products             @controllers.AdminController.adminProd
 GET           /admin/products/:id         @controllers.ProductController.deleteProductAdmin(id: Integer)
 
 
+GET           /user                       @controllers.Users.getUser()
 GET           /user/cart                  @controllers.CartController.getCart()
 POST          /user/cart                  @controllers.CartController.updateItemQuantity(id: Integer)
 GET           /user/cart/delete:id        @controllers.CartController.removeFromCart(id: Integer)
 GET           /user/products              @controllers.Users.getAllUserProducts()
-GET           /user/:id                   @controllers.Users.getUser(id: Integer)
+DELETE        /user/delete                @controllers.Users.deleteUserAccount()
 GET           /user/delete/:id            @controllers.Users.deleteUser(id: Integer)
-DELETE        /user/delete/:id            @controllers.Users.deleteUserAccount(id: Integer)
-GET           /user/edit/:id              @controllers.Users.editUser(id: Integer)
-POST          /user/edit/:id              @controllers.Users.updateUser(id: Integer)
+GET           /user/edit                  @controllers.Users.editUser()
+POST          /user/edit                  @controllers.Users.updateUser()
 
 
 GET           /category/new               @controllers.CategoryController.newCategory()

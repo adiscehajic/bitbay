@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.avaje.ebean.SqlQuery;
+import helpers.SessionHelper;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 
@@ -63,6 +64,8 @@ public class Comment extends Model{
         return comment;
     }
 
-
+    public static Boolean hasUserCommented() {
+        return Comment.finder.where().eq("user", SessionHelper.currentUser()).findRowCount() == 0;
+    }
 
 }

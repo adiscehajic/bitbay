@@ -70,9 +70,8 @@ public class Product extends Model {
         return products;
     }
 
-    public static List<Product> findAllProductsByUser(String email) {
+    public static List<Product> findAllProductsByUser(User user) {
 
-        User user = User.getUserByEmail(email);
         List<Product> products = Product.finder.where().eq("user", user).findList();
 
         return products;
