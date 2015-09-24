@@ -52,8 +52,20 @@ public class Thumb extends Model {
         return thumb;
     }
 
+    public static List<Integer> getAllThumbsUpDown(Comment comment) {
+
+        List<Integer> allThumbs = new ArrayList<>();
+
+        Integer thumbsUp = getNumberThumbsUp(comment);
+        Integer thumbsDown = getNumberThumbsDown(comment);
+
+        allThumbs.add(thumbsUp);
+        allThumbs.add(thumbsDown);
+
+        return allThumbs;
+    }
+
     public static List<Comment> getMostLikedComment(Product product) {
-     //   Integer commentNumber = Thumb.finder.where().eq("is_up", 1).orderBy("comment_id").find();
 
         List<Comment> commentList = Comment.findAllCommentByProduct(product);
         Logger.info("Broj comentara produkta " + product.id + " je " + commentList.size());
