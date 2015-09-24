@@ -1,5 +1,6 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import helpers.SessionHelper;
 import models.Comment;
 import models.Product;
@@ -8,8 +9,11 @@ import models.User;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import java.util.List;
 
 
 /**
@@ -88,15 +92,25 @@ public class CommentController extends Controller {
                     // If thumb exists than updating existing thumb.
                     tmb.isUp = thumb;
                     tmb.update();
-                    return ok("2");
+                    // Declaring a list of the likes and dislikes.
+                    List<Integer> list = Thumb.getAllThumbsUpDown(comment);
+                    // Converting list into a JSON
+                    JsonNode object = Json.toJson(list);
+                    // Returning JSON object.
+                    return ok(object);
                 } else {
                     // If thumb does not exist, creating new thumb and saving it into database.
                     Thumb t = new Thumb(comment, user, thumb);
                     t.save();
-                    return ok("1");
+                    // Declaring a list of the likes and dislikes.
+                    List<Integer> list = Thumb.getAllThumbsUpDown(comment);
+                    // Converting list into a JSON
+                    JsonNode object = Json.toJson(list);
+                    // Returning JSON object.
+                    return ok(object);
                 }
             }
         }
-        return ok("1");
+        return ok();
     }
 }

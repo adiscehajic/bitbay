@@ -164,23 +164,17 @@
 								var thumbUp = "true";
 								var thumbDown = "false";
 								$("#like" + comm).click(function(e) {
-									e.preventDefault();
-									$.ajax({
-										type: "post",
-										url: "@routes.CommentController.saveThumbUp()",
-										data: "comm=" + comm + "&thumb=" + thumbUp
+											e.preventDefault();
+											$.ajax({
+											type: "post",
+											url: "@routes.CommentController.saveThumbUp()",
+											data: "comm=" + comm + "&thumb=" + thumbUp
 										}).success(function(response) {
-											if (response === "1") {
-												var number = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id)) + 1;
-												$("#thumbs-up" + comm).html(number);
-											} else if(response === "2") {
-												var number1 = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id));
-												$("#thumbs-up" + comm).html(number1);
-												var number2 = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id));
-												$("#thumbs-down" + comm).html(number2);
-											}
-											$("#dislike" + comm).css('color', 'blue');
+											console.log(response);
+											$("#thumbs-up" + comm).html(response[0]);
+											$("#thumbs-down" + comm).html(response[1]);
 											$("#like" + comm).css('color', 'grey');
+												$("#dislike" + comm).css('color', 'blue');
 											})
 										})
 										$("#dislike" + comm).click(function(e) {
@@ -189,20 +183,13 @@
 												type: "post",
 												url: "@routes.CommentController.saveThumbUp()",
 												data: "comm=" + comm + "&thumb=" + thumbDown
-												}).success(function(response) {
-													if (response === "1") {
-														var number = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id)) + 1;
-														$("#thumbs-down" + comm).html(number);
-													} else if (response === "2") {
-														var number1 = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id)) + 1;
-														$("#thumbs-down" + comm).html(number1);
-														var number2 = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id)) - 1;
-														$("#thumbs-up" + comm).html(number2);
-													}
-														$("#like" + comm).css('color', 'blue');
-														$("#dislike" + comm).css('color', 'grey');
-													})
-												})
+											}).success(function(response) {
+												$("#thumbs-up" + comm).html(response[0]);
+											$("#thumbs-down" + comm).html(response[1]);
+												$("#like" + comm).css('color', 'blue');
+												$("#dislike" + comm).css('color', 'grey');
+											})
+										})
 											});
 										</script>
 									}
@@ -242,17 +229,11 @@
 											url: "@routes.CommentController.saveThumbUp()",
 											data: "comm=" + comm + "&thumb=" + thumbUp
 										}).success(function(response) {
-											if (response === "1") {
-												var number = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id)) + 1;
-												$("#thumbs-up" + comm).html(number);
-											} else if(response === "2") {
-												var number1 = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id));
-												$("#thumbs-up" + comm).html(number1);
-												var number2 = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id));
-												$("#thumbs-down" + comm).html(number2);
-											}
+											console.log(response);
+											$("#thumbs-up" + comm).html(response[0]);
+											$("#thumbs-down" + comm).html(response[1]);
+											$("#like" + comm).css('color', 'grey');
 												$("#dislike" + comm).css('color', 'blue');
-												$("#like" + comm).css('color', 'grey');
 											})
 										})
 										$("#dislike" + comm).click(function(e) {
@@ -262,15 +243,8 @@
 												url: "@routes.CommentController.saveThumbUp()",
 												data: "comm=" + comm + "&thumb=" + thumbDown
 											}).success(function(response) {
-												if (response === "1") {
-													var number = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id)) + 1;
-													$("#thumbs-down" + comm).html(number);
-												} else if (response === "2") {
-													var number1 = @Thumb.getNumberThumbsDown(Comment.getCommentById(comment.id)) + 1;
-													$("#thumbs-down" + comm).html(number1);
-													var number2 = @Thumb.getNumberThumbsUp(Comment.getCommentById(comment.id)) - 1;
-													$("#thumbs-up" + comm).html(number2);
-												}
+												$("#thumbs-up" + comm).html(response[0]);
+											$("#thumbs-down" + comm).html(response[1]);
 												$("#like" + comm).css('color', 'blue');
 												$("#dislike" + comm).css('color', 'grey');
 											})

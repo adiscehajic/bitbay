@@ -4,6 +4,7 @@ import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.cloudinary.Cloudinary;
 import helpers.CurrentSeller;
+import helpers.SessionHelper;
 import models.*;
 import play.Logger;
 import play.Play;
@@ -26,12 +27,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by adis.cehajic on 08/09/15.
+ * Created by Adis Cehajic on 08/09/15.
  */
 public class ProductController extends Controller {
 
+    // Declaring product form.
     private static Form<Product> productForm = Form.form(Product.class);
 
+    /**
+     * Renders page where all product informations of selected product are shown.
+     *
+     * @param id - Id of product that user wants to see.
+     * @return Page where all product informations are shown.
+     */
     public Result getProduct(Integer id) {
         Product product = Product.getProductById(id);
         String path = Image.getImagePath(product);
@@ -50,33 +58,54 @@ public class ProductController extends Controller {
         return ok(productProfile.render(product, path, comments, topComments));
     }
 
+    /**
+     * Renders page where new product can be inputed. When inputing new product all required fields must be inputed,
+     * otherwise warning message occurs. Only user that is seller can add new products.
+     *
+     * @return Page where new product can be inputed.
+     */
     @Security.Authenticated(CurrentSeller.class)
     public Result newProduct() {
         List<Category> categories = Category.findAll();
         return ok(newProduct.render(categories));
     }
 
+    /**
+     * Deletes selected product. Only user that has added the selected product can delete selected product.
+     *
+     * @param id - Id of the product that user wants to delete.
+     * @return If the deleting of the product was successful renders page where all product of user are listed.
+     */
     @Security.Authenticated(CurrentSeller.class)
     public Result deleteProduct(Integer id) {
         Product product = Product.getProductById(id);
 
-        if (User.getUserByEmail(session("email")).id == product.user.id) {
-            Ebean.delete(product);
+        User user = SessionHelper.currentUser();
+
+        if (user.id == product.user.id) {
+            product.delete();
         }
 
-        User user = User.getUserByEmail(session().get("email"));
         List<Product> products = Product.findAllProductsByUser(user);
         return ok(userProducts.render(products, user));
     }
 
+    /**
+     * Deletes selected product. This method is called when administrator user wants to delete selected product on
+     * administrator panel.
+     *
+     * @param id - Id of the product that user wants to delete.
+     * @return Administrator panel page where all products of the application are listed.
+     */
     public Result deleteProductAdmin(Integer id) {
         Product product = Product.getProductById(id);
 
-        Ebean.delete(product);
+        product.delete();
 
         return redirect(routes.AdminController.adminProducts());
     }
 
+    
     @Security.Authenticated(CurrentSeller.class)
     public Result saveProduct() {
         Form<Product> boundForm = productForm.bindFromRequest();

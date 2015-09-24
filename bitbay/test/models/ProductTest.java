@@ -63,7 +63,7 @@ public class ProductTest extends WithApplication {
         u.password = "12345678";
         u.userType = new UserType();
 
-        List<Product> founded = Product.findAllProductsByUser(u.email);
+        List<Product> founded = Product.findAllProductsByUser(u);
 
         assertNotNull(founded);
     }
