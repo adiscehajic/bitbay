@@ -44,7 +44,9 @@ DELETE        /user/delete                @controllers.Users.deleteUserAccount()
 GET           /user/delete/:id            @controllers.Users.deleteUser(id: Integer)
 GET           /user/edit                  @controllers.Users.editUser()
 POST          /user/edit                  @controllers.Users.updateUser()
-
+GET           /user/messages              @controllers.MessageController.getAllReceivedMessages()
+GET           /user/messages/reply        @controllers.MessageController.replyMessage()
+GET           /user/messages/new          @controllers.MessageController.newMessage()
 
 GET           /category/new               @controllers.CategoryController.newCategory()
 GET           /category/edit/:id          @controllers.CategoryController.editCategory(id:Integer)

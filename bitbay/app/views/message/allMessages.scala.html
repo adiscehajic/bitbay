@@ -1,0 +1,24 @@
+@user.userMessages {
+    <table class="table table-hover" >
+        <thead>
+            <th> Messages </th>
+        </thead>
+        <tbody>
+            <tr>
+                <td width="120px"><img src="@routes.Assets.versioned("images/message.png")" width="70px" height="50px"></td>
+                <td style="vertical-align: middle"><label> Title </label><p> Message </p></td>
+                <td style="vertical-align: middle"> User </td>
+                <td style="vertical-align: middle"><input type="checkbox" value=""></td>
+            </tr>
+            <tr>
+                <td width="120px"><img src="@routes.Assets.versioned("images/read_message.png")" width="70px" height="50px"></td>
+                <td style="vertical-align: middle"><label> Title </label><p> Message </p></td>
+                <td style="vertical-align: middle"> User </td>
+                <td style="vertical-align: middle"><input type="checkbox" value=""></td>
+            </tr>
+            <tr>
+                <td colspan="5" ><button class="btn btn-default" style="float: right">Delete selected messages</button></td>
+            </tr>
+        </tbody>
+    </table>
+}
