@@ -36,7 +36,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <input type="text" class="form-control" onfocusout="editUser()" onkeypress="return isAlphaKey(event);"  placeholder="First Name" name="firstName" value="@user.firstName">
+                                                <input type="text" class="form-control" onfocusout="editName()" oninput="editUser()" onkeypress="return isAlphaKey(event);"  placeholder="First Name" name="firstName" value="@user.firstName">
                                                 @if(flash.containsKey("updateUserNameDiggitError")) {
 
                                                     <p  style="color: red;">
@@ -61,7 +61,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <input type="text" class="form-control" onfocusout="editUser()" onkeypress="return isAlphaKey(event);"  placeholder="Last Name" name="lastName" value="@user.lastName">
+                                                <input type="text" class="form-control" onfocusout="editSurname()" oninput="editUser()" onkeypress="return isAlphaKey(event);"  placeholder="Last Name" name="lastName" value="@user.lastName">
                                                 @if(flash.containsKey("updateUserLastNameDiggitError")) {
                                                     <p  style="color: red;">
                                                     @flash.get("updateUserLastNameDiggitError")
