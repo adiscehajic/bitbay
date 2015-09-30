@@ -85,7 +85,11 @@
                                                 </div>
                                                 <div class="col-lg-8">
                                                     <select class="form-control placeholder" name="country-state">
-                                                        <option value="1" selected disabled>Please select country</option>
+                                                        @if(user.country == null) {
+                                                            <option value="1" selected disabled>Please select country</option>
+                                                        } else {
+                                                            <option value="@user.country.id" selected disabled>@user.country.name</option>
+                                                        }
                                                         @for(country <- countries) {
                                                             <option value="@country.name">@country.name</option>
                                                         }

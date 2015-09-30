@@ -28,11 +28,13 @@ public class Product extends Model {
     @ManyToOne
     @Constraints.Required(message = "Product category is required.")
     public Category category;
+    @Constraints.Min(value = 1, message = "Product price must be larger than 0.")
     @Constraints.Required(message = "Product price is required.")
     public Double price;
-    @Constraints.Min(1)
+    @Constraints.Min(value = 1, message = "Product quantity must be larger than 0.")
     @Constraints.Required(message = "Product quantity is required.")
     public Integer quantity;
+    @Constraints.Required(message = "Product selling type is required.")
     public String sellingType;
     @OneToMany(cascade = CascadeType.ALL)
     public List<Image> images;
@@ -48,7 +50,8 @@ public class Product extends Model {
 
     private static Finder<String, Product> finder = new Finder<String, Product>(Product.class);
 
-    public Product () {}
+    public Product() {
+    }
 
     public Product(User user, String name, String description, String manufacturer, Category category, Double price, Integer quantity, String sellingType) {
         this.user = user;
@@ -84,8 +87,8 @@ public class Product extends Model {
         return products;
     }
 
-    public static List<Product>searchProductByName(String name){
-        List<Product>product = Product.finder.where().contains("name", name).findList();
+    public static List<Product> searchProductByName(String name) {
+        List<Product> product = Product.finder.where().contains("name", name).findList();
 
         return product;
     }

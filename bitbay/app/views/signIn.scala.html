@@ -18,95 +18,94 @@
 		<title> Sign In </title>
 </head>
 <body>
-				<div class = "container">
-					<div class ="row">
-						<div class="container">
-							<a href="/"><img src="@routes.Assets.versioned("images/logo3.png")" id = "TitleImage"></a>
-						</div>
-					</div>
-					<div class ="row">
-						<div class = "col-md-6">
-							<div class = "inputs">
-							<div class = "container" style = "margin-right:5px;">
-								<div class = "row">
-									<div class = "col-md-6">
-										<h2>Sign in</h2>
-									</div>
-								</div>
-								<div style="margin-left: 20px; ">
-									<span class="alert-danger" style="font-weight:normal;">@flash.get("signInError")</span>
-									<span class="alert-danger" style="font-weight:normal;">@flash.get("errorEmail")</span>
-									<span class="alert-danger" style="font-weight:normal;">@flash.get("errorNoInput")</span>
-								</div>
-								<form action="@routes.ApplicationController.validateSignIn()" method="POST" id="login-form">
-									<div class = "row">
-									<div class="col-md-6">
+    <div class = "container">
+        <div class ="row">
+            <div class="container">
+                <a href="/"><img src="@routes.Assets.versioned("images/logo3.png")" id = "TitleImage"></a>
+            </div>
+        </div>
+        <div class ="row">
+            <div class = "col-md-6">
+                <div class = "inputs">
+                    <div class = "container" style = "margin-right:5px;">
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                <h2>Sign in</h2>
+                            </div>
+                        </div>
+                        <div style="margin-left: 20px; ">
+                            <span class="alert-danger" style="font-weight:normal;">@flash.get("signInError")</span>
+                            <span class="alert-danger" style="font-weight:normal;">@flash.get("errorEmail")</span>
+                            <span class="alert-danger" style="font-weight:normal;">@flash.get("errorNoInput")</span>
+                        </div>
+                        <form action="@routes.ApplicationController.validateSignIn()" method="POST" id="login-form">
+                            <div class = "row">
+                                <div class="col-md-6">
 
-									<label style = "margin-left:20px;font-weight:normal;">Email</label>
-                            			<!--field for email -->
-									<input type="email" class="form-control" id="email" name="email" style="margin-bottom: 0;" value="@userRegistration("email").value">
-									<span class="alert-danger" data-error-for="email" style="margin-left:20px;font-weight:normal;"></span>
-									</div>
-								</div>
-								<div class = "row">
-									<div class="col-md-6">
-										<label style = "margin-left:20px;font-weight:normal;">Password</label>
-                            			<!--field for password -->
-										<input type="password"class="form-control" id="password"  name="password" style="margin-bottom: 0;">
-										<span class="alert-danger" data-error-for="password" style = "margin-left:20px;font-weight:normal;"></span>
-                        			</div>
-                        		</div>
-                        		<div class = "row">
-                        			<div class ="col-md-6">
-                        				<div class="checkbox" style="width: 100%;">
-											<input type="checkbox" name="remember" id="login-check" class="custom" style = "margin-left:20px; margin-top:14px;"> <p style = "padding-left:36px; padding-top:10px; width: 100%;">Stay signed in</p>
-                            			</div>
-                            		</div>
-                        		</div>
-                        		<div class ="row">
-                        			<div class ="col-md-6">
-										<button id="signinbutton" type="submit" class="btn btn-default" name="submit">Sign in</button>
-                        			</div>
-                        		</div>
-								</form>
-							</div>
-						</div>
-					</div>
-					<div class = "col-md-6">
-						<div class = "inputs" >
-							<div class = "container" >
-								<div class = "row" >
-									<div class = "col-md-6">
-										<h2 class = "title">New to <img src="@routes.Assets.versioned("images/logoText.png")" id = "bimg" ></h2>
-									</div>
-								</div>
-								<div class = "row" >
-									<div class = "col-md-6">
-										<h4>Get started now. It's fast and easy!</h4>
-									</div>
-								</div>
+                                    <label style = "margin-left:20px;font-weight:normal;">Email</label>
+                                        <!--field for email -->
+                                    <input type="email" class="form-control" id="email" name="email" style="margin-bottom: 0;" value="@userRegistration("email").value">
+                                    <span class="alert-danger" data-error-for="email" style="margin-left:20px;font-weight:normal;"></span>
+                                </div>
+                            </div>
+                            <div class = "row">
+                                <div class="col-md-6">
+                                    <label style = "margin-left:20px;font-weight:normal;">Password</label>
+                                        <!--field for password -->
+                                    <input type="password"class="form-control" id="password"  name="password" style="margin-bottom: 0;">
+                                    <span class="alert-danger" data-error-for="password" style = "margin-left:20px;font-weight:normal;"></span>
+                                </div>
+                            </div>
+                            <div class = "row">
+                                <div class ="col-md-6">
+                                    <div class="checkbox" style="width: 100%;">
+                                        <input type="checkbox" name="remember" id="login-check" class="custom" style = "margin-left:20px; margin-top:14px;"> <p style = "padding-left:36px; padding-top:10px; width: 100%;">Stay signed in</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class ="row">
+                                <div class ="col-md-6">
+                                    <button id="signinbutton" type="submit" class="btn btn-default" name="submit">Sign in</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class = "col-md-6">
+                <div class = "inputs" >
+                    <div class = "container" >
+                        <div class = "row" >
+                            <div class = "col-md-6">
+                                <h2 class = "title">New to <img src="@routes.Assets.versioned("images/logoText.png")" id = "bimg" ></h2>
+                            </div>
+                        </div>
+                        <div class = "row" >
+                            <div class = "col-md-6">
+                                <h4>Get started now. It's fast and easy!</h4>
+                            </div>
+                        </div>
 
-								<div class = "row">
-									<div class = "col-md-6">
-										<a href="@routes.ApplicationController.signUp()"><button type="submit" class="btn btn-default" style = "margin-left:37%; margin-bottom: 85px;">Register</button></a>
-									</div>
-								</div>
-							</div>
-						</div>
+                        <div class = "row">
+                            <div class = "col-md-6">
+                                <a href="@routes.ApplicationController.signUp()"><button type="submit" class="btn btn-default" style = "margin-left:37%; margin-bottom: 85px;">Register</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-					</div>
-					</div>
-				</div>
+            </div>
+        </div>
+    </div>
 
-				<div class = "footer navbar-static-bottom" style = "margin-top: 40px;">
-    				<div id="footer">
-      					<div class="container" >
-        				<p class = "pFooter">Copyright © 2015. bitbay. All Rights Reserved.</p>
-      					</div>
-    				</div>
-				</div>
-			<script>
-
+    <div class = "footer navbar-static-bottom" style = "margin-top: 40px;">
+        <div id="footer">
+            <div class="container" >
+                <p class = "pFooter">Copyright © 2015. bitbay. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+    <script>
 				$(document).ready(function() {
 
 					var remember = $.cookie('remember');
@@ -132,7 +131,7 @@
 				  });
 				});
 
-			</script>
+	</script>
 
 	<script>
 
@@ -172,6 +171,6 @@
 
         });
     </script>
-		</body>
-	</html>
+</body>
+</html>
 

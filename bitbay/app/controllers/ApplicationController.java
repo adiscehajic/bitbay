@@ -174,14 +174,18 @@ public class ApplicationController extends Controller {
                     flash("nameError", "First name and last name can contain only letters.");
                     return badRequest(signup.render(boundForm));
                 }
-                // Declaring user type.
-                UserType userType = UserType.getUserTypeById(Integer.parseInt(type));
-                // Adding values to the new user.
-                user.firstName = newUser.firstName;
-                user.lastName = newUser.lastName;
-                user.password = BCrypt.hashpw(newUser.password, BCrypt.gensalt());
-                user.email = newUser.email;
-                user.userType = userType;
+                if(type.equals("2") || type.equals("3")) {
+                    // Declaring user type.
+                    UserType userType = UserType.getUserTypeById(Integer.parseInt(type));
+                    // Adding values to the new user.
+                    user.firstName = newUser.firstName;
+                    user.lastName = newUser.lastName;
+                    user.password = BCrypt.hashpw(newUser.password, BCrypt.gensalt());
+                    user.email = newUser.email;
+                    user.userType = userType;
+                } else {
+                    throw new Exception("Permission denied.");
+                }
 
                 // Saving new user into database.
                 user.save();

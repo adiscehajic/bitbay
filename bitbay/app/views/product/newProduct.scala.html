@@ -54,7 +54,7 @@
                     }
                 </div>
                 <div class="form-group">
-                    <label for="manufacturer">Manufacturer:*</label>
+                    <label for="manufacturer">Manufacturer:</label>
                     <input type="text" class="form-control" id="manufacturer" name="manufacturer" onfocusout="validateProduct()">
                     @if(flash.containsKey("saveProductManufacturerError")) {
                         <p style="color : red ;">
@@ -68,11 +68,12 @@
                     }
                 </div>
                 <label for="selling=type">Type of selling:*</label>
-                <select id="selling=type" class="form-control placeholder" name="type" onchange="validateRegistration()">
+                <select id="selling=type" class="form-control placeholder" name="sellingType" onchange="validateRegistration()">
                     <option value="0" selected disabled>Please select sale type</option>
                     <option value="1">Regular</option>
                     <option value="2">Auction</option>
                 </select>
+                <span class="alert-danger" data-error-for="sellingType" style="margin-left : 1 px ; font-weight : normal ;"></span>
                 @if(flash.containsKey("saveCategoryEmptySellingTypeyError")) {
                     <p style="color : red ;">
                     @flash.get("saveCategoryEmptySellingTypeyError")
