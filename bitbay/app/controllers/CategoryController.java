@@ -91,7 +91,7 @@ public class CategoryController extends Controller {
                 c.save();
             }
         }catch (Exception e){
-            Logger.info("ERROR: Registration failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
+            Logger.info("ERROR: UserLogin failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
             return badRequest(editCategory.render(category));
         }
         // Editing selected category.
@@ -161,7 +161,7 @@ public class CategoryController extends Controller {
                 category.save();
             }
         }catch (Exception e){
-            Logger.info("ERROR: Registration failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
+            Logger.info("ERROR: UserLogin failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
             return badRequest(newCategory.render());
         }
         // Redirecting to the administrator panel page where all categories are listed.

@@ -3,6 +3,7 @@ package controllers;
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.cloudinary.Cloudinary;
+import helpers.CurrentAdmin;
 import helpers.CurrentSeller;
 import helpers.SessionHelper;
 import models.*;
@@ -21,6 +22,7 @@ import views.html.product.productProfile;
 import views.html.product.searchProduct;
 import views.html.user.userProducts;
 import views.html.category.viewProductsByCategory;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -97,6 +99,7 @@ public class ProductController extends Controller {
      * @param id - Id of the product that user wants to delete.
      * @return Administrator panel page where all products of the application are listed.
      */
+    @Security.Authenticated(CurrentAdmin.class)
     public Result deleteProductAdmin(Integer id) {
         Product product = Product.getProductById(id);
 
@@ -105,68 +108,69 @@ public class ProductController extends Controller {
         return redirect(routes.AdminController.adminProducts());
     }
 
-    
+
     @Security.Authenticated(CurrentSeller.class)
     public Result saveProduct() {
         Form<Product> boundForm = productForm.bindFromRequest();
-        Image.cloudinary = new Cloudinary("cloudinary://"+ Play.application().configuration().getString("cloudinary.string"));
+
+        if (boundForm.hasErrors()) {
+            return badRequest(newProduct.render(Category.findAll()));
+
+        }
+
+        Image.cloudinary = new Cloudinary("cloudinary://" + Play.application().configuration().getString("cloudinary.string"));
         User user = User.getUserByEmail(session().get("email"));
-        String name = boundForm.bindFromRequest().field("name").value();
-        String description = boundForm.bindFromRequest().field("description").value();
-        String manufacturer = boundForm.bindFromRequest().field("manufacturer").value();
+        //String name = boundForm.bindFromRequest().field("name").value();
+        //String description = boundForm.bindFromRequest().field("description").value();
+        //String manufacturer = boundForm.bindFromRequest().field("manufacturer").value();
         String categoryValue = boundForm.bindFromRequest().field("category").value();
-        String price = boundForm.bindFromRequest().field("price").value();
-        String quantity = boundForm.bindFromRequest().field("quantity").value();
-        String sellingType = boundForm.bindFromRequest().field("type").value();
+        //String price = boundForm.bindFromRequest().field("price").value();
+        //String quantity = boundForm.bindFromRequest().field("quantity").value();
+        //String sellingType = boundForm.bindFromRequest().field("sellingType").value();
 
         Category category = Category.getCategoryByName(categoryValue);
         List<Category> categories = Category.findAll();
 
-        if (name.isEmpty()) {
+        /*if (name.isEmpty()) {
             flash("saveProductNameError", "Please enter product name.");
             return badRequest(newProduct.render(categories));
         }
 
-            if(!manufacturer.matches("^[a-z A-Z]*$")){
-                flash("saveProductManufacturerError","Manufacturer must contain only letters.");
-                return badRequest(newProduct.render(categories));
-            }
 
-        if (manufacturer.isEmpty()){
-            flash("saveProductManufacturerEmptyError", "Please enter manufacturer");
+
+        if (Integer.parseInt(price) <= 0) {
+            flash("saveCategoryLowPriceError", "Price can't be 0 or lower.");
             return badRequest(newProduct.render(categories));
+
         }
 
-       if(Integer.parseInt(price)<=0){
-           flash("saveCategoryLowPriceError", "Price can't be 0 or lower.");
-           return badRequest(newProduct.render(categories));
-
-       }
-
-        if(price.isEmpty()){
+        if (price.isEmpty()) {
             flash("saveProductEmptyPriceError", "Please enter price.");
             return badRequest(newProduct.render(categories));
         }
 
-        if(quantity.isEmpty()){
+        if (quantity.isEmpty()) {
             flash("saveProductEmptyQuantityError", "Please enter product quantity.");
             return badRequest(newProduct.render(categories));
         }
 
-        if(categoryValue == null){
+        if (categoryValue == null) {
             flash("saveCategoryEmptyCategoryError", "Please select category.");
             return badRequest(newProduct.render(categories));
         }
 
-        if(sellingType == null){
+        if (sellingType == null) {
             flash("saveCategoryEmptySellingTypeyError", "Please select selling type.");
             return badRequest(newProduct.render(categories));
-        }
+        }*/
 
-        Product product = new Product(user, name, description, manufacturer, category, Double.parseDouble(price), Integer.parseInt(quantity), sellingType);
+        Product product = boundForm.get();
+        product.user = user;
+        product.category = category;
+        //Product product = new Product(user, name, description, manufacturer, category, Double.parseDouble(price), Integer.parseInt(quantity), sellingType);
         product.save();
 
-        Ebean.save(product);
+        //Ebean.save(product);
 
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart filePart = body.getFile("image");
@@ -207,35 +211,23 @@ public class ProductController extends Controller {
             return badRequest(editProduct.render(product));
         }
 
-        for(char ch:manufacturer.toCharArray()){
-            if(Character.isDigit(ch)){
-                flash("editProductManufacturerError","Manufacturer must contain only letters.");
-                return badRequest(editProduct.render(product));
-            }
-        }
-
-        if (manufacturer.isEmpty()){
-            flash("editProductManufacturerEmptyError", "Please enter manufacturer");
-            return badRequest(editProduct.render(product));
-        }
-
-        if(Double.parseDouble(price)<=0){
+        if (Double.parseDouble(price) <= 0) {
             flash("editCategoryLowPriceError", "Price can't be 0 or lower.");
             return badRequest(editProduct.render(product));
 
         }
 
-        if(price.isEmpty()){
+        if (price.isEmpty()) {
             flash("editProductEmptyPriceError", "Please enter price.");
             return badRequest(editProduct.render(product));
         }
 
-        if(Integer.parseInt(quantity)<0){
+        if (Integer.parseInt(quantity) < 0) {
             flash("editProductEmptyQuantityError", "Quantity can't be 0 or lower.");
             return badRequest(editProduct.render(product));
         }
 
-        if(sellingType == null){
+        if (sellingType == null) {
             flash("editCategoryEmptySellingTypeyError", "Please select selling type.");
             return badRequest(editProduct.render(product));
         }
@@ -259,7 +251,7 @@ public class ProductController extends Controller {
         return ok(viewProductsByCategory.render(products, category));
     }
 
-    public Result searchProduct(){
+    public Result searchProduct() {
 
         Form<Product> boundForm = productForm.bindFromRequest();
         String name = boundForm.bindFromRequest().field("search").value();
@@ -282,12 +274,26 @@ public class ProductController extends Controller {
         List<String> names = new ArrayList<>();
 
         for (int i = 0; i < products.size(); i++) {
-           names.add(products.get(i).name);
+            names.add(products.get(i).name);
         }
 
         JsonNode object = Json.toJson(names);
 
         return ok(object);
+    }
+
+    /**
+     * This will just validate the form for the AJAX call
+     *
+     * @return ok if there are no errors or a JSON object representing the errors
+     */
+    public Result validateFormProduct() {
+        Form<Product> binded = productForm.bindFromRequest();
+        if (binded.hasErrors()) {
+            return badRequest(binded.errorsAsJson());
+        } else {
+            return ok("Validation successful.");
+        }
     }
 
 }

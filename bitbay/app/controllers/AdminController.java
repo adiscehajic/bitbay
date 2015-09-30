@@ -4,7 +4,7 @@ import helpers.CurrentAdmin;
 import models.Category;
 import models.Product;
 import models.User;
-import controllers.ApplicationController.Registration;
+import controllers.ApplicationController.UserLogin;
 import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
@@ -23,7 +23,7 @@ import java.util.List;
 public class AdminController extends Controller {
 
     // Declaring user form.
-    private static final Form<Registration> adminLogin = Form.form(Registration.class);
+    private static final Form<UserLogin> adminLogin = Form.form(UserLogin.class);
     // Declaring constant for admin user type.
     private static final Integer ADMIN = 1;
 
@@ -118,7 +118,7 @@ public class AdminController extends Controller {
      */
     public Result validateLogin() {
         // Connecting with sign in form.
-        Form<Registration> boundForm = adminLogin.bindFromRequest();
+        Form<UserLogin> boundForm = adminLogin.bindFromRequest();
         // Reading inputed values and storing them into string variables.
         String email = boundForm.bindFromRequest().field("email").value();
         String password = boundForm.bindFromRequest().field("password").value();
@@ -148,7 +148,7 @@ public class AdminController extends Controller {
                 return redirect(routes.AdminController.adminLogin());
             }
         } catch (Exception e) {
-            Logger.info("ERROR: Registration failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
+            Logger.info("ERROR: UserLogin failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
             return badRequest(login.render(boundForm));
         }
     }

@@ -4,168 +4,176 @@
 @main("User Profile") {
     <script src="@routes.Assets.versioned("javascripts/signup.js")" type="text/javascript"></script>
     <div class="container">
-
         <div class="row">
-
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
                 <form method="POST" action="@routes.Users.updateUser()">
-
-
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <div class="panel-title">Some user</div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-3 col-lg-3 "> <img alt="User Pic" src="https://placeimg.com/300/300/people" class="img-rounded img-responsive"> </div>
-
-
-                            <div class=" col-md-9 col-lg-9 ">
-                                <div class="col-md-9 personal-info">
-
-                                    <h3>Edit</h3>
-
-                                    <div class="form-horizontal">
-
-                                        <div class="form-group">
-                                            <div class="col-lg-4">
-                                                <div class="panel panel-primary">
-                                                    <div class="panel-heading">
-                                                        <div class="panel-title" align="center">First Name</div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="panel-title">Some user</div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3 col-lg-3 ">
+                                    <img alt="User Pic" src="https://placeimg.com/300/300/people" class="img-rounded img-responsive">
+                                </div>
+                                <div class=" col-md-9 col-lg-9 ">
+                                    <div class="col-md-9 personal-info">
+                                        <h3>Edit</h3>
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <div class="col-lg-4">
+                                                    <div class="panel panel-primary">
+                                                        <div class="panel-heading">
+                                                            <div class="panel-title" align="center">First Name</div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-8">
+                                                    <input type="text" class="form-control" onfocusout="editUser()" onkeypress="return isAlphaKey(event);" placeholder="First Name" name="firstName" value="@user.firstName">
+                                                    <span class="alert-danger" data-error-for="firstName" style="margin-left : 1 px ; font-weight : normal ;"></span>
+                                                    <span class="alert-danger" style="margin-left : 1 px ; font-weight : normal ;">@flash.get("updateUserNameDiggitError")</span>
+                                                    <span class="alert-danger" style="margin-left : 1 px ; font-weight : normal ;">@flash.get("updateUserNameEmptyError")</span>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <input type="text" class="form-control" onfocusout="editName()" oninput="editUser()" onkeypress="return isAlphaKey(event);"  placeholder="First Name" name="firstName" value="@user.firstName">
-                                                @if(flash.containsKey("updateUserNameDiggitError")) {
-
-                                                    <p  style="color: red;">
-                                                    @flash.get("updateUserNameDiggitError")
-                                                    </p>
-                                                }
-                                                @if(flash.containsKey("updateUserNameEmptyError")) {
-
-                                                    <p  style="color: red;">
-                                                    @flash.get("updateUserNameEmptyError")
-                                                    </p>
-                                                }
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="col-lg-4">
-                                                <div class="panel panel-primary">
-                                                    <div class="panel-heading">
-                                                        <div class="panel-title" align="center">Last Name</div>
+                                            <div class="form-group">
+                                                <div class="col-lg-4">
+                                                    <div class="panel panel-primary">
+                                                        <div class="panel-heading">
+                                                            <div class="panel-title" align="center">Last Name</div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-8">
+                                                    <input type="text" class="form-control" onfocusout="editUser()" onkeypress="return isAlphaKey(event);" placeholder="Last Name" name="lastName" value="@user.lastName">
+                                                    <span class="alert-danger" data-error-for="lastName" style="margin-left : 1 px ; font-weight : normal ;"></span>
+                                                    <span class="alert-danger" style="margin-left : 1 px ; font-weight : normal ;">@flash.get("updateUserNameDiggitError")</span>
+                                                    <span class="alert-danger" style="margin-left : 1 px ; font-weight : normal ;">@flash.get("updateUserNameEmptyError")</span>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <input type="text" class="form-control" onfocusout="editSurname()" oninput="editUser()" onkeypress="return isAlphaKey(event);"  placeholder="Last Name" name="lastName" value="@user.lastName">
-                                                @if(flash.containsKey("updateUserLastNameDiggitError")) {
-                                                    <p  style="color: red;">
-                                                    @flash.get("updateUserLastNameDiggitError")
-                                                    </p>
-                                                }
-                                                @if(flash.containsKey("updateUserLastNameEmptyError")) {
-                                                    <p  style="color: red;">
-                                                    @flash.get("updateUserLastNameEmptyError")
-                                                    </p>
-                                                }
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="col-lg-4">
-                                                <div class="panel panel-primary">
-                                                    <div class="panel-heading">
-                                                        <div class="panel-title" align="center">New Password</div>
+                                            <div class="form-group">
+                                                <div class="col-lg-4">
+                                                    <div class="panel panel-primary">
+                                                        <div class="panel-heading">
+                                                            <div class="panel-title" align="center">New Password</div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-8">
+                                                    <input type="password" class="form-control" placeholder="Password" name="password">
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <input type="password" class="form-control"  placeholder="Password" name="password">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="col-lg-4">
-                                                <div class="panel panel-primary">
-                                                    <div class="panel-heading">
-                                                        <div class="panel-title" align="center" >Confirm Password</div>
+                                            <div class="form-group">
+                                                <div class="col-lg-4">
+                                                    <div class="panel panel-primary">
+                                                        <div class="panel-heading">
+                                                            <div class="panel-title" align="center" >Confirm Password</div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-8">
+                                                    <input type="password" class="form-control" placeholder="Password" name="confirmPassword">
+                                                    <span class="alert-danger" style="margin-left : 1 px ; font-weight : normal ;">@flash.get("updatePasswordError")</span>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <input type="password" class="form-control"  placeholder="Password" name="confirmPassword">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="col-lg-4">
-                                                <div class="panel panel-primary">
-                                                    <div class="panel-heading">
-                                                        <div class="panel-title" align="center">Country</div>
+                                            <div class="form-group">
+                                                <div class="col-lg-4">
+                                                    <div class="panel panel-primary">
+                                                        <div class="panel-heading">
+                                                            <div class="panel-title" align="center">Country</div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-8">
-                                            <select class="form-control placeholder" name="country" >
-                                                <option value="1" selected disabled>Please select country</option>
-                                                @for(country <- countries) {
-                                                    <option value="@country.name">@country.name</option>
-                                                }
-                                            </select>
+                                                <div class="col-lg-8">
+                                                    <select class="form-control placeholder" name="country-state">
+                                                        @if(user.country == null) {
+                                                            <option value="1" selected disabled>Please select country</option>
+                                                        } else {
+                                                            <option value="@user.country.id" selected disabled>@user.country.name</option>
+                                                        }
+                                                        @for(country <- countries) {
+                                                            <option value="@country.name">@country.name</option>
+                                                        }
+                                                    </select>
                                                 </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="col-lg-4">
-                                                <div class="panel panel-primary">
-                                                    <div class="panel-heading">
-                                                        <div class="panel-title" align="center">City</div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-4">
+                                                    <div class="panel panel-primary">
+                                                        <div class="panel-heading">
+                                                            <div class="panel-title" align="center">City</div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <input type="text" class="form-control"  placeholder="City" name="city" value="@user.city">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="col-lg-4">
-                                                <div class="panel panel-primary">
-                                                    <div class="panel-heading">
-                                                        <div class="panel-title" align="center">Address</div>
-                                                    </div>
+                                                <div class="col-lg-8">
+                                                    <input type="text" class="form-control" placeholder="City" name="city" value="@user.city">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <input type="text" class="form-control"  placeholder="Address" name="address" value="@user.address">
+                                            <div class="form-group">
+                                                <div class="col-lg-4">
+                                                    <div class="panel panel-primary">
+                                                        <div class="panel-heading">
+                                                            <div class="panel-title" align="center">Address</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <input type="text" class="form-control" placeholder="Address" name="address" value="@user.address">
+                                                </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-
-                        <div class="panel-footer" align="center">
-                            <span >
-                                <button type="submit" class="btn btn-lg btn-primary" name="save">Save</button>
-                                <a href="@routes.Users.getUser()"  class="btn btn-lg btn-primary">Cancel</a>
-                            </span>
+                            <div class="panel-footer" align="center">
+                                <span >
+                                    <button id="edit-button" type="submit" class="btn btn-lg btn-primary" name="save">
+                                        Save</button>
+                                    <a href="@routes.Users.getUser()" class="btn btn-lg btn-primary">Cancel</a>
+                                </span>
+                            </div>
                         </div>
                     </div>
-
-
-                </div>
-
                 </form>
             </div>
         </div>
     </div>
 
+    <script>
+
+        $(document).ready(function(){
+            $("#edit-button").prop("disabled", true);
+
+            $('.form-control').keyup(function(){
+                $field = $(this);
+                $('form [data-error-for="'+$field.attr("name")+'"]').html("");
+
+                $form = $("form");
+
+                $.ajax({
+                    url: "@routes.Users.validateFormUser()",
+                    method: "post",
+                    data: $('form').serialize()
+                }).success(function(response){
+                    $("#edit-button").prop("disabled", false);
+                    $("form [data-error-for]").html("");
+
+                }).error(function(response){
+                    $("#edit-button").prop("disabled", true);
+                    var errors = response.responseJSON;
+
+					console.log(errors);
+                    var keys = Object.keys(errors);
+
+					var errorMessages = errors[$field.attr("name")];
+					var allErrors = "";
+					for(var j = 0; j < errorMessages.length; j++){
+						allErrors += errorMessages[j];
+					}
+
+					$('form [data-error-for="'+$field.attr("name")+'"]').html(allErrors);
+                });
+            });
+
+        });
+    </script>
 }

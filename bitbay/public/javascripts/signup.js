@@ -14,7 +14,6 @@ function validateMatching() {
     var confPass = document.getElementsByName("confirmPassword")[0].value;
 
     if(pass != confPass) {
-       //alert("Passwords doesnt match");
         return false;
     }
     return true;
@@ -33,10 +32,11 @@ function validateEmail() {
 }
 
 function validateRegistration() {
-    var name = document.getElementsByName("first-name")[0].value;
-    var surname = document.getElementsByName("last-name")[0].value;
+    var name = document.getElementsByName("firstName")[0].value;
+    var surname = document.getElementsByName("lastName")[0].value;
     var button = document.getElementsByName("register")[0];
     var user_type = document.getElementsByName("type")[0].value;
+    var confirm = document.getElementsByName("confirmPassword")[0].value;
 
     if(name.length == 0) {
         button.disabled = true;
@@ -53,13 +53,16 @@ function validateRegistration() {
     } else if(user_type == 0) {
         button.disabled = true;
         return;
+    } else if(confirm.length == 0) {
+        button.disabled = true;
+        return;
     }
     button.disabled = false;
 }
 
 function checkName() {
-    var name = document.getElementsByName("first-name")[0].value;
-    var inpName = document.getElementsByName("first-name")[0];
+    var name = document.getElementsByName("firstName")[0].value;
+    var inpName = document.getElementsByName("firstName")[0];
 
     if(name.length == 0) {
         inpName.style.borderColor = "red";
@@ -69,8 +72,8 @@ function checkName() {
 }
 
 function checkSurname() {
-    var surname = document.getElementsByName("last-name")[0].value;
-    var inpSurname = document.getElementsByName("last-name")[0];
+    var surname = document.getElementsByName("lastName")[0].value;
+    var inpSurname = document.getElementsByName("lastName")[0];
 
     if(surname.length == 0) {
         inpSurname.style.borderColor = "red";
@@ -102,7 +105,7 @@ function checkPassword() {
 function checkMatching() {
     var inpConfPass = document.getElementsByName("confirmPassword")[0];
 
-    if(validateMatching() == false) {
+    if(validateMatching() == false || inpConfPass.length == 0) {
         inpConfPass.style.borderColor = "red";
         return;
     }
