@@ -1,18 +1,25 @@
 @user.userMessages {
 
     <div class="col-md-10" style="border-bottom: 1px; background-color: #F8F8F4; border-radius: 5px; border: 1px solid #E0E0D1">
+        <form action="@routes.MessageController.sendMessage()" method="POST">
         <div style="margin-top: 10px">
             <label>Reciever</label>
-            <input class="form-control" style="margin-bottom: 10px">
+            <input class="form-control" name="receiver" style="margin-bottom: 10px">
+            @if(flash.containsKey("receiverDontExistError")) {
+                <p style="color : red ;">
+                @flash.get("receiverDontExistError")
+                </p>
+            }
         </div>
         <div>
             <label>Title</label>
-            <input class="form-control" style="margin-bottom: 30px">
+            <input class="form-control" name="title" style="margin-bottom: 30px">
         </div>
         <div style="margin-bottom: 10px">
-            <textarea class="form-control" style="resize: none; height: 200px; margin-bottom: 10px"></textarea>
+            <textarea class="form-control" name="message" style="resize: none; height: 200px; margin-bottom: 10px"></textarea>
             <button class="btn btn-primary"> Send <span class="glyphicon glyphicon-send"></span></button>
             <button class="btn btn-danger"> Cancel</button>
         </div>
+            </form>
     </div>
 }
