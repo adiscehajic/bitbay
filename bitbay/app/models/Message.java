@@ -1,12 +1,18 @@
 package models;
 
+import com.avaje.ebean.Expr;
 import com.avaje.ebean.Model;
+import helpers.SessionHelper;
+import play.Logger;
 import play.data.format.Formats;
+import play.data.validation.Constraints;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.Constraint;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +32,7 @@ public class Message extends Model{
     @Column(columnDefinition = "datetime")
     public Date date = new Date();
     public String title;
+    @Column(columnDefinition = "TEXT")
     public String message;
 
     public Boolean isRead;
@@ -59,13 +66,43 @@ public class Message extends Model{
 
     /**
      * This method returns a list of all reicived messages
-     * @param reiciver - User
      * @return - List of messages
      */
-    public static List<Message> getAllMessages(User receiver){
-        List<Message> messages = finder.where().eq("receiver", receiver).findList();
-        return messages;
+    public static List<Message> getReceivedMessages(){
+        User user = SessionHelper.currentUser();
+        List<Message> receivedMessages = finder.where().eq("receiver", user).findList();
+
+        return receivedMessages;
     }
+
+    public String toString() {
+        return String.format("Sender: %s -- Receiver: %s", sender.email, receiver.email);
+    }
+
+    public static List<Message> getConversation(Integer id){
+        Message message = Message.getMessageById(id);
+        User sender = User.findById(message.sender.id);
+        User receiver = User.findById(message.receiver.id);
+
+        List<Message> messagesOne = Message.finder.where().eq("sender", sender).where().eq("receiver", receiver).findList();
+        List<Message> messagesTwo= Message.finder.where().eq("sender", receiver).where().eq("receiver", sender).findList();
+
+        List<Message> messages = new ArrayList<>();
+        messages.addAll(messagesOne);
+        messages.addAll(messagesTwo);
+
+        return messages;
+
+    }
+
+
+    public static List<Message> getSentMessages(){
+        User user = SessionHelper.currentUser();
+        List<Message> sentMessages = Message.finder.where().eq("sender", user).findList();
+
+        return sentMessages;
+    }
+
 
 
 }
