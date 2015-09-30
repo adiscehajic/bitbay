@@ -8,6 +8,7 @@ import helpers.SessionHelper;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.Play;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -117,64 +118,49 @@ public class Users extends Controller {
     public Result updateUser(){
         // Getting current user from session.
         User user = SessionHelper.currentUser();
-        // Declaring user form.
-        Form<User> boundForm = userRegistration.bindFromRequest();
+        // Declaring list of all countries in the world.
+        List<Country> countries = Country.findAllCountries();
+        // Declaring form.
+        DynamicForm form = Form.form().bindFromRequest();
 
         // Getting all informations that are inputed and storing them into string variables.
-        String firstName = boundForm.bindFromRequest().field("firstName").value();
-        String lastName = boundForm.bindFromRequest().field("lastName").value();
-        String pass = boundForm.bindFromRequest().field("password").value();
-        String conPass = boundForm.bindFromRequest().field("confirmPassword").value();
-        String countryName = boundForm.bindFromRequest().field("country").value();
-        String city = boundForm.bindFromRequest().field("city").value();
-        String address = boundForm.bindFromRequest().field("address").value();
-        List<Country> countries = Country.findAllCountries();
+        String firstName = form.get("firstName");
+        String lastName = form.get("lastName");
+        String pass = form.get("password");
+        String conPass = form.get("confirmPassword");
+        String countryName = form.get("country-state");
+        String city = form.get("city");
+        String address = form.get("address");
 
         //Checking if any user information was changed and if the information has errors.
         try {
-            // Checking first name.
-            if (!firstName.equals(user.firstName)) {
+            // Checking first name and last name.
+            if (!firstName.equals(user.firstName) || !lastName.equals(user.lastName)) {
                 // First name can not be empty and can not contain numbers.
-                if (!firstName.matches("^[a-z A-Z]*$")) {
-                    flash("updateUserNameDiggitError","Name can't contain diggits.");
-                    throw new Exception();
-                }
-                if (firstName.isEmpty()) {
-                    flash("updateUserNameEmptyError","Name can't be empty string.");
-                    throw new Exception();
+                if (!firstName.matches("^[a-z A-Z]*$") || !lastName.matches("^[a-z A-Z]*$")) {
+                    flash("updateUserNameDiggitError","First name and last name can't contain diggits.");
+                    return badRequest(userEdit.render(user, countries));
+                } else if (firstName.isEmpty() || lastName.isEmpty()) {
+                    flash("updateUserNameEmptyError","First name and last name can't be empty string.");
+                    return badRequest(userEdit.render(user, countries));
                 } else {
                     user.firstName = firstName;
-                }
-            }
-        }catch (Exception e){
-            Logger.info("ERROR: Registration failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
-            return badRequest(userEdit.render(user, countries));
-        }
-
-        try {
-            // Checking last name.
-            if (!lastName.equals(user.lastName)) {
-                // Last name can not be empty and can not contain numbers.
-                if (!lastName.matches("^[a-z A-Z]*$")) {
-                    flash("updateUserLastNameDiggitError","Last name can't contain diggits.");
-                    throw new Exception();
-                }
-                if (lastName.isEmpty()) {
-                    flash("updateUserLastNameEmptyError","Last name can't be empty string.");
-                    throw new Exception();
-                } else {
                     user.lastName = lastName;
                 }
             }
         }catch (Exception e){
-            Logger.info("ERROR: Registration failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
+            Logger.info("ERROR: UserLogin failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
             return badRequest(userEdit.render(user, countries));
         }
+
         // Checking if the password match confirm password and if they are in the right format.
         if(pass.equals(conPass)) {
             if (!pass.isEmpty() || pass.length() > 8) {
                 user.password = BCrypt.hashpw(pass, BCrypt.gensalt());
             }
+        } else {
+            flash("updatePasswordError","Password and confirm password must match.");
+            return badRequest(userEdit.render(user, countries));
         }
         // Updating user country.
         user.country = Country.findCountryByName(countryName);
@@ -210,6 +196,19 @@ public class Users extends Controller {
             return ok(userProducts.render(products, user));
         } else {
             return redirect(routes.ApplicationController.signIn());
+        }
+    }
+
+    /**
+     * This will just validate the form for the AJAX call
+     * @return ok if there are no errors or a JSON object representing the errors
+     */
+    public Result validateFormUser(){
+        Form<User> binded = userRegistration.bindFromRequest();
+        if(binded.hasErrors()){
+            return badRequest(binded.errorsAsJson());
+        } else {
+            return ok("Validation successful.");
         }
     }
 

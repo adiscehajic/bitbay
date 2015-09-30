@@ -21,16 +21,17 @@ public class Product extends Model {
     @ManyToOne
     public User user;
     @Constraints.MaxLength(255)
-    @Constraints.Required
+    @Constraints.Required(message = "Product name is required.")
     public String name;
     public String description;
     public String manufacturer;
     @ManyToOne
+    @Constraints.Required(message = "Product category is required.")
     public Category category;
-    @Constraints.Required
+    @Constraints.Required(message = "Product price is required.")
     public Double price;
     @Constraints.Min(1)
-    @Constraints.Required
+    @Constraints.Required(message = "Product quantity is required.")
     public Integer quantity;
     public String sellingType;
     @OneToMany(cascade = CascadeType.ALL)

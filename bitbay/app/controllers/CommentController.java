@@ -53,7 +53,7 @@ public class CommentController extends Controller {
                 throw new Exception();
             }
         }catch (Exception e){
-            Logger.info("ERROR: Registration failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
+            Logger.info("ERROR: UserLogin failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
             return redirect(routes.ProductController.getProduct(id));
         }
         // Creating new comment and saving it into database.

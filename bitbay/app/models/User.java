@@ -25,28 +25,28 @@ public class User extends Model {
     public Integer id;
 
     @Constraints.MaxLength(255)
-    @Constraints.Required
-    @Constraints.Pattern("^[a-z A-Z]+$")
+    @Constraints.Required(message = "Please insert first name.")
+    @Constraints.Pattern(value = "^[a-z A-Z]+$", message = "First name can't contain diggits")
     public String firstName;
 
     @Constraints.MaxLength(255)
-    @Constraints.Pattern("^[a-z A-Z]+$")
-    @Constraints.Required
+    @Constraints.Pattern(value = "^[a-z A-Z]+$", message = "Last name can't contain diggits")
+    @Constraints.Required(message = "Please insert last name.")
     public String lastName;
 
     @Column(unique = true)
     @Constraints.MaxLength(255)
-    @Constraints.Required()
-    @Constraints.Email
+    //@Constraints.Required(message = "Please insert email.")
+    @Constraints.Email(message = "Valid email is required.")
     public String email;
 
     @Constraints.MaxLength(255)
-    @Constraints.MinLength(8)
-    @Constraints.Required()
+    @Constraints.MinLength(value = 8, message = "Minimum 8 characters are required.")
+    //@Constraints.Required(message = "Please insert password.")
     public String password;
 
     @ManyToOne
-    @Constraints.Required
+    //@Constraints.Required
     public UserType userType;
 
     @ManyToOne

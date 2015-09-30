@@ -3,88 +3,132 @@
 
 @main("Product") {
 
-  <script src="@routes.Assets.versioned("javascripts/createProductValidator.js")" type="text/javascript"></script>
-  <div class="container">
+    <script src="@routes.Assets.versioned("javascripts/createProductValidator.js")" type="text/javascript"></script>
+    <div class="container">
 
-    @helper.form(action = routes.ProductController.saveProduct(), 'enctype -> "multipart/form-data") {
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
-    <h2 style="margin-bottom:30px">Create New Product</h2>
+        @helper.form(action = routes.ProductController.saveProduct(), 'enctype -> "multipart/form-data") {
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <h2 style="margin-bottom : 30 px">Create New Product</h2>
 
 
-      <div class="form-group">
-        <label for="product-name">Category: * </label>
-        <select class="form-control placeholder" name="category" onclick="validateProduct()" onfocusout="validateCategory()">
+                <div class="form-group">
+                    <label for="product-name">Category: * </label>
+                    <select class="form-control placeholder" name="category" onclick="validateProduct()" onfocusout="validateCategory()">
 
-          <option value="0" selected disabled >Please select type</option>
-          @for(category <- categories) {
-            <option value="@category.name">@category.name</option>
-          }
-        </select>
-        @if(flash.containsKey("saveCategoryEmptyCategoryError")) {
-        <p style="color : red ;">
-        @flash.get("saveCategoryEmptyCategoryError")
-        </p>
-      }
-      </div>
-      <div class="form-group">
-        <label for="product-name">Product Name: * </label>
-        <input type="text" class="form-control" id="product-name" name="name" onfocusout="validateName()" onchange="validateProduct()">
-        @if(flash.containsKey("saveProductNameError")) {
-          <p style="color : red ;">
-          @flash.get("saveProductNameError")
-          </p>
-        }
-      </div>
-      <div class="form-group">
-        <label for="price">Price: * </label>
-        <input type="number" id="replyNumber" data-bind="value:replyNumber" class="form-control" name="price" onfocusout="validatePrice()" onchange="validateProduct()">
-      </div>
-      <div class="form-group">
-        <label for="quantity">Quantity: * </label>
-        <input type="number" id="replyNumber" data-bind="value:replyNumber" class="form-control" name="quantity" onfocusout="validateQuanity()" onchange="validateProduct()">
-        @if(flash.containsKey("saveProductEmptyQuantityError")) {
-          <p style="color : red ;">
-          @flash.get("saveProductEmptyQuantityError")
-          </p>
-        }
-      </div>
-      <div class="form-group">
-        <label for="manufacturer">Manufacturer:*</label>
-        <input type="text" class="form-control" id="manufacturer" name="manufacturer" onfocusout="validateProduct()">
-        @if(flash.containsKey("saveProductManufacturerError")) {
-          <p style="color : red ;">
-          @flash.get("saveProductManufacturerError")
-          </p>
-        }
-        @if(flash.containsKey("saveProductManufacturerEmptyError")) {
-          <p style="color : red ;">
-          @flash.get("saveProductManufacturerEmptyError")
-          </p>
-        }
-      </div>
-      <label for="selling=type">Type of selling:*</label>
-      <select id="selling=type" class="form-control placeholder" name="type" onchange="validateRegistration()">
-        <option value="0" selected disabled>Please select sale type</option>
-        <option value="1">Regular</option>
-        <option value="2">Auction</option>
-      </select>
-      @if(flash.containsKey("saveCategoryEmptySellingTypeyError")) {
-        <p style="color : red ;">
-        @flash.get("saveCategoryEmptySellingTypeyError")
-        </p>
-      }
-        <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea class="form-control" rows="5" id="description" name="description" onfocusout="validateProduct()"></textarea>
-      </div>
-      <p style="font-size: 12px; color: red"> All * fields are required </p>
-        <div class="form-group">
-            <label for="exampleInputFile">Image select:</label>
-            <input type="file" name="image" accept="image/*">
-        </div>
-        <button type="submit" class="btn btn-primary" name="submitButton">Submit</button>
-      }
-  </div>
-</div>
+                        <option value="0" selected disabled >Please select type</option>
+                        @for(category <- categories) {
+                            <option value="@category.name">@category.name</option>
+                        }
+                    </select>
+                    <span class="alert-danger" data-error-for="category" style="margin-left : 1 px ; font-weight : normal ;"></span>
+                    @if(flash.containsKey("saveCategoryEmptyCategoryError")) {
+                        <p style="color : red ;">
+                        @flash.get("saveCategoryEmptyCategoryError")
+                        </p>
+                    }
+                </div>
+                <div class="form-group">
+                    <label for="product-name">Product Name: * </label>
+                    <input type="text" class="form-control" id="product-name" name="name" onfocusout="validateName()" onchange="validateProduct()">
+                    <span class="alert-danger" data-error-for="name" style="margin-left : 1 px ; font-weight : normal ;"></span>
+                    @if(flash.containsKey("saveProductNameError")) {
+                        <p style="color : red ;">
+                        @flash.get("saveProductNameError")
+                        </p>
+                    }
+                </div>
+                <div class="form-group">
+                    <label for="price">Price: * </label>
+                    <input type="number" id="replyNumber" data-bind="value:replyNumber" class="form-control" name="price" onfocusout="validatePrice()" onchange="validateProduct()">
+                    <span class="alert-danger" data-error-for="price" style="margin-left : 1 px ; font-weight : normal ;"></span>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity: * </label>
+                    <input type="number" id="replyNumber" data-bind="value:replyNumber" class="form-control" name="quantity" onfocusout="validateQuanity()" onchange="validateProduct()">
+                    <span class="alert-danger" data-error-for="quantity" style="margin-left : 1 px ; font-weight : normal ;"></span>
+                    @if(flash.containsKey("saveProductEmptyQuantityError")) {
+                        <p style="color : red ;">
+                        @flash.get("saveProductEmptyQuantityError")
+                        </p>
+                    }
+                </div>
+                <div class="form-group">
+                    <label for="manufacturer">Manufacturer:*</label>
+                    <input type="text" class="form-control" id="manufacturer" name="manufacturer" onfocusout="validateProduct()">
+                    @if(flash.containsKey("saveProductManufacturerError")) {
+                        <p style="color : red ;">
+                        @flash.get("saveProductManufacturerError")
+                        </p>
+                    }
+                    @if(flash.containsKey("saveProductManufacturerEmptyError")) {
+                        <p style="color : red ;">
+                        @flash.get("saveProductManufacturerEmptyError")
+                        </p>
+                    }
+                </div>
+                <label for="selling=type">Type of selling:*</label>
+                <select id="selling=type" class="form-control placeholder" name="type" onchange="validateRegistration()">
+                    <option value="0" selected disabled>Please select sale type</option>
+                    <option value="1">Regular</option>
+                    <option value="2">Auction</option>
+                </select>
+                @if(flash.containsKey("saveCategoryEmptySellingTypeyError")) {
+                    <p style="color : red ;">
+                    @flash.get("saveCategoryEmptySellingTypeyError")
+                    </p>
+                }
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" rows="5" id="description" name="description" onfocusout="validateProduct()"></textarea>
+                </div>
+                <p style="font-size : 12 px ; color : red"> All * fields are required </p>
+                <div class="form-group">
+                    <label for="exampleInputFile">Image select:</label>
+                    <input type="file" name="image" accept="image/*">
+                </div>
+                <button id="submit-button" type="submit" class="btn btn-primary" name="submitButton">Submit</button>
+                }
+    </div>
+    </div>
+
+    <script>
+
+        $(document).ready(function(){
+            $("#submit-button").prop("disabled", true);
+
+            $('.form-control').blur(function(){
+                $field = $(this);
+                $('form [data-error-for="'+$field.attr("name")+'"]').html("");
+
+                $form = $("form");
+
+                $.ajax({
+                    url: "@routes.ProductController.validateFormProduct()",
+                    method: "post",
+                    data: $('form').serialize()
+                }).success(function(response){
+                    $("#submit-button").prop("disabled", false);
+                    $("form [data-error-for]").html("");
+
+                }).error(function(response){
+                    $("#submit-button").prop("disabled", true);
+                    var errors = response.responseJSON;
+
+					console.log(errors);
+                    var keys = Object.keys(errors);
+
+					var errorMessages = errors[$field.attr("name")];
+					var allErrors = "";
+					for(var j = 0; j < errorMessages.length; j++){
+						allErrors += errorMessages[j];
+					}
+
+					$('form [data-error-for="'+$field.attr("name")+'"]').html(allErrors);
+                });
+            });
+
+        });
+    </script>
+
 }

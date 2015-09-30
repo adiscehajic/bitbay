@@ -3,6 +3,7 @@ package controllers;
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.cloudinary.Cloudinary;
+import helpers.CurrentAdmin;
 import helpers.CurrentSeller;
 import helpers.SessionHelper;
 import models.*;
@@ -97,6 +98,7 @@ public class ProductController extends Controller {
      * @param id - Id of the product that user wants to delete.
      * @return Administrator panel page where all products of the application are listed.
      */
+    @Security.Authenticated(CurrentAdmin.class)
     public Result deleteProductAdmin(Integer id) {
         Product product = Product.getProductById(id);
 
@@ -288,6 +290,19 @@ public class ProductController extends Controller {
         JsonNode object = Json.toJson(names);
 
         return ok(object);
+    }
+
+    /**
+     * This will just validate the form for the AJAX call
+     * @return ok if there are no errors or a JSON object representing the errors
+     */
+    public Result validateFormProduct(){
+        Form<Product> binded = productForm.bindFromRequest();
+        if(binded.hasErrors()){
+            return badRequest(binded.errorsAsJson());
+        } else {
+            return ok("Validation successful.");
+        }
     }
 
 }

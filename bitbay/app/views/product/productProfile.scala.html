@@ -108,7 +108,7 @@
 						<br><p>@product.description</p>
 					</div>
 					<div id="menu2" class="tab-pane fade">
-						@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2 && Comment.hasUserCommented) {
+						@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2 && Comment.hasUserCommented(product)) {
 							<div class="page-header">
 								<h2>Your Comment </h2>
 							</div>

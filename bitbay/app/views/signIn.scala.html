@@ -1,5 +1,5 @@
-@import controllers.ApplicationController.Registration
-@(userRegistration: Form[Registration])
+@import controllers.ApplicationController.UserLogin
+@(userRegistration: Form[UserLogin])
 <!DOCTYPE html>
 <html>
 	<head>
@@ -33,54 +33,39 @@
 										<h2>Sign in</h2>
 									</div>
 								</div>
-
+								<div style="margin-left: 20px; ">
+									<span class="alert-danger" style="font-weight:normal;">@flash.get("signInError")</span>
+									<span class="alert-danger" style="font-weight:normal;">@flash.get("errorEmail")</span>
+									<span class="alert-danger" style="font-weight:normal;">@flash.get("errorNoInput")</span>
+								</div>
 								<form action="@routes.ApplicationController.validateSignIn()" method="POST" id="login-form">
 									<div class = "row">
 									<div class="col-md-6">
 
-										@if(flash.containsKey("errorNoInput")) {
-											<div class="alert alert-warning" style="width: 80%; margin-left: 20px;">
-												@flash.get("errorNoInput")
-											</div>
-										}
-										@if(flash.containsKey("errorEmail")) {
-											<div class="alert alert-danger" style="width: 80%; margin-left: 20px;">
-											@flash.get("errorEmail")
-											</div>
-										}
-										@if(flash.containsKey("successLogout")) {
-											<div class="alert alert-success" style="width: 80%; margin-left: 20px;">
-											@flash.get("successLogout")
-											</div>
-										}
-										@if(flash.containsKey("signInError")) {
-											<div class="alert alert-danger" style="width: 80%; margin-left: 20px;">
-											@flash.get("signInError")
-											</div>
-										}
-
-                            			<label style = "margin-left:20px;font-weight:normal;">Email</label>
+									<label style = "margin-left:20px;font-weight:normal;">Email</label>
                             			<!--field for email -->
-										<input type="email" class="form-control" id="email" name="email">
-                        			</div>
+									<input type="email" class="form-control" id="email" name="email" style="margin-bottom: 0;" value="@userRegistration("email").value">
+									<span class="alert-danger" data-error-for="email" style="margin-left:20px;font-weight:normal;"></span>
+									</div>
 								</div>
 								<div class = "row">
 									<div class="col-md-6">
-                            			<label style = "margin-left:20px;font-weight:normal;">Password</label>
+										<label style = "margin-left:20px;font-weight:normal;">Password</label>
                             			<!--field for password -->
-										<input type="password"class="form-control" id="password"  name="password">
+										<input type="password"class="form-control" id="password"  name="password" style="margin-bottom: 0;">
+										<span class="alert-danger" data-error-for="password" style = "margin-left:20px;font-weight:normal;"></span>
                         			</div>
                         		</div>
                         		<div class = "row">
                         			<div class ="col-md-6">
                         				<div class="checkbox" style="width: 100%;">
 											<input type="checkbox" name="remember" id="login-check" class="custom" style = "margin-left:20px; margin-top:14px;"> <p style = "padding-left:36px; padding-top:10px; width: 100%;">Stay signed in</p>
+                            			</div>
                             		</div>
-                            	</div>
                         		</div>
                         		<div class ="row">
                         			<div class ="col-md-6">
-										<button type="submit" class="btn btn-default" name="submit">Sign in</button>
+										<button id="signinbutton" type="submit" class="btn btn-default" name="submit">Sign in</button>
                         			</div>
                         		</div>
 								</form>
@@ -148,6 +133,45 @@
 				});
 
 			</script>
+
+	<script>
+
+         $(document).ready(function(){
+            $("#signinbutton").prop("disabled", true);
+
+            $('.form-control').blur(function(){
+                $field = $(this);
+                $('form [data-error-for="'+$field.attr("name")+'"]').html("");
+
+                $form = $("form");
+
+                $.ajax({
+                    url: "@routes.ApplicationController.validateFormLogin()",
+                    method: "post",
+                    data: $('form').serialize()
+                }).success(function(response){
+                    $("#signinbutton").prop("disabled", false);
+                    $("form [data-error-for]").html("");
+
+                }).error(function(response){
+                    $("#signinbutton").prop("disabled", true);
+                    var errors = response.responseJSON;
+
+					console.log(errors);
+                    var keys = Object.keys(errors);
+
+					var errorMessages = errors[$field.attr("name")];
+					var allErrors = "";
+					for(var j = 0; j < errorMessages.length; j++){
+						allErrors += errorMessages[j];
+					}
+
+					$('form [data-error-for="'+$field.attr("name")+'"]').html(allErrors);
+                });
+            });
+
+        });
+    </script>
 		</body>
 	</html>
 
