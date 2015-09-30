@@ -21,6 +21,7 @@ public class Comment extends Model{
     public Integer id;
     @Constraints.Required
     public String title;
+    @Constraints.MaxLength(900)
     @Constraints.Required
     public String text;
     @ManyToOne

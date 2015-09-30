@@ -135,5 +135,26 @@ function editUser() {
     }
 
     save.disabled = false;
+}
 
+function editName() {
+    var name = document.getElementsByName("firstName")[0].value;
+    var inpName = document.getElementsByName("firstName")[0];
+
+    if(name.length == 0) {
+        inpName.style.borderColor = "red";
+        return;
+    }
+    inpName.style.borderColor = "lightgray";
+}
+
+function editSurname() {
+    var surname = document.getElementsByName("lastName")[0].value;
+    var inpSurname = document.getElementsByName("lastName")[0];
+
+    if(surname.length == 0) {
+        inpSurname.style.borderColor = "red";
+        return;
+    }
+    inpSurname.style.borderColor = "lightgray";
 }

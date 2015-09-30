@@ -18,6 +18,7 @@ import views.html.signup;
 import views.html.signIn;
 import views.html.user.userEdit;
 import views.html.user.userProfile;
+import views.html.user.userMessages;
 import java.lang.*;
 import java.util.List;
 import java.util.Date;
