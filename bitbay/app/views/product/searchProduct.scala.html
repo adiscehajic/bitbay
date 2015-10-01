@@ -1,27 +1,48 @@
 @(products: java.util.List[Product])
 
 @main("Search Result") {
+
     <div class="container" id="main">
-    @for(product <- products){
 
-        <div class = "row" id="row1">
-            <div class = "col-md-4">
-                @for(image <- product.images) {
-                    <a href="@routes.ProductController.getProduct(product.id)"><img src="@image.getSize(250,250)"></a>
-                }
+        <table id="myTable" class="table table-striped">
+            <thead >
+                <tr class="table table-bordered">
+                    <th>Product</th>
+                    <th><a href=""><span class="glyphicon glyphicon-sort"></span> Name</a></th>
+                    <th><a href=""><span class="glyphicon glyphicon-sort"></span> Price</a></th>
+                    <th><a href=""><span class="glyphicon glyphicon-sort"></span> Date</a></th>
+                </tr>
+            </thead>
 
-            </div>
+            <tbody>
+            @for(product <- products){
+                <tr>
+                    <td>@for(image <- product.images) {
+                        <a href="@routes.ProductController.getProduct(product.id)"><img src="@image.getSize(250,250)" style="margin-left: 10px"></a>
+                    }</td>
+                    <td><a href="@routes.ProductController.getProduct(product.id)"><h4>@product.name</h4></a></td>
+                    <td><p style = "font-weight:bold;">@product.price KM</p></td>
+                    <td><p style = "color: #777">@product.registration</p></td>
 
-            <div class = "col-md-8">
-                <a href="@routes.ProductController.getProduct(product.id)"><h4>@product.name</h4></a>
-                <div class = "col-md-12" style = "margin-top: 20px; padding-left:0px;">
-                    <p style = "font-weight:bold;">Price: @product.price KM</p>
-                    <p style = "color: #777">From: @product.manufacturer</p>
-                    <p style = "font-weight:bold;">Free international shipping</p>
-                </div>
-            </div>
-        </div>
+                </tr>
+            }
+            </tbody>
+        </table>
 
+
+
+        <script >
+        $(document).ready(function()
+    {
+        $("#myTable").tablesorter();
     }
+    );
+    </script>
+
+
+
+
     </div>
+
+
 }
