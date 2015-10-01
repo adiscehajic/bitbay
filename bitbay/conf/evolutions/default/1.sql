@@ -57,6 +57,8 @@ create table message (
   date                      datetime,
   title                     varchar(255),
   message                   TEXT,
+  receiver_visible          tinyint(1) default 0,
+  sender_visible            tinyint(1) default 0,
   is_read                   tinyint(1) default 0,
   constraint pk_message primary key (id))
 ;
@@ -65,7 +67,7 @@ create table product (
   id                        integer auto_increment not null,
   user_id                   integer,
   name                      varchar(255),
-  description               varchar(255),
+  description               TEXT,
   manufacturer              varchar(255),
   category_id               integer,
   price                     double,

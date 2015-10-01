@@ -16,7 +16,7 @@
                 }
                 <td style="vertical-align: middle"><a href="@routes.MessageController.replyMessage(message.id)" style="text-decoration: none"><label>@message.title</label><p>@message.message </p></a></td>
                 <td style="vertical-align: middle"><a href="@routes.Users.getUser()"> @message.sender.email</a> </td>
-                <td style="vertical-align: middle"><input type="checkbox" value=""></td>
+                <td style="vertical-align: middle"><form method="POST" action="@routes.MessageController.deleteMessage(message.id)"><button type="submit"><span class="glyphicon glyphicon-remove"></span></button></form></td>
             </tr>
             }
             <tr>

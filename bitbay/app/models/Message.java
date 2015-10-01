@@ -35,6 +35,9 @@ public class Message extends Model{
     @Column(columnDefinition = "TEXT")
     public String message;
 
+    public Boolean receiverVisible;
+    public Boolean senderVisible;
+
     public Boolean isRead;
 
     public static Finder<Integer, Message> finder = new Finder<Integer, Message>(Message.class);
@@ -52,10 +55,12 @@ public class Message extends Model{
         this.title = title;
         this.message = message;
         this.isRead = false;
+        this.receiverVisible = true;
+        this.senderVisible = true;
     }
 
     /**
-     * This method find return one message by ID
+     * This method finds message by received Id and returns that message.
      * @param id
      * @return - Message
      */
@@ -65,12 +70,14 @@ public class Message extends Model{
     }
 
     /**
-     * This method returns a list of all reicived messages
+     * This method gets user from session, gets all messages from database, where this user is reciever and only messages
+     * that are visible to him (messages that havent been already deleted from his "Inbox"/list of received messages on
+     * his profile. This method also returns that List of messages.
      * @return - List of messages
      */
     public static List<Message> getReceivedMessages(){
         User user = SessionHelper.currentUser();
-        List<Message> receivedMessages = finder.where().eq("receiver", user).findList();
+        List<Message> receivedMessages = finder.where().eq("receiver", user).eq("receiverVisible", true).findList();
 
         return receivedMessages;
     }
@@ -79,6 +86,12 @@ public class Message extends Model{
         return String.format("Sender: %s -- Receiver: %s", sender.email, receiver.email);
     }
 
+    /**
+     * This method receives message id, finds message by that received id, get two users, receiver and sender, from that message. Gets list
+     * of messages between those two users from database (sender/receiver) and returns that list.
+     * @param id
+     * @return
+     */
     public static List<Message> getConversation(Integer id){
         Message message = Message.getMessageById(id);
         User sender = User.findById(message.sender.id);
@@ -96,9 +109,15 @@ public class Message extends Model{
     }
 
 
+    /**
+     * This method gets user from session, and get list of messages from database where he is sender, but only messages
+     * that are visible to him (that havent been deleted from its "Sent"/List of sent messages on his profile).
+     * This method returns that list of messages.
+     * @return
+     */
     public static List<Message> getSentMessages(){
         User user = SessionHelper.currentUser();
-        List<Message> sentMessages = Message.finder.where().eq("sender", user).findList();
+        List<Message> sentMessages = Message.finder.where().eq("sender", user).eq("senderVisible", true).findList();
 
         return sentMessages;
     }

@@ -3,9 +3,12 @@ package models;
 import com.avaje.ebean.Model;
 import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
+
+import java.nio.MappedByteBuffer;
 import java.util.Date;
 import play.data.format.Formats;
 import com.avaje.ebean.Model.Finder;
+import scala.collection.immutable.StreamViewLike;
 
 import javax.persistence.*;
 
@@ -62,6 +65,8 @@ public class User extends Model {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Product> products;
+    @OneToMany(mappedBy = "sender")
+    private List<Message> messages;
 
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
