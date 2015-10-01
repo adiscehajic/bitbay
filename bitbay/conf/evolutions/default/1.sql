@@ -56,7 +56,7 @@ create table message (
   receiver_id               integer,
   date                      datetime,
   title                     varchar(255),
-  message                   varchar(255),
+  message                   TEXT,
   is_read                   tinyint(1) default 0,
   constraint pk_message primary key (id))
 ;

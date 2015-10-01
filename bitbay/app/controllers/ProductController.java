@@ -196,22 +196,25 @@ public class ProductController extends Controller {
         return ok(viewProductsByCategory.render(products, category));
     }
 
-    public Result searchProduct() {
+
+    public Result searchProduct(){
 
         Form<Product> boundForm = productForm.bindFromRequest();
-        String name = boundForm.bindFromRequest().field("search").value();
+        String term = boundForm.bindFromRequest().field("search").value();
 
-        List<Product> products = Product.searchProductByName(name);
+        List<Product> products = Product.searchProductByName(term);
 
         return ok(searchProduct.render(products));
     }
 
+
+
     public Result autocompleteSearch() {
         Form<Product> boundForm = productForm.bindFromRequest();
 
-        String name = boundForm.bindFromRequest().field("search").value();
+        String term = boundForm.bindFromRequest().field("search").value();
 
-        List<Product> products = Product.searchProductByName(name);
+        List<Product> products = Product.searchProductByName(term);
 
         List<String> names = new ArrayList<>();
 

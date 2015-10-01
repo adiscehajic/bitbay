@@ -7,8 +7,7 @@ import views.html.user.userProducts;
 import org.apache.commons.io.FileUtils;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by adis.cehajic on 08/09/15.
@@ -88,10 +87,27 @@ public class Product extends Model {
         return products;
     }
 
-    public static List<Product> searchProductByName(String name) {
-        List<Product> product = Product.finder.where().contains("name", name).findList();
+    /**
+     * This method searches the database by a given String
+     * @param term The string we want to find
+     * @return A list containing all products containing that String
+     */
+    public static List<Product> searchProductByName(String term){
 
-        return product;
+        List<Product>productNames = Product.finder.where().contains("name", term).findList();
+        List<Product>productDescription = Product.finder.where().contains("description", term).findList();
+
+        List<Product> products = new ArrayList<>();
+        products.addAll(productNames);
+
+        for (int i = 0; i < productDescription.size(); i++) {
+            if (!products.contains(productDescription.get(i))) {
+                products.add(productDescription.get(i));
+            }
+        }
+
+        return products;
     }
+
 
 }

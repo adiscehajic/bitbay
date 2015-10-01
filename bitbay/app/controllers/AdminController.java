@@ -1,7 +1,9 @@
 package controllers;
 
 import helpers.CurrentAdmin;
+import helpers.SessionHelper;
 import models.Category;
+import models.Message;
 import models.Product;
 import models.User;
 import controllers.ApplicationController.UserLogin;
@@ -20,6 +22,9 @@ import views.html.admin.allProducts;
 import views.html.admin.allUsers;
 import views.html.admin.adminHome;
 import java.util.ArrayList;
+import views.html.admin.adminNewMessage;
+import views.html.admin.allMessages;
+import views.html.admin.adminViewMessage;
 import java.util.List;
 
 /**
@@ -27,8 +32,9 @@ import java.util.List;
  */
 public class AdminController extends Controller {
 
-    // Declaring administrator login form.
+    // Declaring administrator login form and message form.
     private static final Form<AdminLogin> adminLoginForm = Form.form(AdminLogin.class);
+    private static final Form<Message> messageForm = Form.form(Message.class);
 
     // Declaring constant for admin user type.
     private static final Integer ADMIN = 1;
@@ -180,6 +186,29 @@ public class AdminController extends Controller {
             }
             return errors.isEmpty() ? null : errors;
         }
+    }
+
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminNewMessage(String email) {
+        return ok(adminNewMessage.render(email, messageForm));
+    }
+
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminReceivedMessages() {
+        List<Message> messages = Message.getReceivedMessages();
+        return ok(allMessages.render(messages));
+    }
+
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminSentMessages() {
+        List<Message> messages = Message.getSentMessages();
+        return ok(allMessages.render(messages));
+    }
+
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminViewMessage(Integer id) {
+        List<Message> messages = Message.getConversation(id);
+        return ok(adminViewMessage.render(messages));
     }
 }
 
