@@ -1,0 +1,31 @@
+@import helpers.SessionHelper
+@(messages: java.util.List[Message])
+
+@admin.adminIndex {
+
+    <div class="col-md-10" style="border-bottom: 1px; background-color: #F8F8F4; border-radius: 5px; border: 1px solid #E0E0D1">
+        <form action="@routes.MessageController.respondMessage()" method="POST">
+            @if(messages.get(0).sender.email != SessionHelper.currentUser().email) {
+                <input name="receiverEmail" value="@messages.get(0).sender.email" hidden>
+            } else {
+                <input name="receiverEmail" value="@messages.get(0).receiver.email" hidden>
+            }
+            @for(message <- messages) {
+                <div class="row" style="border-bottom: 1px solid lightgray">
+                    <div class="col-md-11" style="margin-left:2%; margin-top:2%">
+                        <label> @message.sender.email : @message.title </label>
+                        <p> @message.message </p>
+                    </div>
+                </div>
+            }
+            <div class="row" style="margin-top: 3%">
+                <label style="margin-left: 5%"> Title: </label>
+                <input class="form-control" name="title" style="width: 90%; margin-left: 5%; margin-bottom: 10px;" placeholder="Message title">
+                <label style="margin-left: 5%"> Message: </label>
+                <textarea style="width:90%; height: 200px; border-radius: 5px; background-color: white; resize: none; margin-left: 5%;" name="messageText"></textarea>
+                <button type="submit" class="btn btn-primary" style="margin-left: 5%">Send <span class="glyphicon glyphicon-send"></span></button>
+            </div>
+        </form>
+    </div>
+
+}

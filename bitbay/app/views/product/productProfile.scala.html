@@ -23,8 +23,11 @@
 
 						<tr>
 							<td> User: </td>
-							<td name="email">@product.user.email</td>
-						</tr>
+							@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
+								<td name="email"><a href="@routes.MessageController.newMessage(product.user.email)" style="text-decoration : none">@product.user.email <span class="glyphicon glyphicon-envelope"></span></a></td>
+							} else {
+								<td name="email">@product.user.email</td>
+							}
 						<tr>
 							<td> Category: </td>
 							<td>@product.category.name</td>
@@ -108,9 +111,9 @@
 						<br><p>@product.description</p>
 					</div>
 					<div id="menu2" class="tab-pane fade">
-						@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2 && Comment.hasUserCommented) {
+						@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2 && Comment.hasUserCommented(product)) {
 							<div class="page-header">
-								<h2>Your Comment </h2>
+								<h2> Your Comment </h2>
 							</div>
 							<div class = "row">
 								<form action="@routes.CommentController.saveComment(product.id)" method="POST">

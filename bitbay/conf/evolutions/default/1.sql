@@ -50,6 +50,17 @@ create table image (
   constraint pk_image primary key (id))
 ;
 
+create table message (
+  id                        integer auto_increment not null,
+  sender_id                 integer,
+  receiver_id               integer,
+  date                      datetime,
+  title                     varchar(255),
+  message                   TEXT,
+  is_read                   tinyint(1) default 0,
+  constraint pk_message primary key (id))
+;
+
 create table product (
   id                        integer auto_increment not null,
   user_id                   integer,
@@ -113,18 +124,22 @@ alter table comment add constraint fk_comment_product_4 foreign key (product_id)
 create index ix_comment_product_4 on comment (product_id);
 alter table image add constraint fk_image_product_5 foreign key (product_id) references product (id) on delete restrict on update restrict;
 create index ix_image_product_5 on image (product_id);
-alter table product add constraint fk_product_user_6 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_product_user_6 on product (user_id);
-alter table product add constraint fk_product_category_7 foreign key (category_id) references category (id) on delete restrict on update restrict;
-create index ix_product_category_7 on product (category_id);
-alter table thumb add constraint fk_thumb_comment_8 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
-create index ix_thumb_comment_8 on thumb (comment_id);
-alter table thumb add constraint fk_thumb_user_9 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_thumb_user_9 on thumb (user_id);
-alter table user add constraint fk_user_userType_10 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
-create index ix_user_userType_10 on user (user_type_id);
-alter table user add constraint fk_user_country_11 foreign key (country_id) references country (id) on delete restrict on update restrict;
-create index ix_user_country_11 on user (country_id);
+alter table message add constraint fk_message_sender_6 foreign key (sender_id) references user (id) on delete restrict on update restrict;
+create index ix_message_sender_6 on message (sender_id);
+alter table message add constraint fk_message_receiver_7 foreign key (receiver_id) references user (id) on delete restrict on update restrict;
+create index ix_message_receiver_7 on message (receiver_id);
+alter table product add constraint fk_product_user_8 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_product_user_8 on product (user_id);
+alter table product add constraint fk_product_category_9 foreign key (category_id) references category (id) on delete restrict on update restrict;
+create index ix_product_category_9 on product (category_id);
+alter table thumb add constraint fk_thumb_comment_10 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
+create index ix_thumb_comment_10 on thumb (comment_id);
+alter table thumb add constraint fk_thumb_user_11 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_thumb_user_11 on thumb (user_id);
+alter table user add constraint fk_user_userType_12 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
+create index ix_user_userType_12 on user (user_type_id);
+alter table user add constraint fk_user_country_13 foreign key (country_id) references country (id) on delete restrict on update restrict;
+create index ix_user_country_13 on user (country_id);
 
 
 
@@ -149,6 +164,8 @@ drop table comment;
 drop table country;
 
 drop table image;
+
+drop table message;
 
 drop table product;
 

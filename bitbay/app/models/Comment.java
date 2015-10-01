@@ -21,6 +21,7 @@ public class Comment extends Model{
     public Integer id;
     @Constraints.Required
     public String title;
+    @Constraints.MaxLength(900)
     @Constraints.Required
     public String text;
     @ManyToOne
@@ -64,8 +65,8 @@ public class Comment extends Model{
         return comment;
     }
 
-    public static Boolean hasUserCommented() {
-        return Comment.finder.where().eq("user", SessionHelper.currentUser()).findRowCount() == 0;
+    public static Boolean hasUserCommented(Product product) {
+        return Comment.finder.where().eq("user", SessionHelper.currentUser()).where().eq("product", product).findRowCount() == 0;
     }
 
 }

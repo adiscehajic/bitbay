@@ -1,10 +1,12 @@
 package controllers;
 
 import helpers.CurrentAdmin;
+import helpers.SessionHelper;
 import models.Category;
+import models.Message;
 import models.Product;
 import models.User;
-import controllers.ApplicationController.Registration;
+import controllers.ApplicationController.UserLogin;
 import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
@@ -15,6 +17,9 @@ import views.html.admin.login;
 import views.html.admin.allProducts;
 import views.html.admin.allUsers;
 import views.html.admin.adminHome;
+import views.html.admin.adminNewMessage;
+import views.html.admin.allMessages;
+import views.html.admin.adminViewMessage;
 import java.util.List;
 
 /**
@@ -23,7 +28,8 @@ import java.util.List;
 public class AdminController extends Controller {
 
     // Declaring user form.
-    private static final Form<Registration> adminLogin = Form.form(Registration.class);
+    private static final Form<UserLogin> adminLogin = Form.form(UserLogin.class);
+    private static final Form<Message> messageForm = Form.form(Message.class);
     // Declaring constant for admin user type.
     private static final Integer ADMIN = 1;
 
@@ -118,7 +124,7 @@ public class AdminController extends Controller {
      */
     public Result validateLogin() {
         // Connecting with sign in form.
-        Form<Registration> boundForm = adminLogin.bindFromRequest();
+        Form<UserLogin> boundForm = adminLogin.bindFromRequest();
         // Reading inputed values and storing them into string variables.
         String email = boundForm.bindFromRequest().field("email").value();
         String password = boundForm.bindFromRequest().field("password").value();
@@ -148,9 +154,32 @@ public class AdminController extends Controller {
                 return redirect(routes.AdminController.adminLogin());
             }
         } catch (Exception e) {
-            Logger.info("ERROR: Registration failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
+            Logger.info("ERROR: UserLogin failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
             return badRequest(login.render(boundForm));
         }
+    }
+
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminNewMessage(String email) {
+        return ok(adminNewMessage.render(email, messageForm));
+    }
+
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminReceivedMessages() {
+        List<Message> messages = Message.getReceivedMessages();
+        return ok(allMessages.render(messages));
+    }
+
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminSentMessages() {
+        List<Message> messages = Message.getSentMessages();
+        return ok(allMessages.render(messages));
+    }
+
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminViewMessage(Integer id) {
+        List<Message> messages = Message.getConversation(id);
+        return ok(adminViewMessage.render(messages));
     }
 }
 

@@ -1,0 +1,16 @@
+@(content: Html)
+
+@main("Messages") {
+<div class="container">
+  <div class="col-md-2">
+    <ul class="nav nav-pills nav-stacked" style="border: 1px solid lightgrey; border-radius: 5px; background-color: #F8F8F4">
+      <li><a href="@routes.MessageController.newMessage("")" class="menuItem"> New Message </a></li>
+      <li><a href="@routes.MessageController.getReceivedMessages()"class="menuItem"> Inbox </a></li>
+      <li><a href="@routes.MessageController.getSentMessages()" class="menuItem"> Sent </a></li>
+    </ul>
+  </div>
+  <div class="col-md-10">
+    @content
+  </div>
+</div>
+}

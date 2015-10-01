@@ -20,7 +20,9 @@
 					<td> @user.email </td>
 					<td> @user.userType.name </td>
 					<td>
+						<a href="@routes.AdminController.adminNewMessage(user.email)"><button type="submit"><span class="glyphicon glyphicon-envelope"></span></button></a>
                         <a id="deleteUserByAdmin@user.id"><button  type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
+
 					</td>
 				</tr>
 

@@ -1,0 +1,30 @@
+@import helpers.SessionHelper
+@(messages: List[Message])
+
+@admin.adminIndex {
+    <table class="table table-hover">
+        <thead>
+            <th>Title</th>
+            <th>Message</th>
+            <td>User</td>
+            <td></td>
+        </thead>
+        <tbody>
+            @for(message <- messages) {
+               <tr>
+                    <td><a href="@routes.AdminController.adminViewMessage(message.id)"><label>@message.title</label></a></td>
+                    <td><a href="@routes.AdminController.adminViewMessage(message.id)">@message.message</a></td>
+                    @if(SessionHelper.currentUser().id != message.sender.id) {
+                        <td><a href="@routes.AdminController.adminViewMessage(message.id)"> @message.sender </a></td>
+                    } else {
+                        <td><a href="@routes.AdminController.adminViewMessage(message.id)"> @message.receiver </a></td>
+                    }
+                    <td><input type="checkbox"></td>
+                </tr>
+            }
+            <tr>
+                <td colspan="4"><button class="btn btn-default" style="float: right"> Delete selected messages </button></td>
+            </tr>
+        </tbody>
+    </table>
+}
