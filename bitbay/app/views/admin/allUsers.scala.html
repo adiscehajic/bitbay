@@ -20,9 +20,8 @@
 					<td> @user.email </td>
 					<td> @user.userType.name </td>
 					<td>
-						<form method="GET" action="@routes.Users.deleteUser(user.id)">
-							<button type="submit"><span class="glyphicon glyphicon-trash"></span></button>
-						</form>
+						<a href="@routes.AdminController.adminNewMessage(user.email)"><button type="submit"><span class="glyphicon glyphicon-envelope"></span></button></a>
+						<a href="@routes.Users.deleteUser(user.id)"><button type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
 					</td>
 				</tr>
 			}

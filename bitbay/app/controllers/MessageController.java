@@ -12,6 +12,7 @@ import play.mvc.Result;
 import views.html.message.newMessage;
 import views.html.message.replyMessage;
 import views.html.message.allMessages;
+import views.html.admin.adminNewMessage;
 import views.html.user.userMessages;
 import java.util.List;
 
@@ -32,11 +33,22 @@ public class MessageController extends Controller {
         String content = boundForm.bindFromRequest().field("message").value();
         Message message = new Message(sender,receiver,title,content);
 
-        if(receiver != null) {
-            Ebean.save(message);
-        }else{
-            flash("receiverDontExistError", "Invalid Email.");
+        if(sender.userType.id == 1 && receiver == null) {
+            flash("receiverDontExistError", "User does not exist.");
+            return badRequest(adminNewMessage.render("", boundForm));
         }
+        if(receiver == null) {
+            flash("receiverDontExistError", "User does not exist.");
+            return badRequest(newMessage.render("", boundForm));
+        }
+
+        flash("messageSentSuccess", "Message successfully sent.");
+        message.save();
+
+        if(sender.userType.id == 1) {
+            return redirect(routes.AdminController.adminNewMessage(""));
+        }
+
         return redirect(routes.MessageController.getReceivedMessages());
     }
 
@@ -62,8 +74,6 @@ public class MessageController extends Controller {
     }
 
 
-
-
     public Result getReceivedMessages(){
      List<Message> recievedMessages = Message.getReceivedMessages();
         return ok(allMessages.render(recievedMessages));
@@ -74,8 +84,6 @@ public class MessageController extends Controller {
         return ok(allMessages.render(sentMesages));
     }
 
-
-
     public Result deleteMessage(Integer id){
         Message message = Message.getMessageById(id);
         message.delete();
@@ -84,14 +92,23 @@ public class MessageController extends Controller {
         //TODO
     }
 
-    public Result newMessage() {
-        return ok(newMessage.render());
+    public Result newMessage(String email) {
+        return ok(newMessage.render(email, messageForm));
     }
 
     public Result replyMessage(Integer id) {
-        List<Message> mess = Message.getConversation(id);
-        return ok(replyMessage.render(mess));
-    }
+        List<Message> conv = Message.getConversation(id);
+        User user = SessionHelper.currentUser();
 
+        for(int i = 0; i < conv.size(); i++) {
+            if(conv.get(i).receiver.id == user.id) {
+                conv.get(i).isRead = true;
+                conv .get(i).update();
+            }
+        }
+
+        List<Message> messages = Message.getConversation(id);
+        return ok(replyMessage.render(messages));
+    }
 
 }
