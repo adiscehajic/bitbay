@@ -23,7 +23,14 @@ public class MessageController extends Controller {
 
     private static final Form<Message> messageForm = Form.form(Message.class);
 
-
+    /**
+     * This method should collect all data from our request, where should be included: email of user that receives
+     * message, title of message, and content of message. From all collected data we create Message object into base.
+     * If there is no receiver, throw different errors if sender is admin or user. If all required data is collected
+     * message will be saved into database and page will redirect us on another page, depending are we admin or just a
+     * user.
+     * @return
+     */
     public Result sendMessage(){
         Form<Message> boundForm = messageForm.bindFromRequest();
         User sender = SessionHelper.currentUser();
@@ -52,6 +59,7 @@ public class MessageController extends Controller {
         return redirect(routes.MessageController.getReceivedMessages());
     }
 
+    
     public Result respondMessage(){
         DynamicForm boundForm = Form.form().bindFromRequest();
         String receiverEmail = boundForm.get("receiverEmail");
@@ -86,10 +94,21 @@ public class MessageController extends Controller {
 
     public Result deleteMessage(Integer id){
         Message message = Message.getMessageById(id);
-        message.delete();
+        User currentUser = SessionHelper.currentUser();
 
-        return  TODO;
-        //TODO
+        if(message.receiver.id == currentUser.id && message.receiverVisible == true) {
+            message.receiverVisible = false;
+            message.update();
+
+            List<Message> messages = Message.getReceivedMessages();
+            return ok(allMessages.render(messages));
+        } else {
+            message.senderVisible = false;
+            message.update();
+
+            List<Message> messages = Message.getSentMessages();
+            return ok(allMessages.render(messages));
+        }
     }
 
     public Result newMessage(String email) {
@@ -103,7 +122,7 @@ public class MessageController extends Controller {
         for(int i = 0; i < conv.size(); i++) {
             if(conv.get(i).receiver.id == user.id) {
                 conv.get(i).isRead = true;
-                conv .get(i).update();
+                conv.get(i).update();
             }
         }
 
