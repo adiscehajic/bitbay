@@ -13,6 +13,7 @@
         <link rel="shortcut icon" type="image/ico" href="@routes.Assets.versioned("images/favicon.ico")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/productProfile.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/jquery-ui.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/jquery.elevator.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/searchProduct.css")">
         <script src="@routes.Assets.versioned("javascripts/jquery-1.11.3.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")" type="text/javascript"></script>
@@ -21,6 +22,9 @@
         <script src="@routes.Assets.versioned("javascripts/createProductValidator.js")" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("javascripts/jquery.dotdotdot.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("javascripts/jquery-ui.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/jquery.tablesorter.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/jquery.elevator.min.js")" type="text/javascript"></script>
+
     </head>
     <body onload="validateProduct()">
         <nav class="navbar navbar-default">
@@ -101,9 +105,16 @@
         });
         </script>
 
+        <script >
+            $.elevator();
+        </script>
+
 
         <div class="container">
         @content
         </div>
-    </body>
+        <div id="top" class="elevator"></div>
+        <div id="bottom" class="elevator"></div>
+
+        </body>
 </html>

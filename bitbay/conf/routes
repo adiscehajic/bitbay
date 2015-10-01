@@ -4,6 +4,7 @@
 
 # Home page
 
+
 GET           /                                @controllers.ApplicationController.index()
 GET           /signup                          @controllers.ApplicationController.signUp()
 POST          /signup                          @controllers.ApplicationController.newUser()

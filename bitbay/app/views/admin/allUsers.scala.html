@@ -21,9 +21,39 @@
 					<td> @user.userType.name </td>
 					<td>
 						<a href="@routes.AdminController.adminNewMessage(user.email)"><button type="submit"><span class="glyphicon glyphicon-envelope"></span></button></a>
-						<a href="@routes.Users.deleteUser(user.id)"><button type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
+                        <a id="deleteUserByAdmin@user.id"><button  type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
+
 					</td>
 				</tr>
+
+				<script >
+                      $(document).ready(function(){
+                      $('#deleteUserByAdmin@user.id').click(function(){
+                         $.confirm({
+                            title: 'You are about to delete ' + @user.firstName,
+                            content: 'Are you sure?',
+                            theme: 'supervan',
+                            confirmButtonClass: 'btn-danger',
+                            cancelButtonClass: 'btn-info',
+                             confirmButton: 'Delete',
+                             cancelButton: 'Cancel',
+                             backgroundDismiss: false,
+                               confirm: function(){
+                                $.ajax({
+                                   url: '@routes.Users.deleteUser(user.id)',
+                                   method: 'GET',
+                                    }).success(function(){
+						             window.location.replace("@routes.AdminController.adminUsers()");
+                                      }).error(function(response){
+                                      alert(response.responseText);
+                                       });
+                                       },
+                                      cancel: function(){
+                                    }
+                               });
+                             })
+                         })
+                     </script>
 			}
 		</tbody>
 	</table>
