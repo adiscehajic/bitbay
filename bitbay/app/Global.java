@@ -7,12 +7,14 @@ import models.UserType;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Application;
 import play.GlobalSettings;
+import play.api.mvc.EssentialFilter;
 import play.mvc.Result;
 import play.libs.F;
 import play.mvc.Http;
 import play.*;
 import play.mvc.*;
 import play.mvc.Http.*;
+import play.filters.csrf.CSRFFilter;
 
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.notFound;
@@ -98,6 +100,12 @@ public class Global extends GlobalSettings {
             categoryTwo.save();
             categoryThree.save();
         }
+    }
+
+    @Override
+    public <T extends EssentialFilter> Class<T>[] filters() {
+        Class[] filters = {CSRFFilter.class};
+        return filters;
     }
 
     @Override

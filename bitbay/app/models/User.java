@@ -26,11 +26,11 @@ public class User extends Model {
 
     @Constraints.MaxLength(255)
     @Constraints.Required(message = "Please insert first name.")
-    @Constraints.Pattern(value = "^[a-z A-Z]+$", message = "First name can't contain diggits")
+    @Constraints.Pattern(value = "^[a-z A-Z]+$", message = "First name can't contain diggits.")
     public String firstName;
 
     @Constraints.MaxLength(255)
-    @Constraints.Pattern(value = "^[a-z A-Z]+$", message = "Last name can't contain diggits")
+    @Constraints.Pattern(value = "^[a-z A-Z]+$", message = "Last name can't contain diggits.")
     @Constraints.Required(message = "Please insert last name.")
     public String lastName;
 
@@ -74,7 +74,7 @@ public class User extends Model {
 
     public String token;
 
-    // Declaring variable.
+    // Declaring finder.
     private static Finder<String, User> finder =
             new Finder<>(User.class);
 

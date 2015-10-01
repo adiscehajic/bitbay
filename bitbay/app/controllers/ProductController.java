@@ -10,6 +10,8 @@ import models.*;
 import play.Logger;
 import play.Play;
 import play.data.Form;
+import play.filters.csrf.AddCSRFToken;
+import play.filters.csrf.RequireCSRFCheck;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -43,20 +45,20 @@ public class ProductController extends Controller {
      * @return Page where all product informations are shown.
      */
     public Result getProduct(Integer id) {
+        // Finding selected product.
         Product product = Product.getProductById(id);
+        // Declaring image path.
         String path = Image.getImagePath(product);
-
-        Logger.info("Product id je: " + product.id);
-
+        // Declaring the list of comments and the list of top comments.
         List<Comment> comments = Comment.sortCommentByDate(product);
         List<Comment> topComments = Thumb.getMostLikedComment(product);
-
+        // Removing comments that are top comments from the list of comments.
         if (topComments.size() > 0) {
             for (int i = 0; i < topComments.size(); i++) {
                 comments.remove(topComments.get(i));
             }
         }
-
+        // Rendering product profile page.
         return ok(productProfile.render(product, path, comments, topComments));
     }
 
@@ -68,8 +70,10 @@ public class ProductController extends Controller {
      */
     @Security.Authenticated(CurrentSeller.class)
     public Result newProduct() {
+        // Declaring the list of categories.
         List<Category> categories = Category.findAll();
-        return ok(newProduct.render(categories));
+        // Rendering the page for the new product input.
+        return ok(newProduct.render(productForm, categories));
     }
 
     /**
@@ -80,15 +84,17 @@ public class ProductController extends Controller {
      */
     @Security.Authenticated(CurrentSeller.class)
     public Result deleteProduct(Integer id) {
+        // Finding selected product.
         Product product = Product.getProductById(id);
-
+        // Getting current user from session.
         User user = SessionHelper.currentUser();
-
+        // Deleting product.
         if (user.id == product.user.id) {
             product.delete();
         }
-
+        // Declaring the list of the products from current user.
         List<Product> products = Product.findAllProductsByUser(user);
+        // Rendering the page where the list of current user product are listed.
         return ok(userProducts.render(products, user));
     }
 
@@ -108,69 +114,26 @@ public class ProductController extends Controller {
         return redirect(routes.AdminController.adminProducts());
     }
 
-
+    @RequireCSRFCheck
     @Security.Authenticated(CurrentSeller.class)
     public Result saveProduct() {
         Form<Product> boundForm = productForm.bindFromRequest();
 
         if (boundForm.hasErrors()) {
-            return badRequest(newProduct.render(Category.findAll()));
-
+            return badRequest(newProduct.render(boundForm, Category.findAll()));
         }
 
         Image.cloudinary = new Cloudinary("cloudinary://" + Play.application().configuration().getString("cloudinary.string"));
         User user = User.getUserByEmail(session().get("email"));
-        //String name = boundForm.bindFromRequest().field("name").value();
-        //String description = boundForm.bindFromRequest().field("description").value();
-        //String manufacturer = boundForm.bindFromRequest().field("manufacturer").value();
+
         String categoryValue = boundForm.bindFromRequest().field("category").value();
-        //String price = boundForm.bindFromRequest().field("price").value();
-        //String quantity = boundForm.bindFromRequest().field("quantity").value();
-        //String sellingType = boundForm.bindFromRequest().field("sellingType").value();
 
         Category category = Category.getCategoryByName(categoryValue);
-        List<Category> categories = Category.findAll();
-
-        /*if (name.isEmpty()) {
-            flash("saveProductNameError", "Please enter product name.");
-            return badRequest(newProduct.render(categories));
-        }
-
-
-
-        if (Integer.parseInt(price) <= 0) {
-            flash("saveCategoryLowPriceError", "Price can't be 0 or lower.");
-            return badRequest(newProduct.render(categories));
-
-        }
-
-        if (price.isEmpty()) {
-            flash("saveProductEmptyPriceError", "Please enter price.");
-            return badRequest(newProduct.render(categories));
-        }
-
-        if (quantity.isEmpty()) {
-            flash("saveProductEmptyQuantityError", "Please enter product quantity.");
-            return badRequest(newProduct.render(categories));
-        }
-
-        if (categoryValue == null) {
-            flash("saveCategoryEmptyCategoryError", "Please select category.");
-            return badRequest(newProduct.render(categories));
-        }
-
-        if (sellingType == null) {
-            flash("saveCategoryEmptySellingTypeyError", "Please select selling type.");
-            return badRequest(newProduct.render(categories));
-        }*/
 
         Product product = boundForm.get();
         product.user = user;
         product.category = category;
-        //Product product = new Product(user, name, description, manufacturer, category, Double.parseDouble(price), Integer.parseInt(quantity), sellingType);
         product.save();
-
-        //Ebean.save(product);
 
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart filePart = body.getFile("image");
@@ -187,61 +150,43 @@ public class ProductController extends Controller {
     public Result editProduct(Integer id) {
         Product product = Product.getProductById(id);
         List<Category> categories = Category.findAll();
+        categories.remove(product.category);
 
         Form<Product> filledForm = productForm.fill(product);
-        return ok(editProduct.render(product));
+        return ok(editProduct.render(filledForm, product, categories));
     }
 
+    @RequireCSRFCheck
     @Security.Authenticated(CurrentSeller.class)
     public Result updateProduct(Integer id) {
         Product product = Product.getProductById(id);
         Form<Product> boundForm = productForm.bindFromRequest();
-
-        String name = boundForm.bindFromRequest().field("name").value();
-        String description = boundForm.bindFromRequest().field("description").value();
-        String manufacturer = boundForm.bindFromRequest().field("manufacturer").value();
-        String price = boundForm.bindFromRequest().field("price").value();
-        String quantity = boundForm.bindFromRequest().field("quantity").value();
-        String sellingType = boundForm.bindFromRequest().field("type").value();
-
         List<Category> categories = Category.findAll();
+        categories.remove(product.category);
 
-        if (name.isEmpty()) {
-            flash("editProductNameError", "Please enter product name.");
-            return badRequest(editProduct.render(product));
+        if (boundForm.hasErrors()) {
+            return badRequest(editProduct.render(boundForm, product, categories));
         }
 
-        if (Double.parseDouble(price) <= 0) {
-            flash("editCategoryLowPriceError", "Price can't be 0 or lower.");
-            return badRequest(editProduct.render(product));
+        try {
+            String categoryValue = boundForm.bindFromRequest().field("category").value();
+            Category category = Category.getCategoryByName(categoryValue);
 
+            product.category = category;
+            product.name = boundForm.bindFromRequest().field("name").value();
+            product.description = boundForm.bindFromRequest().field("description").value();
+            product.manufacturer = boundForm.bindFromRequest().field("manufacturer").value();
+            product.price = Double.parseDouble(boundForm.bindFromRequest().field("price").value());
+            product.quantity = Integer.parseInt(boundForm.bindFromRequest().field("quantity").value());
+            product.sellingType = boundForm.bindFromRequest().field("sellingType").value();
+
+            product.update();
+
+            return redirect(routes.ProductController.getProduct(product.id));
+        } catch (Exception e) {
+            Logger.info("ERROR: Product update failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
+            return badRequest(editProduct.render(boundForm, product, categories));
         }
-
-        if (price.isEmpty()) {
-            flash("editProductEmptyPriceError", "Please enter price.");
-            return badRequest(editProduct.render(product));
-        }
-
-        if (Integer.parseInt(quantity) < 0) {
-            flash("editProductEmptyQuantityError", "Quantity can't be 0 or lower.");
-            return badRequest(editProduct.render(product));
-        }
-
-        if (sellingType == null) {
-            flash("editCategoryEmptySellingTypeyError", "Please select selling type.");
-            return badRequest(editProduct.render(product));
-        }
-
-        product.name = name;
-        product.description = description;
-        product.manufacturer = manufacturer;
-        product.price = Double.parseDouble(price);
-        product.quantity = Integer.parseInt(quantity);
-        product.sellingType = sellingType;
-
-        product.update();
-
-        return redirect(routes.ProductController.getProduct(product.id));
     }
 
     public Result viewProductsByCategory(Integer id) {
@@ -259,7 +204,6 @@ public class ProductController extends Controller {
 
         List<Product> products = Product.searchProductByName(term);
 
-
         return ok(searchProduct.render(products));
     }
 
@@ -270,7 +214,6 @@ public class ProductController extends Controller {
 
         String term = boundForm.bindFromRequest().field("search").value();
 
-        Logger.info(term);
         List<Product> products = Product.searchProductByName(term);
 
         List<String> names = new ArrayList<>();
@@ -285,9 +228,10 @@ public class ProductController extends Controller {
     }
 
     /**
-     * This will just validate the form for the AJAX call
+     * Validates the form when the AJAX calls it. If the form has errors returns the JSON object that represents all
+     * errors that occurs. If there is no errors returns ok.
      *
-     * @return ok if there are no errors or a JSON object representing the errors
+     * @return JSON object that represents all errors that occurs, otherwise returns ok.
      */
     public Result validateFormProduct() {
         Form<Product> binded = productForm.bindFromRequest();

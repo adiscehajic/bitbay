@@ -9,6 +9,7 @@ import models.User;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.filters.csrf.RequireCSRFCheck;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -33,6 +34,7 @@ public class CommentController extends Controller {
      * @return If create of the new comment is successful renders product profil page where added comment can be seen,
      * othervise warning message occurs.
      */
+    @RequireCSRFCheck
     public Result saveComment(Integer id){
         // Declaring category form.
         Form<Comment> boundForm = commentForm.bindFromRequest();

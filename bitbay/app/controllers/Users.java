@@ -10,6 +10,8 @@ import play.Logger;
 import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.filters.csrf.AddCSRFToken;
+import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -115,6 +117,7 @@ public class Users extends Controller {
      * @return Opens current user profile page if the profile editing was successful and redirects to the profile edit
      * page if the informations have errors.
      */
+    @RequireCSRFCheck
     @Security.Authenticated(CurrentBuyerSeller.class)
     public Result updateUser(){
         // Getting current user from session.

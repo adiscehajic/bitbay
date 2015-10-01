@@ -3,10 +3,10 @@
  */
 
 function validateProduct() {
-    var category = document.getElementsByName("category")[0].value;
-    var name = document.getElementsByName("name")[0].value;
-    var price = document.getElementsByName("price")[0].value;
-    var quantity = document.getElementsByName("quantity")[0].value;
+    var category = document.getElementsByName("category")[0];
+    var name = document.getElementsByName("name")[0];
+    var price = document.getElementsByName("price")[0];
+    var quantity = document.getElementsByName("quantity")[0];
     var button = document.getElementsByName("submitButton")[0];
 
 
