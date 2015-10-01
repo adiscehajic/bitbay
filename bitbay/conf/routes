@@ -37,6 +37,7 @@ GET           /admin/users                     @controllers.AdminController.admi
 GET           /admin/categories                @controllers.AdminController.adminCategories()
 GET           /admin/products                  @controllers.AdminController.adminProducts()
 GET           /admin/products/:id              @controllers.ProductController.deleteProductAdmin(id: Integer)
+POST          /admin/validateForm              @controllers.AdminController.validateFormAdmin()
 
 
 GET           /user                            @controllers.Users.getUser()
@@ -58,6 +59,8 @@ GET           /category/edit/:id               @controllers.CategoryController.e
 GET           /category/delete/:id             @controllers.CategoryController.deleteCategory(id:Integer)
 POST          /category/new                    @controllers.CategoryController.saveCategory()
 POST          /category/edit/:id               @controllers.CategoryController.updateCategory(id:Integer)
+POST          /category/validateForm           @controllers.CategoryController.validateFormCategory()
+
 
 
 # Map static resources from the /public folder to the /assets URL path

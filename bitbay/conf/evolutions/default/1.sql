@@ -28,7 +28,7 @@ create table category (
 create table comment (
   id                        integer auto_increment not null,
   title                     varchar(255),
-  text                      varchar(255),
+  text                      TEXT,
   user_id                   integer,
   product_id                integer,
   comment_date              datetime,
@@ -65,7 +65,7 @@ create table product (
   id                        integer auto_increment not null,
   user_id                   integer,
   name                      varchar(255),
-  description               varchar(255),
+  description               TEXT,
   manufacturer              varchar(255),
   category_id               integer,
   price                     double,

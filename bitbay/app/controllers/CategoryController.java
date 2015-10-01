@@ -3,6 +3,7 @@ package controllers;
 import helpers.CurrentAdmin;
 import play.Logger;
 import play.data.Form;
+import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -23,8 +24,6 @@ public class CategoryController extends Controller {
 
     // Declaring category form.
     private static final Form<Category> categoryForm = Form.form(Category.class);
-    // Declaring constant that represents 'Other' category id.
-    private static final Integer OTHER = 1;
 
     /**
      * Renders page where user can create new category. Only users that are administrators can create new category. To
@@ -34,7 +33,7 @@ public class CategoryController extends Controller {
      * @return Page where administrator user can create new category.
      */
     public Result newCategory(){
-        return ok(newCategory.render());
+        return ok(newCategory.render(categoryForm));
     }
 
     /**
@@ -45,9 +44,12 @@ public class CategoryController extends Controller {
      * @return Page where administrator user can edit existing category.
      */
     public Result editCategory(Integer id) {
-        //
+        // Finding selected category from database.
         Category category = Category.getCategoryById(id);
-        return ok(editCategory.render(category));
+        // Declaring filled category form.
+        Form<Category> fillForm = categoryForm.fill(category);
+        // Returning filled category form.
+        return ok(editCategory.render(fillForm, category));
     }
 
     /**
@@ -58,44 +60,20 @@ public class CategoryController extends Controller {
      * @return If the edit is successful renders administrator panel page where all categories are listed, othervise
      *         warning message occurs.
      */
+    @RequireCSRFCheck
     public Result updateCategory(Integer id){
-        // Finding selected category from database.
-        Category category = Category.getCategoryById(id);
         // Declaring category form.
         Form<Category> boundForm = categoryForm.bindFromRequest();
-        // Declaring string variable that represents inputed name of the category.
-        String name = boundForm.bindFromRequest().field("categoryName").value();
-
-        try {
-            // Declaring list of all categories.
-            List<Category> categories = Category.findAll();
-            // Going trough all categories and checking if there is already category with same name.
-            for(Category cat: categories){
-                if(cat.name.equals(name)){
-                    flash("saveCategoryEqualError", "Category already exists.");
-                    throw new Exception();
-                }
-            }
-            // Checking does the inputed name contains letters.
-            if (!name.matches("^[a-z A-Z]*$")) {
-                flash("saveCategoryDigitError", "Category name can't contain digits.");
-                throw new Exception();
-            }
-            // Checking if anything is inputed.
-            if(name.isEmpty()){
-                flash("saveCategoryEmptyError", "Category name can't be empty string.");
-                throw new Exception();
-            }else{
-                // Creating new category with inputed name and saving it into database.
-                Category c = new Category(name);
-                c.save();
-            }
-        }catch (Exception e){
-            Logger.info("ERROR: UserLogin failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
-            return badRequest(editCategory.render(category));
+        // Checking if category form has errors.
+        if (boundForm.hasErrors()) {
+            return badRequest(newCategory.render(boundForm));
+        } else {
+            // Creating new category with inputed name and saving it into database.
+            Category category = Category.getCategoryById(id);
+            category.name = boundForm.bindFromRequest().field("name").value();
+            // Editing selected category.
+            category.update();
         }
-        // Editing selected category.
-        category.update();
         // Redirecting to the administrator panel page where all categories are listed.
         return redirect(routes.AdminController.adminCategories());
     }
@@ -113,7 +91,7 @@ public class CategoryController extends Controller {
         List<Product> products = Product.findAllProductsByCategory(category);
         // Going trough all products from selected category and putting them into 'Other' category.
         for (Product product : products) {
-            product.category = Category.getCategoryById(OTHER);
+            product.category = Category.getCategoryById(Category.OTHER);
             product.save();
         }
         // Deleting selected category.
@@ -130,41 +108,35 @@ public class CategoryController extends Controller {
      * @return If create of the new category is successful renders administrator panel page where all categories
      * are listed, othervise warning message occurs.
      */
+    @RequireCSRFCheck
     public Result saveCategory(){
         // Declaring category form.
         Form<Category> boundForm = categoryForm.bindFromRequest();
-        // Declaring string variable that represents inputed name of the category.
-        String name = boundForm.bindFromRequest().field("categoryName").value();
-
-        try {
-            // Declaring list of all categories.
-            List<Category> categories = Category.findAll();
-            // Going trough all categories and checking if there is already category with same name.
-            for(Category category: categories){
-                if(category.name.equals(name)){
-                    flash("saveCategoryEqualError", "Category already exists.");
-                    throw new Exception();
-                }
-            }
-            // Checking does the inputed name contains letters.
-            if (!name.matches("^[a-z A-Z]*$")) {
-                flash("saveCategoryDigitError", "Category name can't contain digits.");
-                throw new Exception();
-            }
-            // Checking if anything is inputed.
-            if(name.isEmpty()){
-                flash("saveCategoryEmptyError", "Category name can't be empty string.");
-                throw new Exception();
-            }else{
-                // Creating new category with inputed name and saving it into database.
-                Category category = new Category(name);
-                category.save();
-            }
-        }catch (Exception e){
-            Logger.info("ERROR: UserLogin failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
-            return badRequest(newCategory.render());
+        // Checking if category form has errors.
+        if (boundForm.hasErrors()) {
+            return badRequest(newCategory.render(boundForm));
+        } else {
+            // Creating new category with inputed name and saving it into database.
+            Category category = new Category(boundForm.bindFromRequest().field("name").value());
+            category.save();
         }
+
         // Redirecting to the administrator panel page where all categories are listed.
         return redirect(routes.AdminController.adminCategories());
+    }
+
+    /**
+     * Validates the form when the AJAX calls it. If the form has errors returns the JSON object that represents all
+     * errors that occurs. If there is no errors returns ok.
+     *
+     * @return JSON object that represents all errors that occurs, otherwise returns ok.
+     */
+    public Result validateFormCategory() {
+        Form<Category> binded = categoryForm.bindFromRequest();
+        if (binded.hasErrors()) {
+            return badRequest(binded.errorsAsJson());
+        } else {
+            return ok("Validation successful.");
+        }
     }
 }

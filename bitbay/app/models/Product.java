@@ -23,6 +23,7 @@ public class Product extends Model {
     @Constraints.MaxLength(255)
     @Constraints.Required(message = "Product name is required.")
     public String name;
+    @Column(columnDefinition = "TEXT")
     public String description;
     public String manufacturer;
     @ManyToOne

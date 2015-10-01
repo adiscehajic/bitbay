@@ -6,6 +6,7 @@ import models.*;
 import org.h2.engine.Session;
 import play.Logger;
 import play.data.Form;
+import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import models.CartItem;
 import play.mvc.Result;
@@ -31,6 +32,7 @@ public class CartController extends Controller {
      * @param productId - Id of the product that is inputed into the cart.
      * @return Page that represents the cart with all products of the current user.
      */
+    @RequireCSRFCheck
     public Result addToCart(Integer productId){
         // Declaring product and cart item.
         Product product = Product.getProductById(productId);
