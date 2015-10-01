@@ -1,10 +1,11 @@
 @import helpers.SessionHelper
 @(messages: java.util.List[Message])
+@import helper._
 
 @admin.adminIndex {
 
     <div class="col-md-10" style="border-bottom: 1px; background-color: #F8F8F4; border-radius: 5px; border: 1px solid #E0E0D1">
-        <form action="@routes.MessageController.respondMessage()" method="POST">
+        <form action="@helper.CSRF(routes.MessageController.respondMessage())" method="POST">
             @if(messages.get(0).sender.email != SessionHelper.currentUser().email) {
                 <input name="receiverEmail" value="@messages.get(0).sender.email" hidden>
             } else {

@@ -1,8 +1,9 @@
 @(email: String)(messageForm: Form[Message])
+@import helper._
 
 @admin.adminIndex {
     <div class="col-md-10" style="border-bottom: 1px; background-color: #F8F8F4; border-radius: 5px; border: 1px solid #E0E0D1">
-        <form action="@routes.MessageController.sendMessage()" method="POST">
+        <form action="@helper.CSRF(routes.MessageController.sendMessage())" method="POST">
             <span class="alert-success" style="margin-left : 1px; font-weight : normal;">@flash.get("messageSentSuccess")</span>
             <div>
                 <label>Reciever (email)</label>
@@ -17,7 +18,6 @@
                 <textarea class="form-control" name="message" style="resize: none; height: 200px; margin-bottom: 10px">@messageForm("message").value</textarea>
                 <button class="btn btn-primary"> Send <span class="glyphicon glyphicon-send"></span></button>
             </div>
-
         </form>
     </div>
 }

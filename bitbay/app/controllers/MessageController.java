@@ -1,6 +1,7 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import helpers.CurrentBuyerSeller;
 import helpers.SessionHelper;
 import models.Message;
 import models.User;
@@ -10,6 +11,7 @@ import play.data.Form;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import views.html.message.newMessage;
 import views.html.message.replyMessage;
 import views.html.message.allMessages;
@@ -18,7 +20,7 @@ import views.html.user.userMessages;
 import java.util.List;
 
 /**
- * Created by Adnan on 28.09.2015..
+ * Created by Adnan Lapendic on 28.09.2015..
  */
 public class MessageController extends Controller {
 
@@ -77,7 +79,7 @@ public class MessageController extends Controller {
         List<Message> messages = Message.getSentMessages();
         return ok(allMessages.render(messages));
     }
-
+    @Security.Authenticated(CurrentBuyerSeller.class)
     public Result getReceivedMessages(){
      List<Message> recievedMessages = Message.getReceivedMessages();
         return ok(allMessages.render(recievedMessages));
@@ -108,10 +110,12 @@ public class MessageController extends Controller {
         }
     }
 
+    @Security.Authenticated(CurrentBuyerSeller.class)
     public Result newMessage(String email) {
         return ok(newMessage.render(email, messageForm));
     }
 
+    @Security.Authenticated(CurrentBuyerSeller.class)
     public Result replyMessage(Integer id) {
         List<Message> conv = Message.getConversation(id);
         User user = SessionHelper.currentUser();
