@@ -36,9 +36,6 @@ public class AdminController extends Controller {
     private static final Form<AdminLogin> adminLoginForm = Form.form(AdminLogin.class);
     private static final Form<Message> messageForm = Form.form(Message.class);
 
-    // Declaring constant for admin user type.
-    private static final Integer ADMIN = 1;
-
     /**
      * Renders page wher user that is administor of the application can sign in. If the user is not administrator, or
      * there is not user in database warning message occurs. If the email and password are correct it redirrects to the

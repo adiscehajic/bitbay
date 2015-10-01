@@ -13,7 +13,7 @@ public class UserType {
 
     public static final int ADMIN = 1;
     public static final int BUYER = 2;
-    public static final int SELLER = 1;
+    public static final int SELLER = 3;
 
     @Id
     public Integer id;

@@ -35,17 +35,17 @@ public class Global extends GlobalSettings {
             UserType admin = new UserType();
 
             admin.id = 1;
-            admin.name = "admin";
+            admin.name = "Admin";
 
             UserType buyer = new UserType();
 
             buyer.id = 2;
-            buyer.name = "buyer";
+            buyer.name = "Buyer";
 
             UserType seller = new UserType();
 
             seller.id = 3;
-            seller.name = "seller";
+            seller.name = "Seller";
 
             Ebean.save(admin);
             Ebean.save(buyer);

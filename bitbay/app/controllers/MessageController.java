@@ -7,6 +7,7 @@ import models.User;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.message.newMessage;
@@ -31,6 +32,7 @@ public class MessageController extends Controller {
      * user.
      * @return
      */
+    @RequireCSRFCheck
     public Result sendMessage(){
         Form<Message> boundForm = messageForm.bindFromRequest();
         User sender = SessionHelper.currentUser();
@@ -59,7 +61,7 @@ public class MessageController extends Controller {
         return redirect(routes.MessageController.getReceivedMessages());
     }
 
-    
+    @RequireCSRFCheck
     public Result respondMessage(){
         DynamicForm boundForm = Form.form().bindFromRequest();
         String receiverEmail = boundForm.get("receiverEmail");
@@ -76,12 +78,6 @@ public class MessageController extends Controller {
         return ok(allMessages.render(messages));
     }
 
-    public Result getMessage(Integer id){
-        Message message = Message.getMessageById(id);
-        return TODO;
-    }
-
-
     public Result getReceivedMessages(){
      List<Message> recievedMessages = Message.getReceivedMessages();
         return ok(allMessages.render(recievedMessages));
@@ -92,6 +88,7 @@ public class MessageController extends Controller {
         return ok(allMessages.render(sentMesages));
     }
 
+    @RequireCSRFCheck
     public Result deleteMessage(Integer id){
         Message message = Message.getMessageById(id);
         User currentUser = SessionHelper.currentUser();

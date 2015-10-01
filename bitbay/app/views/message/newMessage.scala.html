@@ -1,9 +1,10 @@
 @(email: String)(implicit messageForm: Form[Message])
+@import helper._
 
 @user.userMessages {
 
     <div class="col-md-10" style="border-bottom: 1px; background-color: #F8F8F4; border-radius: 5px; border: 1px solid #E0E0D1">
-        <form action="@routes.MessageController.sendMessage()" method="POST">
+        <form action="@helper.CSRF(routes.MessageController.sendMessage())" method="POST">
             <div style="margin-top: 10px">
                 <label>Reciever (email)</label>
                 <input type="email" class="form-control" name="receiver" style="margin-bottom: 10px" value="@email">
