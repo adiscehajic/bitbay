@@ -11,7 +11,7 @@
             <input name="receiverEmail" value="@messages.get(0).receiver.email" hidden>
         }
     @for(message <- messages) {
-        <div class="row">
+        <div class="row" style="border-bottom: 1px solid lightgray">
             <div class="col-md-11" style="margin-left:2%; margin-top:2%">
                 <label> @message.sender.email : @message.title </label>
                 <p> @message.message </p>
@@ -19,10 +19,9 @@
         </div>
     }
     <div class="row" style="margin-top: 3%">
-        <input class="form-control" name="title" style="width: 90%; margin-left: 5%; margin-bottom: 10px;">
+        <input class="form-control" name="title" style="width: 90%; margin-left: 5%; margin-bottom: 10px;" placeholder="Message title..">
         <textarea style="width:90%; height: 200px; border-radius: 5px; background-color: white; resize: none; margin-left: 5%;" name="messageText"></textarea>
         <button type="submit" class="btn btn-primary" style="margin-left: 5%">Send <span class="glyphicon glyphicon-send"></span></button>
-        <button class="btn btn-danger">Cancel</button>
     </div>
         </form>
 </div>

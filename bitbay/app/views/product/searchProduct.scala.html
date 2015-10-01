@@ -4,7 +4,7 @@
     <div class="container" id="main">
     @for(product <- products){
 
-        <div class = "row" id="row1">
+        <div class = "row" id="row1" style="border-bottom: 1px solid #ccc;">
             <div class = "col-md-4">
                 @for(image <- product.images) {
                     <a href="@routes.ProductController.getProduct(product.id)"><img src="@image.getSize(250,250)"></a>
