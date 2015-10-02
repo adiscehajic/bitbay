@@ -23,11 +23,20 @@ public class Country extends Model{
 
     private  static Finder<String, Country> finder = new Finder<String, Country>(Country.class);
 
+    /**
+     * Method for finding all countries
+     * @return - List of all countries
+     */
     public static List<Country> findAllCountries() {
         List<Country> countries = finder.findList();
         return countries;
     }
 
+    /**
+     * This method finds a single country by name
+     * @param name - Name of country
+     * @return - Country by name
+     */
     public static Country findCountryByName(String name){
         for(Country c: findAllCountries()){
             if(c.name.equals(name)){

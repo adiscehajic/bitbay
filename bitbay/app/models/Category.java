@@ -30,23 +30,51 @@ public class Category extends Model {
     @OneToMany
     private List<Product> products;
 
+    //Finder for class Category
     private static Finder<String, Category> finder =
             new Finder<>(Category.class);
 
+    /**
+     * Constructor for Category
+     * @param name - Category name
+     */
     public Category(String name) {
         this.name = name;
     }
 
+    /**
+     * This method is used to find single category by name
+     * @param name - Category name
+     * @return - Category by name
+     */
     public static Category getCategoryByName(String name) {
         Category c = Category.finder.where().eq("name", name).findUnique();
         return c;
     }
 
+    /**
+     * This method is used to find a category by ID
+     * @param id - ID of a category
+     * @return - Category by ID
+     */
     public static Category getCategoryById(Integer id) {
         Category c = Category.finder.where().eq("id", id).findUnique();
         return c;
     }
 
+    /**
+     * This method is used to list all categories and category other.
+     * @return - List of all categories
+     */
+    public static List<Category> findAllAll(){
+        List<Category> allCategories = finder.orderBy("name asc").findList();
+        return allCategories;
+    }
+
+    /**
+     * This method is used to find all categories without category "other"
+     * @return - List of categories without category "other"
+     */
     public static List<Category> findAll() {
         List<Category> categories = finder.orderBy("name asc").where().ne("id", 1).findList();
         return categories;

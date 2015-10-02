@@ -45,16 +45,29 @@ public class Comment extends Model{
     }
 
 
+    /**
+     * This method is used to find all comments on a single product
+     * @return - List of comments on product
+     */
    public static List<Comment> findAllCommentByProduct(Product product){
        List<Comment> commentList = Comment.finder.where().eq("product", product).findList();
        return commentList;
    }
 
+    /**
+     * This method is sorting all comments on product by date
+     * @return - List of sorted products by date
+     */
     public static List<Comment> sortCommentByDate(Product product){
         List<Comment> sortedByDate = Comment.finder.where().eq("product", product).orderBy("commentDate desc").findList();
         return sortedByDate;
     }
 
+    /**
+     * Method that find comment by ID
+     * @param id - ID of selected comment
+     * @return - Comment by ID
+     */
     public static Comment getCommentById(Integer id) {
         Comment comment = Comment.finder.where().eq("id", id).findUnique();
         return comment;

@@ -34,16 +34,30 @@ public class CartItem extends Model {
 
     private static Finder<String, CartItem> finder = new Finder<String, CartItem>(CartItem.class);
 
+    /**
+     * This method is used to find all items that user has placed to its cart
+     * @return - List of items
+     */
     public static List<CartItem> findAll() {
         List<CartItem> cartItems = finder.all();
         return cartItems;
     }
 
+    /**
+     * Method for finding a single item in Cart
+     * @param id - Item ID
+     * @return - Item by ID
+     */
     public static CartItem getCartItemById(Integer id) {
         CartItem cartItem = CartItem.finder.where().eq("id", id).findUnique();
         return cartItem;
     }
 
+    /**
+     *This method puts a product in cart as car item
+     * @param product
+     * @return
+     */
     public static CartItem getCartItemByProduct(Product product) {
         CartItem cartItem = CartItem.finder.where().eq("product", product).findUnique();
         return cartItem;
