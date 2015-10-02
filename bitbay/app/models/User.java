@@ -5,9 +5,11 @@ import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
 
 import java.nio.MappedByteBuffer;
+import java.util.ArrayList;
 import java.util.Date;
 import play.data.format.Formats;
 import com.avaje.ebean.Model.Finder;
+import play.data.validation.ValidationError;
 import scala.collection.immutable.StreamViewLike;
 
 import javax.persistence.*;
@@ -45,8 +47,12 @@ public class User extends Model {
 
     @Constraints.MaxLength(255)
     @Constraints.MinLength(value = 8, message = "Minimum 8 characters are required.")
-    //@Constraints.Required(message = "Please insert password.")
     public String password;
+
+    @Transient
+    @Constraints.MaxLength(255)
+    @Constraints.MinLength(value = 8, message = "Minimum 8 characters are required.")
+    public String confirmPassword;
 
     @ManyToOne
     //@Constraints.Required
@@ -140,16 +146,6 @@ public class User extends Model {
         }
     }
 
-    //TODO
-//    public static Result deleteUser(Integer id){
-//       // User user = findById(id);
-//       // if(user != null){
-//       //     return redirect("/") ;
-//       // }else{
-//
-//       // }
-//        return TODO;
-//    }
     public static List<User> findAll() {
         List<User> users = finder.where().ne("userType.id", 1).findList();
         return users;
@@ -161,5 +157,19 @@ public class User extends Model {
      */
     public String toString () {
         return String.format("%s %s", firstName, lastName);
+    }
+
+    /**
+     * Validates the admin login form and returns all errors that occur during user login.
+     * @return Errors that have occur during user login.
+     */
+    public List<ValidationError> validate() {
+        // Declaring the list of errors.
+        List<ValidationError> errors = new ArrayList<>();
+        // Checking are the inputed password and confirm password equal.
+        if (!this.confirmPassword.equals(this.password)) {
+            errors.add(new ValidationError("confirmPassword", "Confirm password must match with password."));
+        }
+        return errors.isEmpty() ? null : errors;
     }
 }
