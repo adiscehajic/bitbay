@@ -5,6 +5,7 @@ import helpers.CurrentBuyerSeller;
 import helpers.SessionHelper;
 import models.Message;
 import models.User;
+import models.UserType;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -15,6 +16,7 @@ import play.mvc.Security;
 import views.html.message.newMessage;
 import views.html.message.replyMessage;
 import views.html.message.allMessages;
+import views.html.admin.adminAllMessages;
 import views.html.admin.adminNewMessage;
 import views.html.user.userMessages;
 import java.util.List;
@@ -95,18 +97,35 @@ public class MessageController extends Controller {
         Message message = Message.getMessageById(id);
         User currentUser = SessionHelper.currentUser();
 
-        if(message.receiver.id == currentUser.id && message.receiverVisible == true) {
-            message.receiverVisible = false;
-            message.update();
 
-            List<Message> messages = Message.getReceivedMessages();
-            return ok(allMessages.render(messages));
+        if(currentUser.userType.id == UserType.ADMIN) {
+            if (message.receiver.id == currentUser.id && message.receiverVisible == true) {
+                message.receiverVisible = false;
+                message.update();
+
+                List<Message> messages = Message.getReceivedMessages();
+                return ok(adminAllMessages.render(messages));
+            } else {
+                message.senderVisible = false;
+                message.update();
+
+                List<Message> messages = Message.getSentMessages();
+                return ok(adminAllMessages.render(messages));
+            }
         } else {
-            message.senderVisible = false;
-            message.update();
+            if (message.receiver.id == currentUser.id && message.receiverVisible == true) {
+                message.receiverVisible = false;
+                message.update();
 
-            List<Message> messages = Message.getSentMessages();
-            return ok(allMessages.render(messages));
+                List<Message> messages = Message.getReceivedMessages();
+                return ok(allMessages.render(messages));
+            } else {
+                message.senderVisible = false;
+                message.update();
+
+                List<Message> messages = Message.getSentMessages();
+                return ok(allMessages.render(messages));
+            }
         }
     }
 
