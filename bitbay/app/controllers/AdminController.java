@@ -205,6 +205,14 @@ public class AdminController extends Controller {
     @Security.Authenticated(CurrentAdmin.class)
     public Result adminViewMessage(Integer id) {
         List<Message> messages = Message.getConversation(id);
+        User currentUser = SessionHelper.currentUser();
+
+        for(int i = 0; i < messages.size(); i++) {
+            if(messages.get(i).receiver.id == currentUser.id) {
+                messages.get(i).isRead = true;
+                messages.get(i).update();
+            }
+        }
         return ok(adminViewMessage.render(messages));
     }
 }

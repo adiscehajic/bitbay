@@ -13,6 +13,7 @@ import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import views.html.admin.adminViewMessage;
 import views.html.message.newMessage;
 import views.html.message.replyMessage;
 import views.html.message.allMessages;
@@ -74,12 +75,18 @@ public class MessageController extends Controller {
         String title = boundForm.get("title");
         User receiver = User.getUserByEmail(receiverEmail);
         User sender = User.getUserByEmail(senderEmail);
+        User currentUser = SessionHelper.currentUser();
 
         Message msg = new Message(sender,receiver, title, message);
         Ebean.save(msg);
 
-        List<Message> messages = Message.getSentMessages();
-        return ok(allMessages.render(messages));
+        List<Message> messages = Message.getConversation(msg.id);
+
+        if(currentUser.userType.id == UserType.ADMIN) {
+            return ok(adminViewMessage.render(messages));
+        } else {
+            return ok(replyMessage.render(messages));
+        }
     }
     @Security.Authenticated(CurrentBuyerSeller.class)
     public Result getReceivedMessages(){
