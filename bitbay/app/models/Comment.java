@@ -12,17 +12,18 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 
 /**
- * Created by ibrisimovicnarena on 9/15/15.
+ * Created by Narena Ibrisimovic on 9/15/15.
  */
 @Entity
 public class Comment extends Model{
 
     @Id
     public Integer id;
-    @Constraints.Required
+    @Constraints.MaxLength(255)
+    @Constraints.Required(message = "Please insert comment title.")
     public String title;
     @Column(columnDefinition = "TEXT")
-    @Constraints.Required
+    @Constraints.Required(message = "Please insert message content.")
     public String text;
     @ManyToOne
     public User user;
@@ -48,12 +49,6 @@ public class Comment extends Model{
        List<Comment> commentList = Comment.finder.where().eq("product", product).findList();
        return commentList;
    }
-
-    /*public static List<Comment> sortCommentsByLike(Product product){
-        List<Comment> sortedList = findAllCommentByProduct(product);
-        sortedList = finder.where().orderBy("").findList();
-        return sortedList;
-    }*/
 
     public static List<Comment> sortCommentByDate(Product product){
         List<Comment> sortedByDate = Comment.finder.where().eq("product", product).orderBy("commentDate desc").findList();

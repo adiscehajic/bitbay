@@ -2,6 +2,7 @@ package controllers;
 
 
 import com.cloudinary.Cloudinary;
+import helpers.CurrentAdmin;
 import helpers.CurrentBuyerSeller;
 import helpers.CurrentSeller;
 import helpers.SessionHelper;
@@ -10,6 +11,7 @@ import play.Logger;
 import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.data.validation.ValidationError;
 import play.filters.csrf.AddCSRFToken;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
@@ -22,6 +24,7 @@ import views.html.user.userEdit;
 import views.html.user.userProfile;
 import views.html.user.userMessages;
 import java.lang.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import com.avaje.ebean.Ebean;
@@ -48,6 +51,7 @@ public class Users extends Controller {
      * @param id - Id of the user that administrator user wants to delete.
      * @return Administrator panel page where all users are listed.
      */
+    @Security.Authenticated(CurrentAdmin.class)
     public Result deleteUser(Integer id){
         // Finding user with inputed id.
         User user = User.findById(id);
@@ -63,6 +67,7 @@ public class Users extends Controller {
      *
      * @return Main page of the application.
      */
+
     public Result deleteUserAccount(){
         // Getting current user from session.
         User user = SessionHelper.currentUser();
@@ -100,9 +105,15 @@ public class Users extends Controller {
         User user = SessionHelper.currentUser();
         // Declaring list of all countries in the world.
         List<Country> countries = Country.findAllCountries();
+        //Checking if user has selected country
+        if (user.country != null) {
+            countries.remove(user.country);
+        }
+        // Declaring filled user form.
+        Form<User> filledForm = userRegistration.fill(user);
         // Checking if the user exists.
         if (user != null) {
-            return ok(userEdit.render(user, countries));
+            return ok(userEdit.render(filledForm, user, countries));
         } else {
             return redirect(routes.ApplicationController.signIn());
         }
@@ -124,62 +135,33 @@ public class Users extends Controller {
         User user = SessionHelper.currentUser();
         // Declaring list of all countries in the world.
         List<Country> countries = Country.findAllCountries();
-        // Declaring form.
-        DynamicForm form = Form.form().bindFromRequest();
-
-        // Getting all informations that are inputed and storing them into string variables.
-        String firstName = form.get("firstName");
-        String lastName = form.get("lastName");
-        String pass = form.get("password");
-        String conPass = form.get("confirmPassword");
-        String countryName = form.get("country-state");
-        String city = form.get("city");
-        String address = form.get("address");
-
-        //Checking if any user information was changed and if the information has errors.
+        // Declaring user form.
+        Form<User> boundForm = userRegistration.bindFromRequest();
+        // Checking does user form has errors.
+        if (boundForm.hasErrors()) {
+            return badRequest(userEdit.render(boundForm, user, countries));
+        }
+        //Checking if any user information was changed.
         try {
-            // Checking first name and last name.
-            if (!firstName.equals(user.firstName) || !lastName.equals(user.lastName)) {
-                // First name can not be empty and can not contain numbers.
-                if (!firstName.matches("^[a-z A-Z]*$") || !lastName.matches("^[a-z A-Z]*$")) {
-                    flash("updateUserNameDiggitError","First name and last name can't contain diggits.");
-                    return badRequest(userEdit.render(user, countries));
-                } else if (firstName.isEmpty() || lastName.isEmpty()) {
-                    flash("updateUserNameEmptyError","First name and last name can't be empty string.");
-                    return badRequest(userEdit.render(user, countries));
-                } else {
-                    user.firstName = firstName;
-                    user.lastName = lastName;
-                }
+            // Checking if the new password is inputed.
+            String password = boundForm.data().get("password");
+            if (!password.isEmpty()) {
+                user.password = BCrypt.hashpw(boundForm.data().get("password"), BCrypt.gensalt());
             }
+            // Updating user profile.
+            user.firstName = boundForm.data().get("firstName");
+            user.lastName = boundForm.data().get("lastName");
+            user.country = Country.findCountryByName(boundForm.data().get("country-state"));
+            user.city = boundForm.data().get("city");
+            user.address = boundForm.data().get("address");
+            // Updating time when profile information has been changed.
+            user.updated= new Date();
+            // Updating all altered information into the database.
+            user.update();
         }catch (Exception e){
             Logger.info("ERROR: UserLogin failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
-            return badRequest(userEdit.render(user, countries));
+            return badRequest(userEdit.render(boundForm, user, countries));
         }
-
-        // Checking if the password match confirm password and if they are in the right format.
-        if(pass.equals(conPass)) {
-            if (!pass.isEmpty() || pass.length() > 8) {
-                user.password = BCrypt.hashpw(pass, BCrypt.gensalt());
-            }
-        } else {
-            flash("updatePasswordError","Password and confirm password must match.");
-            return badRequest(userEdit.render(user, countries));
-        }
-        // Updating user country.
-        user.country = Country.findCountryByName(countryName);
-        // Checking if the city is altered and if it is, saving him.
-        if(!city.equals(user.city)){
-            user.city = city;
-        }
-        // Checking if the address is altered and if it is, saving him.
-        if(!address.equals(user.address)){
-            user.address = address;
-        }
-        // Updating time when profile information has been changed.
-        user.updated= new Date();
-        // Updating all altered information into the database.
-        user.update();
         // Redirecting to the profile page of the current user.
         return redirect(routes.Users.getUser());
     }

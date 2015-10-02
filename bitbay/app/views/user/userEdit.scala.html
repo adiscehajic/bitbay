@@ -1,4 +1,4 @@
-@(user: User)(implicit countries: java.util.List[Country] = Country.findAllCountries())
+@(userEdit: Form[User], user: User, countries: java.util.List[Country])
 @import helper._
 
 @main("User Profile") {
@@ -22,6 +22,17 @@
                                         <div class="form-horizontal">
                                             <div class="form-group">
                                                 <div class="col-lg-4">
+                                                </div>
+                                                <div class="col-lg-8">
+                                                @for((key, value) <- userEdit.errors) {
+                                                    @for(err <- value) {
+                                                        <span class="alert-danger" style="font-weight:normal; display: block; width: 90%;">@err.message</span>
+                                                    }
+                                                }
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-4">
                                                     <div class="panel panel-primary">
                                                         <div class="panel-heading">
                                                             <div class="panel-title" align="center">First Name</div>
@@ -29,10 +40,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-8">
-                                                    <input type="text" class="form-control" onfocusout="editUser()" onkeypress="return isAlphaKey(event);" placeholder="First Name" name="firstName" value="@user.firstName">
+                                                    <input type="text" class="form-control" onfocusout="editUser()" onkeypress="return isAlphaKey(event);" placeholder="First Name" name="firstName" value="@userEdit("firstName").value">
                                                     <span class="alert-danger" data-error-for="firstName" style="margin-left : 1 px ; font-weight : normal ;"></span>
-                                                    <span class="alert-danger" style="margin-left : 1 px ; font-weight : normal ;">@flash.get("updateUserNameDiggitError")</span>
-                                                    <span class="alert-danger" style="margin-left : 1 px ; font-weight : normal ;">@flash.get("updateUserNameEmptyError")</span>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -44,10 +53,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-8">
-                                                    <input type="text" class="form-control" onfocusout="editUser()" onkeypress="return isAlphaKey(event);" placeholder="Last Name" name="lastName" value="@user.lastName">
+                                                    <input type="text" class="form-control" onfocusout="editUser()" onkeypress="return isAlphaKey(event);" placeholder="Last Name" name="lastName" value="@userEdit("lastName").value">
                                                     <span class="alert-danger" data-error-for="lastName" style="margin-left : 1 px ; font-weight : normal ;"></span>
-                                                    <span class="alert-danger" style="margin-left : 1 px ; font-weight : normal ;">@flash.get("updateUserNameDiggitError")</span>
-                                                    <span class="alert-danger" style="margin-left : 1 px ; font-weight : normal ;">@flash.get("updateUserNameEmptyError")</span>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -60,6 +67,7 @@
                                                 </div>
                                                 <div class="col-lg-8">
                                                     <input type="password" class="form-control" placeholder="Password" name="password">
+                                                    <span class="alert-danger" data-error-for="password" style="margin-left : 1 px ; font-weight : normal ;"></span>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -72,7 +80,7 @@
                                                 </div>
                                                 <div class="col-lg-8">
                                                     <input type="password" class="form-control" placeholder="Password" name="confirmPassword">
-                                                    <span class="alert-danger" style="margin-left : 1 px ; font-weight : normal ;">@flash.get("updatePasswordError")</span>
+                                                    <span class="alert-danger" data-error-for="confirmPassword" style="margin-left : 1 px ; font-weight : normal ;"></span>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -88,7 +96,7 @@
                                                         @if(user.country == null) {
                                                             <option value="1" selected disabled>Please select country</option>
                                                         } else {
-                                                            <option value="@user.country.id" selected disabled>@user.country.name</option>
+                                                            <option value="@user.country.name" selected>@user.country.name</option>
                                                         }
                                                         @for(country <- countries) {
                                                             <option value="@country.name">@country.name</option>
@@ -105,7 +113,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-8">
-                                                    <input type="text" class="form-control" placeholder="City" name="city" value="@user.city">
+                                                    <input type="text" class="form-control" placeholder="City" name="city" value="@userEdit("city").value">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -117,7 +125,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-8">
-                                                    <input type="text" class="form-control" placeholder="Address" name="address" value="@user.address">
+                                                    <input type="text" class="form-control" placeholder="Address" name="address" value="@userEdit("address").value">
                                                 </div>
                                             </div>
                                         </div>

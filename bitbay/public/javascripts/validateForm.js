@@ -21,9 +21,10 @@ $(document).ready(function(){
         }).error(function(response){
             $("#submit-button").prop("disabled", true);
             var errors = response.responseJSON;
-
-            console.log(errors);
-            var keys = Object.keys(errors);
+            if(errors != null && errors != undefined) {
+                console.log(errors);
+                var keys = Object.keys(errors);
+            }
 
             var errorMessages = errors[$field.attr("name")];
             var allErrors = "";

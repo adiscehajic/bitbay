@@ -18,7 +18,7 @@ import java.util.List;
 
 
 /**
- * Created by Narena Ibrisimovic on 9/15/15.
+ * Created by Adis Cehajic on 9/15/15.
  */
 public class CommentController extends Controller {
 
@@ -38,28 +38,15 @@ public class CommentController extends Controller {
     public Result saveComment(Integer id){
         // Declaring category form.
         Form<Comment> boundForm = commentForm.bindFromRequest();
-        // Declaring string variables that represents inputed name and content of the comment.
-        String title = boundForm.bindFromRequest().field("title").value();
-        String text = boundForm.bindFromRequest().field("comment").value();
-        // Declaring product and user.
-        Product product = Product.getProductById(id);
-        User user = SessionHelper.currentUser();
-        // Checking if a name or content of a comment are empty.
-        try{
-            if(title.isEmpty()){
-                flash("saveCommentEmptyTitleError", "Please enter comment title.");
-                throw new Exception();
-            }
-            if(text.isEmpty()){
-                flash("saveCommentEmptyTextError", "Please enter your comment");
-                throw new Exception();
-            }
-        }catch (Exception e){
-            Logger.info("ERROR: UserLogin failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
+        if (boundForm.hasErrors()) {
             return redirect(routes.ProductController.getProduct(id));
         }
         // Creating new comment and saving it into database.
-        Comment comment = new Comment(title, text, user, product);
+        Comment comment = boundForm.get();
+        Product product = Product.getProductById(id);
+        User user = SessionHelper.currentUser();
+        comment.product = product;
+        comment.user = user;
         comment.save();
         // Redirecting to the product profile page.
         return redirect(routes.ProductController.getProduct(id));
@@ -114,5 +101,20 @@ public class CommentController extends Controller {
             }
         }
         return ok();
+    }
+
+    /**
+     * Validates the form when the AJAX calls it. If the form has errors returns the JSON object that represents all
+     * errors that occurs. If there is no errors returns ok.
+     *
+     * @return JSON object that represents all errors that occurs, otherwise returns ok.
+     */
+    public Result validateFormComment() {
+        Form<Comment> binded = commentForm.bindFromRequest();
+        if (binded.hasErrors()) {
+            return badRequest(binded.errorsAsJson());
+        } else {
+            return ok("Validation successful.");
+        }
     }
 }

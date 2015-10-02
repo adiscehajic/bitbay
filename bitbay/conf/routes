@@ -14,6 +14,7 @@ GET           /logout                          @controllers.ApplicationControlle
 
 POST          /signin/validateFormLog          @controllers.ApplicationController.validateFormLogin()
 POST          /signup/validateFormReg          @controllers.ApplicationController.validateFormRegistration()
+POST          /product/comment/validate        @controllers.CommentController.validateFormComment()
 
 POST          /product/new/validateForm        @controllers.ProductController.validateFormProduct()
 GET           /product/new                     @controllers.ProductController.newProduct()
@@ -27,7 +28,7 @@ GET           /product/delete/:id              @controllers.ProductController.de
 POST          /product/new/                    @controllers.ProductController.saveProduct()
 GET           /product/edit/:id                @controllers.ProductController.editProduct(id: Integer)
 POST          /product/edit/:id                @controllers.ProductController.updateProduct(id: Integer)
-GET           /products/category               @controllers.ProductController.viewProductsByCategory(id: Integer)
+GET           /product/category                @controllers.ProductController.viewProductsByCategory(id: Integer)
 
 GET           /admin                           @controllers.AdminController.adminLogin()
 GET           /admin/logout                    @controllers.AdminController.adminLogout()
