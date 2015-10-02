@@ -17,7 +17,34 @@
                 }
                 <td style="vertical-align: middle"><a href="@routes.MessageController.replyMessage(message.id)" style="text-decoration: none"><label>@message.title</label><p>@message.message </p></a></td>
                 <td style="vertical-align: middle"><a href="@routes.Users.getUser()"> @message.sender.email</a> </td>
-                <td style="vertical-align: middle"><form method="POST" action="@helper.CSRF(routes.MessageController.deleteMessage(message.id))"><button type="submit"><span class="glyphicon glyphicon-remove"></span></button></form></td>
+                <td style="vertical-align: middle"><span id="deleteMessage@message.id" class="glyphicon glyphicon-remove"></span></td>
+                <script>
+                      $(document).ready(function(){
+                      $('#deleteMessage@message.id').click(function(){
+                         $.confirm({
+                            title: 'Are you sure?',
+                            theme: 'white',
+                            content: false,
+                            confirmButtonClass: 'btn-danger',
+                            cancelButtonClass: 'btn-info',
+                            confirmButton: 'Delete',
+                            cancelButton: 'Cancel',
+                               confirm: function(){
+                                $.ajax({
+                                   url: '@routes.MessageController.deleteMessage(message.id)',
+                                   method: 'POST',
+                                    }).success(function(){
+						             window.location.replace('@routes.MessageController.getReceivedMessages()');
+                                      }).error(function(response){
+                                      alert(response.responseText);
+                                       });
+                                       },
+                                      cancel: function(){
+                                    }
+                               });
+                             })
+                         })
+                     </script>
             </tr>
             }
             <tr>
