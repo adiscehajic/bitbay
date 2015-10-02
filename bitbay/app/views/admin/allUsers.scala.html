@@ -21,7 +21,7 @@
 					<td> @user.userType.name </td>
 					<td>
 						<a href="@routes.AdminController.adminNewMessage(user.email)"><button type="submit"><span class="glyphicon glyphicon-envelope"></span></button></a>
-                        <a id="deleteUserByAdmin@user.id"><button  type="submit"><span class="glyphicon glyphicon-trash"></span></button></a>
+                        <a id="deleteUserByAdmin@user.id"><button><span class="glyphicon glyphicon-trash"></span></button></a>
 
 					</td>
 				</tr>
@@ -30,7 +30,7 @@
                       $(document).ready(function(){
                       $('#deleteUserByAdmin@user.id').click(function(){
                          $.confirm({
-                            title: 'You are about to delete ' + @user.firstName,
+                            title: 'You are about to delete ' + '@user.firstName' + ' ?',
                             content: 'Are you sure?',
                             theme: 'supervan',
                             confirmButtonClass: 'btn-danger',
