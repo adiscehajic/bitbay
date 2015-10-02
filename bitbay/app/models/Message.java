@@ -122,6 +122,15 @@ public class Message extends Model{
         return sentMessages;
     }
 
-
+    public static Integer getMessageNotification() {
+        List<Message> messages = getReceivedMessages();
+        Integer counter = 0;
+        for(int i = 0; i < messages.size(); i++) {
+            if(messages.get(i).isRead == false) {
+                counter++;
+            }
+        }
+        return counter;
+    }
 
 }

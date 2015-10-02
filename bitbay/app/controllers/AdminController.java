@@ -23,7 +23,7 @@ import views.html.admin.allUsers;
 import views.html.admin.adminHome;
 import java.util.ArrayList;
 import views.html.admin.adminNewMessage;
-import views.html.admin.allMessages;
+import views.html.admin.adminAllMessages;
 import views.html.admin.adminViewMessage;
 import java.util.List;
 
@@ -193,18 +193,26 @@ public class AdminController extends Controller {
     @Security.Authenticated(CurrentAdmin.class)
     public Result adminReceivedMessages() {
         List<Message> messages = Message.getReceivedMessages();
-        return ok(allMessages.render(messages));
+        return ok(adminAllMessages.render(messages));
     }
 
     @Security.Authenticated(CurrentAdmin.class)
     public Result adminSentMessages() {
         List<Message> messages = Message.getSentMessages();
-        return ok(allMessages.render(messages));
+        return ok(adminAllMessages.render(messages));
     }
 
     @Security.Authenticated(CurrentAdmin.class)
     public Result adminViewMessage(Integer id) {
         List<Message> messages = Message.getConversation(id);
+        User currentUser = SessionHelper.currentUser();
+
+        for(int i = 0; i < messages.size(); i++) {
+            if(messages.get(i).receiver.id == currentUser.id) {
+                messages.get(i).isRead = true;
+                messages.get(i).update();
+            }
+        }
         return ok(adminViewMessage.render(messages));
     }
 }

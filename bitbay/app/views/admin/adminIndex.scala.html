@@ -1,5 +1,5 @@
 @import helpers.SessionHelper
-@(content: Html)(implicit currentUser: User = SessionHelper.currentUser())
+@(content: Html)(implicit currentUser: User = SessionHelper.currentUser(), notifications: Integer = Message.getMessageNotification())
 
 <!DOCTYPE html>
 <html>
@@ -40,7 +40,11 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="font-weight: bold">Messages <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="@routes.AdminController.adminNewMessage("")">New message </a></li>
-							<li><a href="@routes.AdminController.adminReceivedMessages()">Inbox</a></li>
+							<li><a href="@routes.AdminController.adminReceivedMessages()">Inbox
+								@if(notifications > 0) {
+									<span class="badge" style="font-size: 10px; background-color: red; border-radius: 9px; padding: 1px 4px 1px">@notifications</span>
+								}
+							</a></li>
 							<li><a href="@routes.AdminController.adminSentMessages()">Sent</a></li>
 						</ul>
 					</li>
