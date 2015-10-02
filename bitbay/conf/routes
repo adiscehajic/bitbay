@@ -21,6 +21,7 @@ GET           /product/new                     @controllers.ProductController.ne
 POST          /product/thumbUp                 @controllers.CommentController.saveThumbUp()
 GET           /product/search                  @controllers.ProductController.searchProduct()
 POST          /product/search                  @controllers.ProductController.autocompleteSearch()
+GET           /product/category                @controllers.ProductController.viewProductsByCategory(id: Integer)
 GET           /product/:id                     @controllers.ProductController.getProduct(id: Integer)
 POST          /product/:id                     @controllers.CartController.addToCart(id: Integer)
 POST          /product/comment/:id             @controllers.CommentController.saveComment(id: Integer)
@@ -28,7 +29,6 @@ GET           /product/delete/:id              @controllers.ProductController.de
 POST          /product/new/                    @controllers.ProductController.saveProduct()
 GET           /product/edit/:id                @controllers.ProductController.editProduct(id: Integer)
 POST          /product/edit/:id                @controllers.ProductController.updateProduct(id: Integer)
-GET           /product/category                @controllers.ProductController.viewProductsByCategory(id: Integer)
 
 GET           /admin                           @controllers.AdminController.adminLogin()
 GET           /admin/logout                    @controllers.AdminController.adminLogout()

@@ -1,6 +1,6 @@
 @import helpers.SessionHelper
 
-@(title: String)(content: Html)(implicit categories: java.util.List[Category] = Category.findAll(), admin: Integer = 1, buyer: Integer = 2, seller: Integer = 3, user: User = SessionHelper.currentUser(), notifications: Integer = Message.getMessageNotification())
+@(title: String)(content: Html)(implicit categories: java.util.List[Category] = Category.findAllAll(), admin: Integer = 1, buyer: Integer = 2, seller: Integer = 3, user: User = SessionHelper.currentUser(), notifications: Integer = Message.getMessageNotification())
 
 <!DOCTYPE html>
 
