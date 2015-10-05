@@ -24,11 +24,11 @@ public class EmailController  extends Controller{
         DynamicForm form = Form.form().bindFromRequest();
 
 
-        String user_name = form.get("name");
+        String username = form.get("name");
         String mail = form.get("email");
         String subject = form.get("subject");
         String message = form.get("message");
-        Logger.info(user_name + "----" + mail + "-----" + subject + "----" +  message);
+        Logger.info(username + "----" + mail + "-----" + subject + "----" +  message);
         SimpleEmail email = new SimpleEmail();
         email.setHostName(Play.application().configuration().getString("smtp.host"));
         email.setSmtpPort(587);
@@ -40,7 +40,7 @@ public class EmailController  extends Controller{
             email.setDebug(true);
             email.addTo(Play.application().configuration().getString("mail.smtp.user"));
             email.setSubject(subject);
-            email.setMsg(user_name + "\n" + mail + "\n\n"+subject +"\n" + message);
+            email.setMsg("Name: " + username + "\n" + "E-mail address: " + mail + "\n\n" + "Message subject: " + subject + " \n " + "Message: " + message);
             email.send();
         } catch (EmailException e) {
             e.printStackTrace();

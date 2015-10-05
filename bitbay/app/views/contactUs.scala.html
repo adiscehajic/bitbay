@@ -1,13 +1,13 @@
 @import helper._
 @main("Contact Us"){
-<div class="container">
+<div style="background-image: url(@routes.Assets.versioned("/images/contactUs.jpg")) " id="contactForm" class="container">
     <div class="col-md-5">
         <div class="form-area">
             <form method="post" action="@helper.CSRF(routes.EmailController.sendEmail())" role="form">
                 <br style="clear:both">
-                <h3 style="margin-bottom: 25px; text-align: center;">Contact Form</h3>
+                <h3 style="margin-bottom: 25px; text-align: center;">Contact Us</h3>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Full name" required>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
@@ -20,7 +20,9 @@
                     <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
                 </div>
 
-                <input href="@routes.EmailController.sendEmail()" class="submit-btn" style="background-color: #204d74; border-radius: 5px; width: 80px; " type="submit" value="SUBMIT">
+                <input href="@routes.EmailController.sendEmail()" class="btn btn-primary" type="submit" value="SEND">
+                <button class="btn btn-default" type="reset" >CLEAR</button>
+
 
                 <script>
                     $(document).ready(function(){
