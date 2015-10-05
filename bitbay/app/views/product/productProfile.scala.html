@@ -11,10 +11,11 @@
 					@for(image <- product.images) {
 						<img class="img-responsive" src="@image.getSize(576,486)" >
 					}
-
+					</div>
+					<div style="margin-left: 35%">
+						<input class="rating" data-max="5" data-min="1" id="some_id" name="your_awesome_parameter" type="number" data-empty-value="0" data-icon-lib="fa" data-active-icon="fa-star fa-2x" data-inactive-icon="fa-star-o fa-2x"/>
 					</div>
 				</div>
-
 			<div class="col-md-5 " id="userInfo">
 				<h2>@product.name</h2>
 				<table>
