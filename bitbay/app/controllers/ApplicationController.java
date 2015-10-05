@@ -6,13 +6,13 @@ import models.Product;
 import models.User;
 import models.UserType;
 import org.mindrot.jbcrypt.BCrypt;
-import play.Logger;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.contactUs;
 import views.html.index;
 import views.html.signIn;
 import views.html.signup;
@@ -30,6 +30,16 @@ public class ApplicationController extends Controller {
     private static final Form<UserLogin> loginForm = Form.form(UserLogin.class);
     private static final Form<UserRegistration> registrationForm = Form.form(UserRegistration.class);
     private static final Integer ADMIN = 1;
+
+
+    /**
+     * Renders contactUs.html page with a form for sending a message from user to ADMIN.
+     *
+     * @return ContactUs page of the application.
+     */
+    public Result contactUs() {
+        return ok(contactUs.render());
+    }
 
     /**
      * Renders index.html page on which are listed all products from database. User can select product and depending on
@@ -274,5 +284,6 @@ public class ApplicationController extends Controller {
             }
             return errors.isEmpty() ? null : errors;
         }
+
     }
 }

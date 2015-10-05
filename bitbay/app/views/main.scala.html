@@ -58,8 +58,11 @@
                             <input name="search" type="text" id="search-product" autocomplete="off" class="form-control" placeholder="Search" style="width: 100%">
                         </div>
                             <button type="submit" class="btn btn-default">Submit</button>
+
                     </form>
                     <ul class="nav navbar-nav navbar-right">
+                        <a href="@routes.ApplicationController.contactUs()" style="padding-top: 13px; font-size: 14px" class="btn btn-link">Contact Us</a>
+
                         @if(!SessionHelper.isAuthenticated() || SessionHelper.isUserType(admin)) {
                                 <li><a href="@routes.ApplicationController.signIn()"><span class="glyphicon glyphicon-log-in"></span>  Sign in</a></li>
                                 <li><a href="@routes.ApplicationController.signUp()"><span class="glyphicon glyphicon-registration-mark"></span>  Sign up</a></li>
