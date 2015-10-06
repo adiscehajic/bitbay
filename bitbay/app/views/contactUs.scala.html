@@ -1,5 +1,7 @@
 @import helper._
 @main("Contact Us"){
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
 <div class="container">
     <div class="col-md-5">
         <div class="form-area">
@@ -19,6 +21,13 @@
                     <textarea class="form-control" type="textarea" name="message" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
                     <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
                 </div>
+
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <div class="g-recaptcha" data-sitekey="6LfUKg4TAAAAAKyfQBX3H8Q_fAq5LFPKqQ1mI84E"></div>
+                    </div>
+                </div>
+
 
                 <input href="@routes.EmailController.sendEmail()" class="submit-btn" style="background-color: #204d74; border-radius: 5px; width: 80px; " type="submit" value="SUBMIT">
 
