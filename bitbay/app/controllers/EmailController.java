@@ -40,7 +40,7 @@ public class EmailController  extends Controller{
             email.setDebug(true);
             email.addTo(Play.application().configuration().getString("mail.smtp.user"));
             email.setSubject(subject);
-            email.setMsg("Name: " + username + "\n" + "E-mail address: " + mail + "\n\n" + "Message subject: " + subject + " \n " + "Message: " + message);
+            email.setMsg("Name: " + username + "\n" + "E-mail address: " + mail + "\n\n" + "Message subject: " + subject + " \n" + "Message: " + message);
             email.send();
         } catch (EmailException e) {
             e.printStackTrace();

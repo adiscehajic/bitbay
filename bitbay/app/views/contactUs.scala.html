@@ -1,6 +1,6 @@
 @import helper._
 @main("Contact Us"){
-<div style="background-image: url(@routes.Assets.versioned("/images/contactUs.jpg")) " id="contactForm" class="container">
+<div id="contactForm" class="container">
     <div class="col-md-5">
         <div class="form-area">
             <form method="post" action="@helper.CSRF(routes.EmailController.sendEmail())" role="form">
@@ -20,8 +20,18 @@
                     <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
                 </div>
 
-                <input href="@routes.EmailController.sendEmail()" class="btn btn-primary" type="submit" value="SEND">
-                <button class="btn btn-default" type="reset" >CLEAR</button>
+                <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="6LfUKg4TAAAAAKyfQBX3H8Q_fAq5LFPKqQ1mI84E"></div>
+                </div>
+
+                <br>
+                <div class="form-group">
+
+                    <input href="@routes.EmailController.sendEmail()" class="btn btn-primary" type="submit" value="SEND">
+                    <button class="btn btn-default" type="reset" >CLEAR</button>
+
+                </div>
+
 
 
                 <script>
