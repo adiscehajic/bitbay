@@ -1,23 +1,38 @@
 @(email: String)(implicit messageForm: Form[Message])
 @import helper._
+@import play.Logger;
 
 @user.userMessages {
 
     <div class="col-md-10" style="border-bottom: 1px; background-color: #F8F8F4; border-radius: 5px; border: 1px solid #E0E0D1">
         <form action="@helper.CSRF(routes.MessageController.sendMessage())" method="POST">
             <div style="margin-top: 10px">
-                <label>Reciever (email)</label>
-                <input type="email" class="form-control" name="receiver" style="margin-bottom: 10px" value="@email">
-                <span class="alert-danger" style="margin-left : 1px ; font-weight : normal ;">@flash.get("receiverDontExistError")</span>
+                @for((key, value) <- messageForm.errors) {
+                    @for(err <- value) {
+                        <span class="alert-danger" style="font-weight:normal; display: block; width: 90%;">@err.message</span>
+                    }
+                }
             </div>
-            <div>
+            <div style="margin-top: 10px">
+                <label>Receiver (email)</label>
+                <input class="form-control" name="receiverEmail" value="@email">
+                <span class="alert-danger" data-error-for="receiverEmail" style="font-weight:normal;"></span>
+            </div>
+            <div >
                 <label>Title</label>
                 <input class="form-control" name="title" style="margin-bottom: 30px" value="@messageForm("title").value">
             </div>
             <div style="margin-bottom: 10px">
-                <textarea class="form-control" name="message" style="resize: none; height: 200px; margin-bottom: 10px">@messageForm("message").value</textarea>
-                <button class="btn btn-primary"> Send <span class="glyphicon glyphicon-send"></span></button>
+                <textarea class="form-control" name="message" style="resize: none; height: 200px;">@messageForm("message").value</textarea>
+                <span class="alert-danger" data-error-for="message" style="font-weight:normal;"></span>
+            </div>
+            <div>
+                <button class="btn btn-primary" id="submit-button" style="margin-bottom: 10px;"> Send <span class="glyphicon glyphicon-send"></span></button>
             </div>
         </form>
     </div>
+    <script>
+        var urlPost = "@routes.MessageController.validateFormMessage()";
+    </script>
+    <script src="@routes.Assets.versioned("javascripts/validateForm.js")" type="text/javascript"></script>
 }

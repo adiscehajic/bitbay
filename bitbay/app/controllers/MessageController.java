@@ -35,34 +35,39 @@ public class MessageController extends Controller {
      * If there is no receiver, throw different errors if sender is admin or user. If all required data is collected
      * message will be saved into database and page will redirect us on another page, depending are we admin or just a
      * user.
-     * @return
+     *
+     * @return If the sending message is successful renders page where sent message and other reply messages are shown,
+     * othervise warning message occurs.
      */
     @RequireCSRFCheck
     public Result sendMessage(){
+        // Declaring message form.
         Form<Message> boundForm = messageForm.bindFromRequest();
+        // Finding current user and declaring him as sender.
         User sender = SessionHelper.currentUser();
-        String email = boundForm.bindFromRequest().field("receiver").value();
-        User receiver = User.getUserByEmail(email);
-        String title = boundForm.bindFromRequest().field("title").value();
-        String content = boundForm.bindFromRequest().field("message").value();
-        Message message = new Message(sender,receiver,title,content);
-
-        if(sender.userType.id == 1 && receiver == null) {
-            flash("receiverDontExistError", "User does not exist.");
-            return badRequest(adminNewMessage.render("", boundForm));
-        }
-        if(receiver == null) {
-            flash("receiverDontExistError", "User does not exist.");
+        // Checking if form has errors.
+        if (boundForm.hasErrors()) {
+            if(sender.userType.id == UserType.ADMIN) {
+                return badRequest(adminNewMessage.render("", boundForm));
+            }
             return badRequest(newMessage.render("", boundForm));
         }
-
-        flash("messageSentSuccess", "Message successfully sent.");
+        // Finding receiver in database.
+        User receiver = User.getUserByEmail(boundForm.data().get("receiverEmail"));
+        // Creating new message and adding values.
+        Message message = boundForm.get();
+        message.sender = sender;
+        message.receiver = receiver;
+        message.isRead = false;
+        message.receiverVisible = true;
+        message.senderVisible = true;
+        // Saving message into database.
         message.save();
-
-        if(sender.userType.id == 1) {
+        // If the user is administrator rendering administrator panel page where sent message is shown.
+        if(sender.userType.id == UserType.ADMIN) {
             return redirect(routes.AdminController.adminNewMessage(""));
         }
-
+        // If the user is buyer or seller rendering application page where sent message is shown.
         return redirect(routes.MessageController.getReceivedMessages());
     }
 
@@ -155,6 +160,21 @@ public class MessageController extends Controller {
 
         List<Message> messages = Message.getConversation(id);
         return ok(replyMessage.render(messages));
+    }
+
+    /**
+     * Validates the form when the AJAX calls it. If the form has errors returns the JSON object that represents all
+     * errors that occurs. If there is no errors returns ok.
+     *
+     * @return JSON object that represents all errors that occurs, otherwise returns ok.
+     */
+    public Result validateFormMessage() {
+        Form<Message> binded = messageForm.bindFromRequest();
+        if (binded.hasErrors()) {
+            return badRequest(binded.errorsAsJson());
+        } else {
+            return ok("Validation successful.");
+        }
     }
 
 }
