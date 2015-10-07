@@ -29,7 +29,6 @@ public class ApplicationController extends Controller {
     // Declaring variable.
     private static final Form<UserLogin> loginForm = Form.form(UserLogin.class);
     private static final Form<UserRegistration> registrationForm = Form.form(UserRegistration.class);
-    private static final Integer ADMIN = 1;
 
     /**
      * Renders index.html page on which are listed all products from database. User can select product and depending on
@@ -150,7 +149,6 @@ public class ApplicationController extends Controller {
      */
     public Result logout() {
         session().clear();
-        flash("successLogout", "You have successfully logged out!");
         return redirect(routes.ApplicationController.signIn());
     }
 

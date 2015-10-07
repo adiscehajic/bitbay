@@ -63,6 +63,7 @@ GET           /user/messages/new               @controllers.MessageController.ne
 POST          /user/messages/send              @controllers.MessageController.sendMessage()
 POST          /user/messages/reply             @controllers.MessageController.respondMessage()
 POST          /user/messages/delete            @controllers.MessageController.deleteMessage(id: Integer)
+POST          /user/messages/validateForm      @controllers.MessageController.validateFormMessage()
 
 GET           /category/new                    @controllers.CategoryController.newCategory()
 GET           /category/edit/:id               @controllers.CategoryController.editCategory(id:Integer)

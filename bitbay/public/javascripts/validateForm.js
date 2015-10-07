@@ -27,6 +27,7 @@ $(document).ready(function(){
             }
 
             var errorMessages = errors[$field.attr("name")];
+            console.log(errorMessages);
             var allErrors = "";
             for(var j = 0; j < errorMessages.length; j++){
                 allErrors += errorMessages[j];
