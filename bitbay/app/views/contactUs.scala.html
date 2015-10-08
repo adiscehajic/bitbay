@@ -1,40 +1,45 @@
 @import helper._
 @main("Contact Us"){
-<div id="contactForm" class="container">
-    <div class="col-md-5">
-        <div class="form-area">
-            <form method="post" action="@helper.CSRF(routes.EmailController.sendEmail())" role="form">
-                <br style="clear:both">
-                <h3 style="margin-bottom: 25px; text-align: center;">Contact Us</h3>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Full name *" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="email" name="email" placeholder="Email *" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject *" required>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" type="textarea" name="message" id="message" placeholder="Message *" maxlength="140" rows="7" required></textarea>
-                    <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
-                </div>
 
-                <div class="form-group">
-                        <div class="g-recaptcha" data-sitekey="6LfUKg4TAAAAAKyfQBX3H8Q_fAq5LFPKqQ1mI84E"></div>
-                </div>
+        <div class="col-sm-4">
 
-                <br>
-                <div class="form-group">
+            <div id="contactForm" class="container">
 
-                    <input href="@routes.EmailController.sendEmail()" class="btn btn-primary" type="submit" value="SEND">
-                    <button class="btn btn-default" type="reset" >CLEAR</button>
+                <script src='https://www.google.com/recaptcha/api.js'></script>
 
-                </div>
+                <div class="col-md-5">
+                    <div class="form-area">
+                        <form method="post" action="@helper.CSRF(routes.EmailController.sendEmail())" role="form">
+                            <br style="clear:both">
+                            <h3 style="margin-bottom: 25px; text-align: center;">Contact Us</h3>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Full name *" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Email *" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject *" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" type="textarea" name="message" id="message" placeholder="Message *" maxlength="140" rows="7" required></textarea>
+                                <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="g-recaptcha" data-sitekey="6LfUKg4TAAAAAKyfQBX3H8Q_fAq5LFPKqQ1mI84E"></div>
+                            </div>
+
+                            <br>
+                            <div class="form-group">
+
+                                <input href="@routes.EmailController.sendEmail()" class="btn btn-primary" type="submit" value="SEND">
+                                <button class="btn btn-default" type="reset" >CLEAR</button>
+
+                            </div>
 
 
-
-                <script>
+                            <script>
                     $(document).ready(function(){
                         $('#characterLeft').text('140 characters left');
                         $('#message').keydown(function () {
@@ -55,8 +60,12 @@
                     });
                 </script>
 
-            </form>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
-</div>
+
+
 }
