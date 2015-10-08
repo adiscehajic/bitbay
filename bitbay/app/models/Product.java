@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.*;
 
 /**
- * Created by adis.cehajic on 08/09/15.
+ * Created by Adis Cehajic on 08/09/15.
  */
 @Entity
 public class Product extends Model {
@@ -109,5 +109,26 @@ public class Product extends Model {
         return products;
     }
 
+    public static Product getOneRandomProduct(List<Product> products) {
+        Random rand = new Random();
+        return products.get(rand.nextInt(products.size()));
+    }
 
+    public static List<Product> getTwoRandomProducts(List<Product> products) {
+        List<Product> list = new LinkedList<>(products);
+        Collections.shuffle(list);
+        if (list.size() > 1) {
+            return list.subList(0, 2);
+        }
+        return list.subList(0, list.size());
+    }
+
+    public static List<Product> getFourRandomProducts(List<Product> products) {
+        List<Product> list = new LinkedList<>(products);
+        Collections.shuffle(list);
+        if (list.size() > 3) {
+            return list.subList(0, 4);
+        }
+        return list.subList(0, list.size());
+    }
 }
