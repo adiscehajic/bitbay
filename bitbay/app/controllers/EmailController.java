@@ -21,6 +21,10 @@ import javax.inject.Inject;
  */
 public class EmailController  extends Controller{
 
+    /**
+     * This method gets inputs from contact us form, verifies recaptcha and sends email to
+     * bitbayservice@gmail.com from userfeedback.bitbay@gmail.com
+     */
     @Inject WSClient ws;
     @RequireCSRFCheck
     public Result sendEmail() {
@@ -40,9 +44,9 @@ public class EmailController  extends Controller{
         F.Promise<JsonNode> responsePromise = rq.get().map(response -> {
             return response.asJson();
         });
-        JsonNode returnderJson = responsePromise.get(3000);
+        JsonNode returnedJson = responsePromise.get(3000);
 
-        if(returnderJson.findValue("success").asBoolean() == true && !form.hasErrors()){
+        if(returnedJson.findValue("success").asBoolean() == true && !form.hasErrors()){
             SimpleEmail email = new SimpleEmail();
             email.setHostName(Play.application().configuration().getString("smtp.host"));
             email.setSmtpPort(587);
@@ -60,13 +64,14 @@ public class EmailController  extends Controller{
                 e.printStackTrace();
             }
 
-            Logger.info("Message succesful sent");
+            Logger.info("Message successfully sent");
             flash("success", "Message sent");
             return redirect(routes.ApplicationController.index());
         }
         else{
-            flash("error", "Please check your input!");
+            flash("error", "You need to verify that you are not a robot!");
             return redirect(routes.EmailController.sendEmail());
         }
     }
+
 }

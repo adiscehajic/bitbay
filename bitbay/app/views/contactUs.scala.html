@@ -1,12 +1,17 @@
 @import helper._
 @main("Contact Us"){
 
-            <div id="contactForm" class="container">
+            <div id="contactForm"  class="container">
 
                 <script src='https://www.google.com/recaptcha/api.js'></script>
 
+                <div class="col-md-3"></div>
+
+
+                <!-- This is a contact form, it has input fields for name, email, subject and message content -->
+                <!-- It also has two buttons, SEND and CLEAR, and recaptcha-->
                 <div class="col-md-5">
-                    <div class="form-area">
+                    <div class="form-area" style="min-width: 384px">
                         <form method="post" action="@helper.CSRF(routes.EmailController.sendEmail())" role="form">
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Contact Us</h3>
@@ -38,29 +43,34 @@
 
 
                             <script>
-                    $(document).ready(function(){
-                        $('#characterLeft').text('140 characters left');
-                        $('#message').keydown(function () {
-                            var max = 140;
-                            var len = $(this).val().length;
-                            if (len >= max) {
-                                $('#characterLeft').text('You have reached the limit');
-                                $('#characterLeft').addClass('red');
-                                $('#btnSubmit').addClass('disabled');
-                            }
-                            else {
-                                var ch = max - len;
-                                $('#characterLeft').text(ch + ' characters left');
-                                $('#btnSubmit').removeClass('disabled');
-                                $('#characterLeft').removeClass('red');
-                            }
-                        });
-                    });
-                </script>
+                                /**
+                                 *
+                                 * This function fixes the length of the message to 140 characters
+                                 */
+                                $(document).ready(function(){
+                                    $('#characterLeft').text('140 characters left');
+                                    $('#message').keydown(function () {
+                                        var max = 140;
+                                        var len = $(this).val().length;
+                                        if (len >= max) {
+                                            $('#characterLeft').text('You have reached the limit');
+                                            $('#characterLeft').addClass('red');
+                                            $('#btnSubmit').addClass('disabled');
+                                        }
+                                        else {
+                                            var ch = max - len;
+                                            $('#characterLeft').text(ch + ' characters left');
+                                            $('#btnSubmit').removeClass('disabled');
+                                            $('#characterLeft').removeClass('red');
+                                        }
+                                    });
+                                });
+                             </script>
 
                         </form>
                     </div>
                 </div>
+
             </div>
 
 
