@@ -78,6 +78,14 @@ create table product (
   constraint pk_product primary key (id))
 ;
 
+create table rating (
+  id                        integer auto_increment not null,
+  user_id                   integer,
+  product_id                integer,
+  rate                      integer,
+  constraint pk_rating primary key (id))
+;
+
 create table thumb (
   id                        integer auto_increment not null,
   comment_id                integer,
@@ -134,14 +142,18 @@ alter table product add constraint fk_product_user_8 foreign key (user_id) refer
 create index ix_product_user_8 on product (user_id);
 alter table product add constraint fk_product_category_9 foreign key (category_id) references category (id) on delete restrict on update restrict;
 create index ix_product_category_9 on product (category_id);
-alter table thumb add constraint fk_thumb_comment_10 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
-create index ix_thumb_comment_10 on thumb (comment_id);
-alter table thumb add constraint fk_thumb_user_11 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_thumb_user_11 on thumb (user_id);
-alter table user add constraint fk_user_userType_12 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
-create index ix_user_userType_12 on user (user_type_id);
-alter table user add constraint fk_user_country_13 foreign key (country_id) references country (id) on delete restrict on update restrict;
-create index ix_user_country_13 on user (country_id);
+alter table rating add constraint fk_rating_user_10 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_rating_user_10 on rating (user_id);
+alter table rating add constraint fk_rating_product_11 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_rating_product_11 on rating (product_id);
+alter table thumb add constraint fk_thumb_comment_12 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
+create index ix_thumb_comment_12 on thumb (comment_id);
+alter table thumb add constraint fk_thumb_user_13 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_thumb_user_13 on thumb (user_id);
+alter table user add constraint fk_user_userType_14 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
+create index ix_user_userType_14 on user (user_type_id);
+alter table user add constraint fk_user_country_15 foreign key (country_id) references country (id) on delete restrict on update restrict;
+create index ix_user_country_15 on user (country_id);
 
 
 
@@ -170,6 +182,8 @@ drop table image;
 drop table message;
 
 drop table product;
+
+drop table rating;
 
 drop table thumb;
 

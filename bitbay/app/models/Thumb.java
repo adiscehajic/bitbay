@@ -68,7 +68,6 @@ public class Thumb extends Model {
     public static List<Comment> getMostLikedComment(Product product) {
 
         List<Comment> commentList = Comment.findAllCommentByProduct(product);
-        Logger.info("Broj comentara produkta " + product.id + " je " + commentList.size());
         int maxFirst = 0;
         Comment commentFirst = null;
         int maxSecond = 0;
@@ -77,7 +76,6 @@ public class Thumb extends Model {
         for (int i = 0; i < commentList.size(); i++) {
             Comment comment = commentList.get(i);
             List<Thumb> comments = Thumb.finder.where().eq("comment", comment).where().eq("isUp", true).findList();
-            Logger.info("Velicina niza je: " + comments.size());
             if (comments.size() > maxFirst) {
                 maxFirst = comments.size();
                 commentFirst = comment;
