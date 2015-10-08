@@ -11,6 +11,8 @@ POST          /signup                          @controllers.ApplicationControlle
 GET           /signin                          @controllers.ApplicationController.signIn()
 POST          /signin                          @controllers.ApplicationController.validateSignIn()
 GET           /logout                          @controllers.ApplicationController.logout()
+GET           /contactus                       @controllers.ApplicationController.contactUs()
+POST          /contactus                       @controllers.EmailController.sendEmail()
 
 POST          /signin/validateFormLog          @controllers.ApplicationController.validateFormLogin()
 POST          /signup/validateFormReg          @controllers.ApplicationController.validateFormRegistration()
