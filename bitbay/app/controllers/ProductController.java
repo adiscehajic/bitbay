@@ -61,8 +61,26 @@ public class ProductController extends Controller {
                 comments.remove(topComments.get(i));
             }
         }
+        // Getting current user from session.
+        User user = SessionHelper.currentUser();
+        // Finding category of selected product.
+        Category category = Category.getCategoryById(product.category.id);
+        // Declaring recommendation
+        Recommendation recommendation = Recommendation.getRecommendationByUserAndCategory(user, category);
+        // Checking if recommendation exists.
+        if (recommendation != null) {
+            // If recommendation exists increase recommendation count for one and update recommendation.
+            recommendation.count++;
+            recommendation.update();
+        } else {
+            // If recommendation does not exist creating new recommendation and saving into database.
+            Recommendation newRecommendation = new Recommendation(user, category);
+            newRecommendation.save();
+        }
+
+        List<Product> recommendedProducts = Product.getFourRandomProducts(Product.findAllProductsByCategory(category));
         // Rendering product profile page.
-        return ok(productProfile.render(product, path, comments, topComments, averageRating));
+        return ok(productProfile.render(product, path, comments, topComments, recommendedProducts, averageRating));
     }
 
     /**

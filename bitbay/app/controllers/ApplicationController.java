@@ -2,9 +2,7 @@ package controllers;
 
 import com.avaje.ebean.Model.Finder;
 import helpers.SessionHelper;
-import models.Product;
-import models.User;
-import models.UserType;
+import models.*;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.data.Form;
@@ -37,9 +35,12 @@ public class ApplicationController extends Controller {
      * @return Index page of the application.
      */
     public Result index() {
+
+        List<Product> recommendations = Recommendation.getRecommendations();
+
         // Declaring list that contains all products from database.
         List<Product> products = Product.findAll();
-        return ok(index.render(products));
+        return ok(index.render(products, recommendations));
     }
 
     /**
