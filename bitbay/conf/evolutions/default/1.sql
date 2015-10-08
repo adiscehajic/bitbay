@@ -54,12 +54,12 @@ create table message (
   id                        integer auto_increment not null,
   sender_id                 integer,
   receiver_id               integer,
-  date                      datetime,
   title                     varchar(255),
   message                   TEXT,
   receiver_visible          tinyint(1) default 0,
   sender_visible            tinyint(1) default 0,
   is_read                   tinyint(1) default 0,
+  date                      datetime,
   constraint pk_message primary key (id))
 ;
 
