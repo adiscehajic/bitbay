@@ -16,6 +16,8 @@ POST          /signin/validateFormLog          @controllers.ApplicationControlle
 POST          /signup/validateFormReg          @controllers.ApplicationController.validateFormRegistration()
 POST          /product/comment/validate        @controllers.CommentController.validateFormComment()
 
+POST          /product/                        @controllers.ProductController.productRating()
+
 POST          /product/new/validateForm        @controllers.ProductController.validateFormProduct()
 GET           /product/new                     @controllers.ProductController.newProduct()
 POST          /product/thumbUp                 @controllers.CommentController.saveThumbUp()

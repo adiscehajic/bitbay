@@ -9,6 +9,7 @@ import helpers.SessionHelper;
 import models.*;
 import play.Logger;
 import play.Play;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.filters.csrf.AddCSRFToken;
 import play.filters.csrf.RequireCSRFCheck;
@@ -45,6 +46,8 @@ public class ProductController extends Controller {
      * @return Page where all product informations are shown.
      */
     public Result getProduct(Integer id) {
+        String averageRating = Rating.getAverageRating(id);
+        Logger.info(averageRating);
         // Finding selected product.
         Product product = Product.getProductById(id);
         // Declaring image path.
@@ -59,7 +62,7 @@ public class ProductController extends Controller {
             }
         }
         // Rendering product profile page.
-        return ok(productProfile.render(product, path, comments, topComments));
+        return ok(productProfile.render(product, path, comments, topComments, averageRating));
     }
 
     /**
@@ -298,4 +301,29 @@ public class ProductController extends Controller {
         }
     }
 
+    public Result productRating() {
+        DynamicForm form = Form.form().bindFromRequest();
+        String productId = form.get("productId");
+        Integer id = Integer.parseInt(productId);
+        Product product = Product.getProductById(id);
+        User user = SessionHelper.currentUser();
+        String numOfStars = form.get("rating");
+        Integer intRatingValue = Integer.parseInt(numOfStars);
+
+
+        if(Rating.hasRated(product)) {
+            Logger.info(product.name);
+            Rating rating = Rating.getRating(product);
+            rating.rate = intRatingValue;
+           // Logger.info(rating.rate.toString());
+            rating.update();
+        } else {
+            Rating rating = new Rating(user, product, intRatingValue);
+            rating.save();
+        }
+        JsonNode object = Json.toJson(numOfStars);
+        return ok(object);
+    }
+
 }
+
