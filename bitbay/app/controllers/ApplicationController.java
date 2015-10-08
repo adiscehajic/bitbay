@@ -2,9 +2,7 @@ package controllers;
 
 import com.avaje.ebean.Model.Finder;
 import helpers.SessionHelper;
-import models.Product;
-import models.User;
-import models.UserType;
+import models.*;
 import org.mindrot.jbcrypt.BCrypt;
 import play.data.Form;
 import play.data.validation.Constraints;
@@ -29,7 +27,6 @@ public class ApplicationController extends Controller {
     // Declaring variable.
     private static final Form<UserLogin> loginForm = Form.form(UserLogin.class);
     private static final Form<UserRegistration> registrationForm = Form.form(UserRegistration.class);
-    private static final Integer ADMIN = 1;
 
 
     /**
@@ -48,9 +45,12 @@ public class ApplicationController extends Controller {
      * @return Index page of the application.
      */
     public Result index() {
+
+        List<Product> recommendations = Recommendation.getRecommendations();
+
         // Declaring list that contains all products from database.
         List<Product> products = Product.findAll();
-        return ok(index.render(products));
+        return ok(index.render(products, recommendations));
     }
 
     /**
@@ -160,7 +160,6 @@ public class ApplicationController extends Controller {
      */
     public Result logout() {
         session().clear();
-        flash("successLogout", "You have successfully logged out!");
         return redirect(routes.ApplicationController.signIn());
     }
 

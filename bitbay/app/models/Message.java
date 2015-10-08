@@ -6,21 +6,19 @@ import helpers.SessionHelper;
 import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
+import play.data.validation.ValidationError;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.Constraint;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Adnan on 28.09.2015..
+ * Created by Adnan Lapendic on 28.09.2015..
  */
 @Entity
-public class Message extends Model{
+public class Message extends Model {
 
     @Id
     public Integer id;
@@ -28,10 +26,12 @@ public class Message extends Model{
     public User sender;
     @ManyToOne
     public User receiver;
-    @Formats.DateTime(pattern = "dd/MM/yyyy")
-    @Column(columnDefinition = "datetime")
-    public Date date = new Date();
+    @Transient
+    @Constraints.Email(message = "Valid email required.")
+    @Constraints.Required(message = "Please input receiver email.")
+    public String receiverEmail;
     public String title;
+    @Constraints.Required(message = "Please type message content.")
     @Column(columnDefinition = "TEXT")
     public String message;
 
@@ -40,7 +40,13 @@ public class Message extends Model{
 
     public Boolean isRead;
 
+    @Formats.DateTime(pattern = "dd/MM/yyyy")
+    @Column(columnDefinition = "datetime")
+    public Date date = new Date();
+
     public static Finder<Integer, Message> finder = new Finder<Integer, Message>(Message.class);
+
+    public Message() {}
 
     /**
      * Constructor for new message.
@@ -131,6 +137,26 @@ public class Message extends Model{
             }
         }
         return counter;
+    }
+
+    /**
+     * Validates the new message form and returns all errors that occur during user inputing.
+     * @return Errors that have occur during new message input.
+     */
+    public List<ValidationError> validate() {
+        // Declaring list of errors.
+        List<ValidationError> errors = new ArrayList<>();
+        User currentUser = SessionHelper.currentUser();
+        User user = User.getUserByEmail(receiverEmail);
+        // Checking if administrator user has inputed existing user
+        if(currentUser.userType.id == UserType.ADMIN && user == null) {
+            errors.add(new ValidationError("receiverEmail", "User does not exist."));
+        }
+        // Checking if user has inputed existing user
+        else if (user == null) {
+            errors.add(new ValidationError("receiverEmail", "User does not exist."));
+        }
+        return errors.isEmpty() ? null : errors;
     }
 
 }

@@ -18,6 +18,8 @@ POST          /signin/validateFormLog          @controllers.ApplicationControlle
 POST          /signup/validateFormReg          @controllers.ApplicationController.validateFormRegistration()
 POST          /product/comment/validate        @controllers.CommentController.validateFormComment()
 
+POST          /product/                        @controllers.ProductController.productRating()
+
 POST          /product/new/validateForm        @controllers.ProductController.validateFormProduct()
 GET           /product/new                     @controllers.ProductController.newProduct()
 POST          /product/thumbUp                 @controllers.CommentController.saveThumbUp()
@@ -65,6 +67,7 @@ GET           /user/messages/new               @controllers.MessageController.ne
 POST          /user/messages/send              @controllers.MessageController.sendMessage()
 POST          /user/messages/reply             @controllers.MessageController.respondMessage()
 POST          /user/messages/delete            @controllers.MessageController.deleteMessage(id: Integer)
+POST          /user/messages/validateForm      @controllers.MessageController.validateFormMessage()
 
 GET           /category/new                    @controllers.CategoryController.newCategory()
 GET           /category/edit/:id               @controllers.CategoryController.editCategory(id:Integer)
