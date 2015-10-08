@@ -1,5 +1,6 @@
 @(cartItems : List[CartItem])(user: User)
 @import helpers.SessionHelper;
+    @import helper._
 
 @main("Cart") {
 
@@ -25,7 +26,7 @@
                 </thead>
                 <tbody>
                     @for(cartItem <- cartItems) {
-                        <form method="POST" action="@routes.CartController.updateItemQuantity(cartItem.id)" name="myForm">
+                        <form method="POST" action="@helper.CSRF(routes.CartController.updateItemQuantity(cartItem.id))" name="myForm">
                         <tr>
                             <td class="cartData" width="150px"><a href="@routes.ProductController.getProduct(cartItem.product.id)">
                                 @for(image <- cartItem.product.images) {

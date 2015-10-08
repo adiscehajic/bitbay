@@ -328,7 +328,6 @@ public class ProductController extends Controller {
         String numOfStars = form.get("rating");
         Integer intRatingValue = Integer.parseInt(numOfStars);
 
-
         if(Rating.hasRated(product)) {
             Logger.info(product.name);
             Rating rating = Rating.getRating(product);

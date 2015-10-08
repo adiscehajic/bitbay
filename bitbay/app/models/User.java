@@ -1,10 +1,13 @@
 package models;
 
 import com.avaje.ebean.Model;
+import controllers.Users;
 import org.mindrot.jbcrypt.BCrypt;
+import play.Logger;
 import play.data.validation.Constraints;
 
 import java.nio.MappedByteBuffer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import play.data.format.Formats;
@@ -171,5 +174,22 @@ public class User extends Model {
             errors.add(new ValidationError("confirmPassword", "Confirm password must match with password."));
         }
         return errors.isEmpty() ? null : errors;
+    }
+
+    public static String getAverageUserRating(User user){
+        List<Product> userProducts = Product.findAllProductsByUser(user);
+        Double average = 0.0;
+        Double ratedProducts = 0.0;
+        for(Product p: userProducts){
+           Double rating =Double.parseDouble(Rating.getAverageRating(p.id));
+            if(rating != 0.0){
+                ratedProducts++;
+            }
+            Logger.info("Average rating is: " + rating + "");
+            average = average + rating;
+        }
+        Double result = average/ratedProducts;
+        DecimalFormat df = new DecimalFormat("#.0");
+        return df.format(result);
     }
 }
