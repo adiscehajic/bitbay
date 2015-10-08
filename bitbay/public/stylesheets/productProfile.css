@@ -45,3 +45,12 @@ td {
 	border: 1px solid #ddd;
 
 }
+.fa-star {
+	color: gold;
+}
+
+.fa-star-o {
+	color:gold;
+}
+
+.star-text { font-size: 18px; }

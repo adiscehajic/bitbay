@@ -86,6 +86,14 @@ create table recommendation (
   constraint pk_recommendation primary key (id))
 ;
 
+create table rating (
+  id                        integer auto_increment not null,
+  user_id                   integer,
+  product_id                integer,
+  rate                      integer,
+  constraint pk_rating primary key (id))
+;
+
 create table thumb (
   id                        integer auto_increment not null,
   comment_id                integer,
@@ -146,6 +154,10 @@ alter table recommendation add constraint fk_recommendation_user_10 foreign key 
 create index ix_recommendation_user_10 on recommendation (user_id);
 alter table recommendation add constraint fk_recommendation_category_11 foreign key (category_id) references category (id) on delete restrict on update restrict;
 create index ix_recommendation_category_11 on recommendation (category_id);
+alter table rating add constraint fk_rating_user_10 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_rating_user_10 on rating (user_id);
+alter table rating add constraint fk_rating_product_11 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_rating_product_11 on rating (product_id);
 alter table thumb add constraint fk_thumb_comment_12 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
 create index ix_thumb_comment_12 on thumb (comment_id);
 alter table thumb add constraint fk_thumb_user_13 foreign key (user_id) references user (id) on delete restrict on update restrict;
@@ -184,6 +196,8 @@ drop table message;
 drop table product;
 
 drop table recommendation;
+
+drop table rating;
 
 drop table thumb;
 

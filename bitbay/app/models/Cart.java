@@ -2,6 +2,8 @@ package models;
 
 import com.avaje.ebean.Model;
 import com.avaje.ebean.Model.Finder;
+import helpers.SessionHelper;
+
 import javax.persistence.Entity;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -48,5 +50,23 @@ public class Cart extends Model{
             amount += c.price;
         }
         return amount;
+    }
+
+    public static Boolean doesContainItem(Integer id) {
+        User user = SessionHelper.currentUser();
+        Cart cart = Cart.findCartByUser(user);
+
+        if (user.userType.id == UserType.BUYER)
+            try {
+                List<CartItem> items = cart.cartItems;
+
+                for (int i = 0; i < items.size(); i++) {
+                    if (items.get(i).product.id == id) {
+                        return true;
+                    }
+                }
+            } catch(NullPointerException e) {
+        }
+     return false;
     }
 }

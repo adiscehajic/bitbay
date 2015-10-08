@@ -1,28 +1,31 @@
-@(product: Product)(path: String)(comments:List[Comment])(topComments: List[Comment])(recommendedProducts: java.util.List[Product]))
+@(product: Product)(path: String)(comments:List[Comment])(topComments: List[Comment])(recommendedProducts: java.util.List[Product])(averageRating: String)
+
 @import helper._
-
 @main("Product") {
-		<div class="container" id="wrapper">
-			<div class="row">
-
-				<div class="col-md-6">
-					<div class="thumbnail">
-
-					@for(image <- product.images) {
-						<img class="img-responsive" src="@image.getSize(576,486)" >
+	<div class="container" id="wrapper">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="thumbnail">
+				@for(image <- product.images) {
+					<img class="img-responsive" src="@image.getSize(576,486)" >
 					}
-					</div>
-					<div style="margin-left: 35%">
+				</div>
+				@if(Cart.doesContainItem(product.id)) {
+					<div style="margin-left: auto; margin-right: auto; width: 10em">
 						<input class="rating" data-max="5" data-min="1" id="some_id" name="your_awesome_parameter" type="number" data-empty-value="0" data-icon-lib="fa" data-active-icon="fa-star fa-2x" data-inactive-icon="fa-star-o fa-2x"/>
 					</div>
-				</div>
+				}
+			</div>
 			<div class="col-md-5 " id="userInfo">
-				<h2>@product.name</h2>
+				<h2 style="display: inline">@product.name</h2>
+				<span class="fa-stack fa-2x" style="float: right; margin-top: 10px">
+					<i class="fa fa-star fa-stack-2x"></i>
+					<strong class="fa-stack-1x star-text">@averageRating</strong>
+				</span>
 				<table>
 					<tbody>
 						<tr class="blank_row"></tr>
 						<tr class="blank_row"></tr>
-
 						<tr>
 							<td> User: </td>
 							@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
@@ -103,43 +106,36 @@
 		</div>
 
 
-			@if(recommendedProducts != null && recommendedProducts.size() > 3) {
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						Recommended
-					</div>
+		@if(recommendedProducts != null && recommendedProducts.size() > 3) {
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					Recommended
 				</div>
+			</div>
 
 
-				<div class="row">
-				@for(product <- recommendedProducts) {
-					<div class="col-sm-6 col-md-3 col-lg-3">
-						<div class="thumbnail" style="height:165px;" id="ellipsis@product.id">
-							<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
-							@for(image <- product.images) {
-								<img class="img-responsive" src="@image.getThumbnail(200,180)" ></a>
-							}
-							<div class="caption">
-								<h3 style="margin-top: 5px"><a href="@routes.ProductController.getProduct(product.id)" >@product.name</a></h3>
-								<p>@product.description</p>
-							</div>
+			<div class="row">
+			@for(product <- recommendedProducts) {
+				<div class="col-sm-6 col-md-3 col-lg-3">
+					<div class="thumbnail" style="height:165px;" id="ellipsis@product.id">
+						<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+						@for(image <- product.images) {
+							<img class="img-responsive" src="@image.getThumbnail(200,180)" ></a>
+						}
+						<div class="caption">
+							<h3 style="margin-top: 5px"><a href="@routes.ProductController.getProduct(product.id)" >@product.name</a></h3>
+							<p>@product.description</p>
 						</div>
 					</div>
-					<script >
+				</div>
+				<script >
         $(document).ready(function() {
 	    $("#ellipsis@product.id").dotdotdot();
         });
     </script>
-				}
-				</div>
 			}
-
-
-
-
-
-
-
+			</div>
+		}
 		<div class="row" >
 
 			<div class="col-md-12">
@@ -233,16 +229,16 @@
 										})
 											});
 										</script>
-									}
+						}
 						</tbody>
 					</table>
-					<table class="table">
-						<thead>
-							<tr>
-								<th><h3>All comments</h3></th>
-							</tr>
-						</thead>
-						<tbody>
+						<table class="table">
+							<thead>
+								<tr>
+									<th><h3>All comments</h3></th>
+								</tr>
+							</thead>
+							<tbody>
 							@for(comment <- comments) {
 								<form action="" method="post">
 									<tr>
@@ -296,13 +292,28 @@
 							</tbody>
 						</table>
 					</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 	<script>
         var urlPost = "@routes.CommentController.validateFormComment()";
     </script>
 	<script src="@routes.Assets.versioned("javascripts/validateForm.js")" type="text/javascript"></script>
+	<script >
+		$(document).ready(function(){
+			var productId = @product.id;
+			$('.fa').on("click", function(){
+				var rating = $(this).attr("data-value")
+				$.ajax({
+					url: @routes.ProductController.productRating(),
+					type: "post",
+					data: "productId=" + productId + "&rating=" + rating
+				}).success(function(response){
+				});
+			});
+		});
+
+	</script>
 }

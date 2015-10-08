@@ -1,12 +1,14 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import views.html.user.userProducts;
 import org.apache.commons.io.FileUtils;
 
 import javax.persistence.*;
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -43,6 +45,8 @@ public class Product extends Model {
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date registration = new Date();
+    @ManyToOne
+    public List<Rating> ratings;
 
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
