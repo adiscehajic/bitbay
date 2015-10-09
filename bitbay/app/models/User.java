@@ -199,16 +199,27 @@ public class User extends Model {
         List<Product> userProducts = Product.findAllProductsByUser(user);
         Double average = 0.0;
         Double ratedProducts = 0.0;
-        for(Product p: userProducts){
-           Double rating =Double.parseDouble(Rating.getAverageRating(p.id));
-            if(rating != 0.0){
-                ratedProducts++;
+
+        if (userProducts != null && userProducts.size() > 0) {
+            for (int i = 0; i < userProducts.size(); i++) {
+                Double rating = Double.parseDouble(Rating.getAverageRating(userProducts.get(i).id));
+                if (rating != 0.0) {
+                    ratedProducts = ratedProducts + 1;
+                }
+                average = average + rating;
             }
-            Logger.info("Average rating is: " + rating + "");
-            average = average + rating;
+
+            if(average != 0) {
+                Double result = average / ratedProducts;
+                DecimalFormat df = new DecimalFormat("#.0");
+
+                return df.format(result);
+            } else {
+                return "0.0";
+            }
+        } else {
+            return "0.0";
         }
-        Double result = average/ratedProducts;
-        DecimalFormat df = new DecimalFormat("#.0");
-        return df.format(result);
+
     }
 }

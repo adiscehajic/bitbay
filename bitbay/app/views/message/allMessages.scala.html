@@ -1,4 +1,5 @@
 @(messages: List[Message])
+@import helpers.SessionHelper
 @import helper._
 
 @user.userMessages {
@@ -11,13 +12,19 @@
             @for(message <- messages) {
                 <tr>
                 @if(message.isRead == false) {
-                    <td width="120px"><a href="@routes.MessageController.replyMessage(message.id)"><img src="@routes.Assets.versioned("images/message.png")" width="70px" height="50px"></a></td>
+                    <td width="80px" style="text-align: center; vertical-align: middle"><a href="@routes.MessageController.replyMessage(message.id)"><img src="@routes.Assets.versioned("images/message.png")" width="40px" height="30px"></a></td>
                 } else {
-                    <td width="120px"><a href="@routes.MessageController.replyMessage(message.id)"><img src="@routes.Assets.versioned("images/read_message.png")" width="70px" height="50px"></a></td>
+                    <td width="80px" style="text-align: center; vertical-align: middle"><a href="@routes.MessageController.replyMessage(message.id)"><img src="@routes.Assets.versioned("images/read_message.png")" width="40px" height="30px"></a></td>
                 }
-                <td style="vertical-align: middle"><a href="@routes.MessageController.replyMessage(message.id)" style="text-decoration: none"><label>@message.title</label><p>@message.message </p></a></td>
-                <td style="vertical-align: middle"><a href="@routes.Users.getUser()"> @message.sender.email</a> </td>
-                <td style="vertical-align: middle"><span id="deleteMessage@message.id" class="glyphicon glyphicon-remove"></span></td>
+                <td style="vertical-align: middle;" class="col-md-7"><div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;  width: 450px">
+                    <a href="@routes.MessageController.replyMessage(message.id)" style="text-decoration: none"><label>@message.title</label><p>@message.message</p></a>
+                </div></td>
+                @if(SessionHelper.currentUser().id == message.receiver.id) {
+                    <td style="vertical-align : middle"><a href="@routes.Users.getUser()"> @message.sender.email</a> </td>
+                } else {
+                    <td style="vertical-align : middle"><a href="@routes.Users.getUser()"> @message.receiver.email</a> </td>
+                }
+                <td style="vertical-align: middle"><span id="deleteMessage@message.id" class="glyphicon glyphicon-remove"><i class="icon-envelope-open"></i></span></td>
                 <script>
                       $(document).ready(function(){
                       $('#deleteMessage@message.id').click(function(){

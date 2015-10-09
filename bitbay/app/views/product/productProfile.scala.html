@@ -2,7 +2,7 @@
 
 @import helper._
 @main("Product") {
-	<div class="container" id="wrapper">
+	<div class="container" id="wrapper" style="padding-right: 30px">
 		<div class="row">
 			<div class="col-md-6">
 				<div class="thumbnail">
@@ -19,13 +19,12 @@
 				</div>
 				@if(Cart.doesContainItem(product.id)) {
 					<div style="margin-left: auto; margin-right: auto; width: 10em">
-						<h3>Rate product</h3>
 						<input class="rating" data-max="5" data-min="1" id="some_id" name="your_awesome_parameter" type="number" data-empty-value="0" data-icon-lib="fa" data-active-icon="fa-star fa-2x" data-inactive-icon="fa-star-o fa-2x"/>
 					</div>
 				}
 			</div>
-			<div class="col-md-5 " id="userInfo">
-				<h2 style="display: inline">@product.name</h2>
+			<div class="col-md-6 " id="userInfo" style="padding-top: 10px; height: 476px">
+				<h2 style="display: inline;">@product.name</h2>
 				<span class="fa-stack fa-2x" style="float: right; margin-top: 10px">
 					<i class="fa fa-star fa-stack-2x"></i>
 					<strong class="fa-stack-1x star-text">@averageRating</strong>
@@ -93,7 +92,7 @@
 		</div>
 		<div class="row" >
 
-			<div class="col-md-5 col-md-offset-6" style="margin-top:20px" id="deliveryWrapper">
+			<div class="col-md-6 col-md-offset-6" style="margin-top:20px" id="deliveryWrapper">
 				<table>
 					<tbody>
 						<tr>

@@ -1,32 +1,29 @@
 @import helpers.SessionHelper
-@(messages: java.util.List[Message])
+@import helpers.CommonHelpers
+@(message: Message)
 @import helper._
 
 @admin.adminIndex {
+    <div class="col-md-3"></div>
+        <div class="col-md-10" style="border-bottom: 1px; background-color: #F8F8F4; border-radius: 5px; border: 1px solid #E0E0D1">
+            <div class="row" style="border-bottom: 1px ridge lightgray; margin-top: 15px">
+                <label style="margin-left: 5%"> From: </label> <label style="color: gray">@message.sender.email</label><br>
+                @if(message.title != "") {
+                    <label style="margin-left: 5%"> Title: </label> <label style="color: gray">@message.title</label><br>
+                } else {
+                    <label style="margin-left: 5%"> Title: </label> <label style="color: gray"> No Subject</label><br>
 
-    <div class="col-md-10" style="border-bottom: 1px; background-color: #F8F8F4; border-radius: 5px; border: 1px solid #E0E0D1">
-        <form action="@helper.CSRF(routes.MessageController.respondMessage())" method="POST">
-            @if(messages.get(0).sender.email != SessionHelper.currentUser().email) {
-                <input name="receiverEmail" value="@messages.get(0).sender.email" hidden>
-            } else {
-                <input name="receiverEmail" value="@messages.get(0).receiver.email" hidden>
-            }
-            @for(message <- messages) {
-                <div class="row" style="border-bottom: 1px solid lightgray">
-                    <div class="col-md-11" style="margin-left:2%; margin-top:2%">
-                        <label> @message.sender.email : @message.title </label>
-                        <p> @message.message </p>
-                    </div>
-                </div>
-            }
-            <div class="row" style="margin-top: 3%">
-                <label style="margin-left: 5%"> Title: </label>
-                <input class="form-control" name="title" style="width: 90%; margin-left: 5%; margin-bottom: 10px;" placeholder="Message title">
-                <label style="margin-left: 5%"> Message: </label>
-                <textarea style="width:90%; height: 200px; border-radius: 5px; background-color: white; resize: none; margin-left: 5%;" name="messageText"></textarea>
-                <button type="submit" class="btn btn-primary" style="margin-left: 5%">Send <span class="glyphicon glyphicon-send"></span></button>
+                }
+                <label style="margin-left: 5%"> Date: </label> <label style="color: gray">@CommonHelpers.getDateAsString(message.date) h</label><br>
             </div>
-        </form>
-    </div>
-
+            <div class="row" style="margin-top: 20px">
+                <p style="font-family: serif; font-size: 17px;  margin-left: 5%; width: 90%; border-top: 1px "> Lorem Ipsum is simply dummy text of
+                    the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+                    unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            </div>
+            @if(message.sender.id != SessionHelper.currentUser().id) {
+                <a href="@routes.AdminController.adminNewMessage(message.sender.email)"><button class="btn btn-primary" type="submit" style="margin-left : 5%; margin-bottom : 10px">
+                    Reply <i class="fa fa-reply"></i></button></a>
+            }
+        </div>
 }
