@@ -4,14 +4,14 @@
 # --- !Ups
 
 create table cart (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   user_id                   integer,
   constraint uq_cart_user_id unique (user_id),
   constraint pk_cart primary key (id))
 ;
 
 create table cart_item (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   product_id                integer,
   quantity                  integer,
   price                     double,
@@ -20,13 +20,13 @@ create table cart_item (
 ;
 
 create table category (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   name                      varchar(255),
   constraint pk_category primary key (id))
 ;
 
 create table comment (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   title                     varchar(255),
   text                      TEXT,
   user_id                   integer,
@@ -36,13 +36,13 @@ create table comment (
 ;
 
 create table country (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   name                      varchar(255),
   constraint pk_country primary key (id))
 ;
 
 create table image (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   public_id                 varchar(255),
   secret_image_url          varchar(255),
   image_url                 varchar(255),
@@ -51,20 +51,20 @@ create table image (
 ;
 
 create table message (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   sender_id                 integer,
   receiver_id               integer,
   title                     varchar(255),
   message                   TEXT,
-  receiver_visible          tinyint(1) default 0,
-  sender_visible            tinyint(1) default 0,
-  is_read                   tinyint(1) default 0,
+  receiver_visible          boolean,
+  sender_visible            boolean,
+  is_read                   boolean,
   date                      datetime,
   constraint pk_message primary key (id))
 ;
 
 create table product (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   user_id                   integer,
   name                      varchar(255),
   description               TEXT,
@@ -79,7 +79,7 @@ create table product (
 ;
 
 create table rating (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   user_id                   integer,
   product_id                integer,
   rate                      integer,
@@ -87,7 +87,7 @@ create table rating (
 ;
 
 create table recommendation (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   user_id                   integer,
   category_id               integer,
   count                     integer,
@@ -95,15 +95,15 @@ create table recommendation (
 ;
 
 create table thumb (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   comment_id                integer,
   user_id                   integer,
-  is_up                     tinyint(1) default 0,
+  is_up                     boolean,
   constraint pk_thumb primary key (id))
 ;
 
 create table user (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   first_name                varchar(255),
   last_name                 varchar(255),
   email                     varchar(255),
@@ -121,7 +121,7 @@ create table user (
 ;
 
 create table user_type (
-  id                        integer auto_increment not null,
+  id                        integer not null,
   name                      varchar(255),
   constraint pk_user_type primary key (id))
 ;
@@ -132,6 +132,32 @@ create table cart_cart_item (
   cart_item_id                   integer not null,
   constraint pk_cart_cart_item primary key (cart_id, cart_item_id))
 ;
+create sequence cart_seq;
+
+create sequence cart_item_seq;
+
+create sequence category_seq;
+
+create sequence comment_seq;
+
+create sequence country_seq;
+
+create sequence image_seq;
+
+create sequence message_seq;
+
+create sequence product_seq;
+
+create sequence rating_seq;
+
+create sequence recommendation_seq;
+
+create sequence thumb_seq;
+
+create sequence user_seq;
+
+create sequence user_type_seq;
+
 alter table cart add constraint fk_cart_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
 create index ix_cart_user_1 on cart (user_id);
 alter table cart_item add constraint fk_cart_item_product_2 foreign key (product_id) references product (id) on delete restrict on update restrict;
@@ -175,35 +201,61 @@ alter table cart_cart_item add constraint fk_cart_cart_item_cart_item_02 foreign
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
+SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table cart;
+drop table if exists cart;
 
-drop table cart_cart_item;
+drop table if exists cart_cart_item;
 
-drop table cart_item;
+drop table if exists cart_item;
 
-drop table category;
+drop table if exists category;
 
-drop table comment;
+drop table if exists comment;
 
-drop table country;
+drop table if exists country;
 
-drop table image;
+drop table if exists image;
 
-drop table message;
+drop table if exists message;
 
-drop table product;
+drop table if exists product;
 
-drop table rating;
+drop table if exists rating;
 
-drop table recommendation;
+drop table if exists recommendation;
 
-drop table thumb;
+drop table if exists thumb;
 
-drop table user;
+drop table if exists user;
 
-drop table user_type;
+drop table if exists user_type;
 
-SET FOREIGN_KEY_CHECKS=1;
+SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists cart_seq;
+
+drop sequence if exists cart_item_seq;
+
+drop sequence if exists category_seq;
+
+drop sequence if exists comment_seq;
+
+drop sequence if exists country_seq;
+
+drop sequence if exists image_seq;
+
+drop sequence if exists message_seq;
+
+drop sequence if exists product_seq;
+
+drop sequence if exists rating_seq;
+
+drop sequence if exists recommendation_seq;
+
+drop sequence if exists thumb_seq;
+
+drop sequence if exists user_seq;
+
+drop sequence if exists user_type_seq;
 

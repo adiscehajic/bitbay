@@ -5,14 +5,13 @@ import org.junit.Test;
 import play.test.WithApplication;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 
 /**
- * Created by Adnan on 18.09.2015..
+ * Created by Senadin on 9.10.2015.
  */
-public class CountryTest extends WithApplication {
+public class RecommendationTest extends WithApplication {
 
     @Before
     public void configureDatabase(){
@@ -20,21 +19,7 @@ public class CountryTest extends WithApplication {
     }
 
     @Test
-    public void newCountryTest(){
-        Country c = new Country();
-        c.name = "BiH";
-        c.save();
-
-    }
-
-    @Test
-    public void findCountry(){
-        Country country = Country.findCountryByName("Sweden");
-        assertNull(country);
-    }
-
-    @Test
-    public void recommendationTest(){
+    public void newRecommendationTest(){
         User u = new User();
         u.firstName = "Enver";
         Category c = new Category("Water");

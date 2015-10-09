@@ -32,6 +32,7 @@ public class ProductTest extends WithApplication {
         p.save();
     }
 
+
     @Test
     public void testLoadingProduct() {
 
@@ -87,6 +88,12 @@ public class ProductTest extends WithApplication {
         List<Product> founded = Product.findAllProductsByCategory(c);
 
         assertNotNull(founded);
+    }
+
+    @Test
+    public void testFindNonExistingProduct(){
+        Product p = Product.getProductById(123);
+        assertNull(p);
     }
 
 
