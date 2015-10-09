@@ -40,7 +40,7 @@
                             </a></td>
                         }
                             <td class="cartData" style="font-size : 17px"><a href="@routes.ProductController.getProduct(cartItem.product.id)"> @cartItem.product.name </a></td>
-                            <td class="cartData" style="align: center;"><input type="number" id="replyNumber" data-bind="value:replyNumber" onfocusout="quantityValidator()" min="1" max="@cartItem.product.quantity" value="@cartItem.quantity" name="quantity"><br><button class="btn btn-default" type="submit">Update</button></td>
+                            <td class="cartData" style="align: center;"><input type="number" style="display:inline" id="replyNumber" data-bind="value:replyNumber" onfocusout="quantityValidator()" min="1" max="@cartItem.product.quantity" value="@cartItem.quantity" name="quantity"><br><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-floppy-save"></span></button></td>
                             <td class="cartData"> @cartItem.price KM</td>
                             <td class="cartData"><a href="#" id="delete-cart-item"><span class="glyphicon glyphicon-remove" style="font-size : 20 px"></span></a></td>
                         </tr>
