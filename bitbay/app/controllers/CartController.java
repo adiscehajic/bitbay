@@ -112,7 +112,7 @@ public class CartController extends Controller {
         // Declaring cart item.
         CartItem cartItem = CartItem.getCartItemById(itemId);
 
-        User user = User.getUserByEmail(session().get("email"));
+        User user = SessionHelper.currentUser();
         Cart cart = Cart.findCartByUser(user);
         // Removing foung cart item from the list of cart items and updating the cart.
         cart.cartItems.remove(cartItem);
@@ -143,7 +143,9 @@ public class CartController extends Controller {
         cartItem.quantity = Integer.parseInt(quantity);
         cartItem.price = cartItem.product.price * cartItem.quantity;
         cartItem.save();
-
+        Product product = Product.getProductById(cartItem.product.id);
+        product.quantity = product.quantity - cartItem.quantity;
+        product.update();
         return redirect(routes.CartController.getCart());
     }
 

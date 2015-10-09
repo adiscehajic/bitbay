@@ -91,9 +91,7 @@ public class Rating extends Model {
             return df.format(average);
             //return average + "";
         } else {
-            return "1.0";
+            return "0";
         }
-
-
     }
 }

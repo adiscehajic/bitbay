@@ -14,6 +14,7 @@ libraryDependencies ++= Seq(
   "org.apache.directory.studio" % "org.apache.commons.io" % "2.4",
   "org.mindrot" % "jbcrypt" % "0.3m",
   "com.cloudinary" % "cloudinary" % "1.0.14",
+  "org.apache.commons" % "commons-email" % "1.3.3",
   filters
 )
 
