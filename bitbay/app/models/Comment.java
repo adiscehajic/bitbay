@@ -73,6 +73,10 @@ public class Comment extends Model{
         return comment;
     }
 
+    public static List<Comment> getCommentsByUser(User user) {
+        return finder.where().eq("user", user).findList();
+    }
+
     public static Boolean hasUserCommented(Product product) {
         return Comment.finder.where().eq("user", SessionHelper.currentUser()).where().eq("product", product).findRowCount() == 0;
     }

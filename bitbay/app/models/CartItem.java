@@ -13,20 +13,22 @@ public class CartItem extends Model {
 
     @Id
     public Integer id;
-
-    @OneToOne
+    @ManyToOne
+    public User user;
+    @ManyToOne
     public Product product;
-
+    @ManyToOne
+    public Cart cart;
     public Integer quantity;
-
     public Double price;
-
 
     public CartItem(){
     }
 
-    public CartItem(Product product){
+    public CartItem(Product product, User user, Cart cart){
         this.product = product;
+        this.user = user;
+        this.cart = cart;
         this.quantity = 1;
         this.price = product.price*quantity;
     }
@@ -58,8 +60,8 @@ public class CartItem extends Model {
      * @param product
      * @return
      */
-    public static CartItem getCartItemByProduct(Product product) {
-        CartItem cartItem = CartItem.finder.where().eq("product", product).findUnique();
+    public static CartItem getCartItemByProductAndUser(Product product, User user) {
+        CartItem cartItem = CartItem.finder.where().eq("product", product).where().eq("user", user).findUnique();
         return cartItem;
     }
 

@@ -36,7 +36,7 @@ public class CategoryTest extends WithApplication{
     }
 
     @Test
-    public void newtCategoryTest() {
+    public void newCategoryTest() {
     Category c = new Category("c1");
         c.save();
         assertNotNull(c);

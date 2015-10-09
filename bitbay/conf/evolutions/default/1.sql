@@ -12,10 +12,11 @@ create table cart (
 
 create table cart_item (
   id                        integer auto_increment not null,
+  user_id                   integer,
   product_id                integer,
+  cart_id                   integer,
   quantity                  integer,
   price                     double,
-  constraint uq_cart_item_product_id unique (product_id),
   constraint pk_cart_item primary key (id))
 ;
 
@@ -126,60 +127,50 @@ create table user_type (
   constraint pk_user_type primary key (id))
 ;
 
-
-create table cart_cart_item (
-  cart_id                        integer not null,
-  cart_item_id                   integer not null,
-  constraint pk_cart_cart_item primary key (cart_id, cart_item_id))
-;
 alter table cart add constraint fk_cart_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
 create index ix_cart_user_1 on cart (user_id);
-alter table cart_item add constraint fk_cart_item_product_2 foreign key (product_id) references product (id) on delete restrict on update restrict;
-create index ix_cart_item_product_2 on cart_item (product_id);
-alter table comment add constraint fk_comment_user_3 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_comment_user_3 on comment (user_id);
-alter table comment add constraint fk_comment_product_4 foreign key (product_id) references product (id) on delete restrict on update restrict;
-create index ix_comment_product_4 on comment (product_id);
-alter table image add constraint fk_image_product_5 foreign key (product_id) references product (id) on delete restrict on update restrict;
-create index ix_image_product_5 on image (product_id);
-alter table message add constraint fk_message_sender_6 foreign key (sender_id) references user (id) on delete restrict on update restrict;
-create index ix_message_sender_6 on message (sender_id);
-alter table message add constraint fk_message_receiver_7 foreign key (receiver_id) references user (id) on delete restrict on update restrict;
-create index ix_message_receiver_7 on message (receiver_id);
-alter table product add constraint fk_product_user_8 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_product_user_8 on product (user_id);
-alter table product add constraint fk_product_category_9 foreign key (category_id) references category (id) on delete restrict on update restrict;
-create index ix_product_category_9 on product (category_id);
-alter table rating add constraint fk_rating_user_10 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_rating_user_10 on rating (user_id);
-alter table rating add constraint fk_rating_product_11 foreign key (product_id) references product (id) on delete restrict on update restrict;
-create index ix_rating_product_11 on rating (product_id);
-alter table recommendation add constraint fk_recommendation_user_12 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_recommendation_user_12 on recommendation (user_id);
-alter table recommendation add constraint fk_recommendation_category_13 foreign key (category_id) references category (id) on delete restrict on update restrict;
-create index ix_recommendation_category_13 on recommendation (category_id);
-alter table thumb add constraint fk_thumb_comment_14 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
-create index ix_thumb_comment_14 on thumb (comment_id);
-alter table thumb add constraint fk_thumb_user_15 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_thumb_user_15 on thumb (user_id);
-alter table user add constraint fk_user_userType_16 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
-create index ix_user_userType_16 on user (user_type_id);
-alter table user add constraint fk_user_country_17 foreign key (country_id) references country (id) on delete restrict on update restrict;
-create index ix_user_country_17 on user (country_id);
-
-
-
-alter table cart_cart_item add constraint fk_cart_cart_item_cart_01 foreign key (cart_id) references cart (id) on delete restrict on update restrict;
-
-alter table cart_cart_item add constraint fk_cart_cart_item_cart_item_02 foreign key (cart_item_id) references cart_item (id) on delete restrict on update restrict;
+alter table cart_item add constraint fk_cart_item_user_2 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_cart_item_user_2 on cart_item (user_id);
+alter table cart_item add constraint fk_cart_item_product_3 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_cart_item_product_3 on cart_item (product_id);
+alter table cart_item add constraint fk_cart_item_cart_4 foreign key (cart_id) references cart (id) on delete restrict on update restrict;
+create index ix_cart_item_cart_4 on cart_item (cart_id);
+alter table comment add constraint fk_comment_user_5 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_comment_user_5 on comment (user_id);
+alter table comment add constraint fk_comment_product_6 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_comment_product_6 on comment (product_id);
+alter table image add constraint fk_image_product_7 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_image_product_7 on image (product_id);
+alter table message add constraint fk_message_sender_8 foreign key (sender_id) references user (id) on delete restrict on update restrict;
+create index ix_message_sender_8 on message (sender_id);
+alter table message add constraint fk_message_receiver_9 foreign key (receiver_id) references user (id) on delete restrict on update restrict;
+create index ix_message_receiver_9 on message (receiver_id);
+alter table product add constraint fk_product_user_10 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_product_user_10 on product (user_id);
+alter table product add constraint fk_product_category_11 foreign key (category_id) references category (id) on delete restrict on update restrict;
+create index ix_product_category_11 on product (category_id);
+alter table rating add constraint fk_rating_user_12 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_rating_user_12 on rating (user_id);
+alter table rating add constraint fk_rating_product_13 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_rating_product_13 on rating (product_id);
+alter table recommendation add constraint fk_recommendation_user_14 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_recommendation_user_14 on recommendation (user_id);
+alter table recommendation add constraint fk_recommendation_category_15 foreign key (category_id) references category (id) on delete restrict on update restrict;
+create index ix_recommendation_category_15 on recommendation (category_id);
+alter table thumb add constraint fk_thumb_comment_16 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
+create index ix_thumb_comment_16 on thumb (comment_id);
+alter table thumb add constraint fk_thumb_user_17 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_thumb_user_17 on thumb (user_id);
+alter table user add constraint fk_user_userType_18 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
+create index ix_user_userType_18 on user (user_type_id);
+alter table user add constraint fk_user_country_19 foreign key (country_id) references country (id) on delete restrict on update restrict;
+create index ix_user_country_19 on user (country_id);
 
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
 
 drop table cart;
-
-drop table cart_cart_item;
 
 drop table cart_item;
 
