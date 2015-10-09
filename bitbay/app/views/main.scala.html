@@ -29,7 +29,9 @@
         <script src='https://www.google.com/recaptcha/api.js'></script>
 
     </head>
-    <body onload="validateProduct()">
+    <div class="all">
+    <body onload="validateProduct()" style="">
+
         <nav class="navbar navbar-default">
             <div class="container">
                     <!-- Brand and toggle get grouped for better mobile display -->
@@ -140,12 +142,12 @@
         <div id="top" class="elevator"></div>
         <div id="bottom" class="elevator"></div>
 
-
-
         </body>
+        <div class="push"></div>
+    </div>
         <!-- FOOTER ALWAYS FIXED AT BOTTOM OF PAGE -->
-    <footer class="panel-footer navbar-default">
-        <div class="text-center" style="padding-top: 0px">
+    <footer class="panel-footer navbar-default" style="margin-top: 100px">
+        <div class="text-center" style="padding-top: 0px;">
             <a href="#" style="font-size: 14px; color:grey" class="btn btn-link">Terms of use</a>
             <a href="#" style="font-size: 14px; color:grey" class="btn btn-link">About</a>
             <a href="@routes.ApplicationController.contactUs()" style="font-size: 14px; color:grey" class="btn btn-link">Contact Us</a>

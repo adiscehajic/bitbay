@@ -166,6 +166,8 @@ create index ix_user_userType_18 on user (user_type_id);
 alter table user add constraint fk_user_country_19 foreign key (country_id) references country (id) on delete restrict on update restrict;
 create index ix_user_country_19 on user (country_id);
 
+
+
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
