@@ -28,17 +28,52 @@
                     @for(cartItem <- cartItems) {
                         <form method="POST" action="@helper.CSRF(routes.CartController.updateItemQuantity(cartItem.id))" name="myForm">
                         <tr>
+                        @if(cartItem.product.images.size() > 0) {
                             <td class="cartData" width="150px"><a href="@routes.ProductController.getProduct(cartItem.product.id)">
-                                @for(image <- cartItem.product.images) {
-                                    <img src="@image.getSize(150,150)"/>
-                                }
+                            @for(image <- cartItem.product.images) {
+                                <img src="@image.getSize(150, 150)"/>
+                            }
                             </a></td>
+                        }else {
+                            <td class="cartData" width="150px"><a href="@routes.ProductController.getProduct(cartItem.product.id)">
+                                <img src="http://placehold.it/140x120"/>
+                            </a></td>
+                        }
                             <td class="cartData" style="font-size : 17px"><a href="@routes.ProductController.getProduct(cartItem.product.id)"> @cartItem.product.name </a></td>
-                            <td class="cartData"><input type="number" id="replyNumber" data-bind="value:replyNumber" onfocusout="quantityValidator()" min="1" max="@cartItem.product.quantity" value="@cartItem.quantity" name="quantity"><br><button type="submit">Update</button></td>
+                            <td class="cartData" style="align: center;"><input type="number" id="replyNumber" data-bind="value:replyNumber" onfocusout="quantityValidator()" min="1" max="@cartItem.product.quantity" value="@cartItem.quantity" name="quantity"><br><button class="btn btn-default" type="submit">Update</button></td>
                             <td class="cartData"> @cartItem.price KM</td>
-                            <td class="cartData"><a href="@routes.CartController.removeFromCart(cartItem.id)"><span class="glyphicon glyphicon-remove" style="font-size : 20 px"></span></a></td>
+                            <td class="cartData"><a href="#" id="delete-cart-item"><span class="glyphicon glyphicon-remove" style="font-size : 20 px"></span></a></td>
                         </tr>
                         </form>
+                        <script >
+                          $(document).ready(function(){
+                          $('#delete-cart-item').click(function(){
+                             $.confirm({
+                                title: 'You are about to delete cart item',
+                                content: 'Are you really sure?',
+                                theme: 'supervan',
+                                confirmButtonClass: 'btn-danger',
+                                cancelButtonClass: 'btn-info',
+                                 confirmButton: 'Delete',
+                                 cancelButton: 'Cancel',
+                                 backgroundDismiss: false,
+                                   confirm: function(){
+                                    $.ajax({
+                                       url: '@routes.CartController.removeFromCart(cartItem.id)',
+                                       method: 'DELETE',
+                                        }).success(function(){
+                                         window.location.replace("@routes.CartController.getCart()");
+                                          }).error(function(response){
+                                          alert(response.responseText);
+                                           });
+                                           },
+                                          cancel: function(){
+                                          alert('Canceled!')
+                                        }
+                                   });
+                                 })
+                             })
+                     </script>
                     }
                 </tbody>
             </table>

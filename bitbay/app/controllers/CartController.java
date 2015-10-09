@@ -105,12 +105,12 @@ public class CartController extends Controller {
     /**
      * Removes the cart item from the cart.
      *
-     * @param itemId - Id of the cart item that user wants to delete.
+     * @param id - Id of the cart item that user wants to delete.
      * @return Page that contains all cart items that current user has added into the cart.
      */
-    public Result removeFromCart(Integer itemId){
+    public Result removeFromCart(Integer id){
         // Declaring cart item.
-        CartItem cartItem = CartItem.getCartItemById(itemId);
+        CartItem cartItem = CartItem.getCartItemById(id);
 
         User user = SessionHelper.currentUser();
         Cart cart = Cart.findCartByUser(user);
