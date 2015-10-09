@@ -6,9 +6,16 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="thumbnail">
-				@for(image <- product.images) {
-					<img class="img-responsive" src="@image.getSize(576,486)" >
+
+				@if(product.images.size() > 0) {
+					@for(image <- product.images) {
+						<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+							<img class="img-responsive" src="@image.getSize(576,486)" ></a>
 					}
+				}else{
+					<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+						<img class="img-responsive" src="http://placehold.it/576x486" ></a>
+				}
 				</div>
 				@if(Cart.doesContainItem(product.id)) {
 					<div style="margin-left: auto; margin-right: auto; width: 10em">
@@ -107,9 +114,9 @@
 
 
 		@if(recommendedProducts != null && recommendedProducts.size() > 3) {
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					Recommended
+			<div class="panel panel-primary" style="background-color: #f5f5f5; border-color: #f5f5f5;">
+				<div class="panel-heading" id="panel-name">
+					Other products you may be interested in
 				</div>
 			</div>
 
@@ -117,22 +124,22 @@
 			<div class="row">
 			@for(product <- recommendedProducts) {
 				<div class="col-sm-6 col-md-3 col-lg-3">
-					<div class="thumbnail" style="height:165px;" id="ellipsis@product.id">
-						<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
-						@for(image <- product.images) {
-							<img class="img-responsive" src="@image.getThumbnail(200,180)" ></a>
+					<div class="thumbnail" style="height:230px;" id="ellipsis@product.id">
+						@if(product.images.size() > 0) {
+							@for(image <- product.images) {
+								<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+									<img class="img-responsive" src="@image.getThumbnail(130, 130)" ></a>
+							}
+						}else{
+							<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+								<img class="img-responsive" src="http://placehold.it/130x130" ></a>
 						}
-						<div class="caption">
-							<h3 style="margin-top: 5px"><a href="@routes.ProductController.getProduct(product.id)" >@product.name</a></h3>
-							<p>@product.description</p>
-						</div>
+					<div class="caption" style="word-wrap: break-word;">
+						<h5 style="margin-top: 5px"><a href="@routes.ProductController.getProduct(product.id)" >@product.name</a></h5>
+						<h4>@product.price KM</h4>
+					</div>
 					</div>
 				</div>
-				<script >
-        $(document).ready(function() {
-	    $("#ellipsis@product.id").dotdotdot();
-        });
-    </script>
 			}
 			</div>
 		}

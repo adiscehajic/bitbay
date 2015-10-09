@@ -38,15 +38,17 @@ public class Product extends Model {
     public Integer quantity;
     @Constraints.Required(message = "Product selling type is required.")
     public String sellingType;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     public List<Image> images;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Comment> comments;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    public List<CartItem> cartItems;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    public List<Rating> ratings;
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date registration = new Date();
-    @ManyToOne
-    public List<Rating> ratings;
 
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")

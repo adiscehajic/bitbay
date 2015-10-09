@@ -34,17 +34,17 @@ public class CartController extends Controller {
      */
     @RequireCSRFCheck
     public Result addToCart(Integer productId){
-        // Declaring product and cart item.
-        Product product = Product.getProductById(productId);
-        CartItem cartItem = CartItem.getCartItemByProduct(product);
-        // Checking if the cart item is already in the cart and if not creating new cart item.
-        if (cartItem == null) {
-            cartItem = new CartItem(product);
-        }
         // Finding current user.
         User user = SessionHelper.currentUser();
         // Finding the cart of the current user.
         Cart cart = Cart.findCartByUser(user);
+        // Declaring product and cart item.
+        Product product = Product.getProductById(productId);
+        CartItem cartItem = CartItem.getCartItemByProductAndUser(product, user);
+        // Checking if the cart item is already in the cart and if not creating new cart item.
+        if (cartItem == null) {
+            cartItem = new CartItem(product, user, cart);
+        }
         // Checking if the cart of current user exists and if there is cart items in the cart.
         if(cart != null && cart.cartItems.size() > 0) {
             // If the user clicks again on the button ADD TO CART increasing amount of product in the cart for one.
@@ -72,13 +72,14 @@ public class CartController extends Controller {
         } else {
             // If the current user does not have cart, saving the cart item into database, creating new cart of current
             // user and adding the cart item into the cart.
-            cartItem.save();
             cart = new Cart();
             cart.user = user;
             cart.cartItems = new ArrayList<>();
             cart.cartItems.add(cartItem);
             // Saving the cart into database.
             cart.save();
+            cartItem.cart = cart;
+            cartItem.save();
         }
         return redirect(routes.CartController.getCart());
     }
@@ -115,7 +116,7 @@ public class CartController extends Controller {
         Cart cart = Cart.findCartByUser(user);
         // Removing foung cart item from the list of cart items and updating the cart.
         cart.cartItems.remove(cartItem);
-        cart.update();
+        //cart.update();
         // Deleting the cart item from the database.
         cartItem.delete();
         return ok(userCart.render(cart.cartItems, user));
@@ -128,6 +129,7 @@ public class CartController extends Controller {
      * @param id - Id of the cart item which amount is changed.
      * @return Page that contains all cart items that current user has added into the cart.
      */
+    @RequireCSRFCheck
     public Result updateItemQuantity(Integer id) {
         // Declaring cart item form.
         Form<CartItem> boundForm = itemForm.bindFromRequest();

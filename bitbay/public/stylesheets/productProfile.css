@@ -54,3 +54,9 @@ td {
 }
 
 .star-text { font-size: 18px; }
+
+#panel-name {
+	background-color: #f5f5f5;
+	border-color: #f5f5f5;
+	color: #33A3DD;
+}

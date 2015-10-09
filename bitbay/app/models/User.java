@@ -69,10 +69,29 @@ public class User extends Model {
     @Constraints.MaxLength(255)
     public String address;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Product> products;
-    @OneToMany(mappedBy = "sender")
-    private List<Message> messages;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<Product> products;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<CartItem> cartItems;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<Comment> comments;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<Thumb> thumbs;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<Recommendation> recommendations;
+
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    public List<Message> messages;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<Rating> ratings;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    public Cart cart;
 
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")

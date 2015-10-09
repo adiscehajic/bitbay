@@ -1,4 +1,5 @@
 @import helpers.SessionHelper
+@import play.Logger
 @(implicit products: java.util.List[Product], recommendedProducts: java.util.List[Product])
 
 @main("bitbay Home") {
@@ -25,12 +26,17 @@
     <div class="row">
         @for(product <- recommendedProducts) {
             <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="thumbnail" style="height:330px;" id="ellipsis@product.id">
-                    <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+                <div class="thumbnail" style="height:450px;" id="ellipsis@product.id">
+                    @if(product.images.size() > 0) {
                     @for(image <- product.images) {
-                        <img class="img-responsive" src="@image.getThumbnail(400,360)" ></a>
+                            <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+                            <img class="img-responsive" src="@image.getThumbnail(400, 360)" ></a>
                     }
-                    <div class="caption">
+                        }else{
+                            <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+                                <img class="img-responsive" src="http://placehold.it/400x360" ></a>
+                        }
+                    <div class="caption" style="word-wrap: break-word;">
                         <h3 style="margin-top: 5px"><a href="@routes.ProductController.getProduct(product.id)" >@product.name</a></h3>
                         <p>@product.description</p>
                     </div>
@@ -38,7 +44,9 @@
             </div>
             <script >
         $(document).ready(function() {
-	    $("#ellipsis@product.id").dotdotdot();
+        var id = @product.id;
+        console.log(id);
+	    $("#ellipsis" + id).dotdotdot();
         });
     </script>
         }
@@ -56,24 +64,28 @@
     <div class="row">
     @for(product <- products) {
         <div class="col-sm-6 col-md-3 col-lg-3">
-            <div class="thumbnail" style="height:330px;" id="ellipsis@product.id">
-                <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+            <div class="thumbnail" style="height:450px;" id="ellipsis@product.id">
+                @if(product.images.size() > 0) {
                     @for(image <- product.images) {
-                        <img class="img-responsive" src="@image.getThumbnail(400,360)" ></a>
+                        <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+                            <img class="img-responsive" src="@image.getThumbnail(400, 360)" ></a>
+                    }
+                }else{
+                    <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+                        <img class="img-responsive" src="http://placehold.it/400x360" ></a>
                 }
-                <div class="caption">
-                    <h3 style="margin-top: 5px"><a href="@routes.ProductController.getProduct(product.id)" >@product.name</a></h3>
-                    <p>@product.description</p>
-                </div>
+            <div class="caption" style="word-wrap: break-word; height: 130px;">
+                <h3 style="margin-top: 5px"><a href="@routes.ProductController.getProduct(product.id)" >@product.name</a></h3>
+                <p >@product.description</p>
+            </div>
             </div>
         </div>
         <script >
         $(document).ready(function() {
-	    $("#ellipsis@product.id").dotdotdot();
+	        var id = @product.id;
+	        $("#ellipsis" + id).dotdotdot();
         });
     </script>
     }
     </div>
-
-
 }

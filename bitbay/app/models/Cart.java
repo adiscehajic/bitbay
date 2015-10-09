@@ -22,7 +22,7 @@ public class Cart extends Model{
     @OneToOne
     public User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     public List<CartItem> cartItems;
 
     private static Finder<String, Cart> finder = new Finder<String, Cart>(Cart.class);
@@ -56,7 +56,7 @@ public class Cart extends Model{
         User user = SessionHelper.currentUser();
         Cart cart = Cart.findCartByUser(user);
 
-        if (user.userType.id == UserType.BUYER)
+        if (user != null && user.userType.id == UserType.BUYER)
             try {
                 List<CartItem> items = cart.cartItems;
 
