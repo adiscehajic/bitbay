@@ -15,9 +15,9 @@
                     <td style="vertical-align: middle"><a href="@routes.AdminController.adminViewMessage(message.id)"><label>@message.title</label></a></td>
                     <td style="vertical-align: middle"><a href="@routes.AdminController.adminViewMessage(message.id)">@message.message</a></td>
                     @if(SessionHelper.currentUser().id != message.sender.id) {
-                        <td style="vertical-align: middle"><a href="@routes.AdminController.adminViewMessage(message.id)"> @message.sender </a></td>
+                        <td style="vertical-align: middle"><a href="@routes.AdminController.adminViewMessage(message.id)"> @message.sender.email </a></td>
                     } else {
-                        <td style="vertical-align: middle"><a href="@routes.AdminController.adminViewMessage(message.id)"> @message.receiver </a></td>
+                        <td style="vertical-align: middle"><a href="@routes.AdminController.adminViewMessage(message.id)"> @message.receiver.email </a></td>
                     }
                    <td style="vertical-align: middle"><span id="deleteMessage@message.id" class="glyphicon glyphicon-remove"></span></td>
                    <script>

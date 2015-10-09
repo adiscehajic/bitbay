@@ -85,12 +85,12 @@ public class MessageController extends Controller {
         Message msg = new Message(sender,receiver, title, message);
         Ebean.save(msg);
 
-        List<Message> messages = Message.getConversation(msg.id);
+        List<Message> messages = Message.getReceivedMessages();
 
         if(currentUser.userType.id == UserType.ADMIN) {
-            return ok(adminViewMessage.render(messages));
+            return ok(adminAllMessages.render(messages));
         } else {
-            return ok(replyMessage.render(messages));
+            return ok(allMessages.render(messages));
         }
     }
     @Security.Authenticated(CurrentBuyerSeller.class)
@@ -148,18 +148,13 @@ public class MessageController extends Controller {
 
     @Security.Authenticated(CurrentBuyerSeller.class)
     public Result replyMessage(Integer id) {
-        List<Message> conv = Message.getConversation(id);
         User user = SessionHelper.currentUser();
 
-        for(int i = 0; i < conv.size(); i++) {
-            if(conv.get(i).receiver.id == user.id) {
-                conv.get(i).isRead = true;
-                conv.get(i).update();
-            }
-        }
+        Message message = Message.getMessageById(id);
+        message.isRead = true;
+        message.update();
 
-        List<Message> messages = Message.getConversation(id);
-        return ok(replyMessage.render(messages));
+        return ok(replyMessage.render(message));
     }
 
     /**

@@ -56,7 +56,7 @@ public class Cart extends Model{
         User user = SessionHelper.currentUser();
         Cart cart = Cart.findCartByUser(user);
 
-        if (user.userType.id == UserType.BUYER)
+        if (user != null && user.userType.id == UserType.BUYER)
             try {
                 List<CartItem> items = cart.cartItems;
 

@@ -17,11 +17,10 @@
                             <div class="col-md-3 col-lg-3 "> <img alt="User Pic" src="https://placeimg.com/300/300/people" class="img-rounded img-responsive">
                               <div>
                                @if(user.userType.id == 3) {
-                                   <span  class="fa-stack fa-2x" style="float : right ; margin-top : 10 px">
+                                   <span  class="fa-stack fa-2x" style="margin-left: auto; margin-right: auto; width: 9em; margin-top: 10px" title="Users rating">
                                        <i class="fa fa-star fa-stack-2x"></i>
                                        <strong class="fa-stack-1x star-text">@User.getAverageUserRating(user)</strong>
                                    </span>
-                                   <h3>Average rating of sold products:</h3>
                                }
                                  </div>
                             </div>
