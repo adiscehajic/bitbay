@@ -60,10 +60,11 @@ public class EmailController  extends Controller{
                 email.setSubject(subject);
                 email.setMsg("Name: " + username + "\n" + "E-mail address: " + mail + "\n\n" + message);
                 email.send();
-            } catch (EmailException e) {
-                e.printStackTrace();
-            }
 
+            } catch (EmailException e) {
+                Logger.info("Error");e.printStackTrace();
+                return redirect(routes.EmailController.sendEmail());
+            }
             Logger.info("Message successfully sent");
             flash("success", "Message sent");
             return redirect(routes.ApplicationController.index());

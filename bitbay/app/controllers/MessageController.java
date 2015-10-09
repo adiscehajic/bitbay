@@ -2,6 +2,7 @@ package controllers;
 
 import com.avaje.ebean.Ebean;
 import helpers.CurrentBuyerSeller;
+import helpers.CurrentUser;
 import helpers.SessionHelper;
 import models.Message;
 import models.User;
@@ -99,6 +100,7 @@ public class MessageController extends Controller {
         return ok(allMessages.render(recievedMessages));
     }
 
+    @Security.Authenticated(CurrentUser.class)
     public Result getSentMessages(){
         List<Message> sentMesages = Message.getSentMessages();
         return ok(allMessages.render(sentMesages));
