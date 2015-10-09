@@ -23,7 +23,7 @@
 					</div>
 				}
 			</div>
-			<div class="col-md-6 " id="userInfo" style="padding-top: 10px; height: 476px">
+			<div class="col-md-6 " id="userInfo" style="padding-top: 10px; height: 470px">
 				<h2 style="display: inline;">@product.name</h2>
 				<span class="fa-stack fa-2x" style="float: right; margin-top: 10px">
 					<i class="fa fa-star fa-stack-2x"></i>
@@ -152,7 +152,7 @@
 				</ul>
 				<div class="tab-content">
 					<div id="about" class="tab-pane fade in active">
-						<br><p>@product.description</p>
+						<br><p style="min-height: 100px">@product.description</p>
 					</div>
 					<div id="menu2" class="tab-pane fade">
 						@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2 && Comment.hasUserCommented(product)) {

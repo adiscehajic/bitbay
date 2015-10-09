@@ -1,22 +1,15 @@
-html{
-    position: relative;
+
+html, body {
+    height: 100%;
+}
+.all {
     min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
 }
-
-body{
-    margin: 0 0 100px;
-    /* bottom = footer height */
-    padding-bottom: 70px;
-}
-
-footer{
-    padding-top: 30px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 80px;
-    width: 100%;
-    overflow:hidden;
+.footer, .push {
+    height: 142px;
 }
 
 #notification {
