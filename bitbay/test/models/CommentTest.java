@@ -4,8 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import play.test.WithApplication;
 
-import java.util.List;
-
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 
@@ -26,6 +24,7 @@ public class CommentTest extends WithApplication {
        Comment c = new Comment("newComment","Comment text", u, p);
        c.save();
    }
+
 
     @Test
     public void findCommentByIdTest(){

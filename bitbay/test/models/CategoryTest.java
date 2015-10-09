@@ -1,29 +1,13 @@
 package models;
 
-import java.util.*;
+import org.junit.Before;
+import org.junit.Test;
+import play.test.WithApplication;
 
-import controllers.CategoryController;
-import com.avaje.ebean.Ebean;
-import com.fasterxml.jackson.databind.JsonNode;
-import models.Category;
-import models.User;
-import org.junit.*;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import play.Logger;
-import play.Play;
-import play.mvc.*;
-import play.test.*;
-import play.data.DynamicForm;
-import play.data.validation.ValidationError;
-import play.data.validation.Constraints.RequiredValidator;
-import play.i18n.Lang;
-import play.libs.F;
-import play.libs.F.*;
-import play.twirl.api.Content;
-
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static play.test.Helpers.*;
-import static org.junit.Assert.*;
+import static play.test.Helpers.fakeApplication;
+import static play.test.Helpers.inMemoryDatabase;
 
 /**
  * Created by adnan.lapendic on 15.09.2015..
@@ -55,14 +39,27 @@ public class CategoryTest extends WithApplication{
         assertNotNull(c1);
     }
 
-/*
     @Test
-    public void deleteCategoryTest(){
-        Category c = new Category("Moto");
-       c.save();
+    public void findNonExistingCategoryTest(){
+        Category c = Category.getCategoryById(149);
+        assertNull(c);
 
-       c.delete();
-       assertNull(c);
     }
-    */
+
+
+    @Test
+    public void findCountry(){
+        Country country = Country.findCountryByName("Sweden");
+        assertNull(country);
+    }
+
+    @Test
+    public void deleteCategory(){
+        Category category = new Category("Water");
+        category.save();
+        Category.getCategoryById(12);
+        assertNotNull(category);
+        category.delete();
+    }
+
 }
