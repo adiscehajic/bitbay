@@ -4,7 +4,7 @@
 $(document).ready(function(){
     $("#submit-button").prop("disabled", true);
 
-    $('.form-control').blur(function(){
+    $('.form-control').on("keyup", function(){
         $field = $(this);
         $('form [data-error-for="'+$field.attr("name")+'"]').html("");
 

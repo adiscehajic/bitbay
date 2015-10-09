@@ -113,15 +113,12 @@
 			</div>
 		</div>
 
-
 		@if(recommendedProducts != null && recommendedProducts.size() > 3) {
 			<div class="panel panel-primary" style="background-color: #f5f5f5; border-color: #f5f5f5;">
 				<div class="panel-heading" id="panel-name">
 					Other products you may be interested in
 				</div>
 			</div>
-
-
 			<div class="row">
 			@for(product <- recommendedProducts) {
 				<div class="col-sm-6 col-md-3 col-lg-3">
@@ -135,7 +132,11 @@
 							<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
 								<img class="img-responsive" src="http://placehold.it/130x130" ></a>
 						}
-					<div class="caption" style="word-wrap: break-word;">
+					<div class="caption">
+						<span class="fa-stack fa-2x" style="float: right; margin-top: 10px">
+							<i class="fa fa-star fa-stack-2x"></i>
+							<strong class="fa-stack-1x star-text">@Rating.getAverageRating(product.id)</strong>
+						</span>
 						<h5 style="margin-top: 5px"><a href="@routes.ProductController.getProduct(product.id)" >@product.name</a></h5>
 						<h4>@product.price KM</h4>
 					</div>
