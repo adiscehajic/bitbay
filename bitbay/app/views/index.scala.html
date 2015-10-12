@@ -23,17 +23,16 @@
             <div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="thumbnail" style="height:450px;" id="ellipsis@product.id">
                     @if(product.images.size() > 0) {
-                    @for(image <- product.images) {
                             <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
-                            <img class="img-responsive" src="@image.getThumbnail(400, 360)" ></a>
-                    }
+                            <img class="img-responsive" src="@product.images.get(0).getThumbnail(400, 360)" ></a>
+
                         }else{
                             <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
                                 <img class="img-responsive" src="http://placehold.it/400x360" ></a>
                         }
                 <div class="caption">
                     <h3 style="margin-top: 5px"><a href="@routes.ProductController.getProduct(product.id)" >@product.name</a></h3>
-                    <span class="fa-stack fa-2x" style="float: right; margin-top: 10px">
+                    <span class="fa-stack fa-2x" style="float: right; margin-top: 10px; position: absolute; bottom: 20px; right: 20px;">
                         <i class="fa fa-star fa-stack-2x"></i>
                         <strong class="fa-stack-1x star-text">@Rating.getAverageRating(product.id)</strong>
                     </span>
@@ -61,17 +60,15 @@
         <div class="col-sm-6 col-md-3 col-lg-3">
             <div class="thumbnail" style="height:450px;" id="ellipsis@product.id">
                 @if(product.images.size() > 0) {
-                    @for(image <- product.images) {
                         <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
-                            <img class="img-responsive" src="@image.getThumbnail(400, 360)" ></a>
-                    }
+                            <img class="img-responsive" src="@product.images.get(0).getThumbnail(400, 360)" ></a>
                 }else{
                     <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
                         <img class="img-responsive" src="http://placehold.it/400x360" ></a>
                 }
                 <div class="caption">
                     <h3 style="margin-top: 5px"><a href="@routes.ProductController.getProduct(product.id)" >@product.name</a></h3>
-                    <span class="fa-stack fa-2x" style="float: right; margin-top: 10px">
+                    <span class="fa-stack fa-2x" style="float: right; margin-top: 10px; position: absolute; bottom: 20px; right: 20px;">
                         <i class="fa fa-star fa-stack-2x"></i>
                         <strong class="fa-stack-1x star-text">@Rating.getAverageRating(product.id)</strong>
                     </span>

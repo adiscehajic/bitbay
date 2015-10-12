@@ -60,3 +60,7 @@ td {
 	border-color: #f5f5f5;
 	color: #33A3DD;
 }
+
+
+/* This rule is read by Galleria to define the gallery height: */
+#galleria{height:586px}
