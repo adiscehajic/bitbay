@@ -126,6 +126,7 @@
 
         <div class="container">
 
+
             @if(flash.containsKey("success")) {
                 <div class="alert alert-success">
                 @flash.get("success")
@@ -150,7 +151,7 @@
         <div class="text-center" style="padding-top: 0px;">
             <a href="#" style="font-size: 14px; color:grey" class="btn btn-link">Terms of use</a>
             <a href="#" style="font-size: 14px; color:grey" class="btn btn-link">About</a>
-            <a href="@routes.ApplicationController.contactUs()" style="font-size: 14px; color:grey" class="btn btn-link">Contact Us</a>
+            <a href="@routes.EmailController.contactUs()" style="font-size: 14px; color:grey" class="btn btn-link">Contact Us</a>
         </div>
         <div class="text-center">
             <a href="#" style="font-size: 10px; color:grey" class="btn btn-link">Copyright &copy;2015 bitbay &#64; BITCamp</a>
