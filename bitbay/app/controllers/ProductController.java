@@ -153,28 +153,36 @@ public class ProductController extends Controller {
         if (boundForm.hasErrors()) {
             return badRequest(newProduct.render(boundForm, Category.findAll()));
         }
-        // Initializing cloudinery object.
-        Image.cloudinary = new Cloudinary("cloudinary://" + Play.application().configuration().getString("cloudinary.string"));
-        // Finding current user.
-        User user = SessionHelper.currentUser();
-        // Declaring string variable for the selected product category.
-        String categoryValue = boundForm.bindFromRequest().field("category").value();
-        // Declaring selected category.
-        Category category = Category.getCategoryByName(categoryValue);
-        // Creating new product and adding selected values.
-        Product product = boundForm.get();
-        product.user = user;
-        product.category = category;
-        // Saving product into database.
-        product.save();
-        // Getting selected images
-        Http.MultipartFormData body = request().body().asMultipartFormData();
-        Http.MultipartFormData.FilePart filePart = body.getFile("image");
-        // Uploading selected images on cloudinery and saving image path into database.
-        if (filePart != null) {
-            File file = filePart.getFile();
-            Image image = Image.create(file, product.id);
-            image.save();
+        try {
+            // Initializing cloudinery object.
+            Image.cloudinary = new Cloudinary("cloudinary://" + Play.application().configuration().getString("cloudinary.string"));
+            // Finding current user.
+            User user = SessionHelper.currentUser();
+            // Declaring string variable for the selected product category.
+            String categoryValue = boundForm.bindFromRequest().field("category").value();
+            // Declaring selected category.
+            Category category = Category.getCategoryByName(categoryValue);
+            // Creating new product and adding selected values.
+            Product product = boundForm.get();
+            product.user = user;
+            product.category = category;
+
+            // Getting selected images
+            Http.MultipartFormData body = request().body().asMultipartFormData();
+            List<Http.MultipartFormData.FilePart> fileParts = body.getFiles();
+            // Uploading selected images on cloudinery and saving image path into database.
+            if (fileParts != null) {
+                for (Http.MultipartFormData.FilePart filePart : fileParts) {
+                    File file = filePart.getFile();
+                    Image image = Image.create(file, product.id);
+                    image.save();
+                }
+            }
+            // Saving product into database.
+            product.save();
+        }catch(RuntimeException e) {
+            Logger.info("Uploaded file is not image file.");
+            return badRequest(newProduct.render(boundForm, Category.findAll()));
         }
         // Redirecting to the main application page.
         return redirect(routes.ApplicationController.index());
