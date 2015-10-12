@@ -7,12 +7,14 @@ import play.Logger;
 import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.data.validation.Constraints;
 import play.filters.csrf.RequireCSRFCheck;
 import play.libs.F;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSRequest;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.contactUs;
 
 import javax.inject.Inject;
 
@@ -21,6 +23,18 @@ import javax.inject.Inject;
  */
 public class EmailController  extends Controller{
 
+    private static final Form<Contact> contactForm = Form.form(Contact.class);
+
+
+    /**
+     * Renders contactUs.html page with a form for sending a message from user to ADMIN.
+     *
+     * @return ContactUs page of the application.
+     */
+    public Result contactUs() {
+        return ok(contactUs.render(contactForm));
+    }
+
     /**
      * This method gets inputs from contact us form, verifies recaptcha and sends email to
      * bitbayservice@gmail.com from userfeedback.bitbay@gmail.com
@@ -28,14 +42,21 @@ public class EmailController  extends Controller{
     @Inject WSClient ws;
     @RequireCSRFCheck
     public Result sendEmail() {
-        DynamicForm form = Form.form().bindFromRequest();
 
+        Form<Contact> boundForm = contactForm.bindFromRequest();
 
-        String username = form.get("name");
-        String mail = form.get("email");
-        String subject = form.get("subject");
-        String message = form.get("message");
+        if(boundForm.hasErrors()){
+            return badRequest(contactUs.render(boundForm));
+        }
 
+        Contact newContact = boundForm.get();
+
+/*
+        String username = newEmail.name;
+        String mail = newEmail.email;
+        String subject = newEmail.subject;
+        String message = newEmail.message;
+*/
         String grecaptcha = request().body().asFormUrlEncoded().get("g-recaptcha-response")[0];
         WSRequest rq = ws.url("https://www.google.com/recaptcha/api/siteverify");
         rq.setQueryParameter("secret", "6LfUKg4TAAAAAASFERHrMiHR0quZWg0oein3DsUu");
@@ -46,7 +67,7 @@ public class EmailController  extends Controller{
         });
         JsonNode returnedJson = responsePromise.get(3000);
 
-        if(returnedJson.findValue("success").asBoolean() == true && !form.hasErrors()){
+        if(returnedJson.findValue("success").asBoolean() == true){
             SimpleEmail email = new SimpleEmail();
             email.setHostName(Play.application().configuration().getString("smtp.host"));
             email.setSmtpPort(587);
@@ -57,8 +78,8 @@ public class EmailController  extends Controller{
                 email.setStartTLSEnabled(true);
                 email.setDebug(true);
                 email.addTo(Play.application().configuration().getString("mail.smtp.user"));
-                email.setSubject(subject);
-                email.setMsg("Name: " + username + "\n" + "E-mail address: " + mail + "\n\n" + message);
+                email.setSubject(newContact.subject);
+                email.setMsg("Name: " + newContact.name + "\n" + "E-mail address: " + newContact.email + "\n\n" + newContact.message);
                 email.send();
 
             } catch (EmailException e) {
@@ -67,11 +88,56 @@ public class EmailController  extends Controller{
             }
             Logger.info("Message successfully sent");
             flash("success", "Message sent");
-            return redirect(routes.ApplicationController.index());
+            return redirect(routes.EmailController.sendEmail());
         }
         else{
             flash("error", "You need to verify that you are not a robot!");
-            return redirect(routes.EmailController.sendEmail());
+            return badRequest(contactUs.render(boundForm));
+        }
+    }
+
+
+
+    /**
+     * Created by Senadin Botic 12/10/15.
+     *
+     * Inner class with four variables that are required.
+     */
+    public static class Contact {
+
+        @Constraints.MaxLength(255)
+        @Constraints.Required(message = "Please insert your name.")
+        @Constraints.Pattern(value = "^[a-z A-Z]+$", message = "Name can't contain digits.")
+        public String name;
+
+        @Constraints.MaxLength(255)
+        @Constraints.Required(message = "Please insert your email.")
+        @Constraints.Email(message = "Valid email is required.")
+        public String email;
+
+        @Constraints.MaxLength(255)
+        @Constraints.Required(message = "Please insert subject.")
+        public String subject;
+
+        @Constraints.MaxLength(255)
+        @Constraints.Required(message = "Please insert your message.")
+        public String message;
+
+    }
+
+
+    /**
+     * Validates the form when the AJAX calls it. If the form has errors returns the JSON object that represents all
+     * errors that occurs. If there is no errors returns ok.
+     *
+     * @return JSON object that represents all errors that occurs, otherwise returns ok.
+     */
+    public Result validateFormContactUs() {
+        Form<Contact> binded = contactForm.bindFromRequest();
+        if (binded.hasErrors()) {
+            return badRequest(binded.errorsAsJson());
+        } else {
+            return ok("Validation successful.");
         }
     }
 

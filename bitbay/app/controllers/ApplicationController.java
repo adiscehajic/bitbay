@@ -29,14 +29,7 @@ public class ApplicationController extends Controller {
     private static final Form<UserRegistration> registrationForm = Form.form(UserRegistration.class);
 
 
-    /**
-     * Renders contactUs.html page with a form for sending a message from user to ADMIN.
-     *
-     * @return ContactUs page of the application.
-     */
-    public Result contactUs() {
-        return ok(contactUs.render());
-    }
+
 
     /**
      * Renders index.html page on which are listed all products from database. User can select product and depending on

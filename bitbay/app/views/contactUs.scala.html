@@ -1,4 +1,5 @@
 @import helper._
+@(contactForm: Form[EmailController.Contact])
 @main("Contact Us"){
 
             <div id="contactForm"  class="container">
@@ -16,16 +17,19 @@
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Contact Us</h3>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Full name *" required>
+                                <input type="text"  value="@contactForm("name").value"  class="form-control" id="name" name="name" placeholder="Full name *">
+                                <span class="alert-danger" data-error-for="name" style="margin-left : 1 px ; font-weight : normal ;"></span>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Email *" required>
+                                <input type="email" value="@contactForm("email").value" class="form-control" id="email" name="email" placeholder="Email *">
+                                <span class="alert-danger" data-error-for="email" style="margin-left : 1 px ; font-weight : normal ;"></span>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject *" required>
+                                <input type="text" class="form-control"  value="@contactForm("subject").value" id="subject" name="subject" placeholder="Subject *">
+                                <span class="alert-danger" data-error-for="subject" style="margin-left : 1 px ; font-weight : normal ;"></span>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" type="textarea" name="message" id="message" placeholder="Message *" maxlength="140" rows="7" required></textarea>
+                                <textarea class="form-control"  type="textarea" name="message" id="message" placeholder="Message *" maxlength="140" rows="7">@contactForm("message").value</textarea>
                                 <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
                             </div>
 
@@ -73,6 +77,10 @@
 
             </div>
 
+    <script>
+            var urlPost = "@routes.EmailController.validateFormContactUs()";
+        </script>
+    <script src="@routes.Assets.versioned("javascripts/validateForm.js")" type="text/javascript"></script>
 
 
 }
