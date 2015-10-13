@@ -117,6 +117,7 @@ create table user (
   registration              datetime,
   updated                   datetime,
   token                     varchar(255),
+  validated                 tinyint(1) default 0,
   constraint uq_user_email unique (email),
   constraint pk_user primary key (id))
 ;
