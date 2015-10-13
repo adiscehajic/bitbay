@@ -3,9 +3,8 @@ package helpers;
         import models.User;
         import org.apache.commons.mail.DefaultAuthenticator;
         import org.apache.commons.mail.HtmlEmail;
-        import org.slf4j.Logger;
-        import org.slf4j.LoggerFactory;
         import play.Play;
+        import play.Logger;
 
 /**
  * Created by Adnan on 12.10.2015..
@@ -21,7 +20,7 @@ public class MailHelper {
     public static void send(String email, String message) {
 
         try {
-            User user = SessionHelper.currentUser();
+            User user = User.getUserByEmail(email);
             HtmlEmail mail = new HtmlEmail();
             mail.setSubject("bitBay Welcome");
             mail.setFrom("bitBay <bitbayservice@gmail.com>");
@@ -42,6 +41,7 @@ public class MailHelper {
             ));
             mail.send();
         } catch (Exception e) {
+            e.printStackTrace();
 
         }
     }

@@ -5,6 +5,7 @@ import helpers.MailHelper;
 import helpers.SessionHelper;
 import models.*;
 import org.mindrot.jbcrypt.BCrypt;
+import play.Logger;
 import play.Play;
 import play.data.Form;
 import play.data.validation.Constraints;
@@ -30,7 +31,7 @@ public class ApplicationController extends Controller {
     // Declaring variable.
     private static final Form<UserLogin> loginForm = Form.form(UserLogin.class);
     private static final Form<UserRegistration> registrationForm = Form.form(UserRegistration.class);
-    private static String url = Play.application().configuration().getString("url");
+
 
 
 
@@ -146,8 +147,7 @@ public class ApplicationController extends Controller {
             user.setValidated(false);
             // Saving new user into database.
             user.save();
-            MailHelper.send(user.email, Play.application().configuration().getString("BIT_BAY") + "/signup/validate/" + user.token);
-
+            MailHelper.send(user.email, Users.BIT_BAY + "/signup/validate/" + user.token);
             // Clearing all sessions and creating new session that stores user email
             session().clear();
            // session("email", user.email);
