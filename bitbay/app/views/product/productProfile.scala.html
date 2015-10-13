@@ -5,18 +5,20 @@
 	<div class="container" id="wrapper" style="padding-right: 30px">
 		<div class="row">
 			<div class="col-md-6">
-				<div class="thumbnail">
-
 				@if(product.images.size() > 0) {
-					@for(image <- product.images) {
-						<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
-							<img class="img-responsive" src="@image.getSize(576,486)" ></a>
-					}
-				}else{
-					<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
-						<img class="img-responsive" src="http://placehold.it/576x486" ></a>
+				<div id="galleria">
+				@for(image <- product.images) {
+					<a href="@image.getSize(576,486)">
+						<img src="@image.getSize(576,486)">
+					</a>
 				}
 				</div>
+				} else {
+					<div class="thumbnail">
+						<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+							<img class="img-responsive" src="http://placehold.it/576x486" ></a>
+					</div>
+				}
 				@if(Cart.doesContainItem(product.id)) {
 					<div style="margin-left: auto; margin-right: auto; width: 10em">
 						<input class="rating" data-max="5" data-min="1" id="some_id" name="your_awesome_parameter" type="number" data-empty-value="0" data-icon-lib="fa" data-active-icon="fa-star fa-2x" data-inactive-icon="fa-star-o fa-2x"/>
@@ -91,7 +93,6 @@
 			</div>
 		</div>
 		<div class="row" >
-
 			<div class="col-md-6 col-md-offset-6" style="margin-top:20px" id="deliveryWrapper">
 				<table>
 					<tbody>
@@ -111,7 +112,6 @@
 				</table>
 			</div>
 		</div>
-
 		@if(recommendedProducts != null && recommendedProducts.size() > 3) {
 			<div class="panel panel-primary" style="background-color: #f5f5f5; border-color: #f5f5f5;">
 				<div class="panel-heading" id="panel-name">
@@ -123,10 +123,8 @@
 				<div class="col-sm-6 col-md-3 col-lg-3">
 					<div class="thumbnail" style="height:230px;" id="ellipsis@product.id">
 						@if(product.images.size() > 0) {
-							@for(image <- product.images) {
-								<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
-									<img class="img-responsive" src="@image.getThumbnail(130, 130)" ></a>
-							}
+							<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+								<img class="img-responsive" src="@product.images.get(0).getThumbnail(130, 130)" ></a>
 						}else{
 							<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
 								<img class="img-responsive" src="http://placehold.it/130x130" ></a>
@@ -145,7 +143,6 @@
 			</div>
 		}
 		<div class="row" >
-
 			<div class="col-md-12">
 				<ul class="nav nav-tabs">
 					<li class="active"><a data-toggle="tab" href="#about">About</a></li>
@@ -163,10 +160,9 @@
 							<div class = "row">
 								<form action="@helper.CSRF(routes.CommentController.saveComment(product.id))" method="POST">
 									<div class="form-group">
-										<label for="usr" style = "margin-top:40px;">Tittle:</label>
+										<label for="usr" style = "margin-top:40px;">Title:</label>
 										<input type="text" class="form-control" id="usr"  name="title">
 										<span class="alert-danger" data-error-for="title" style="display: block;font-weight:normal;"></span>
-
 										<label for="comment" style = "margin-top:30px;">Comment:</label>
 										<textarea class="form-control" rows="5" id="comment"  name="text"></textarea>
 										<span class="alert-danger" data-error-for="text" style="display: block;font-weight:normal;"></span>
@@ -182,16 +178,12 @@
 								<table class="table">
 								}
 						<thead>
-
 							<tr>
-
 								<th><h3>Top comments</h3></th>
 							</tr>
 						</thead>
 						<tbody>
-
 						@for(comment <- topComments){
-
 							<tr>
 								<td>
 									<a href=""><h4>@comment.title</h4></a>
@@ -203,7 +195,6 @@
 								</td>
 							</tr>
 							<script>
-
 							$(document).ready(function() {
 								var comm = @comment.id;
 								var thumbUp = "true";
@@ -255,13 +246,11 @@
 											<p class = "person">By @comment.user.firstName @comment.user.lastName on @comment.commentDate</p>
 											<p style = "margin-bottom:20px;">@comment.text</p>
 											<span style = "margin-right:6px; ">Was this review helpful to you?</span>
-
 											<a id="like@comment.id"> <span id="thumbs-up@comment.id" class="glyphicon glyphicon-thumbs-up" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsUp(comment)</span></a>
 											<a id="dislike@comment.id"> <span id="thumbs-down@comment.id" class="glyphicon glyphicon-thumbs-down" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsDown(comment)</span></a>
 										</td>
 									</tr>
 								</form>
-
 								<script>
 									$(document).ready(function() {
 										var comm = @comment.id;
@@ -322,6 +311,13 @@
 				});
 			});
 		});
-
+	</script>
+	<script src="@routes.Assets.versioned("javascripts/galleria-1.4.2.min.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.versioned("javascripts/galleria.history.min.js")" type="text/javascript"></script>
+	<script >
+	// Load the classic theme
+    Galleria.loadTheme('@routes.Assets.versioned("javascripts/galleria.classic.min.js")');
+		// Initialize Galleria
+    Galleria.run('#galleria');
 	</script>
 }

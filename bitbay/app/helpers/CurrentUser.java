@@ -7,9 +7,9 @@ import play.mvc.Result;
 import play.mvc.Security;
 
 /**
- * Created by Adis Cehajic on 9/11/2015.
+ * Created by adis.cehajic on 09/10/15.
  */
-public class CurrentSeller extends Security.Authenticator {
+public class CurrentUser extends Security.Authenticator {
 
     @Override
     public String getUsername(Http.Context ctx) {
@@ -18,7 +18,7 @@ public class CurrentSeller extends Security.Authenticator {
         }
         String email = ctx.session().get("email");
         User user = User.getUserByEmail(email);
-        if (user != null && user.userType.id == 3) {
+        if (user != null) {
             return user.email;
         }
         return null;

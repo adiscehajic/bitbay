@@ -11,8 +11,12 @@ POST          /signup                            @controllers.ApplicationControl
 GET           /signin                            @controllers.ApplicationController.signIn()
 POST          /signin                            @controllers.ApplicationController.validateSignIn()
 GET           /logout                            @controllers.ApplicationController.logout()
-GET           /contactus                         @controllers.ApplicationController.contactUs()
+GET           /signup/validate/:token            @controllers.Users.emailValidation(token: String)
+
+
+GET           /contactus                         @controllers.EmailController.contactUs()
 POST          /contactus                         @controllers.EmailController.sendEmail()
+POST          /contactus/validateformcontactus   @controllers.EmailController.validateFormContactUs()
 
 POST          /signin/validateFormLog            @controllers.ApplicationController.validateFormLogin()
 POST          /signup/validateFormReg            @controllers.ApplicationController.validateFormRegistration()
@@ -75,8 +79,6 @@ GET           /category/delete/:id               @controllers.CategoryController
 POST          /category/new                      @controllers.CategoryController.saveCategory()
 POST          /category/edit/:id                 @controllers.CategoryController.updateCategory(id:Integer)
 POST          /category/validateForm             @controllers.CategoryController.validateFormCategory()
-
-GET           /validate/:token                   @controllers.Users.emailValidation(token: String)
 
 
 # Map static resources from the /public folder to the /assets URL path

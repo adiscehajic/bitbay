@@ -33,14 +33,7 @@ public class ApplicationController extends Controller {
     private static String url = Play.application().configuration().getString("url");
 
 
-    /**
-     * Renders contactUs.html page with a form for sending a message from user to ADMIN.
-     *
-     * @return ContactUs page of the application.
-     */
-    public Result contactUs() {
-        return ok(contactUs.render());
-    }
+
 
     /**
      * Renders index.html page on which are listed all products from database. User can select product and depending on
@@ -153,7 +146,7 @@ public class ApplicationController extends Controller {
             user.setValidated(false);
             // Saving new user into database.
             user.save();
-            MailHelper.send(user.email, Play.application().configuration().getString("BIT_BAY") + "/validate/" + user.token);
+            MailHelper.send(user.email, Play.application().configuration().getString("BIT_BAY") + "/signup/validate/" + user.token);
 
             // Clearing all sessions and creating new session that stores user email
             session().clear();
