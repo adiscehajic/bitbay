@@ -42,6 +42,7 @@ public class Users extends Controller {
 
     // Declaring user form.
     private static final Form<User> userRegistration = Form.form(User.class);
+    public static final String BIT_BAY = Play.application().configuration().getString("BIT_BAY");
 
     /**
      * Deletes selected user. Only administrator user can delete other users, except users that are also administrators.
@@ -205,4 +206,28 @@ public class Users extends Controller {
         }
     }
 
+    /**
+     * This action method is activated after user click on a link in verification email.
+     * It is using token from email to verify user and activate validateUser(user) method
+     * which is saving validation data to DB
+     * @param token - User token
+     * @return - Result
+     */
+    public Result emailValidation(String token) {
+        try {
+            if (token == null) {
+                return redirect(routes.ApplicationController.index());
+            }
+
+            User user = User.findUserByToken(token);
+            if (User.validateUser(user)) {
+                session("email", user.email);
+                return redirect(routes.ApplicationController.index());
+            } else {
+                return redirect(routes.ApplicationController.signIn());
+            }
+        } catch (Exception e){
+            return redirect(routes.ApplicationController.signIn());
+        }
+    }
 }
