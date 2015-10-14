@@ -25,8 +25,8 @@
 					</div>
 				}
 			</div>
-			<div class="col-md-6 " id="userInfo" style="padding-top: 10px; height: 470px">
-				<h2 style="display: inline;">@product.name</h2>
+			<div class="col-md-6 " id="userInfo" style="padding-top: 10px;">
+				<h2 style="display: inline; font-family: serif">@product.name</h2>
 				<span class="fa-stack fa-2x" style="float: right; margin-top: 10px">
 					<i class="fa fa-star fa-stack-2x"></i>
 					<strong class="fa-stack-1x star-text">@averageRating</strong>
@@ -64,11 +64,15 @@
 						</tr>
 						<tr>
 							<td>Availability:</td>
-							<td>Yes</td>
+							@if(product.quantity > 0) {
+								<td style="font-size: 15px; color: green;">Yes</td>
+							} else {
+								<td style="font-size: 15px; color: red"> No </td>
+							}
 						</tr>
 						<tr>
 							<td> Payment: </td>
-							<td> Paypal </td>
+							<td><img src="@routes.Assets.versioned("images/paypal.png")"></td>
 						</tr>
 						<tr class="blank_row"></tr>
 						<tr class="blank_row"></tr>
@@ -76,8 +80,13 @@
 							<td>
 								@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
 									<form action="@helper.CSRF(routes.CartController.addToCart(product.id))" method="POST">
-										<button type="submit " class="btn btn-primary" style="margin-bottom:20px">
-											Add to cart </button>
+										@if(product.quantity > 0) {
+											<button type="submit " class="btn btn-primary" style="margin-bottom : 20px">
+												Add to cart </button>
+										} else {
+											<button type="submit " class="btn btn-primary" style="margin-bottom : 20px" disabled>
+												Add to cart </button>
+										}
 									</form>
 								}
 								@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 3 && product.user.id == User.getUserByEmail(session().get("email")).id) {
@@ -90,26 +99,24 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
-		</div>
-		<div class="row" >
-			<div class="col-md-6 col-md-offset-6" style="margin-top:20px" id="deliveryWrapper">
-				<table>
-					<tbody>
-						<tr>
-							<td> Shipping: </td>
-							<td> </td>
-						</tr>
-						<tr>
-							<td> Delivery: </td>
-							<td> Estimated 10-15 days. </td>
-						</tr>
-						<tr>
-							<td> Returns: </td>
-							<td> 60 days money back, buyer pays return shipping </td>
-						</tr>
-					</tbody>
-				</table>
+				<div  id="deliveryWrapper">
+					<table>
+						<tbody>
+							<tr>
+								<td> Shipping: </td>
+								<td> </td>
+							</tr>
+							<tr>
+								<td> Delivery: </td>
+								<td> Estimated 10-15 days. </td>
+							</tr>
+							<tr>
+								<td> Returns: </td>
+								<td> 60 days money back, buyer pays return shipping </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 		@if(recommendedProducts != null && recommendedProducts.size() > 3) {
