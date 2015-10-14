@@ -242,10 +242,12 @@ public class ProductController extends Controller {
             product.category = category;
             product.name = boundForm.bindFromRequest().field("name").value();
             product.description = boundForm.bindFromRequest().field("description").value();
-            product.manufacturer = boundForm.bindFromRequest().field("manufacturer").value();
             product.price = Double.parseDouble(boundForm.bindFromRequest().field("price").value());
             product.quantity = Integer.parseInt(boundForm.bindFromRequest().field("quantity").value());
             product.sellingType = boundForm.bindFromRequest().field("sellingType").value();
+            product.manufacturer = boundForm.bindFromRequest().field("manufacturer").value();
+
+
             // Saving all changes into database.
             product.update();
             // Rendering product profile page.
