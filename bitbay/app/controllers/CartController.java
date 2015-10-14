@@ -144,7 +144,6 @@ public class CartController extends Controller {
         cartItem.price = cartItem.product.price * cartItem.quantity;
         cartItem.save();
         Product product = Product.getProductById(cartItem.product.id);
-        product.quantity = product.quantity - cartItem.quantity;
         product.update();
         return redirect(routes.CartController.getCart());
     }
