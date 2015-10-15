@@ -15,7 +15,7 @@
                 }
                 <div class="form-group">
                     <label for="product-name">Category: * </label>
-                    <select class="form-control placeholder" name="category" onclick="validateProduct()" onfocusout="validateCategory()">
+                    <select class="form-control placeholder" id="booksChange" name="category" onclick="validateProduct()" onfocusout="validateCategory()">
                         @if(productForm("category").value == null) {
                             <option value="0" selected disabled >Please select type</option>
                         } else {

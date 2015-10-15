@@ -27,6 +27,15 @@ function validateProduct() {
     }
     button.disabled = false;
 
+    $('#booksChange').change(function(){
+        var thisValue = $(this).val();
+        if (thisValue == "Books"){
+            $("label[for='manufacturer']").text("Publisher:*");
+        } else {
+            $("label[for='manufacturer']").text("Manufacturer:*");
+        }
+    });
+
 }
 
 function validateName() {

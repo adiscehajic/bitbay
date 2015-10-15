@@ -200,6 +200,15 @@ public class Global extends GlobalSettings {
             Product p49 = new Product(userFive, "Blue Cotton 5 Assorted Pre Cut Charm Quilt Squares Fabric Craft 10", "A brand-new, unused, unopened, undamaged item in its original packaging", "Handmade", categorySeven, 6.00, 10, "1");
             Product p50 = new Product(userFive, "100Pcs 11MM DIY 2 Holes Round Resin Buttons Scrapbooking Sewing Craft 20 Colors", "A brand-new, unused, unopened, undamaged item in its original packaging", "Unbranded", categorySeven, 1.00, 10, "1");
 
+            /*
+            Books
+             */
+
+            Product p51 = new Product(userOne, "Humans of New York: Stories", "“There's no judgment, just observation and in many cases reverence, making for an inspiring reading and visual experience.” ", "St. Martin's Press", categoryFour, 20.00, 10, "1");
+            Product p52 = new Product(userOne, "Lost", "Like everyone reading the newspapers these days, 10-year-old Barney Roberts knows the killer will strike again soon. ", "St. Martin's Press", categoryFour, 20.00, 10, "1");
+            Product p53 = new Product(userOne, "Whirligig", "A terrible accident ends one life, but is just the beginning for another. . . .", "St. Martin's Press", categoryFour, 20.00, 10, "1");
+            Product p54 = new Product(userOne, "Zero the Hero", "Zero. Zip. Zilch. Nada. That's what all the other numbers think of Zero. He doesn't add anything in addition. ", "St. Martin's Press", categoryFour, 20.00, 10, "1");
+            Product p55 = new Product(userOne, "Memories of Babi", "Piri is a city girl, but every year she goes to visit her grandmother Babi on her farm in the Ukrainian village of Komjaty.", "St. Martin's Press", categoryFour, 20.00, 10, "1");
 
             p1.save();
             p2.save();
@@ -251,6 +260,12 @@ public class Global extends GlobalSettings {
             p48.save();
             p49.save();
             p50.save();
+            p51.save();
+            p52.save();
+            p53.save();
+            p54.save();
+            p55.save();
+
 
             List<User> buyers = new ArrayList<>();
             buyers.add(userTwo);

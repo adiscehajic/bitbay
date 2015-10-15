@@ -21,6 +21,7 @@
 				}
 				@if(Cart.doesContainItem(product.id)) {
 					<div style="margin-left: auto; margin-right: auto; width: 10em">
+						<h4 style="margin-left: 25px">Rate product</h4>
 						<input class="rating" data-max="5" data-min="1" id="some_id" name="your_awesome_parameter" type="number" data-empty-value="0" data-icon-lib="fa" data-active-icon="fa-star fa-2x" data-inactive-icon="fa-star-o fa-2x"/>
 					</div>
 				}
@@ -54,7 +55,12 @@
 						<tr class="blank_row"></tr>
 
 						<tr>
-							<td> Manifacturer: </td>
+
+							@if(product.category == Category.getCategoryByName("Books")) {
+								<td> Publisher: </td>
+							}else {
+								<td> Manufacturer: </td>
+							}
 							<td>@product.manufacturer</td>
 						</tr>
 						<tr class="blank_row"></tr>
@@ -128,7 +134,7 @@
 			<div class="row">
 			@for(product <- recommendedProducts) {
 				<div class="col-sm-6 col-md-3 col-lg-3">
-					<div class="thumbnail" style="height:230px;" id="ellipsis@product.id">
+					<div class="thumbnail" style="height:260px;" id="ellipsis@product.id">
 						@if(product.images.size() > 0) {
 							<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
 								<img class="img-responsive" src="@product.images.get(0).getThumbnail(130, 130)" ></a>
@@ -137,6 +143,7 @@
 								<img class="img-responsive" src="http://placehold.it/130x130" ></a>
 						}
 					<div class="caption">
+
 						<span class="fa-stack fa-2x" style="float: right; margin-top: 10px">
 							<i class="fa fa-star fa-stack-2x"></i>
 							<strong class="fa-stack-1x star-text">@Rating.getAverageRating(product.id)</strong>
