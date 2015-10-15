@@ -58,7 +58,6 @@ public class Global extends GlobalSettings {
             userOne.email = "adis.cehajic@bitcamp.ba";
             userOne.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userOne.userType = seller;
-            userOne.token = "d893926a-7b24-4d2e-ae6b-180a51172c44";
             userOne.setValidated(true);
 
             User userThree = new User();
@@ -67,6 +66,7 @@ public class Global extends GlobalSettings {
             userThree.email = "dinko.hodzic@bitcamp.ba";
             userThree.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userThree.userType = seller;
+            userOne.setValidated(true);
 
             User userFive = new User();
             userFive.firstName = "Medina";
@@ -74,6 +74,7 @@ public class Global extends GlobalSettings {
             userFive.email = "medina.banjic@bitcamp.ba";
             userFive.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userFive.userType = seller;
+            userOne.setValidated(true);
 
             User userTwo = new User();
             userTwo.firstName = "Kerim";
@@ -81,8 +82,7 @@ public class Global extends GlobalSettings {
             userTwo.email = "kerim.dragolj@bitcamp.ba";
             userTwo.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userTwo.userType = buyer;
-            userTwo.token = "cc1d9ece-e9d9-4a83-9519-2357dfa40c0f";
-            userTwo.setValidated(true);
+            userOne.setValidated(true);
 
             User userFour = new User();
             userFour.firstName = "Adnan";
@@ -90,6 +90,7 @@ public class Global extends GlobalSettings {
             userFour.email = "adnan.lapendic@bitcamp.ba";
             userFour.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userFour.userType = buyer;
+            userOne.setValidated(true);
 
             User userSix = new User();
             userFive.firstName = "Senadin";
@@ -97,6 +98,7 @@ public class Global extends GlobalSettings {
             userFive.email = "senadin.botic@bitcamp.ba";
             userFive.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userFive.userType = buyer;
+            userOne.setValidated(true);
 
             User userSeven = new User();
             userFive.firstName = "Narena";

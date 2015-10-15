@@ -95,9 +95,15 @@ public class Users extends Controller {
      * @return - Profile page of current user that is signed in.
      */
     @Security.Authenticated(CurrentBuyerSeller.class)
-    public Result getUser(){
-        return ok(userProfile.render(SessionHelper.currentUser()));
+    public Result getUser(String email){
+        User user = User.getUserByEmail(email);
+        return ok(userProfile.render(user));
     }
+
+//    public Result getSelectedUserByEmail(String email){
+//        User user = User.getUserByEmail(email);
+//        return ok(userProfile.render(user));
+//    }
 
     /**
      * Renders page where user can edit his personal informations. He can alter inputed information that he has inputed
@@ -171,7 +177,7 @@ public class Users extends Controller {
             return badRequest(userEdit.render(boundForm, user, countries));
         }
         // Redirecting to the profile page of the current user.
-        return redirect(routes.Users.getUser());
+        return redirect(routes.Users.getUser(user.email));
     }
 
     /**
@@ -180,10 +186,10 @@ public class Users extends Controller {
      *
      * @return Page where all products of the user are listed.
      */
-    @Security.Authenticated(CurrentSeller.class)
-    public Result getAllUserProducts() {
+    @Security.Authenticated(CurrentBuyerSeller.class)
+    public Result getAllUserProducts(String email) {
         // Getting current from the session.
-        User user = SessionHelper.currentUser();
+        User user = User.getUserByEmail(email);
         // Creating the list of the product from current user.
         List<Product> products = Product.findAllProductsByUser(user);
         if (user != null) {

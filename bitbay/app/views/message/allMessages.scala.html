@@ -20,9 +20,9 @@
                     <a href="@routes.MessageController.replyMessage(message.id)" style="text-decoration: none"><label>@message.title</label><p>@message.message</p></a>
                 </div></td>
                 @if(SessionHelper.currentUser().id == message.receiver.id) {
-                    <td style="vertical-align : middle"><a href="@routes.Users.getUser()"> @message.sender.email</a> </td>
+                    <td style="vertical-align : middle"><a href="@routes.Users.getUser(SessionHelper.currentUser().email)"> @message.sender.email</a> </td>
                 } else {
-                    <td style="vertical-align : middle"><a href="@routes.Users.getUser()"> @message.receiver.email</a> </td>
+                    <td style="vertical-align : middle"><a href="@routes.Users.getUser(SessionHelper.currentUser().email)"> @message.receiver.email</a> </td>
                 }
                 <td style="vertical-align: middle"><span id="deleteMessage@message.id" class="glyphicon glyphicon-remove"><i class="icon-envelope-open"></i></span></td>
                 <script>
