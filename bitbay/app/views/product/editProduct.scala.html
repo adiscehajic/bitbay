@@ -40,7 +40,11 @@
                     <span class="alert-danger" data-error-for="quantity" style="margin-left : 1 px ; font-weight : normal ;"></span>
                 </div>
                 <div class="form-group">
-                    <label for="manufacturer">Manufacturer:</label>
+                    @if(product.category == Category.getCategoryByName("Books")){
+                        <label for="manufacturer">Publisher:</label>
+                    }else {
+                        <label for="manufacturer">Manufacturer:</label>
+                    }
                     <input type="text" class="form-control" id="manufacturer" name="manufacturer" value="@productForm("manufacturer").value" oninput="validateEditing()">
                 </div>
                 <label for="selling-type">Type of selling:*</label>

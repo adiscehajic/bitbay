@@ -54,7 +54,12 @@
 						<tr class="blank_row"></tr>
 
 						<tr>
-							<td> Manifacturer: </td>
+
+							@if(product.category == Category.getCategoryByName("Books")) {
+								<td> Publisher: </td>
+							}else {
+								<td> Manufacturer: </td>
+							}
 							<td>@product.manufacturer</td>
 						</tr>
 						<tr class="blank_row"></tr>
