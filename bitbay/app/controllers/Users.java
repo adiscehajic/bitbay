@@ -15,6 +15,7 @@ import play.data.validation.ValidationError;
 import play.filters.csrf.AddCSRFToken;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.index;
@@ -23,6 +24,8 @@ import views.html.signIn;
 import views.html.user.userEdit;
 import views.html.user.userProfile;
 import views.html.user.userMessages;
+
+import java.io.File;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -229,5 +232,30 @@ public class Users extends Controller {
         } catch (Exception e){
             return redirect(routes.ApplicationController.signIn());
         }
+    }
+
+    @RequireCSRFCheck
+    public Result saveUserPicture() {
+        User user = SessionHelper.currentUser();
+
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart filePart = body.getFile("image");
+        // Uploading selected images on cloudinery and saving image path into database.
+
+        if (user.image != null) {
+            user.image.deleteImage();
+            if (filePart != null) {
+                File file = filePart.getFile();
+                Image image = Image.createUserImage(file);
+                image.save();
+            }
+        } else {
+            if (filePart != null) {
+                File file = filePart.getFile();
+                Image image = Image.createUserImage(file);
+                image.save();
+            }
+        }
+        return redirect(routes.Users.getUser());
     }
 }
