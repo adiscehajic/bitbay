@@ -52,8 +52,7 @@ GET           /admin/messages/inbox                   @controllers.AdminControll
 GET           /admin/messages/sent                    @controllers.AdminController.adminSentMessages()
 GET           /admin/message                          @controllers.AdminController.adminViewMessage(id: Integer)
 
-GET           /user/:email                            @controllers.Users.getUser(email: String)
-#GET           /user/:email                            @controllers.Users.getSelectedUserByEmail(email: String)
+
 POST          /user/validate                          @controllers.Users.validateFormUser()
 GET           /user/cart                              @controllers.CartController.getCart()
 POST          /user/cart                              @controllers.CartController.updateItemQuantity(id: Integer)
@@ -63,6 +62,12 @@ DELETE        /user/delete                            @controllers.Users.deleteU
 GET           /user/delete/:id                        @controllers.Users.deleteUser(id: Integer)
 GET           /user/edit                              @controllers.Users.editUser()
 POST          /user/edit                              @controllers.Users.updateUser()
+POST          /user/saveuserimage                     @controllers.Users.saveUserPicture()
+
+POST          /purchaseprocessing                     @controllers.PayPalController.purchaseProcessing()
+GET           /purchasesuccess                        @controllers.PayPalController.purchaseSuccess()
+GET           /purchasefail                           @controllers.PayPalController.purchaseFail()
+GET           /purchaseTransaction/                   @controllers.PayPalController.approveTransaction()
 
 GET           /user/messages                          @controllers.MessageController.getReceivedMessages()
 GET           /user/messages/sent                     @controllers.MessageController.getSentMessages()
@@ -80,6 +85,6 @@ POST          /category/new                           @controllers.CategoryContr
 POST          /category/edit/:id                      @controllers.CategoryController.updateCategory(id:Integer)
 POST          /category/validateForm                  @controllers.CategoryController.validateFormCategory()
 
-
+GET           /user/:email                            @controllers.Users.getUser(email: String)
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                           controllers.Assets.versioned(path="/public", file: Asset)

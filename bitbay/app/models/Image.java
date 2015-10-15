@@ -3,12 +3,10 @@ package models;
 import com.avaje.ebean.Model;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Transformation;
+import helpers.SessionHelper;
 import play.Logger;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.File;
 import java.io.*;
 import java.util.List;
@@ -38,6 +36,9 @@ public class Image extends Model {
 
     @ManyToOne
     public Product product;
+
+    @OneToOne
+    public User user;
 
 
     public static Image create(String public_id, String image_url, String secret_image_url) {
@@ -75,6 +76,32 @@ public class Image extends Model {
         return img;
     }
 
+    public static Image createUserImage(File image) {
+        Map result;
+        try {
+            result = cloudinary.uploader().upload(image, null);
+            return createUserImage(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Image createUserImage(Map uploadResult) {
+        Image img = new Image();
+
+        img.public_id = (String) uploadResult.get("public_id");
+        Logger.debug(img.public_id);
+        img.image_url = (String) uploadResult.get("url");
+        Logger.debug(img.image_url);
+        img.secret_image_url = (String) uploadResult.get("secure_url");
+        Logger.debug(img.secret_image_url);
+        User user = SessionHelper.currentUser();
+        img.user = user;
+        img.save();
+        return img;
+    }
+
     public static List<Image> all() {
         return finder.all();
     }
@@ -86,6 +113,12 @@ public class Image extends Model {
         } else {
             return "http://placehold.it/450x600";
         }
+    }
+
+    public static Image getUserImage(User user) {
+        Image image = Image.finder.where().eq("user", user).findUnique();
+            return image;
+
     }
 
     public String getSize(int width, int height) {

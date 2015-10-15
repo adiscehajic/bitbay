@@ -48,6 +48,8 @@ create table image (
   secret_image_url          varchar(255),
   image_url                 varchar(255),
   product_id                integer,
+  user_id                   integer,
+  constraint uq_image_user_id unique (user_id),
   constraint pk_image primary key (id))
 ;
 
@@ -77,6 +79,25 @@ create table product (
   registration              datetime,
   updated                   datetime,
   constraint pk_product primary key (id))
+;
+
+create table purchase (
+  id                        integer auto_increment not null,
+  payment_id                varchar(255),
+  user_id                   integer,
+  purchase_date             datetime,
+  constraint pk_purchase primary key (id))
+;
+
+create table purchase_item (
+  id                        integer auto_increment not null,
+  user_id                   integer,
+  product_id                integer,
+  purchase_id               integer,
+  cart_id                   integer,
+  quantity                  integer,
+  price                     double,
+  constraint pk_purchase_item primary key (id))
 ;
 
 create table rating (
@@ -150,22 +171,33 @@ alter table product add constraint fk_product_user_10 foreign key (user_id) refe
 create index ix_product_user_10 on product (user_id);
 alter table product add constraint fk_product_category_11 foreign key (category_id) references category (id) on delete restrict on update restrict;
 create index ix_product_category_11 on product (category_id);
-alter table rating add constraint fk_rating_user_12 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_rating_user_12 on rating (user_id);
-alter table rating add constraint fk_rating_product_13 foreign key (product_id) references product (id) on delete restrict on update restrict;
-create index ix_rating_product_13 on rating (product_id);
-alter table recommendation add constraint fk_recommendation_user_14 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_recommendation_user_14 on recommendation (user_id);
-alter table recommendation add constraint fk_recommendation_category_15 foreign key (category_id) references category (id) on delete restrict on update restrict;
-create index ix_recommendation_category_15 on recommendation (category_id);
-alter table thumb add constraint fk_thumb_comment_16 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
-create index ix_thumb_comment_16 on thumb (comment_id);
-alter table thumb add constraint fk_thumb_user_17 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_thumb_user_17 on thumb (user_id);
-alter table user add constraint fk_user_userType_18 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
-create index ix_user_userType_18 on user (user_type_id);
-alter table user add constraint fk_user_country_19 foreign key (country_id) references country (id) on delete restrict on update restrict;
-create index ix_user_country_19 on user (country_id);
+alter table purchase add constraint fk_purchase_user_12 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_purchase_user_12 on purchase (user_id);
+alter table purchase_item add constraint fk_purchase_item_user_13 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_purchase_item_user_13 on purchase_item (user_id);
+alter table purchase_item add constraint fk_purchase_item_product_14 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_purchase_item_product_14 on purchase_item (product_id);
+alter table purchase_item add constraint fk_purchase_item_purchase_15 foreign key (purchase_id) references purchase (id) on delete restrict on update restrict;
+create index ix_purchase_item_purchase_15 on purchase_item (purchase_id);
+alter table purchase_item add constraint fk_purchase_item_cart_16 foreign key (cart_id) references cart (id) on delete restrict on update restrict;
+create index ix_purchase_item_cart_16 on purchase_item (cart_id);
+alter table rating add constraint fk_rating_user_17 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_rating_user_17 on rating (user_id);
+alter table rating add constraint fk_rating_product_18 foreign key (product_id) references product (id) on delete restrict on update restrict;
+create index ix_rating_product_18 on rating (product_id);
+alter table recommendation add constraint fk_recommendation_user_19 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_recommendation_user_19 on recommendation (user_id);
+alter table recommendation add constraint fk_recommendation_category_20 foreign key (category_id) references category (id) on delete restrict on update restrict;
+create index ix_recommendation_category_20 on recommendation (category_id);
+alter table thumb add constraint fk_thumb_comment_21 foreign key (comment_id) references comment (id) on delete restrict on update restrict;
+create index ix_thumb_comment_21 on thumb (comment_id);
+alter table thumb add constraint fk_thumb_user_22 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_thumb_user_22 on thumb (user_id);
+alter table user add constraint fk_user_userType_23 foreign key (user_type_id) references user_type (id) on delete restrict on update restrict;
+create index ix_user_userType_23 on user (user_type_id);
+alter table user add constraint fk_user_country_24 foreign key (country_id) references country (id) on delete restrict on update restrict;
+create index ix_user_country_24 on user (country_id);
+>>>>>>> develop
 
 
 
@@ -188,6 +220,10 @@ drop table image;
 drop table message;
 
 drop table product;
+
+drop table purchase;
+
+drop table purchase_item;
 
 drop table rating;
 
