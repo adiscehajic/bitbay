@@ -17,6 +17,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.html.index;
 import views.html.purchase.purchaseResult;
+import views.html.user.userCart;
 
 import java.util.*;
 
@@ -26,9 +27,12 @@ import java.util.*;
 @Security.Authenticated(CurrentBuyer.class)
 public class PayPalController extends Controller {
 
-    private static final String CLIENT_ID = Play.application().configuration()
+    /**
+     * PayPal configurated constants
+     */
+    public static final String CLIENT_ID = Play.application().configuration()
             .getString("clientid");
-    private static final String CLIENT_SECRET = Play.application().configuration()
+    public static final String CLIENT_SECRET = Play.application().configuration()
             .getString("secret");
 
     private static User currentUser = SessionHelper.currentUser();
@@ -38,7 +42,7 @@ public class PayPalController extends Controller {
 
     private static String priceString;
     private static String productString;
-    private static String desc = "Bought:\n";
+    private static String desc = "";
 
     private static String token;
 
@@ -71,19 +75,23 @@ public class PayPalController extends Controller {
     private static List<PurchaseItem> purchaseItems = new ArrayList<>();
     private static Map<String, String> config;
 
-
+    /**
+     * This method configurates PayPal and PayPal payment information
+     * Redirects to payment approval
+     * @return approve_url
+     */
     @Security.Authenticated(CurrentBuyer.class)
     @RequireCSRFCheck
     public Result purchaseProcessing() {
         try {
         //Configuration PayPal
-        token = new OAuthTokenCredential(CLIENT_ID, CLIENT_SECRET).getAccessToken();
+            token = new OAuthTokenCredential(PayPalController.CLIENT_ID, PayPalController.CLIENT_SECRET).getAccessToken();
 
-        config = new HashMap<>();
-        config.put("mode", "sandbox");
+            config = new HashMap<>();
+            config.put("mode", "sandbox");
 
-        context = new APIContext(token);
-        context.setConfigurationMap(config);
+            context = new APIContext(token);
+            context.setConfigurationMap(config);
 
         // Process cart/payment information
         for (int i = 0; i < cartItems.size(); i++){
@@ -93,53 +101,54 @@ public class PayPalController extends Controller {
             quantity = cartItemI.quantity;
             productString = cartItemI.product.name;
             priceString = String.format("%1.2f", price);
-            desc += "Product:" + productString;
+            desc += "Product:" + productString + "\n";
 
             purchaseItem = new PurchaseItem(cartItemI.product, cartItemI.user, cartItemI.cart, purchase, quantity);
             // Adding the purchase item to the purchaseItems list
             purchaseItems.add(purchaseItem);
         }
+
         purchase = new Purchase(currentUser, purchaseItems);
         priceString = String.format("%1.2f", totalPrice);
 
-        desc += "Total amount: " + priceString;
+        desc += "\nTotal amount: " + priceString;
 
-        // Configure payment
-        amount = new Amount();
-        amount.setTotal(priceString);
-        amount.setCurrency("USD");
-
-            /* details to render in the success view */
+        /* details to render in the success view */
         details = new ArrayList<String>();
         details.add("Total price " + priceString);
 
-        transactionList = new ArrayList<>();
-        transaction = new Transaction();
-        transaction.setAmount(amount);
-        transaction.setDescription(desc);
-        transactionList.add(transaction);
+        // Configure payment
 
-        payer = new Payer();
-        payer.setPaymentMethod("paypal");
+            amount = new Amount();
+            amount.setTotal(priceString);
+            amount.setCurrency("USD");
 
-        payment = new Payment();
-        payment.setPayer(payer);
-        payment.setIntent("sale");
-        payment.setTransactions(transactionList);
+            transactionList = new ArrayList<>();
+            transaction = new Transaction();
+            transaction.setAmount(amount);
+            transaction.setDescription(desc);
+            transactionList.add(transaction);
 
+            payer = new Payer();
+            payer.setPaymentMethod("paypal");
+
+            payment = new Payment();
+            payment.setIntent("sale");
+            payment.setPayer(payer);
+            payment.setTransactions(transactionList);
+
+            /** Redirect urls*/
         redirects = new RedirectUrls();
         redirects.setCancelUrl("http://localhost:9000/");
         redirects.setReturnUrl("http://localhost:9000/purchasesuccess");
         payment.setRedirectUrls(redirects);
 
         madePayments = payment.create(context);
-            String id = madePayments.getId();
-            purchase.payment_id = id;
 
-           /*Iterating through the url lists received from the paypal response
-			 * and checking if we got a approval_url
-			 * If a approval url is found, we can redirect the client to the
-			 * paypal checkout page*/
+       /*Iterating through the url lists received from the paypal response
+         * and checking if we got a approval_url
+         * If a approval url is found, we can redirect the client to the
+         * paypal checkout page*/
         Iterator<Links> it = madePayments.getLinks().iterator();
         while(it.hasNext()) {
             Links link = it.next();
@@ -164,13 +173,14 @@ public class PayPalController extends Controller {
      * @return
      */
     public Result purchaseSuccess() {
-         String payerID;
+        DynamicForm paypalReturn = Form.form().bindFromRequest();
+
+        //These datas are generated in the return_url
+        paymentID = paypalReturn.get("paymentId");
+        String payerID = paypalReturn.get("PayerID");
+        token = paypalReturn.get("token");
 
         try {
-            DynamicForm paypalReturn = Form.form().bindFromRequest();
-            paymentID = paypalReturn.get("paymentId");
-            payerID = paypalReturn.get("PayerID");
-            token = paypalReturn.get("token");
             String accessToken = new OAuthTokenCredential(CLIENT_ID,
                     CLIENT_SECRET).getAccessToken();
             Map<String, String> sdkConfig = new HashMap<String, String>();
@@ -181,20 +191,22 @@ public class PayPalController extends Controller {
             paymentExecution = new PaymentExecution();
             paymentExecution.setPayerId(payerID);
 
-			/*when the payment is built, the client is redirected to the
-			 * approval page */
+            //Executes a payment
+            Payment newPayment = payment.execute(context, paymentExecution);
 
             flash("info");
-            return ok(purchaseResult.render(currentUser, purchase, details));
         } catch (Exception e) {
             flash("error");
             Logger.debug("Error at purchaseSucess: " + e.getMessage(), e);
             return redirect("/");
         }
+        /**when the payment is built, the client is redirected to the
+         purchaseResult view*/
+        return ok(purchaseResult.render(currentUser, purchase, details));
     }
 
     /**
-     * Method renders the purchaseFailure and shows a flash notification
+     * Method renders userCart and shows a flash notification
      * message if the transaction is canceled during the procedure on the
      * paypal page. It's called with the "fail" return url
      *
@@ -202,40 +214,22 @@ public class PayPalController extends Controller {
      */
     public Result purchaseFail() {
         flash("error");
-        return redirect(routes.CartController.getCart());
+        return ok(userCart.render(cartItems,currentUser));
     }
 
 
     /**
-     * Method is if the user approves the transaction on the couponResult page.
-     *  It executes the payment and finalizes the transaction.
-     *  For registered users, the transaction details contains a transacition.buyer
-     *  value, otherwise, if the user is "-1", it means the user is a unregistered user,
-     *  a transaction with name and surname is made and the transaction.buyer is set to null.
+     * Method saves purchase in a database
      *
      * @return render index page with a flash message
      */
-    @RequireCSRFCheck
     public Result approveTransaction() {
-
-        try {
-            Payment response = payment.execute(token, paymentExecution);
-            String saleId = response.getTransactions().get(0).getRelatedResources().get(0).getSale().getId();
-
-
-
             savePurchaseToDatabase(purchaseItems, purchase, cartItems);
 
             List<Product> products = Product.findAll();
             List<Product> recommendations = Recommendation.getRecommendations();
             flash("success");
             return ok(index.render(products, recommendations));
-
-        } catch (PayPalRESTException e) {
-            flash("error");
-            Logger.debug("Error at approveTransaction: " + e.getMessage() + e);
-            return redirect("/");
-        }
     }
 
 

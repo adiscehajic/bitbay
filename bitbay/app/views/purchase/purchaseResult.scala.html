@@ -10,32 +10,32 @@
     </div>
   </header>
   <div class="container">
-    <div class="paypal-info">
-      <ul>
-      @for( info <- details ){
-        <h2>
-          <li> @info </li>
-        </h2>
-      }
-      </ul>
-      <form class="paypal-approve">
-        <button  type="submit" class="btn btn-primary" formaction="@helper.CSRF(routes.PayPalController.approveTransaction())">SUBMIT</button>
-        <button  type="submit" class="btn btn-default" formaction="@routes.ApplicationController.index()" >CANCEL</button>
-      </form>
-    </div>
-    <br>
-    <div class="product-information">
+
         <!--/product-information-->
       @for( purchaseItem <- purchase.purchaseItems ){
-        <h2> @purchaseItem.product.name </h2>
-          <span> @purchaseItem.price.toString) BAM</span>
+        <h4> @purchaseItem.product.name </h4>
+          <span> @purchaseItem.price.toString BAM</span>
           <br>
           <div>
-            <label class="pull-left" >DESCRIPTION</label>
+            <label class="label" >DESCRIPTION</label>
+            </div>
+        <div>
             <textarea disabled rows="6" >@purchaseItem.product.description</textarea>
           </div>
-      }
-  </div>
+      </div>
+        <div class="container">
 
-  </div>
+          @for( info <- details ){
+            <h2>@info</h2>
+          }
+
+          <form class="paypal-approve">
+            <button  type="submit" class="btn btn-primary" formaction="@helper.CSRF(routes.PayPalController.approveTransaction())">SUBMIT</button>
+            <button  type="submit" class="btn btn-default" formaction="@routes.ApplicationController.index()" >CANCEL</button>
+          </form>
+        </div>
+
+
+}
+  
 }

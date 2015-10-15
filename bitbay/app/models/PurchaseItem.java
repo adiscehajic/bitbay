@@ -31,6 +31,14 @@ public class PurchaseItem extends Model {
 
     public PurchaseItem(){}
 
+    /**
+     * Constructor for a new purchaseItem object
+     * @param product
+     * @param user
+     * @param cart
+     * @param purchase
+     * @param quantity
+     */
     public PurchaseItem(Product product, User user, Cart cart, Purchase purchase, Integer quantity){
         this.product = product;
         this.purchase = purchase;
@@ -43,8 +51,8 @@ public class PurchaseItem extends Model {
     private static Finder<String, PurchaseItem> finder = new Finder<String, PurchaseItem>(PurchaseItem.class);
 
     /**
-     * This method is used to find all purchases
-     * @return - List of purchases
+     * This method is used to find all purchaseItem objects
+     * @return - List of purchaseItem
      */
     public static List<PurchaseItem> findAll() {
         List<PurchaseItem> purchaseItems = finder.all();
@@ -52,7 +60,7 @@ public class PurchaseItem extends Model {
     }
 
     /**
-     * Method for finding a single purchase
+     * Method for finding a single purchaseItem
      * @param id - PurchaseItem ID
      * @return - PurchaseItem by ID
      */

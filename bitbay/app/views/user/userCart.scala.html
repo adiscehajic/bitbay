@@ -4,7 +4,7 @@
 
 @main("Cart") {
 
-    <div class="panel panel-primary">
+    <div class="panel panel-primary" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
         <div class="panel-heading">
             <div class="panel-title">@user.firstName's Cart</div>
         </div>
@@ -80,13 +80,10 @@
                 <div class="col-md-4" align="center">
                     <div class="cartTotal">
                         <label style="margin-bottom: 15px;"> Total: <label style="font-size: 20px; margin-left: 15px; border-bottom: 1px solid lightblue"> @Cart.cartAmount(user) KM </label></label><br>
-                        <a href="@routes.ApplicationController.index()"><button class="btn btn-success"><span class="fa fa-arrow-left"></span> Countinue shopping </button></a>
+
+                        <a href="@routes.ApplicationController.index()"><button class="btn btn-success" style="min-width: 170px"><span class="fa fa-arrow-left"></span> Countinue shopping </button></a>
                         <form method="POST" action="@helper.CSRF(controllers.routes.PayPalController.purchaseProcessing())">
-                        <div class="row">
-                            <div class="col-md-8"></div>
-                            <div class="col-md-4" align="center">
-                                <input type="submit" id="paypal" value="Checkout" class="btn btn-primary" /><span class="fa fa-arrow-right"></span></div>
-                        </div>
+                            <button type="submit" id="paypal" style="min-width: 170px" class="btn btn-primary">Checkout<span class="fa fa-arrow-right"></span></button>
                     </form>
                     </div>
                 </div>

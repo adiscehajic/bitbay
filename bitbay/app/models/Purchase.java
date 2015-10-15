@@ -34,18 +34,34 @@ public class Purchase extends Model {
     public Purchase(){
     }
 
+    /**
+     * Constructor for new purchase.
+     * @param buyer - current user
+     * @param purchaseItem - list of purchased items
+
+     */
     public Purchase (User user, List<PurchaseItem> purchaseItems){
         this.user = user;
         this.purchaseItems = purchaseItems;
     }
 
 
+    /**
+     * Finds purchase by the given id
+     * @param user
+     * @return
+     */
     public static Purchase findPurchaseByUser(User user){
         Purchase purchase = Purchase.finder.where().eq("user", user).findUnique();
 
         return purchase;
     }
 
+    /**
+     * Calculates whole purchase price amount
+     * @param user - buyer
+     * @return amount
+     */
     public static Double purchaseAmount(User user) {
         Purchase purchase = Purchase.findPurchaseByUser(user);
         Double amount = 0.0;
@@ -56,6 +72,11 @@ public class Purchase extends Model {
         return amount;
     }
 
+    /**
+     * Finds if there is an item with the given id in a purchaseItem list of a current user
+     * @param id - item id
+     * @return boolean
+     */
     public static Boolean doesContainItem(Integer id) {
         User user = SessionHelper.currentUser();
         Purchase purchase = Purchase.findPurchaseByUser(user);

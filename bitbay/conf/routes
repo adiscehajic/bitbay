@@ -66,7 +66,7 @@ POST          /user/edit                              @controllers.Users.updateU
 POST          /purchaseprocessing                     @controllers.PayPalController.purchaseProcessing()
 GET           /purchasesuccess                        @controllers.PayPalController.purchaseSuccess()
 GET           /purchasefail                           @controllers.PayPalController.purchaseFail()
-GET           /purchaseTransaction                    @controllers.PayPalController.approveTransaction()
+GET           /purchaseTransaction/                   @controllers.PayPalController.approveTransaction()
 
 GET           /user/messages                          @controllers.MessageController.getReceivedMessages()
 GET           /user/messages/sent                     @controllers.MessageController.getSentMessages()
