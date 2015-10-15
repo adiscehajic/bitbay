@@ -73,3 +73,12 @@ td {
 	box-shadow: 4px 4px 1px #eee;
 	border: 1px solid #ddd;
 }
+
+.userInfoWrapper {
+	padding-top: 10px;
+	background-color: #F9F9F6;
+	padding-bottom: 10px;
+	border-radius: 3px;
+	box-shadow: 4px 4px 1px #eee;
+	border: 1px solid #ddd;
+}

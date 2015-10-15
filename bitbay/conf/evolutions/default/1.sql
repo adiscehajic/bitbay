@@ -48,6 +48,8 @@ create table image (
   secret_image_url          varchar(255),
   image_url                 varchar(255),
   product_id                integer,
+  user_id                   integer,
+  constraint uq_image_user_id unique (user_id),
   constraint pk_image primary key (id))
 ;
 
@@ -195,6 +197,7 @@ alter table user add constraint fk_user_userType_23 foreign key (user_type_id) r
 create index ix_user_userType_23 on user (user_type_id);
 alter table user add constraint fk_user_country_24 foreign key (country_id) references country (id) on delete restrict on update restrict;
 create index ix_user_country_24 on user (country_id);
+>>>>>>> develop
 
 
 

@@ -3,6 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 import com.sun.javafx.fxml.expression.Expression;
 import controllers.Users;
+import helpers.SessionHelper;
 import jdk.nashorn.internal.parser.Token;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
@@ -102,6 +103,9 @@ public class User extends Model {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     public Cart cart;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    public Image image;
+
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date registration = new Date();
@@ -109,6 +113,7 @@ public class User extends Model {
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date updated = new Date();
+
 
     public String token;
 
