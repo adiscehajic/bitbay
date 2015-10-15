@@ -1,6 +1,7 @@
 @(product: Product)(path: String)(comments:List[Comment])(topComments: List[Comment])(recommendedProducts: java.util.List[Product])(averageRating: String)
 
 @import helper._
+	@import helpers.CommonHelpers
 @main("Product") {
 	<div class="container" id="wrapper" style="padding-right: 30px">
 		<div class="row">
@@ -38,9 +39,9 @@
 						<tr class="blank_row"></tr>
 						<tr>
 							<td> User: </td>
-							@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
-								<td name="email"><a href="@routes.MessageController.newMessage(product.user.email)" style="text-decoration : none">@product.user.email <span class="glyphicon glyphicon-envelope"></span></a></td>
-							} else {
+							@if(session().get("email") != null ) {
+								<td name="email"><a href="@routes.Users.getUser(product.user.email)" style="text-decoration : none">@product.user.email</a><a href="@routes.MessageController.newMessage(product.user.email)" style="text-decoration : none"><span class="glyphicon glyphicon-envelope"></span></a></td>
+							} else {userOne.validated = true;
 								<td name="email">@product.user.email</td>
 							}
 						<tr>
@@ -201,7 +202,7 @@
 							<tr>
 								<td>
 									<a href=""><h4>@comment.title</h4></a>
-									<p class = "person">By @comment.user.firstName @comment.user.lastName on @comment.commentDate</p>
+									<p class = "person">By @comment.user.firstName @comment.user.lastName on @CommonHelpers.getDateAsString(comment.commentDate)</p>
 									<p style = "margin-bottom:20px;">@comment.text</p>
 									<span style = "margin-right:6px; ">Was this review helpful to you?</span>
 									<a id="like@comment.id"> <span id="thumbs-up@comment.id" class="glyphicon glyphicon-thumbs-up" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsUp(comment)</span></a>

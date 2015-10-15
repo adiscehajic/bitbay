@@ -14,6 +14,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -47,6 +48,7 @@ public class CommentController extends Controller {
         User user = SessionHelper.currentUser();
         comment.product = product;
         comment.user = user;
+        comment.commentDate = new Date();
         comment.save();
         // Redirecting to the product profile page.
         return redirect(routes.ProductController.getProduct(id));

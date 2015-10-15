@@ -1,5 +1,6 @@
 @(products: List[Product])(user: User)
 
+@import helpers.SessionHelper
 @main("User Profile") {
 
   <body>
@@ -44,7 +45,7 @@
                                    url: '@routes.ProductController.deleteProduct(product.id)',
                                    method: 'GET',
                                     }).success(function(){
-						             window.location.replace('@routes.Users.getAllUserProducts()');
+						             window.location.replace('@routes.Users.getAllUserProducts(user.email)');
                                       }).error(function(response){
                                       alert(response.responseText);
                                        });
@@ -58,7 +59,10 @@
                 }
               </btable>
             </table>
-                 <a href="@routes.ProductController.newProduct()"><button type="submit" class="btn btn-primary"> Create new product </button></a>
+              @if(SessionHelper.currentUser() == User.getUserByEmail(user.email)) {
+                  <a href="@routes.ProductController.newProduct()"><button type="submit" class="btn btn-primary">
+                      Create new product </button></a>
+              }
           </div>
         </div>
 

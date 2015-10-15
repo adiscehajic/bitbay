@@ -52,12 +52,12 @@ GET           /admin/messages/inbox                   @controllers.AdminControll
 GET           /admin/messages/sent                    @controllers.AdminController.adminSentMessages()
 GET           /admin/message                          @controllers.AdminController.adminViewMessage(id: Integer)
 
-GET           /user                                   @controllers.Users.getUser()
+
 POST          /user/validate                          @controllers.Users.validateFormUser()
 GET           /user/cart                              @controllers.CartController.getCart()
 POST          /user/cart                              @controllers.CartController.updateItemQuantity(id: Integer)
 DELETE        /user/cart/delete:id                    @controllers.CartController.removeFromCart(id: Integer)
-GET           /user/products                          @controllers.Users.getAllUserProducts()
+GET           /user/products/:email                   @controllers.Users.getAllUserProducts(email: String)
 DELETE        /user/delete                            @controllers.Users.deleteUserAccount()
 GET           /user/delete/:id                        @controllers.Users.deleteUser(id: Integer)
 GET           /user/edit                              @controllers.Users.editUser()
@@ -85,6 +85,6 @@ POST          /category/new                           @controllers.CategoryContr
 POST          /category/edit/:id                      @controllers.CategoryController.updateCategory(id:Integer)
 POST          /category/validateForm                  @controllers.CategoryController.validateFormCategory()
 
-
+GET           /user/:email                            @controllers.Users.getUser(email: String)
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                           controllers.Assets.versioned(path="/public", file: Asset)

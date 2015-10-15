@@ -1,6 +1,7 @@
 @(user: User)
 @import helper._
 
+@import helpers.SessionHelper
 @main("User Profile") {
     <div class="container">
         <div class="row">
@@ -64,14 +65,17 @@
                         </div>
                         <div class="panel-footer" style="background-color: transparent; border-top: none">
                             <span>
-                                @if(user.userType.id == 3) {
-                                    <a href="@routes.Users.getAllUserProducts()"><button type="submit" class="btn btn-lg btn-primary" >
-                                        Products</button></a>
+
+                                    @if(user.userType.id == 3) {
+                                        <a href="@routes.Users.getAllUserProducts(user.email)"><button type="submit" class="btn btn-lg btn-primary" >
+                                            Products</button></a>
+                                    }
+                                @if(SessionHelper.currentUser() == User.getUserByEmail(user.email)) {
+                                    <a href="@routes.Users.editUser()" title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning"><i class="glyphicon glyphicon-edit" style="font-size : 20 px"></i>
+                                        Edit</a>
+                                    <a id="deleteUser" title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-remove" style="font-size : 20 px"></i>
+                                        Delete</a>
                                 }
-                                <a href="@routes.Users.editUser()" title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning"><i class="glyphicon glyphicon-edit" style="font-size : 20 px"></i>
-                                    Edit</a>
-                                <a id="deleteUser" title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-remove" style="font-size : 20 px"></i>
-                                    Delete</a>
                             </span>
                         </div>
                     </div>
