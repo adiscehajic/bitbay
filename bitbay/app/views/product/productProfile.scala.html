@@ -28,112 +28,37 @@
 				}
 			</div>
 			<div class="col-md-6 " id="userInfo" style="padding-top: 10px;">
-				<h2 style="display: inline; font-family: serif">@product.name</h2>
 				<span class="fa-stack fa-2x" style="float: right; margin-top: 10px">
 					<i class="fa fa-star fa-stack-2x"></i>
 					<strong class="fa-stack-1x star-text">@averageRating</strong>
 				</span>
-				<table>
-					<tbody>
-						<tr class="blank_row"></tr>
-						<tr class="blank_row"></tr>
-						<tr>
-							<td> User: </td>
-							@if(session().get("email") != null ) {
-								<td name="email"><a href="@routes.Users.getUser(product.user.email)" style="text-decoration : none">@product.user.email </a><a href="@routes.MessageController.newMessage(product.user.email)" style="text-decoration : none"><span style="font-size: 20px" class="glyphicon glyphicon-envelope"></span></a></td>
-							} else {userOne.validated = true;
-								<td name="email">@product.user.email</td>
-							}
-						<tr>
-							<td> Category: </td>
-							<td>@product.category.name</td>
-						</tr>
-						<tr class="blank_row"></tr>
-						<tr>
-							<td> <h4> Price:</h4></td>
-							<td> <h4>@product.price KM</h4></td>
-						</tr>
-						<tr class="blank_row"></tr>
-
-						<tr>
-
-							@if(product.category == Category.getCategoryByName("Books")) {
-								<td> Publisher: </td>
-							}else {
-								<td> Manufacturer: </td>
-							}
-							<td>@product.manufacturer</td>
-						</tr>
-						<tr class="blank_row"></tr>
-						<tr>
-							<td>Quantity:</td>
-							<td>@product.quantity</td>
-						</tr>
-						<tr>
-							<td>Time Left: </td>
-							<td id="getting-started"></td>
-						</tr>
-						<tr>
-							<td>Availability:</td>
-							@if(product.quantity > 0) {
-								<td style="font-size: 15px; color: green;">Yes</td>
-							} else {
-								<td style="font-size: 15px; color: red"> No </td>
-							}
-						</tr>
-						<tr>
-							<td> Payment: </td>
-							<td><img src="@routes.Assets.versioned("images/paypal.png")"></td>
-						</tr>
-						<tr class="blank_row"></tr>
-						<tr class="blank_row"></tr>
-						<tr>
-							<td>
-								@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
-									<form action="@helper.CSRF(routes.CartController.addToCart(product.id))" method="POST">
-										@if(product.quantity > 0) {
-											<button type="submit " class="btn btn-primary" style="margin-bottom : 20px">
-												Add to cart </button>
-										} else {
-											<button type="submit " class="btn btn-primary" style="margin-bottom : 20px" disabled>
-												Add to cart </button>
-										}
-									</form>
-								}
-								@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 3 && product.user.id == User.getUserByEmail(session().get("email")).id) {
-									<form action="@routes.ProductController.editProduct(product.id)" method="GET">
-										<button type="submit " class="btn btn-primary" style="margin-bottom:20px">
-											Edit </button>
-									</form>
-								}
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-
-
-			</div>
-		</div>
-
-		<div class="row" >
-			<div class="col-md-6 col-md-offset-6" id="priceDiv">
+				<h2 style="display: inline; font-family: serif;">@product.name</h2>
+				<p style="height: 20px"></p>
+				<a href="@routes.Users.getUser(product.user.email)"> @product.user.email <a href="@routes.MessageController.newMessage(product.user.email)"><span class="glyphicon glyphicon-envelope"></span></a></a>
+				<br>
+				<label> Quantity: </label> <label> @product.quantity </label>
+				<br>
+				@if(Auction.getAuctionByProduct(product) != null) {
+					<label>Time Left: </label>
+					<label id="getting-started"></label>
+				}
+				<div id="priceDiv" style="padding-left: 20px">
 				@if(Auction.getAuctionByProduct(product) != null) {
 					<div>
 					@if(Bid.getNumberOfAuctionBids(Auction.getAuctionByProduct(product)) == 0) {
-						<p style="display : inline ; font-size : 15 px ; padding : 0 25 px 0 25 px ;">Starting bid:   </p>
-						<p style="display : inline ; font-size : 15 px ;"><strong>@Auction.getAuctionByProduct(product).startingPrice
+						<p style="display : inline ; font-size: 20px;">Starting bid:   </p>
+						<p style="display : inline ; font-size: 20px;"><strong>@Auction.getAuctionByProduct(product).startingPrice
 							KM</strong></p>
 					} else {
-						<p style="display : inline ; font-size : 15 px ; padding : 0 25 px 0 25 px ;">Current bid:   </p>
-						<p style="display : inline ; font-size : 15 px ;"><strong>@Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product))
+						<p style="display : inline ; font-size: 20px;">Current bid:   </p>
+						<p style="display : inline ; font-size: 20px;"><strong>@Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product))
 							KM</strong></p>
 					}
 					</div>
 
 					<form action="@helper.CSRF(routes.BidController.placeBidForProduct(product.id))" method="POST">
 						<div style="margin-top : 25 px">
-							<input type="text" name="amount" style="display : inline ; margin-top : 10 px ; margin-left : 135 px ; margin-right : 25 px ; width : 75 px ;"/>
+							<input type="text" name="amount" style="display : inline ; margin-top : 15px;"/>
 							<span class="alert-danger" data-error-for="amount" style="margin-left : 1 px ; font-weight : normal ;"></span>
 							<input type="submit" class="btn btn-primary" value="Place Bid" style="display : inline ; margin-top : 10 px ; margin-left : 25 px ; margin-right : 25 px ;"/>
 							@if(Bid.getNumberOfAuctionBids(Auction.getAuctionByProduct(product)) == 0) {
@@ -146,34 +71,49 @@
 						</div>
 					</form>
 				}else{
-					hello
+					<label style="font-size: 15px;"> Price: </label> <label style="font-size: 20px;"> @product.price  KM</label>
+					@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
+						<form action="@helper.CSRF(routes.CartController.addToCart(product.id))" method="POST">
+						@if(product.quantity > 0) {
+							<button type="submit " class="btn btn-primary" style="margin-bottom : 20px">
+								Add to cart </button>
+						} else {
+							<button type="submit " class="btn btn-primary" style="margin-bottom : 20px" disabled>
+								Add to cart </button>
+						}
+						</form>
+					}
 				}
-			</div>
-		</div>
+				</div>
+				<div style="margin-top:20px" id="deliveryWrapper">
+					<table>
+						<tbody>
+							<tr>
+								<td> Shipping: </td>
+								<td> </td>
+							</tr>
+							<tr>
+								<td> Delivery: </td>
+								<td> Estimated 10-15 days. </td>
+							</tr>
 
-
-		<div class="row" >
-			<div class="col-md-6 col-md-offset-6" style="margin-top:20px" id="deliveryWrapper">
-				<table>
-					<tbody>
-						<tr>
-							<td> Shipping: </td>
-							<td> </td>
+							<tr>
+								<td> Returns: </td>
+								<td> 60 days money back, buyer pays return shipping </td>
+							</tr>
+							<tr>
+							<td>Payment: </td>
+							<td><img src="@routes.Assets.versioned("images/paypal.png")"/></td>
 						</tr>
-						<tr>
-							<td> Delivery: </td>
-							<td> Estimated 10-15 days. </td>
-						</tr>
-						<tr>
-							<td> Returns: </td>
-							<td> 60 days money back, buyer pays return shipping </td>
-						</tr>
-					</tbody>
-				</table>
-
-
-
-
+						</tbody>
+					</table>
+				</div>
+				@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 3 && product.user.id == User.getUserByEmail(session().get("email")).id) {
+					<form action="@routes.ProductController.editProduct(product.id)" method="GET">
+						<button type="submit " class="btn btn-primary" style="margin-top: 20px">
+							Edit </button>
+					</form>
+				}
 			</div>
 		</div>
 		@if(recommendedProducts != null && recommendedProducts.size() > 3) {
@@ -381,7 +321,27 @@
 	<script src="@routes.Assets.versioned("javascripts/galleria.history.min.js")" type="text/javascript"></script>
 	<script src="@routes.Assets.versioned("javascripts/jquery.countdown.min.js")" type="text/javascript"></script>
 
-	<script src="@routes.Assets.versioned("javascripts/auctionCounter.js")" type="text/javascript"></script>
+	<script type="text/javascript">
+
+		$('#getting-started').countdown('@Auction.getAuctionEndingDate(product)', function(event) {
+			var hours = "@Auction.getAuctionEndingTime(product).substring(0, 2)";
+			var minutes = "@Auction.getAuctionEndingTime(product).substring(3, 5)";
+			var seconds = "@Auction.getAuctionEndingTime(product).substring(6, 8)";
+			var countHours = event.strftime('%H');
+			var countMinutes = event.strftime('%M');
+			var countSeconds = event.strftime('%S');
+			var resultHours = +countHours + +hours;
+			var resultMinutes = +countMinutes + +minutes;
+			if (event.strftime('%w') === "00") {
+				$(this).html(event.strftime('%dd ' + resultHours + 'h ' + resultMinutes + 'm ' + countSeconds + "s"));
+			} else if ((event.strftime('%w') && event.strftime('%d')) === "00") {
+				$(this).html(event.strftime(resultHours + 'h ' + resultMinutes + 'm ' + countSeconds + "s"));
+			} else {
+				$(this).html(event.strftime('%ww %dd ' + resultHours + 'h ' + resultMinutes + 'm ' + countSeconds + "s"));
+			}
+		});
+	</script>
+
 	<script >
 	// Load the classic theme
     Galleria.loadTheme('@routes.Assets.versioned("javascripts/galleria.classic.min.js")');

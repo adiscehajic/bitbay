@@ -37,6 +37,9 @@ public class BidController extends Controller {
         String amount = boundForm.data().get("amount");
 
         try {
+            if (Double.compare(Double.parseDouble(amount), Bid.getAmountOfHighestBid(auction)) < 0) {
+                return redirect(routes.ProductController.getProduct(id));
+            }
 
             Bid bid = new Bid(user, auction, Double.parseDouble(amount));
             bid.save();
