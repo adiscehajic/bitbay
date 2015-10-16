@@ -1,5 +1,5 @@
 @(product: Product)(path: String)(comments:List[Comment])(topComments: List[Comment])(recommendedProducts: java.util.List[Product])(averageRating: String)
-
+@import models.Bid
 @import helper._
 	@import helpers.CommonHelpers
 @main("Product") {
@@ -70,6 +70,10 @@
 							<td>@product.quantity</td>
 						</tr>
 						<tr>
+							<td>Time Left: </td>
+							<td id="getting-started"></td>
+						</tr>
+						<tr>
 							<td>Availability:</td>
 							@if(product.quantity > 0) {
 								<td style="font-size: 15px; color: green;">Yes</td>
@@ -106,24 +110,64 @@
 						</tr>
 					</tbody>
 				</table>
-				<div  id="deliveryWrapper">
-					<table>
-						<tbody>
-							<tr>
-								<td> Shipping: </td>
-								<td> </td>
-							</tr>
-							<tr>
-								<td> Delivery: </td>
-								<td> Estimated 10-15 days. </td>
-							</tr>
-							<tr>
-								<td> Returns: </td>
-								<td> 60 days money back, buyer pays return shipping </td>
-							</tr>
-						</tbody>
-					</table>
+
+
+
+			</div>
+		</div>
+
+		<div class="row" >
+			<div class="col-md-6 col-md-offset-6" id="priceDiv">
+				<div>
+					@if(Bid.getNumberOfAuctionBids(Auction.getAuctionByProduct(product)) == 0) {
+						<p style="display : inline ; font-size : 15 px ; padding : 0 25 px 0 25 px ;">Starting bid:   </p>
+						<p style="display : inline ; font-size : 15 px ;"><strong>@Auction.getAuctionByProduct(product).startingPrice
+							KM</strong></p>
+					}else{
+						<p style="display : inline ; font-size : 15 px ; padding : 0 25 px 0 25 px ;">Current bid:   </p>
+						<p style="display : inline ; font-size : 15 px ;"><strong>@Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product))
+							KM</strong></p>
+					}
 				</div>
+
+				<form action="@helper.CSRF(routes.BidController.placeBidForProduct(product.id))" method="POST">
+					<div style="margin-top: 25px">
+						<input type="text" name="amount" style="display: inline; margin-top: 10px; margin-left: 135px; margin-right: 25px; width: 75px;"/>
+						<span class="alert-danger" data-error-for="amount" style="margin-left : 1 px ; font-weight : normal ;"></span>
+						<input type="submit" class="btn btn-primary" value="Place Bid" style="display: inline; margin-top: 10px; margin-left: 25px; margin-right: 25px;"/>
+						@if(Bid.getNumberOfAuctionBids(Auction.getAuctionByProduct(product)) == 0) {
+							<p style="font-size: 10px; margin-left: 135px;">Enter @Auction.getAuctionByProduct(product).startingPrice KM or more</p>
+						}else{
+							<p style="font-size: 10px; margin-left: 135px;">Enter more than @Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product)) KM</p>
+						}
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+		<div class="row" >
+			<div class="col-md-6 col-md-offset-6" style="margin-top:20px" id="deliveryWrapper">
+				<table>
+					<tbody>
+						<tr>
+							<td> Shipping: </td>
+							<td> </td>
+						</tr>
+						<tr>
+							<td> Delivery: </td>
+							<td> Estimated 10-15 days. </td>
+						</tr>
+						<tr>
+							<td> Returns: </td>
+							<td> 60 days money back, buyer pays return shipping </td>
+						</tr>
+					</tbody>
+				</table>
+
+
+
+
 			</div>
 		</div>
 		@if(recommendedProducts != null && recommendedProducts.size() > 3) {
@@ -329,6 +373,32 @@
 	</script>
 	<script src="@routes.Assets.versioned("javascripts/galleria-1.4.2.min.js")" type="text/javascript"></script>
 	<script src="@routes.Assets.versioned("javascripts/galleria.history.min.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.versioned("javascripts/jquery.countdown.min.js")" type="text/javascript"></script>
+
+	<script type="text/javascript">
+	var hours = "@Auction.getAuctionEndingTime(product).substring(0, 2)";
+	var minutes = "@Auction.getAuctionEndingTime(product).substring(3, 5)";
+	var seconds = "@Auction.getAuctionEndingTime(product).substring(6, 8)";
+
+	$('#getting-started').countdown('@Auction.getAuctionEndingDate(product)', function(event) {
+
+		var countHours = event.strftime('%H');
+		var countMinutes = event.strftime('%M');
+		var countSeconds = event.strftime('%S');
+
+		var resultHours = +countHours + +hours;
+		var resultMinutes = +countMinutes + +minutes;
+
+		if (event.strftime('%w') === "00") {
+			$(this).html(event.strftime('%dd ' + resultHours + 'h ' + resultMinutes + 'm ' + countSeconds + "s"));
+		} else if ((event.strftime('%w') && event.strftime('%d')) === "00") {
+			$(this).html(event.strftime(resultHours + 'h ' + resultMinutes + 'm ' + countSeconds + "s"));
+		} else {
+			$(this).html(event.strftime('%ww %dd ' + resultHours + 'h ' + resultMinutes + 'm ' + countSeconds + "s"));
+		}
+	});
+</script>
+
 	<script >
 	// Load the classic theme
     Galleria.loadTheme('@routes.Assets.versioned("javascripts/galleria.classic.min.js")');

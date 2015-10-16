@@ -1,7 +1,28 @@
+<<<<<<< HEAD
 # --- Created by Ebean DDL
 # To stop Ebean DDL generation, remove this comment and start using Evolutions
 
 # --- !Ups
+
+create table auction (
+  id                        integer auto_increment not null,
+  product_id                integer,
+  starting_price            double,
+  is_active                 tinyint(1) default 0,
+  starting_date             datetime,
+  ending_date               datetime,
+  constraint uq_auction_product_id unique (product_id),
+  constraint pk_auction primary key (id))
+;
+
+create table bid (
+  id                        integer auto_increment not null,
+  user_id                   integer,
+  auction_id                integer,
+  amount                    double,
+  biding_date               datetime,
+  constraint pk_bid primary key (id))
+;
 
 create table cart (
   id                        integer auto_increment not null,
@@ -149,6 +170,9 @@ create table user_type (
   constraint pk_user_type primary key (id))
 ;
 
+
+# --- !Downs
+
 alter table cart add constraint fk_cart_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
 create index ix_cart_user_1 on cart (user_id);
 alter table cart_item add constraint fk_cart_item_user_2 foreign key (user_id) references user (id) on delete restrict on update restrict;
@@ -205,6 +229,10 @@ create index ix_user_country_25 on user (country_id);
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
+
+drop table auction;
+
+drop table bid;
 
 drop table cart;
 

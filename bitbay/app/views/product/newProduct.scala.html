@@ -33,16 +33,6 @@
                     <span class="alert-danger" data-error-for="name" style="margin-left : 1 px ; font-weight : normal ;"></span>
                 </div>
                 <div class="form-group">
-                    <label for="price">Price: * </label>
-                    <input type="number" id="replyNumber" data-bind="value:replyNumber" class="form-control" value="@productForm("price").value" name="price" onfocusout="validatePrice()" onchange="validateProduct()">
-                    <span class="alert-danger" data-error-for="price" style="margin-left : 1 px ; font-weight : normal ;"></span>
-                </div>
-                <div class="form-group">
-                    <label for="quantity">Quantity: * </label>
-                    <input type="number" id="replyNumber" data-bind="value:replyNumber" class="form-control" value="@productForm("quantity").value" name="quantity" onfocusout="validateQuanity()" onchange="validateProduct()">
-                    <span class="alert-danger" data-error-for="quantity" style="margin-left : 1 px ; font-weight : normal ;"></span>
-                </div>
-                <div class="form-group">
                     <label for="manufacturer">Manufacturer:</label>
                     <input type="text" class="form-control" id="manufacturer" value="@productForm("manufacturer").value" name="manufacturer" onfocusout="validateProduct()">
                 </div>
@@ -53,6 +43,31 @@
                     <option value="2">Auction</option>
                 </select>
                 <span class="alert-danger" data-error-for="sellingType" style="margin-left : 1 px ; font-weight : normal ;"></span>
+                <div class="form-group">
+                    <label for="price">Price: * </label>
+                    <input type="number" id="price" data-bind="value:price" class="form-control" value="@productForm("price").value" name="price" onfocusout="validatePrice()" onchange="validateProduct()" required>
+                    <span class="alert-danger" data-error-for="price" style="margin-left : 1 px ; font-weight : normal ;"></span>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity: * </label>
+                    <input type="number" id="quantity" data-bind="value:replyNumber" class="form-control" value="1" name="quantity" onfocusout="validateQuanity()" onchange="validateProduct()" required>
+                    <span class="alert-danger" data-error-for="quantity" style="margin-left : 1 px ; font-weight : normal ;"></span>
+                </div>
+                <div class="form-group">
+                    <label for="starting-price">Starting price: *</label>
+                    <input type="text" class="form-control" id="starting-price" name="startingPrice" required>
+                    <label for="buy-it-now-price">Buy It Now Price:</label>
+                    <input type="text" class="form-control" id="buy-it-now-price" name="buy-it-now-price" required>
+                    <label for="auction-duration">Duration: *</label>
+                    <select id="auction-duration" class="form-control placeholder" name="auction-duration" required>
+                        <option value="3" selected>3 days</option>
+                        <option value="5">5 days</option>
+                        <option value="7">7 days</option>
+                        <option value="10">10 days</option>
+                        <option value="15">15 days</option>
+                        <option value="30">30 days</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label for="description">Description:</label>
                     <textarea class="form-control" rows="5" id="description" name="description" onfocusout="validateProduct()">@productForm("description").value</textarea>
@@ -66,8 +81,37 @@
                 }
     </div>
     </div>
-    <script>
+    <script >
         var urlPost = "@routes.ProductController.validateFormProduct()";
     </script>
     <script src="@routes.Assets.versioned("javascripts/validateForm.js")" type="text/javascript"></script>
+    <script>
+        $(document).ready(function(){
+            $("#starting-price").prop("disabled", true);
+            $("#buy-it-now-price").prop("disabled", true);
+            $("#auction-duration").prop("disabled", true);
+            $("#price").prop("disabled", true);
+            $("#quantity").prop("disabled", true);
+
+            console.log($("#selling-type").val());
+
+            $("#selling-type").on('change', function() {
+                            console.log($("#selling-type").val());
+            if($("#selling-type").val() == "1") {
+                $("#price").prop("disabled", false);
+                $("#quantity").prop("disabled", false);
+                $("#starting-price").prop("disabled", true);
+                $("#buy-it-now-price").prop("disabled", true);
+                $("#auction-duration").prop("disabled", true);
+            }
+            if ($("#selling-type").val() == "2"){
+                $("#starting-price").prop("disabled", false);
+                $("#buy-it-now-price").prop("disabled", false);
+                $("#auction-duration").prop("disabled", false);
+                $("#price").prop("disabled", true);
+                $("#quantity").prop("disabled", true);
+            }
+            });
+        });
+    </script>
 }

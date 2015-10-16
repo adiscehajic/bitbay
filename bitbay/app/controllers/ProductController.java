@@ -29,6 +29,8 @@ import views.html.category.viewProductsByCategory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +40,7 @@ public class ProductController extends Controller {
 
     // Declaring product form.
     private static Form<Product> productForm = Form.form(Product.class);
+    private static Form<Auction> auctionForm = Form.form(Auction.class);
 
     /**
      * Renders page where all product informations of selected product are shown.
@@ -166,6 +169,8 @@ public class ProductController extends Controller {
             Product product = boundForm.get();
             product.user = user;
             product.category = category;
+            // Saving product into database.
+            product.save();
 
             // Getting selected images
             Http.MultipartFormData body = request().body().asMultipartFormData();
@@ -178,8 +183,26 @@ public class ProductController extends Controller {
                     image.save();
                 }
             }
-            // Saving product into database.
-            product.save();
+
+            if (product.sellingType.equals("2")) {
+                Form<Auction> auctionBoundForm = auctionForm.bindFromRequest();
+                Auction auction = auctionBoundForm.get();
+
+                String days = auctionBoundForm.data().get("auction-duration");
+                String buyItNowPrice = auctionBoundForm.data().get("buy-it-now-price");
+
+                product.price = Double.parseDouble(buyItNowPrice);
+                product.update();
+
+                auction.startingDate = new Date();
+                auction.product = product;
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date());
+                calendar.add(Calendar.DATE, Integer.parseInt(days));
+                auction.endingDate = calendar.getTime();
+                auction.save();
+            }
         }catch(RuntimeException e) {
             Logger.info("Uploaded file is not image file.");
             return badRequest(newProduct.render(boundForm, Category.findAll()));
