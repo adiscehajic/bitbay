@@ -38,9 +38,10 @@
 				<br>
 				<label> Quantity: </label> <label> @product.quantity </label>
 				<br>
-				<label>Time Left: </label>
-				<label id="getting-started"></label>
-
+				@if(Auction.getAuctionByProduct(product) != null) {
+					<label>Time Left: </label>
+					<label id="getting-started"></label>
+				}
 				<div id="priceDiv" style="padding-left: 20px">
 				@if(Auction.getAuctionByProduct(product) != null) {
 					<div>
@@ -321,10 +322,11 @@
 	<script src="@routes.Assets.versioned("javascripts/jquery.countdown.min.js")" type="text/javascript"></script>
 
 	<script type="text/javascript">
-		var hours = "@Auction.getAuctionEndingTime(product).substring(0, 2)";
-		var minutes = "@Auction.getAuctionEndingTime(product).substring(3, 5)";
-		var seconds = "@Auction.getAuctionEndingTime(product).substring(6, 8)";
+
 		$('#getting-started').countdown('@Auction.getAuctionEndingDate(product)', function(event) {
+			var hours = "@Auction.getAuctionEndingTime(product).substring(0, 2)";
+			var minutes = "@Auction.getAuctionEndingTime(product).substring(3, 5)";
+			var seconds = "@Auction.getAuctionEndingTime(product).substring(6, 8)";
 			var countHours = event.strftime('%H');
 			var countMinutes = event.strftime('%M');
 			var countSeconds = event.strftime('%S');

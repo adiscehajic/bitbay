@@ -47,10 +47,12 @@ public class Auction extends Model {
 
     public static String getAuctionEndingDate(Product product) {
         Auction auction = finder.where().eq("product", product).findUnique();
-
-        Date endingDate = auction.endingDate;
-
-        return CommonHelpers.getOnlyDate(endingDate);
+        Date endingDate = null;
+        if (auction != null) {
+            endingDate = auction.endingDate;
+            return CommonHelpers.getOnlyDate(endingDate);
+        }
+        return CommonHelpers.getOnlyDate(new Date());
     }
 
     public static String getAuctionEndingTime(Product product) {
@@ -59,10 +61,8 @@ public class Auction extends Model {
         if (auction != null) {
             Date endingDate = auction.endingDate;
             return CommonHelpers.getTimeFromDate(endingDate);
-        } else {
-            return null;
         }
-
+        return CommonHelpers.getTimeFromDate(new Date());
     }
 
     public static void checkAuctionOutcome() {

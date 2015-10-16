@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
@@ -51,7 +52,13 @@ public class Bid extends Model {
     }
 
     public static Double getAmountOfHighestBid(Auction auction) {
-        return finder.where().eq("auction", auction).orderBy("amount desc").findList().get(0).amount;
+
+        try {
+            return finder.where().eq("auction", auction).orderBy("amount desc").findList().get(0).amount;
+        } catch (IndexOutOfBoundsException e) {
+            Logger.error(e.getMessage());
+            return auction.startingPrice;
+        }
     }
 
     public static List<Bid> getAuctionBids(Auction auction) {
