@@ -30,7 +30,7 @@ td {
 #userInfo {
 
 	padding-bottom: 20px;
-	background-color: #E0EBEB;
+	background-color: #ffffff;
 	border-radius: 3px;
 	box-shadow: 4px 4px 1px #eee;
 	border: 1px solid #ddd;
@@ -71,6 +71,24 @@ td {
 	border: 1px solid #ddd;
 }
 
-
 /* This rule is read by Galleria to define the gallery height: */
 #galleria{height:586px}
+
+
+.cartTotal {
+	padding-top: 10px;
+	background-color: #E6E5FF;
+	padding-bottom: 10px;
+	border-radius: 3px;
+	box-shadow: 4px 4px 1px #eee;
+	border: 1px solid #ddd;
+}
+
+.userInfoWrapper {
+	padding-top: 10px;
+	background-color: #F9F9F6;
+	padding-bottom: 10px;
+	border-radius: 3px;
+	box-shadow: 4px 4px 1px #eee;
+	border: 1px solid #ddd;
+}

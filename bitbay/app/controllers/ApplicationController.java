@@ -1,9 +1,12 @@
 package controllers;
 
 import com.avaje.ebean.Model.Finder;
+import helpers.MailHelper;
 import helpers.SessionHelper;
 import models.*;
 import org.mindrot.jbcrypt.BCrypt;
+import play.Logger;
+import play.Play;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
@@ -18,6 +21,7 @@ import views.html.signup;
 import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Adis Cehajic on 9/21/2015.
@@ -133,13 +137,18 @@ public class ApplicationController extends Controller {
             user.password = BCrypt.hashpw(newUser.password, BCrypt.gensalt());
             user.email = newUser.email;
             user.userType = userType;
+            //Setting new token
+            user.token = UUID.randomUUID().toString();
+            //setting validated to false
+            user.setValidated(false);
             // Saving new user into database.
             user.save();
+            MailHelper.send(user.email, Users.BIT_BAY + "/signup/validate/" + user.token);
             // Clearing all sessions and creating new session that stores user email
             session().clear();
-            session("email", newUser.email);
+           // session("email", user.email);
             // Redirecting to the main page.
-            return redirect(routes.ApplicationController.index());
+            return redirect(routes.ApplicationController.signIn());
         }
     }
 
@@ -210,6 +219,9 @@ public class ApplicationController extends Controller {
             // redirecting to the main page, othewise opens sign in page.
             if (user == null || user.userType.id == UserType.ADMIN) {
                 errors.add(new ValidationError("password", "Wrong email or password."));
+            }
+            if(!user.validated){
+                errors.add(new ValidationError("password", "Please verify your email"));
             }
             return errors.isEmpty() ? null : errors;
         }

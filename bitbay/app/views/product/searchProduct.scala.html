@@ -10,6 +10,7 @@
                     <th>Product</th>
                     <th><a href=""><span class="glyphicon glyphicon-sort"></span> Name</a></th>
                     <th><a href=""><span class="glyphicon glyphicon-sort"></span> Price</a></th>
+                    <th><a href=""><span class="glyphicon glyphicon-sort"></span> Rating</a></th>
                     <th><a href=""><span class="glyphicon glyphicon-sort"></span> Date</a></th>
                 </tr>
             </thead>
@@ -22,6 +23,10 @@
                     }</td>
                     <td><a href="@routes.ProductController.getProduct(product.id)"><h4>@product.name</h4></a></td>
                     <td><p style = "font-weight:bold;">@product.price KM</p></td>
+                    <td><span class="fa-stack fa-2x">
+                        <i class="fa fa-star fa-stack-2x"></i>
+                        <strong class="fa-stack-1x star-text">@Rating.getAverageRating(product.id)</strong>
+                    </span></td>
                     <td><p style = "color: #777">@product.registration</p></td>
 
                 </tr>

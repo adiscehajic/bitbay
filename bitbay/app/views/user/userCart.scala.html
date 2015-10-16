@@ -4,7 +4,7 @@
 
 @main("Cart") {
 
-    <div class="panel panel-primary">
+    <div class="panel panel-primary" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
         <div class="panel-heading">
             <div class="panel-title">@user.firstName's Cart</div>
         </div>
@@ -19,9 +19,9 @@
                     <tr>
                         <th> Product </th>
                         <th></th>
-                        <th> Quantity </th>
                         <th> Price </th>
-                        <th></th>
+                        <th> Quantity </th>
+                        <th> Subtotal </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,8 +38,9 @@
                             </a></td>
                         }
                             <td class="cartData" style="font-size : 17px"><a href="@routes.ProductController.getProduct(cartItem.product.id)"> @cartItem.product.name </a></td>
-                            <td class="cartData" style="align: center;"><input type="number" style="display:inline" id="replyNumber" data-bind="value:replyNumber" onfocusout="quantityValidator()" min="1" max="@cartItem.product.quantity" value="@cartItem.quantity" name="quantity"><br><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-floppy-save"></span></button></td>
-                            <td class="cartData"> @cartItem.price KM</td>
+                            <td class="cartData" width="200px"> @cartItem.product.price </td>
+                            <td class="cartData" style="align: center;"><input type="number" style="display:inline" id="replyNumber" data-bind="value:replyNumber" onfocusout="quantityValidator()" min="1" max="@cartItem.product.quantity" value="@cartItem.quantity" name="quantity"><button type="submit"><span class="fa fa-check" visible="false"></span>Update</button></td>
+                            <td class="cartData"> @cartItem.price KM </td>
                             <td class="cartData"><a href="#" id="delete@cartItem.id"><span class="glyphicon glyphicon-remove" style="font-size : 20 px"></span></a></td>
                         </tr>
                         </form>
@@ -77,13 +78,15 @@
             <div class="row">
                 <div class="col-md-8"></div>
                 <div class="col-md-4" align="center">
-                    <label> Total: @Cart.cartAmount(user) KM </label>
+                    <div class="cartTotal">
+                        <label style="margin-bottom: 15px;"> Total: <label style="font-size: 20px; margin-left: 15px; border-bottom: 1px solid lightblue"> @Cart.cartAmount(user) KM </label></label><br>
+
+                        <a href="@routes.ApplicationController.index()"><button class="btn btn-success" style="min-width: 170px"><span class="fa fa-arrow-left"></span> Countinue shopping </button></a>
+                        <form method="POST" action="@helper.CSRF(controllers.routes.PayPalController.purchaseProcessing())">
+                            <button type="submit" id="paypal" style="min-width: 170px" class="btn btn-primary">Checkout <span class="fa fa-arrow-right"></span></button>
+                    </form>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8"></div>
-                <div class="col-md-4" align="center">
-                <button class="btn btn-primary"> Checkout </button></div>
             </div>
             }
         </div>

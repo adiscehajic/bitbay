@@ -11,23 +11,23 @@ POST          /signup                                 @controllers.ApplicationCo
 GET           /signin                                 @controllers.ApplicationController.signIn()
 POST          /signin                                 @controllers.ApplicationController.validateSignIn()
 GET           /logout                                 @controllers.ApplicationController.logout()
+GET           /signup/validate/:token                 @controllers.Users.emailValidation(token: String)
+POST          /signin/validateFormLog                 @controllers.ApplicationController.validateFormLogin()
+POST          /signup/validateFormReg                 @controllers.ApplicationController.validateFormRegistration()
+
 GET           /contactus                              @controllers.EmailController.contactUs()
 POST          /contactus                              @controllers.EmailController.sendEmail()
 POST          /contactus/validateformcontactus        @controllers.EmailController.validateFormContactUs()
 
-POST          /signin/validateFormLog                 @controllers.ApplicationController.validateFormLogin()
-POST          /signup/validateFormReg                 @controllers.ApplicationController.validateFormRegistration()
 POST          /product/comment/validate               @controllers.CommentController.validateFormComment()
-
 POST          /product/                               @controllers.ProductController.productRating()
-POST          /product/bid/validatebid                @controllers.BidController.validateFormBid()
+POST          /product/placebid                       @controllers.BidController.placeBidForProduct(id: Integer)
 POST          /product/new/validateForm               @controllers.ProductController.validateFormProduct()
 GET           /product/new                            @controllers.ProductController.newProduct()
 POST          /product/thumbUp                        @controllers.CommentController.saveThumbUp()
 GET           /product/search                         @controllers.ProductController.searchProduct()
 POST          /product/search                         @controllers.ProductController.autocompleteSearch()
 GET           /product/category                       @controllers.ProductController.viewProductsByCategory(id: Integer)
-POST          /product/placebid                       @controllers.BidController.placeBidForProduct(id: Integer)
 GET           /product/:id                            @controllers.ProductController.getProduct(id: Integer)
 POST          /product/:id                            @controllers.CartController.addToCart(id: Integer)
 POST          /product/comment/:id                    @controllers.CommentController.saveComment(id: Integer)
@@ -51,16 +51,21 @@ GET           /admin/messages/inbox                   @controllers.AdminControll
 GET           /admin/messages/sent                    @controllers.AdminController.adminSentMessages()
 GET           /admin/message                          @controllers.AdminController.adminViewMessage(id: Integer)
 
-GET           /user                                   @controllers.Users.getUser()
 POST          /user/validate                          @controllers.Users.validateFormUser()
 GET           /user/cart                              @controllers.CartController.getCart()
 POST          /user/cart                              @controllers.CartController.updateItemQuantity(id: Integer)
 DELETE        /user/cart/delete:id                    @controllers.CartController.removeFromCart(id: Integer)
-GET           /user/products                          @controllers.Users.getAllUserProducts()
+GET           /user/products/:email                   @controllers.Users.getAllUserProducts(email: String)
 DELETE        /user/delete                            @controllers.Users.deleteUserAccount()
 GET           /user/delete/:id                        @controllers.Users.deleteUser(id: Integer)
 GET           /user/edit                              @controllers.Users.editUser()
 POST          /user/edit                              @controllers.Users.updateUser()
+POST          /user/saveuserimage                     @controllers.Users.saveUserPicture()
+
+POST          /purchaseprocessing                     @controllers.PayPalController.purchaseProcessing()
+GET           /purchasesuccess                        @controllers.PayPalController.purchaseSuccess()
+GET           /purchasefail                           @controllers.PayPalController.purchaseFail()
+GET           /purchaseTransaction/                   @controllers.PayPalController.approveTransaction()
 
 GET           /user/messages                          @controllers.MessageController.getReceivedMessages()
 GET           /user/messages/sent                     @controllers.MessageController.getSentMessages()
@@ -78,6 +83,6 @@ POST          /category/new                           @controllers.CategoryContr
 POST          /category/edit/:id                      @controllers.CategoryController.updateCategory(id:Integer)
 POST          /category/validateForm                  @controllers.CategoryController.validateFormCategory()
 
-
+GET           /user/:email                            @controllers.Users.getUser(email: String)
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                           controllers.Assets.versioned(path="/public", file: Asset)

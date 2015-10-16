@@ -1,6 +1,7 @@
 @(product: Product)(path: String)(comments:List[Comment])(topComments: List[Comment])(recommendedProducts: java.util.List[Product])(averageRating: String)
 @import models.Bid
 @import helper._
+	@import helpers.CommonHelpers
 @main("Product") {
 	<div class="container" id="wrapper" style="padding-right: 30px">
 		<div class="row">
@@ -21,12 +22,13 @@
 				}
 				@if(Cart.doesContainItem(product.id)) {
 					<div style="margin-left: auto; margin-right: auto; width: 10em">
+						<h4 style="margin-left: 25px">Rate product</h4>
 						<input class="rating" data-max="5" data-min="1" id="some_id" name="your_awesome_parameter" type="number" data-empty-value="0" data-icon-lib="fa" data-active-icon="fa-star fa-2x" data-inactive-icon="fa-star-o fa-2x"/>
 					</div>
 				}
 			</div>
-			<div class="col-md-6 " id="userInfo" style="padding-top: 10px; height: 470px">
-				<h2 style="display: inline;">@product.name</h2>
+			<div class="col-md-6 " id="userInfo" style="padding-top: 10px;">
+				<h2 style="display: inline; font-family: serif">@product.name</h2>
 				<span class="fa-stack fa-2x" style="float: right; margin-top: 10px">
 					<i class="fa fa-star fa-stack-2x"></i>
 					<strong class="fa-stack-1x star-text">@averageRating</strong>
@@ -37,9 +39,9 @@
 						<tr class="blank_row"></tr>
 						<tr>
 							<td> User: </td>
-							@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
-								<td name="email"><a href="@routes.MessageController.newMessage(product.user.email)" style="text-decoration : none">@product.user.email <span class="glyphicon glyphicon-envelope"></span></a></td>
-							} else {
+							@if(session().get("email") != null ) {
+								<td name="email"><a href="@routes.Users.getUser(product.user.email)" style="text-decoration : none">@product.user.email </a><a href="@routes.MessageController.newMessage(product.user.email)" style="text-decoration : none"><span style="font-size: 20px" class="glyphicon glyphicon-envelope"></span></a></td>
+							} else {userOne.validated = true;
 								<td name="email">@product.user.email</td>
 							}
 						<tr>
@@ -54,7 +56,12 @@
 						<tr class="blank_row"></tr>
 
 						<tr>
-							<td> Manifacturer: </td>
+
+							@if(product.category == Category.getCategoryByName("Books")) {
+								<td> Publisher: </td>
+							}else {
+								<td> Manufacturer: </td>
+							}
 							<td>@product.manufacturer</td>
 						</tr>
 						<tr class="blank_row"></tr>
@@ -68,11 +75,15 @@
 						</tr>
 						<tr>
 							<td>Availability:</td>
-							<td>Yes</td>
+							@if(product.quantity > 0) {
+								<td style="font-size: 15px; color: green;">Yes</td>
+							} else {
+								<td style="font-size: 15px; color: red"> No </td>
+							}
 						</tr>
 						<tr>
 							<td> Payment: </td>
-							<td> Paypal </td>
+							<td><img src="@routes.Assets.versioned("images/paypal.png")"></td>
 						</tr>
 						<tr class="blank_row"></tr>
 						<tr class="blank_row"></tr>
@@ -80,8 +91,13 @@
 							<td>
 								@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
 									<form action="@helper.CSRF(routes.CartController.addToCart(product.id))" method="POST">
-										<button type="submit " class="btn btn-primary" style="margin-bottom:20px">
-											Add to cart </button>
+										@if(product.quantity > 0) {
+											<button type="submit " class="btn btn-primary" style="margin-bottom : 20px">
+												Add to cart </button>
+										} else {
+											<button type="submit " class="btn btn-primary" style="margin-bottom : 20px" disabled>
+												Add to cart </button>
+										}
 									</form>
 								}
 								@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 3 && product.user.id == User.getUserByEmail(session().get("email")).id) {
@@ -94,6 +110,9 @@
 						</tr>
 					</tbody>
 				</table>
+
+
+
 			</div>
 		</div>
 
@@ -145,6 +164,10 @@
 						</tr>
 					</tbody>
 				</table>
+
+
+
+
 			</div>
 		</div>
 		@if(recommendedProducts != null && recommendedProducts.size() > 3) {
@@ -156,7 +179,7 @@
 			<div class="row">
 			@for(product <- recommendedProducts) {
 				<div class="col-sm-6 col-md-3 col-lg-3">
-					<div class="thumbnail" style="height:230px;" id="ellipsis@product.id">
+					<div class="thumbnail" style="height:260px;" id="ellipsis@product.id">
 						@if(product.images.size() > 0) {
 							<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
 								<img class="img-responsive" src="@product.images.get(0).getThumbnail(130, 130)" ></a>
@@ -165,6 +188,7 @@
 								<img class="img-responsive" src="http://placehold.it/130x130" ></a>
 						}
 					<div class="caption">
+
 						<span class="fa-stack fa-2x" style="float: right; margin-top: 10px">
 							<i class="fa fa-star fa-stack-2x"></i>
 							<strong class="fa-stack-1x star-text">@Rating.getAverageRating(product.id)</strong>
@@ -222,7 +246,7 @@
 							<tr>
 								<td>
 									<a href=""><h4>@comment.title</h4></a>
-									<p class = "person">By @comment.user.firstName @comment.user.lastName on @comment.commentDate</p>
+									<p class = "person">By @comment.user.firstName @comment.user.lastName on @CommonHelpers.getDateAsString(comment.commentDate)</p>
 									<p style = "margin-bottom:20px;">@comment.text</p>
 									<span style = "margin-right:6px; ">Was this review helpful to you?</span>
 									<a id="like@comment.id"> <span id="thumbs-up@comment.id" class="glyphicon glyphicon-thumbs-up" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsUp(comment)</span></a>

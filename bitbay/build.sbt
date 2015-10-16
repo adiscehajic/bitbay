@@ -15,6 +15,8 @@ libraryDependencies ++= Seq(
   "org.mindrot" % "jbcrypt" % "0.3m",
   "com.cloudinary" % "cloudinary" % "1.0.14",
   "org.apache.commons" % "commons-email" % "1.3.3",
+  "com.typesafe.play" %% "play-mailer" % "2.4.0",
+  "com.paypal.sdk" % "rest-api-sdk" % "1.2.0",
   filters
 )
 

@@ -1,7 +1,10 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.sun.javafx.fxml.expression.Expression;
 import controllers.Users;
+import helpers.SessionHelper;
+import jdk.nashorn.internal.parser.Token;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.data.validation.Constraints;
@@ -13,9 +16,13 @@ import java.util.Date;
 import play.data.format.Formats;
 import com.avaje.ebean.Model.Finder;
 import play.data.validation.ValidationError;
+import play.filters.csrf.CSRF;
 import scala.collection.immutable.StreamViewLike;
+import play.filters.csrf.AddCSRFToken;
 
 import javax.persistence.*;
+
+import java.util.UUID;
 
 import java.lang.String;
 import java.lang.Integer;
@@ -99,6 +106,9 @@ public class User extends Model {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     public Cart cart;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    public Image image;
+
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date registration = new Date();
@@ -109,6 +119,8 @@ public class User extends Model {
 
 
     public String token;
+
+    public Boolean validated;
 
     // Declaring finder.
     private static Finder<String, User> finder =
@@ -134,6 +146,7 @@ public class User extends Model {
         this.email = email;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.userType = userType;
+
     }
 
     /**
@@ -198,7 +211,7 @@ public class User extends Model {
         return errors.isEmpty() ? null : errors;
     }
 
-    public static String getAverageUserRating(User user){
+    public static String getAverageUserRating(User user) {
         List<Product> userProducts = Product.findAllProductsByUser(user);
         Double average = 0.0;
         Double ratedProducts = 0.0;
@@ -212,7 +225,7 @@ public class User extends Model {
                 average = average + rating;
             }
 
-            if(average != 0) {
+            if (average != 0) {
                 Double result = average / ratedProducts;
                 DecimalFormat df = new DecimalFormat("#.0");
 
@@ -223,6 +236,38 @@ public class User extends Model {
         } else {
             return "0.0";
         }
-
     }
+
+    /**
+     *This static method is used to find user by token.
+     */
+    public static User findUserByToken(String token) {
+        return finder.where().eq("token", token).findUnique();
+    }
+
+    /**
+     * Seting validated atribute to True or False
+     * @param validated
+     */
+    public void setValidated(Boolean validated) {
+        this.validated = validated;
+    }
+
+
+    /**
+     * Method is used to validate user after verification email was sent to users email address.
+     * After verification user token is deleted and verified field is set to true.
+     * @return - True or False
+     */
+    public static Boolean validateUser(User user) {
+        if (user == null) {
+            return false;
+        }else {
+            user.token = null;
+            user.setValidated(true);
+            user.update();
+        }
+        return true;
+    }
+
 }

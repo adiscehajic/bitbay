@@ -15,6 +15,7 @@ import play.data.validation.ValidationError;
 import play.filters.csrf.AddCSRFToken;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.index;
@@ -23,6 +24,8 @@ import views.html.signIn;
 import views.html.user.userEdit;
 import views.html.user.userProfile;
 import views.html.user.userMessages;
+
+import java.io.File;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +45,7 @@ public class Users extends Controller {
 
     // Declaring user form.
     private static final Form<User> userRegistration = Form.form(User.class);
+    public static final String BIT_BAY = Play.application().configuration().getString("BIT_BAY");
 
     /**
      * Deletes selected user. Only administrator user can delete other users, except users that are also administrators.
@@ -94,9 +98,15 @@ public class Users extends Controller {
      * @return - Profile page of current user that is signed in.
      */
     @Security.Authenticated(CurrentBuyerSeller.class)
-    public Result getUser(){
-        return ok(userProfile.render(SessionHelper.currentUser()));
+    public Result getUser(String email){
+        User user = User.getUserByEmail(email);
+        return ok(userProfile.render(user));
     }
+
+//    public Result getSelectedUserByEmail(String email){
+//        User user = User.getUserByEmail(email);
+//        return ok(userProfile.render(user));
+//    }
 
     /**
      * Renders page where user can edit his personal informations. He can alter inputed information that he has inputed
@@ -170,7 +180,7 @@ public class Users extends Controller {
             return badRequest(userEdit.render(boundForm, user, countries));
         }
         // Redirecting to the profile page of the current user.
-        return redirect(routes.Users.getUser());
+        return redirect(routes.Users.getUser(user.email));
     }
 
     /**
@@ -179,10 +189,10 @@ public class Users extends Controller {
      *
      * @return Page where all products of the user are listed.
      */
-    @Security.Authenticated(CurrentSeller.class)
-    public Result getAllUserProducts() {
+    @Security.Authenticated(CurrentBuyerSeller.class)
+    public Result getAllUserProducts(String email) {
         // Getting current from the session.
-        User user = SessionHelper.currentUser();
+        User user = User.getUserByEmail(email);
         // Creating the list of the product from current user.
         List<Product> products = Product.findAllProductsByUser(user);
         if (user != null) {
@@ -205,4 +215,53 @@ public class Users extends Controller {
         }
     }
 
+    /**
+     * This action method is activated after user click on a link in verification email.
+     * It is using token from email to verify user and activate validateUser(user) method
+     * which is saving validation data to DB
+     * @param token - User token
+     * @return - Result
+     */
+    public Result emailValidation(String token) {
+        try {
+            if (token == null) {
+                return redirect(routes.ApplicationController.index());
+            }
+
+            User user = User.findUserByToken(token);
+            if (User.validateUser(user)) {
+                session("email", user.email);
+                return redirect(routes.ApplicationController.index());
+            } else {
+                return redirect(routes.ApplicationController.signIn());
+            }
+        } catch (Exception e){
+            return redirect(routes.ApplicationController.signIn());
+        }
+    }
+
+    @RequireCSRFCheck
+    public Result saveUserPicture() {
+        User user = SessionHelper.currentUser();
+
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart filePart = body.getFile("image");
+        // Uploading selected images on cloudinery and saving image path into database.
+
+        if (user.image != null) {
+            user.image.deleteImage();
+            if (filePart != null) {
+                File file = filePart.getFile();
+                Image image = Image.createUserImage(file);
+                image.save();
+            }
+        } else {
+            if (filePart != null) {
+                File file = filePart.getFile();
+                Image image = Image.createUserImage(file);
+                image.save();
+            }
+        }
+        return redirect(routes.Users.getUser(user.email));
+    }
 }

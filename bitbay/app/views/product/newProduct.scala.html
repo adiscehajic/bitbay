@@ -15,7 +15,7 @@
                 }
                 <div class="form-group">
                     <label for="product-name">Category: * </label>
-                    <select class="form-control placeholder" name="category" onclick="validateProduct()" onfocusout="validateCategory()">
+                    <select class="form-control placeholder" id="booksChange" name="category" onclick="validateProduct()" onfocusout="validateCategory()">
                         @if(productForm("category").value == null) {
                             <option value="0" selected disabled >Please select type</option>
                         } else {
@@ -75,7 +75,7 @@
                 <p style="font-size : 12 px ; color : red"> All * fields are required </p>
                 <div class="form-group">
                     <label for="exampleInputFile">Image select:</label>
-                    <input type="file" name="image" id="uploadImage" accept="image/*" multiple/>
+                    <input type="file" class="filestyle" data-classButton="btn btn-default" data-input="false" data-classIcon="icon-plus" data-buttonText="Change picture" accept="image/*" multiple/>
                 </div>
                 <button id="submit-button" type="submit" class="btn btn-primary" name="submitButton">Submit</button>
                 }
