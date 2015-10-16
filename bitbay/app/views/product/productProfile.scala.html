@@ -40,7 +40,7 @@
 						<tr>
 							<td> User: </td>
 							@if(session().get("email") != null ) {
-								<td name="email"><a href="@routes.Users.getUser(product.user.email)" style="text-decoration : none">@product.user.email</a><a href="@routes.MessageController.newMessage(product.user.email)" style="text-decoration : none"><span class="glyphicon glyphicon-envelope"></span></a></td>
+								<td name="email"><a href="@routes.Users.getUser(product.user.email)" style="text-decoration : none">@product.user.email </a><a href="@routes.MessageController.newMessage(product.user.email)" style="text-decoration : none"><span style="font-size: 20px" class="glyphicon glyphicon-envelope"></span></a></td>
 							} else {userOne.validated = true;
 								<td name="email">@product.user.email</td>
 							}
