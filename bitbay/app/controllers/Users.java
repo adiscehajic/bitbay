@@ -262,6 +262,6 @@ public class Users extends Controller {
                 image.save();
             }
         }
-        return redirect(routes.Users.getUser());
+        return redirect(routes.Users.getUser(user.email));
     }
 }
