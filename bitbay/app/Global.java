@@ -1,30 +1,25 @@
 
-import com.avaje.ebean.Ebean;
-import com.cloudinary.Cloudinary;
-import helpers.SessionHelper;
-import models.Category;
-import models.Image;
-import models.User;
-import models.UserType;
-import models.*;
-import org.mindrot.jbcrypt.BCrypt;
-import play.Application;
-import play.GlobalSettings;
-import play.api.mvc.EssentialFilter;
-import play.libs.Akka;
-import play.mvc.Result;
-import play.libs.F;
-import play.mvc.Http;
-import play.*;
-import play.mvc.*;
-import play.mvc.Http.*;
-import play.filters.csrf.CSRFFilter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+        import com.avaje.ebean.Ebean;
+        import com.cloudinary.Cloudinary;
+        import models.*;
+        import org.mindrot.jbcrypt.BCrypt;
+        import play.Application;
+        import play.GlobalSettings;
+        import play.api.mvc.EssentialFilter;
+        import play.mvc.Result;
+        import play.libs.F;
+        import play.mvc.Http;
+        import play.*;
+        import play.mvc.*;
+        import play.mvc.Http.*;
+        import play.filters.csrf.CSRFFilter;
 
-import static play.mvc.Results.badRequest;
-import static play.mvc.Results.notFound;
+        import java.util.ArrayList;
+        import java.util.List;
+        import java.util.Random;
+
+        import static play.mvc.Results.badRequest;
+        import static play.mvc.Results.notFound;
 
 /**
  * Created by Adis Cehajic on 9/22/2015.
@@ -214,7 +209,7 @@ public class Global extends GlobalSettings {
             Books
              */
 
-            Product p51 = new Product(userOne, "Humans of New York: Stories", "“There's no judgment, just observation and in many cases reverence, making for an inspiring reading and visual experience.�? ", "St. Martin's Press", categoryFour, 20.00, 10, "1");
+            Product p51 = new Product(userOne, "Humans of New York: Stories", "“There's no judgment, just observation and in many cases reverence, making for an inspiring reading and visual experience.” ", "St. Martin's Press", categoryFour, 20.00, 10, "1");
             Product p52 = new Product(userOne, "Lost", "Like everyone reading the newspapers these days, 10-year-old Barney Roberts knows the killer will strike again soon. ", "St. Martin's Press", categoryFour, 20.00, 10, "1");
             Product p53 = new Product(userOne, "Whirligig", "A terrible accident ends one life, but is just the beginning for another. . . .", "St. Martin's Press", categoryFour, 20.00, 10, "1");
             Product p54 = new Product(userOne, "Zero the Hero", "Zero. Zip. Zilch. Nada. That's what all the other numbers think of Zero. He doesn't add anything in addition. ", "St. Martin's Press", categoryFour, 20.00, 10, "1");
