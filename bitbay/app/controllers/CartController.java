@@ -14,6 +14,8 @@ import play.mvc.Security;
 import views.html.user.userCart;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Dinko Hodzic on 9/15/15.
@@ -44,7 +46,9 @@ public class CartController extends Controller {
         // Checking if the cart item is already in the cart and if not creating new cart item.
         if (cartItem == null) {
             cartItem = new CartItem(product, user, cart);
+
         }
+
         // Checking if the cart of current user exists and if there is cart items in the cart.
         if(cart != null && cart.cartItems.size() > 0) {
             // If the user clicks again on the button ADD TO CART increasing amount of product in the cart for one.
@@ -94,6 +98,8 @@ public class CartController extends Controller {
     public Result getCart(){
         User user = SessionHelper.currentUser();
         Cart cart = Cart.findCartByUser(user);
+
+
 
         if(cart != null) {
             return ok(userCart.render(cart.cartItems, user));
