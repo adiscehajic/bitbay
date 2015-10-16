@@ -93,6 +93,9 @@ public class User extends Model {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     public List<Rating> ratings;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<Bid> bids;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     public Cart cart;
 

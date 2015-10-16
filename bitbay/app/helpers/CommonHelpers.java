@@ -13,4 +13,16 @@ public class CommonHelpers {
         String myDate = dtf.format(date);
         return myDate;
     }
+
+    public static String getOnlyDate(Date date){
+        SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
+        String myDate = dtf.format(date);
+        return myDate;
+    }
+
+    public static String getTimeFromDate(Date date){
+        SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm:ss");
+        String time = localDateFormat.format(date);
+        return time;
+    }
 }

@@ -30,11 +30,11 @@ public class Product extends Model {
     @ManyToOne
     @Constraints.Required(message = "Product category is required.")
     public Category category;
-    @Constraints.Min(value = 1, message = "Product price must be larger than 0.")
-    @Constraints.Required(message = "Product price is required.")
+//    @Constraints.Min(value = 1, message = "Product price must be larger than 0.")
+//    @Constraints.Required(message = "Product price is required.")
     public Double price;
-    @Constraints.Min(value = 1, message = "Product quantity must be larger than 0.")
-    @Constraints.Required(message = "Product quantity is required.")
+//    @Constraints.Min(value = 1, message = "Product quantity must be larger than 0.")
+//    @Constraints.Required(message = "Product quantity is required.")
     public Integer quantity;
     @Constraints.Required(message = "Product selling type is required.")
     public String sellingType;
@@ -53,6 +53,9 @@ public class Product extends Model {
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date updated = new Date();
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    public Auction auction;
 
     private static Finder<String, Product> finder = new Finder<String, Product>(Product.class);
 

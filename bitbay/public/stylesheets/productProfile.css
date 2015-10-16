@@ -61,6 +61,16 @@ td {
 	color: #33A3DD;
 }
 
+#priceDiv {
+	margin-top:20px;
+	background-color: rgba(182, 162, 230, 0.27);
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 3px;
+	box-shadow: 4px 4px 1px #eee;
+	border: 1px solid #ddd;
+}
+
 
 /* This rule is read by Galleria to define the gallery height: */
 #galleria{height:586px}

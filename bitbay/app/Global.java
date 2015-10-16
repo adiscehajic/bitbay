@@ -1,5 +1,7 @@
+
 import com.avaje.ebean.Ebean;
 import com.cloudinary.Cloudinary;
+import helpers.SessionHelper;
 import models.Category;
 import models.Image;
 import models.User;
@@ -8,6 +10,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import play.Application;
 import play.GlobalSettings;
 import play.api.mvc.EssentialFilter;
+import play.libs.Akka;
 import play.mvc.Result;
 import play.libs.F;
 import play.mvc.Http;
@@ -15,6 +18,8 @@ import play.*;
 import play.mvc.*;
 import play.mvc.Http.*;
 import play.filters.csrf.CSRFFilter;
+
+import java.util.concurrent.TimeUnit;
 
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.notFound;
@@ -27,6 +32,8 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(Application application) {
         super.onStart(application);
+
+        AuctionHandler.handleAuctions();
 
         Image.cloudinary = new Cloudinary("cloudinary://"+ Play.application().configuration().getString("cloudinary.string"));
 

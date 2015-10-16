@@ -28,9 +28,6 @@ public class ApplicationController extends Controller {
     private static final Form<UserLogin> loginForm = Form.form(UserLogin.class);
     private static final Form<UserRegistration> registrationForm = Form.form(UserRegistration.class);
 
-
-
-
     /**
      * Renders index.html page on which are listed all products from database. User can select product and depending on
      * his type he can buy and comment product and also like and dislike product comments.
