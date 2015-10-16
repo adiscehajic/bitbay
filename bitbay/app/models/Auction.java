@@ -56,9 +56,13 @@ public class Auction extends Model {
     public static String getAuctionEndingTime(Product product) {
         Auction auction = finder.where().eq("product", product).findUnique();
 
-        Date endingDate = auction.endingDate;
+        if (auction != null) {
+            Date endingDate = auction.endingDate;
+            return CommonHelpers.getTimeFromDate(endingDate);
+        } else {
+            return null;
+        }
 
-        return CommonHelpers.getTimeFromDate(endingDate);
     }
 
     public static void checkAuctionOutcome() {

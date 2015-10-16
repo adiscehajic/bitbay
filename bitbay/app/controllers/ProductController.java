@@ -192,6 +192,7 @@ public class ProductController extends Controller {
                 String buyItNowPrice = auctionBoundForm.data().get("buy-it-now-price");
 
                 product.price = Double.parseDouble(buyItNowPrice);
+                product.quantity = 1;
                 product.update();
 
                 auction.startingDate = new Date();

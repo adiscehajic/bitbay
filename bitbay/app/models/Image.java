@@ -63,7 +63,7 @@ public class Image extends Model {
 
     public static Image create(Map uploadResult, Integer id) {
         Image img = new Image();
-
+        Logger.info("-------3--------");
         img.public_id = (String) uploadResult.get("public_id");
         Logger.debug(img.public_id);
         img.image_url = (String) uploadResult.get("url");

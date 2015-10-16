@@ -246,10 +246,11 @@ public class Users extends Controller {
 
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart filePart = body.getFile("image");
-        // Uploading selected images on cloudinery and saving image path into database.
+        // Uploading selected image on cloudinery and saving image path into database.
 
         if (user.image != null) {
             user.image.deleteImage();
+            user.image.delete();
             if (filePart != null) {
                 File file = filePart.getFile();
                 Image image = Image.createUserImage(file);
