@@ -2,12 +2,8 @@ package controllers;
 
 import helpers.CurrentAdmin;
 import helpers.SessionHelper;
-import models.Category;
-import models.Message;
-import models.Product;
-import models.User;
+import models.*;
 import controllers.ApplicationController.UserLogin;
-import models.UserType;
 import play.Logger;
 import play.data.Form;
 import play.data.validation.Constraints;
@@ -17,6 +13,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.admin.allCategories;
+import views.html.admin.allFaqs;
 import views.html.admin.login;
 import views.html.admin.allProducts;
 import views.html.admin.allUsers;
@@ -102,6 +99,20 @@ public class AdminController extends Controller {
     }
 
     /**
+     * Renders administrator panel page where all FAQs are listet. Only administrators can create
+     * new faq and update existing faq.
+     *
+     * To this page can access only users that are administrators.
+     * @return Page where all FAQs are listed.
+     */
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminFAQs() {
+        // Creating the list of the FAQs
+        List<FAQ> faqs = FAQ.findAll();
+        return ok(allFaqs.render(faqs));
+    }
+
+    /**
      * Renders administrator panel page where all products of the application are listed. Administrator user can decide
      * if he wants to delete product. Administrator user can not update product.
      *
@@ -123,7 +134,8 @@ public class AdminController extends Controller {
      * administrator warning message occurs.
      *
      * @return Opens administrator panel index page if the sign in is successful and redirects administrator panel page
-     * if the sign in has errors.
+     * if the sign in
+     * has errors.
      */
     @RequireCSRFCheck
     public Result validateLogin() {
@@ -210,5 +222,6 @@ public class AdminController extends Controller {
 
         return ok(adminViewMessage.render(message));
     }
+
 }
 

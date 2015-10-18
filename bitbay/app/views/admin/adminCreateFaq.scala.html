@@ -1,0 +1,46 @@
+@import helper._
+
+@(faqForm: Form[FAQ])
+@adminIndex {
+  <div class="row" style="margin-right: 0px">
+    <div class="col-md-6">
+      <h2>Add new faq</h2>
+    </div>
+  </div>
+  <div class="col-md-10" style="border-bottom: 1px; background-color: #F8F8F4; border-radius: 5px; border: 1px solid #E0E0D1">
+    <form action="@helper.CSRF(routes.FAQController.saveFAQ())" method="POST">
+      <div class = "row newCategory" style="margin-right: 0px">
+        <div class = "col-md-10">
+          @for((key, value) <- faqForm.errors) {
+            @for(err <- value) {
+              <span class="alert-danger" style="font-weight: normal; display: block; width: 90%;">@err.message</span>
+            }
+          }
+
+          <div>
+            <label>Question: </label>
+            <input class="form-control" name="question" style="margin-bottom: 30px" value="@faqForm("question").value">
+          </div>
+          <div>
+            <label>Answer: </label>
+            <textarea class="form-control" name="answer" style="resize: none; height: 200px; margin-bottom: 10px">@faqForm("answer").value</textarea>
+            <span class="alert-danger" data-error-for="message" style="font-weight: normal; margin-bottom: 10px"></span>
+          </div>
+        </div>
+      </div>
+      <div class ="col-md-1" style="padding-right : 0px ;">
+        <button id="submit-button" class="btn btn-primary" type="submit" name="save" onclick="validateFAQ()"> Save </button>
+      </div>
+    </form>
+    <div class ="row newCategory" style="margin-right: 0px">
+      <div class="col-md-1" style="padding-left: 0px">
+        <a href="@routes.AdminController.adminFAQs()"><button type="submit" class="btn btn-default">
+          Cancel</button></a>
+      </div>
+    </div>
+  </div>
+  <script>
+    var urlPost = "@routes.FAQController.validateFormFAQ()";
+  </script>
+  <script src="@routes.Assets.versioned("javascripts/validateForm.js")" type="text/javascript"></script>
+}
