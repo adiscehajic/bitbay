@@ -10,12 +10,6 @@
   <div class="col-md-10" style="border-bottom: 1px; background-color: #F8F8F4; border-radius: 5px; border: 1px solid #E0E0D1">
     <form action="@helper.CSRF(routes.FAQController.saveFAQ())" method="POST">
       <div class = "row newCategory" style="margin-right: 0px">
-        <div class = "col-md-10">
-          @for((key, value) <- faqForm.errors) {
-            @for(err <- value) {
-              <span class="alert-danger" style="font-weight: normal; display: block; width: 90%;">@err.message</span>
-            }
-          }
 
           <div>
             <label>Question: </label>
@@ -26,7 +20,7 @@
             <textarea class="form-control" name="answer" style="resize: none; height: 200px; margin-bottom: 10px">@faqForm("answer").value</textarea>
             <span class="alert-danger" data-error-for="message" style="font-weight: normal; margin-bottom: 10px"></span>
           </div>
-        </div>
+
       </div>
       <div class ="col-md-1" style="padding-right : 0px ;">
         <button id="submit-button" class="btn btn-primary" type="submit" name="save" onclick="validateFAQ()"> Save </button>
