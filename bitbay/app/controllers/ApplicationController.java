@@ -5,8 +5,6 @@ import helpers.MailHelper;
 import helpers.SessionHelper;
 import models.*;
 import org.mindrot.jbcrypt.BCrypt;
-import play.Logger;
-import play.Play;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
@@ -14,7 +12,10 @@ import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
-
+import views.html.faq;
+import views.html.index;
+import views.html.signIn;
+import views.html.signup;
 import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class ApplicationController extends Controller {
     // Declaring variable.
     private static final Form<UserLogin> loginForm = Form.form(UserLogin.class);
     private static final Form<UserRegistration> registrationForm = Form.form(UserRegistration.class);
-//    private static final Form<ForgotPassword> forgotPasswordForm = Form.form(ForgotPassword.class);
+    private static final Finder<String, FAQ> faqFinder = new Finder<>(FAQ.class);
 
     /**
      * Renders index.html page on which are listed all products from database. User can select product and depending on
@@ -43,6 +44,15 @@ public class ApplicationController extends Controller {
         // Declaring list that contains all products from database.
         List<Product> products = Product.findAll();
         return ok(index.render(products, recommendations));
+    }
+
+    /**
+     * Renders faq.html page on which are listed all faqs from database.
+     * @return Faq page.
+     */
+    public Result showFaq() {
+        List<FAQ> faqs = FAQ.findAll();
+        return ok(faq.render(faqs));
     }
 
     /**
@@ -299,30 +309,5 @@ public class ApplicationController extends Controller {
         }
 
     }
-
-//    public static class ForgotPassword {
-//
-//
-//        public String email;
-//
-//        private static Finder<String, User> finder =
-//                new Finder<>(User.class);
-//
-//            public static String getForgotenPassEmail(String email){
-//                Form<ForgotPassword> boundForm = forgotPasswordForm.bindFromRequest();
-//                String forgotEmail = boundForm.data().get("email");
-//                User user = finder.where().eq("email", email).findUnique();
-//
-//                if(user.email == forgotEmail){
-//                    Logger.info("++++++++++++++++++++++++++++++++++++++++++++++++++++");
-//                    return forgotEmail;
-//                }
-//
-//                return null;
-//            }
-//
-//    }
-
-
-
+    
 }

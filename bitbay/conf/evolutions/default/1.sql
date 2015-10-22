@@ -47,6 +47,13 @@ create table category (
   constraint pk_category primary key (id))
 ;
 
+create table faq (
+  id                        integer auto_increment not null,
+  question                    varchar(255),
+  answer                      TEXT,
+  constraint pk_faq primary key (id))
+;
+
 create table comment (
   id                        integer auto_increment not null,
   title                     varchar(255),
