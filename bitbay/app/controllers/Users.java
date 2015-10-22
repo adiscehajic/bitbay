@@ -14,6 +14,7 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
+import views.html.purchase.showUserPurchases;
 import views.html.user.userEdit;
 import views.html.user.userProducts;
 import views.html.user.userProfile;
@@ -255,6 +256,6 @@ public class Users extends Controller {
         User currentUser = SessionHelper.currentUser();
         List<PurchaseItem> items = PurchaseItem.getPurchasedItemsByUser(currentUser);
 
-        return ok(views.html.purchase.showUserPurchases.render(currentUser, items));
+        return ok(showUserPurchases.render(currentUser, items));
     }
 }

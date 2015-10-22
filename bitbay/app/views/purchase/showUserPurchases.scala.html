@@ -39,9 +39,9 @@
               }
             <td class="cartData" style="font-size : 17px"><a href="@routes.ProductController.getProduct(purchaseItem.product.id)"> @purchaseItem.product.name </a></td>
             <td class="cartData" width="200px"> @purchaseItem.product.price KM</td>
-            <td class="cartData" style="align: center;">@purchaseItem.quantity"</td>
+            <td class="cartData" style="align: center;">@purchaseItem.quantity</td>
             <td class="cartData"> @purchaseItem.price KM </td>
-              @if(purchaseItem.cancelationDueDate.after(new Date())){
+              @if(purchaseItem.cancelationDueDate.compareTo(new Date()) != -1){
                 <td class="cartData"><a href="#" id="refund@purchaseItem.id">Cancel order</a></td>
               }
             </tr>

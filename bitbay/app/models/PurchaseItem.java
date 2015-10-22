@@ -35,6 +35,8 @@ public class PurchaseItem extends Model {
     @Column(columnDefinition = "datetime")
     public Date cancelationDueDate;
 
+    public int isRefunded;
+
     public PurchaseItem(){}
 
     /**
@@ -50,6 +52,7 @@ public class PurchaseItem extends Model {
         this.user = user;
         this.quantity = quantity;
         this.price = product.price*quantity;
+        isRefunded = 0;
     }
 
     private static Finder<String, PurchaseItem> finder = new Finder<String, PurchaseItem>(PurchaseItem.class);

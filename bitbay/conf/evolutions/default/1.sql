@@ -130,6 +130,7 @@ create table purchase_item (
   quantity                  integer,
   price                     double,
   cancelation_due_date      datetime,
+  is_refunded               integer,
   constraint pk_purchase_item primary key (id))
 ;
 

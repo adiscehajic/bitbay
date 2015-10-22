@@ -48,11 +48,9 @@ public class Purchase extends Model {
      * @param buyer        - current user
      * @param purchaseItem - list of purchased items
      */
-    public Purchase(User user, List<PurchaseItem> purchaseItems, String payment_id, String sale_id, double totalPrice, String token) {
+    public Purchase(User user, List<PurchaseItem> purchaseItems, double totalPrice, String token) {
         this.user = user;
         this.purchaseItems = purchaseItems;
-        this.payment_id = payment_id;
-        this.sale_id = sale_id;
         this.bitPayment_id = "bit" + UUID.randomUUID().toString().substring(0, 7);
         this.totalPrice = totalPrice;
         this.token = token;
@@ -108,12 +106,23 @@ public class Purchase extends Model {
 
 
     /**
-     * Finds purchase by the given id
+     * Finds purchase by the given user
      * @param user
      * @return
      */
     public static Purchase findPurchaseByUser(User user){
         Purchase purchase = Purchase.finder.where().eq("user", user).findUnique();
+
+        return purchase;
+    }
+
+    /**
+     * Finds purchase by the given id
+     * @param id
+     * @return
+     */
+    public static Purchase findPurchaseById(Integer id){
+        Purchase purchase = Purchase.finder.where().eq("id", id).findUnique();
 
         return purchase;
     }
