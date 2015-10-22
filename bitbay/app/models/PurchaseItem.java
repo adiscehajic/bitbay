@@ -1,10 +1,13 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.data.format.Formats;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,10 +27,13 @@ public class PurchaseItem extends Model {
 
     @ManyToOne
     public Purchase purchase;
-    @ManyToOne
-    public Cart cart;
+
     public Integer quantity;
     public Double price;
+
+    @Formats.DateTime(pattern = "dd/MM/yyyy")
+    @Column(columnDefinition = "datetime")
+    public Date cancelationDueDate;
 
     public PurchaseItem(){}
 
@@ -35,15 +41,13 @@ public class PurchaseItem extends Model {
      * Constructor for a new purchaseItem object
      * @param product
      * @param user
-     * @param cart
      * @param purchase
      * @param quantity
      */
-    public PurchaseItem(Product product, User user, Cart cart, Purchase purchase, Integer quantity){
+    public PurchaseItem(Product product, User user, Purchase purchase, Integer quantity){
         this.product = product;
         this.purchase = purchase;
         this.user = user;
-        this.cart = cart;
         this.quantity = quantity;
         this.price = product.price*quantity;
     }
@@ -67,6 +71,10 @@ public class PurchaseItem extends Model {
     public static PurchaseItem getPurchaseById(Integer id) {
         PurchaseItem purchaseItem = PurchaseItem.finder.where().eq("id", id).findUnique();
         return purchaseItem;
+    }
+
+    public static List<PurchaseItem> getPurchasedItemsByUser(User user){
+        return PurchaseItem.finder.where().eq("user", user).findList();
     }
 
 }

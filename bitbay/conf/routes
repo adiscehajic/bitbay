@@ -62,6 +62,7 @@ GET           /user/delete/:id                        @controllers.Users.deleteU
 GET           /user/edit                              @controllers.Users.editUser()
 POST          /user/edit                              @controllers.Users.updateUser()
 POST          /user/saveuserimage                     @controllers.Users.saveUserPicture()
+GET           /user/purchasehistory                   @controllers.Users.getUserPurchases()
 
 POST          /purchaseprocessing                     @controllers.PayPalController.purchaseProcessing()
 GET           /purchasesuccess                        @controllers.PayPalController.purchaseSuccess()

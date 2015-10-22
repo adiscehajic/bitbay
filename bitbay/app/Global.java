@@ -215,6 +215,79 @@ public class Global extends GlobalSettings {
             Product p54 = new Product(userOne, "Zero the Hero", "Zero. Zip. Zilch. Nada. That's what all the other numbers think of Zero.", "St. Martin's Press", categoryFour, 20.00, 10, "1");
             Product p55 = new Product(userOne, "Memories of Babi", "Piri is a city girl, but every year she goes to visit her grandmother Babi on.", "St. Martin's Press", categoryFour, 20.00, 10, "1");
 
+
+            List<User> buyers = new ArrayList<>();
+            buyers.add(userTwo);
+            buyers.add(userFour);
+            buyers.add(userSix);
+
+            Random num = new Random();
+
+            for(int i = 1; i < 1000; i++){
+                new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(50) + 1)), (num.nextInt(5) + 1)).save();
+            }
+
+            List<Product> products = new ArrayList<>();
+            products.add(p1);
+            products.add(p2);
+            products.add(p3);
+            products.add(p4);
+            products.add(p5);
+            products.add(p6);
+            products.add(p7);
+            products.add(p8);
+            products.add(p9);
+            products.add(p10);
+            products.add(p11);
+            products.add(p12);
+            products.add(p13);
+            products.add(p14);
+            products.add(p15);
+            products.add(p16);
+            products.add(p17);
+            products.add(p18);
+            products.add(p19);
+            products.add(p20);
+            products.add(p21);
+            products.add(p22);
+            products.add(p23);
+            products.add(p24);
+            products.add(p25);
+            products.add(p26);
+            products.add(p27);
+            products.add(p28);
+            products.add(p29);
+            products.add(p30);
+            products.add(p31);
+            products.add(p32);
+            products.add(p33);
+            products.add(p34);
+            products.add(p35);
+            products.add(p36);
+            products.add(p37);
+            products.add(p38);
+            products.add(p39);
+            products.add(p40);
+            products.add(p41);
+            products.add(p42);
+            products.add(p43);
+            products.add(p44);
+            products.add(p45);
+            products.add(p46);
+            products.add(p47);
+            products.add(p48);
+            products.add(p49);
+            products.add(p50);
+            products.add(p51);
+            products.add(p52);
+            products.add(p53);
+            products.add(p54);
+            products.add(p55);
+
+            for (int i = 0; i < products.size(); i++){
+                products.get(i).cancelation = 2;
+            }
+
             p1.save();
             p2.save();
             p3.save();
@@ -271,17 +344,7 @@ public class Global extends GlobalSettings {
             p54.save();
             p55.save();
 
-
-            List<User> buyers = new ArrayList<>();
-            buyers.add(userTwo);
-            buyers.add(userFour);
-            buyers.add(userSix);
-
-            Random num = new Random();
-
-            for(int i = 1; i < 1000; i++){
-                new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(50) + 1)), (num.nextInt(5) + 1)).save();
-            }FAQ f1 = new FAQ("How does bitBay Valet work?\n", "Valet is a new and simple way to sell your things on eBay. Valets sell your items on your behalf, and you get up to 80% of the sale price.\n" +
+            FAQ f1 = new FAQ("How does bitBay Valet work?\n", "Valet is a new and simple way to sell your things on eBay. Valets sell your items on your behalf, and you get up to 80% of the sale price.\n" +
                     "\n" +
                     "To get your things to valets:\n" +
                     "\n" +

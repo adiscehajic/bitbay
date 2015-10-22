@@ -1,41 +1,26 @@
 package controllers;
 
 
-import com.cloudinary.Cloudinary;
 import helpers.CurrentAdmin;
 import helpers.CurrentBuyerSeller;
-import helpers.CurrentSeller;
 import helpers.SessionHelper;
+import models.*;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.Play;
-import play.data.DynamicForm;
 import play.data.Form;
-import play.data.validation.ValidationError;
-import play.filters.csrf.AddCSRFToken;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.index;
-import views.html.signup;
-import views.html.signIn;
 import views.html.user.userEdit;
+import views.html.user.userProducts;
 import views.html.user.userProfile;
-import views.html.user.userMessages;
 
 import java.io.File;
-import java.lang.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
-import com.avaje.ebean.Ebean;
-import models.*;
-import views.html.user.userProducts;
-import views.html.user.userCart;
-import models.Country;
-import javax.persistence.PersistenceException;
+import java.util.List;
 
 
 /**
@@ -264,5 +249,12 @@ public class Users extends Controller {
             }
         }
         return redirect(routes.Users.getUser(user.email));
+    }
+
+    public Result getUserPurchases(){
+        User currentUser = SessionHelper.currentUser();
+        List<PurchaseItem> items = PurchaseItem.getPurchasedItemsByUser(currentUser);
+
+        return ok(views.html.purchase.showUserPurchases.render(currentUser, items));
     }
 }

@@ -166,7 +166,10 @@ public class ProductController extends Controller {
             // Declaring selected category.
             Category category = Category.getCategoryByName(categoryValue);
             // Creating new product and adding selected values.
+            //finding cancelation duration selected by seller
             Product product = boundForm.get();
+            String cancelationDate = boundForm.bindFromRequest().field("cancelation-duration").value();
+            product.cancelation = Integer.parseInt(cancelationDate);
             product.user = user;
             product.category = category;
             // Saving product into database.
