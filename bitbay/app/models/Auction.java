@@ -81,9 +81,10 @@ public class Auction extends Model {
                 Bid highestBid = bids.get(0);
                 Logger.info(highestBid.user.email);
 
-                String winningMessage = "Congratulations!!! You won bitBay auction for item #" + auctions.get(i).product.id + " - " + auctions.get(i).product.name + ".\n\nTo proceed with transaction please click on link below:\n";
+                String winningMessage = "Congratulations!!! You won bitBay auction for item #" + auctions.get(i).product.id + " - " + auctions.get(i).product.name +
+                        ".\n\r \n\r To proceed with transaction please contact: " + auctions.get(i).product.user.email;
 
-                Message message = new Message(User.getUserByEmail("adnan.lapendic@bitcamp.ba"), highestBid.user, "Auction Winning", winningMessage);
+                Message message = new Message(User.getUserByEmail("bitbayservice@gmail.com"), highestBid.user, "Auction Winning", winningMessage);
                 message.save();
 
                 auctions.get(i).isActive = false;

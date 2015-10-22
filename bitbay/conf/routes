@@ -44,6 +44,7 @@ GET           /admin/users                            @controllers.AdminControll
 GET           /admin/categories                       @controllers.AdminController.adminCategories()
 GET           /admin/products                         @controllers.AdminController.adminProducts()
 GET           /admin/products/:id                     @controllers.ProductController.deleteProductAdmin(id: Integer)
+GET           /admin/faqs                             @controllers.AdminController.adminFAQs()
 
 POST          /admin/validateForm                     @controllers.AdminController.validateFormAdmin()
 GET           /admin/messages/new                     @controllers.AdminController.adminNewMessage(email: String)
@@ -82,6 +83,15 @@ GET           /category/delete/:id                    @controllers.CategoryContr
 POST          /category/new                           @controllers.CategoryController.saveCategory()
 POST          /category/edit/:id                      @controllers.CategoryController.updateCategory(id:Integer)
 POST          /category/validateForm                  @controllers.CategoryController.validateFormCategory()
+
+GET           /showfaq                                @controllers.ApplicationController.showFaq()
+GET           /faq/new                                @controllers.FAQController.newFAQ()
+GET           /faq/edit/:id                           @controllers.FAQController.editFAQ(id:Integer)
+GET           /faq/delte/:id                          @controllers.FAQController.deleteFAQ(id:Integer)
+POST          /faq/new                                @controllers.FAQController.saveFAQ()
+POST          /faq/edit/:id                           @controllers.FAQController.updateFAQ(id:Integer)
+POST          /faq/validateForm                       @controllers.FAQController.validateFormFAQ()
+
 
 GET           /user/:email                            @controllers.Users.getUser(email: String)
 # Map static resources from the /public folder to the /assets URL path

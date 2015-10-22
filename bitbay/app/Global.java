@@ -281,7 +281,37 @@ public class Global extends GlobalSettings {
 
             for(int i = 1; i < 1000; i++){
                 new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(50) + 1)), (num.nextInt(5) + 1)).save();
-            }
+            }FAQ f1 = new FAQ("How does bitBay Valet work?\n", "Valet is a new and simple way to sell your things on eBay. Valets sell your items on your behalf, and you get up to 80% of the sale price.\n" +
+                    "\n" +
+                    "To get your things to valets:\n" +
+                    "\n" +
+                    "Mail-in\n" +
+                    "Request a free postage-paid shipping label. It's emailed to you. Print it out and use it with any box.\n" +
+                    "Drop-off\n" +
+                    "In some locations, you can bring your items to an eBay Drop-Off Center.");
+            FAQ f2 = new FAQ("What sells well?\n", "Electronics like cameras, smart phones, tablets and laptops\n" +
+                    "Antiques & collectibles like early-issue comics, rare baseball cards, vintage toys\n" +
+                    "Musical instruments like violins, trumpets, flutes, and guitars\n" +
+                    "New and like-new designer clothing, shoes and handbags: See full list of eligible brands and estimated values\n" +
+                    "Sporting goods and accessories like golf clubs, baseball bats, tennis rackets\n" +
+                    "High-end kitchen appliances like blenders and mixers by brands like KitchenAid, Vitamix, and Breville");
+            FAQ f3 = new FAQ("What about shipping costs?\n", "With Valet, there are no shipping costs.\n" +
+                    "\n" +
+                    "Shipping your things to valets is free.\n" +
+                    "If your item sells, the buyer pays to have the item shipped to them.\n" +
+                    "If an item doesn't sell, it's returned to you for free.");
+            FAQ f4 = new FAQ("Can I track the sale of my items?\n", "If your items are listed on eBay, you'll get a confirmation email with a link to the listings.\n");
+            FAQ f5 = new FAQ("What if I want to make a change to how one of my items is listed?\n", "Valets can't change a listing after the listing is published, but you can call the valets to cancel your listing and have your item returned to you.\n");
+            FAQ f6 = new FAQ("What is the criteria for classifying an item as a new item ?", "New items are those that are in the original factory/manufacturer’s box and are sealed with the original factory/manufacturer’s seal. Boxes that have been opened—even if items have never been used—are not considered new because valets cannot verify that the items have never been used.");
+
+            f1.save();
+            f2.save();
+            f3.save();
+            f4.save();
+            f5.save();
+            f6.save();
+
+
 
         }
     }
