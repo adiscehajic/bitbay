@@ -13,10 +13,7 @@ import play.data.validation.ValidationError;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.contactUs;
-import views.html.index;
-import views.html.signIn;
-import views.html.signup;
+import views.html.*;
 
 import javax.persistence.Column;
 import java.util.ArrayList;
@@ -31,6 +28,7 @@ public class ApplicationController extends Controller {
     // Declaring variable.
     private static final Form<UserLogin> loginForm = Form.form(UserLogin.class);
     private static final Form<UserRegistration> registrationForm = Form.form(UserRegistration.class);
+//    private static final Form<ForgotPassword> forgotPasswordForm = Form.form(ForgotPassword.class);
 
     /**
      * Renders index.html page on which are listed all products from database. User can select product and depending on
@@ -80,6 +78,23 @@ public class ApplicationController extends Controller {
         }
     }
 
+    /**
+     * Method for rendering forgot password page where user can enter his email
+     * @return
+     */
+    public Result forgotPassword() {
+        User user = SessionHelper.currentUser();
+        return ok(forgotPassword.render());
+    }
+
+    /**
+     * Method for rendering new password page ehere user can enter and confirm new password
+     * @return
+     */
+    public Result newPassword(String email){
+        User user = User.getUserByEmail(email);
+        return ok(newPassword.render(user));
+    }
     /**
      * Reads values that are inputed on signIn.html page and validates them. On sign in user needs to input correct
      * email and password. If the email or password are incorrect, or if the email or password are not inputed, warning
@@ -143,11 +158,8 @@ public class ApplicationController extends Controller {
             user.setValidated(false);
             // Saving new user into database.
             user.save();
-            MailHelper.send(user.email, Users.BIT_BAY + "/signup/validate/" + user.token);
-            // Clearing all sessions and creating new session that stores user email
-            session().clear();
-           // session("email", user.email);
-            // Redirecting to the main page.
+            MailHelper.send(user.email, Users.BIT_BAY + "/signup/validateForgotenPassword/" + user.token);
+
             return redirect(routes.ApplicationController.signIn());
         }
     }
@@ -287,4 +299,30 @@ public class ApplicationController extends Controller {
         }
 
     }
+
+//    public static class ForgotPassword {
+//
+//
+//        public String email;
+//
+//        private static Finder<String, User> finder =
+//                new Finder<>(User.class);
+//
+//            public static String getForgotenPassEmail(String email){
+//                Form<ForgotPassword> boundForm = forgotPasswordForm.bindFromRequest();
+//                String forgotEmail = boundForm.data().get("email");
+//                User user = finder.where().eq("email", email).findUnique();
+//
+//                if(user.email == forgotEmail){
+//                    Logger.info("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+//                    return forgotEmail;
+//                }
+//
+//                return null;
+//            }
+//
+//    }
+
+
+
 }

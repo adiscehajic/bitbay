@@ -117,7 +117,6 @@ public class User extends Model {
     @Column(columnDefinition = "datetime")
     public Date updated = new Date();
 
-
     public String token;
 
     public Boolean validated;

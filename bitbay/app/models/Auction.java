@@ -68,7 +68,7 @@ public class Auction extends Model {
     public static void checkAuctionOutcome() {
         List<Auction> auctions = finder.all();
 
-        Logger.info("Number of auctions: " + auctions.size());
+//        Logger.info("Number of auctions: " + auctions.size());
 
         Date currentDate = new Date();
 
