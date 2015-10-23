@@ -254,6 +254,7 @@ public class Users extends Controller {
         try {
             User user = User.findUserByToken(token);
             if (User.validateUser(user)) {
+                user.token = null;
                 return redirect(routes.ApplicationController.newPassword(user.email));
             } else {
                 return redirect(routes.ApplicationController.forgotPassword());
