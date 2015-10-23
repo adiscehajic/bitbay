@@ -13,23 +13,23 @@
         <p><a class="btn btn-primary btn-lg" href="/" role="button">Back to home</a></p>
     </div>
     @if(recommendedProducts != null && recommendedProducts.size() > 3) {
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            Recommended
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Recommended
+            </div>
         </div>
-    </div>
-    <div class="row">
+        <div class="row">
         @for(product <- recommendedProducts) {
             <div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="thumbnail" style="height:450px;" id="ellipsis@product.id">
                     @if(product.images.size() > 0) {
-                            <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+                        <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
                             <img class="img-responsive" src="@product.images.get(0).getThumbnail(400, 360)" ></a>
 
-                        }else{
-                            <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
-                                <img class="img-responsive" src="http://placehold.it/400x360" ></a>
-                        }
+                    }else{
+                        <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
+                            <img class="img-responsive" src="http://placehold.it/400x360" ></a>
+                    }
                 <div class="caption">
                     <h3 style="margin-top: 5px"><a href="@routes.ProductController.getProduct(product.id)" >@product.name</a></h3>
                     <span class="fa-stack fa-2x" style="float: right; margin-top: 10px; position: absolute; bottom: 20px; right: 20px;">
@@ -48,17 +48,18 @@
         });
     </script>
         }
-    </div>
+        </div>
     }
     <div class="panel panel-primary">
         <div class="panel-heading">
             Products
         </div>
     </div>
-    <div class="row">
+    <div class="row" id="easyPaginate">
     @for(product <- products) {
+        <div class="product">
         <div class="col-sm-6 col-md-3 col-lg-3">
-            <div class="thumbnail" style="height:450px;" id="ellipsis@product.id">
+            <div class="thumbnail"style="height:450px;" id="ellipsis@product.id">
                 @if(product.images.size() > 0) {
                         <a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
                             <img class="img-responsive" src="@product.images.get(0).getThumbnail(400, 360)" ></a>
@@ -75,8 +76,9 @@
                     <p>@product.description</p>
                 </div>
             </div>
+            </div>
         </div>
-        <script >
+        <script>
         $(document).ready(function() {
 	        var id = @product.id;
 	        $("#ellipsis" + id).dotdotdot();
@@ -85,3 +87,16 @@
     }
     </div>
 }
+
+<script>
+    var slider = new MasterSlider();
+    slider.setup('masterslider' , {
+            width:1000,    // slider standard width
+            height:350,   // slider standard height
+            space:5
+            // more slider options goes here...
+            // check slider options section in documentation for more options.
+        });
+    // adds Arrows navigation control to the slider.
+    slider.control('arrows');
+</script>
