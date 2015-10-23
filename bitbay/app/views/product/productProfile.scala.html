@@ -4,16 +4,25 @@
 	@import helpers.CommonHelpers
 @main("Product") {
 	<div class="container" id="wrapper" style="padding-right: 30px">
+		@if(Auction.getAuctionByProduct(product) != null && !Auction.getAuctionByProduct(product).isActive) {
+			<div class="row">
+				<div class="panel panel-primary" style="margin-left: 15px; background-color : #f3ad29 ; border-color : #f3ad29 ;">
+					<div class="panel-heading" id="panel-name" style="color : black ; background-color : #f3ad29 ; border-color : #f3ad29 ;">
+						Bidding has ended on this item.
+					</div>
+				</div>
+			</div>
+		}
 		<div class="row">
 			<div class="col-md-6">
 				@if(product.images.size() > 0) {
-				<div id="galleria">
-				@for(image <- product.images) {
-					<a href="@image.getSize(576,486)">
-						<img src="@image.getSize(576,486)">
-					</a>
-				}
-				</div>
+					<div id="galleria">
+					@for(image <- product.images) {
+						<a href="@image.getSize(576,486)">
+							<img src="@image.getSize(576,486)">
+						</a>
+					}
+					</div>
 				} else {
 					<div class="thumbnail">
 						<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
@@ -32,58 +41,73 @@
 					<i class="fa fa-star fa-stack-2x"></i>
 					<strong class="fa-stack-1x star-text">@averageRating</strong>
 				</span>
-				<h2 style="display: inline; font-family: serif;">@product.name</h2>
+				<h2 style="display: inline;">@product.name</h2>
 				<p style="height: 20px"></p>
 				<a href="@routes.Users.getUser(product.user.email)"> @product.user.email <a href="@routes.MessageController.newMessage(product.user.email)"><span class="glyphicon glyphicon-envelope"></span></a></a>
 				<br>
-				<label> Quantity: </label> <label> @product.quantity </label>
+				@if(Auction.getAuctionByProduct(product) == null) {
+					<label> Quantity: </label> <label> @product.quantity </label>
+				}
 				<br>
-				@if(Auction.getAuctionByProduct(product) != null) {
+				@if(Auction.getAuctionByProduct(product) != null && Auction.getAuctionByProduct(product).isActive) {
 					<label>Time Left: </label>
 					<label id="getting-started"></label>
 				}
-				<div id="priceDiv" style="padding-left: 20px">
-				@if(Auction.getAuctionByProduct(product) != null) {
-					<div>
-					@if(Bid.getNumberOfAuctionBids(Auction.getAuctionByProduct(product)) == 0) {
-						<p style="display : inline ; font-size: 20px;">Starting bid:   </p>
-						<p style="display : inline ; font-size: 20px;"><strong>@Auction.getAuctionByProduct(product).startingPrice
-							KM</strong></p>
-					} else {
-						<p style="display : inline ; font-size: 20px;">Current bid:   </p>
-						<p style="display : inline ; font-size: 20px;"><strong>@Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product))
-							KM</strong></p>
-					}
-					</div>
-
-					<form action="@helper.CSRF(routes.BidController.placeBidForProduct(product.id))" method="POST">
-						<div style="margin-top : 25 px">
-							<input type="text" name="amount" style="display : inline ; margin-top : 15px;"/>
-							<span class="alert-danger" data-error-for="amount" style="margin-left : 1 px ; font-weight : normal ;"></span>
-							<input type="submit" class="btn btn-primary" value="Place Bid" style="display : inline ; margin-top : 10 px ; margin-left : 25 px ; margin-right : 25 px ;"/>
-							@if(Bid.getNumberOfAuctionBids(Auction.getAuctionByProduct(product)) == 0) {
-								<p style="font-size : 10 px ; margin-left : 135 px ;">
-									Enter @Auction.getAuctionByProduct(product).startingPrice KM or more</p>
-							} else {
-								<p style="font-size : 10 px ; margin-left : 135 px ;">
-									Enter more than @Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product)) KM</p>
-							}
-						</div>
-					</form>
-				}else{
-					<label style="font-size: 15px;"> Price: </label> <label style="font-size: 20px;"> @product.price  KM</label>
-					@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
-						<form action="@helper.CSRF(routes.CartController.addToCart(product.id))" method="POST">
-						@if(product.quantity > 0) {
-							<button type="submit " class="btn btn-primary" style="margin-bottom : 20px">
-								Add to cart </button>
-						} else {
-							<button type="submit " class="btn btn-primary" style="margin-bottom : 20px" disabled>
-								Add to cart </button>
-						}
-						</form>
-					}
+				@if(Auction.getAuctionByProduct(product) != null && !Auction.getAuctionByProduct(product).isActive) {
+					<label>Ended: </label>
+					<label>@CommonHelpers.getDateAsString(Auction.getAuctionByProduct(product).endingDate)h </label>
 				}
+				<div id="priceDiv" style="padding-left: 20px">
+					@if(Auction.getAuctionByProduct(product) != null && Auction.getAuctionByProduct(product).isActive) {
+						<div>
+						@if(Bid.getNumberOfAuctionBids(Auction.getAuctionByProduct(product)) == 0) {
+							<p style="display : inline ; font-size: 20px;">Starting bid:   </p>
+							<p style="display : inline ; font-size: 20px;"><strong>@Auction.getAuctionByProduct(product).startingPrice
+								KM</strong></p>
+						} else {
+							<p style="display : inline ; font-size: 20px;">Current bid:   </p>
+							<p style="display : inline ; font-size: 20px;"><strong>@Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product))
+								KM</strong></p>
+						}
+						</div>
+
+						<form action="@helper.CSRF(routes.BidController.placeBidForProduct(product.id))" method="POST">
+							<div style="margin-top : 25 px">
+								<input type="text" name="amount" style="display : inline ; margin-top : 15px;"/>
+								<span class="alert-danger" data-error-for="amount" style="margin-left : 1 px ; font-weight : normal ;"></span>
+								<input type="submit" class="btn btn-primary" value="Place Bid" style="display : inline ; margin-top : 10 px ; margin-left : 25 px ; margin-right : 25 px ;"/>
+								@if(Bid.getNumberOfAuctionBids(Auction.getAuctionByProduct(product)) == 0) {
+									<p style="font-size : 10 px ; margin-left : 135 px ;">
+										Enter @Auction.getAuctionByProduct(product).startingPrice KM or more</p>
+								} else {
+									<p style="font-size : 10 px ; margin-left : 135 px ;">
+										Enter more than @Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product)) KM</p>
+								}
+							</div>
+						</form>
+					}else {
+						@if(Auction.getAuctionByProduct(product) != null && !Auction.getAuctionByProduct(product).isActive) {
+							<div>
+								<p style="display : inline ; font-size : 20px;">Winning bid:   </p>
+								<p style="display : inline ; font-size : 20px;"><strong>@Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product))
+									KM</strong></p>
+							</div>
+						} else {
+							<label style="font-size : 15 px ;">
+								Price: </label> <label style="font-size : 20 px ;"> @product.price KM</label>
+							@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
+								<form action="@helper.CSRF(routes.CartController.addToCart(product.id))" method="POST">
+								@if(product.quantity > 0) {
+									<button type="submit " class="btn btn-primary" style="margin-bottom : 20 px">
+										Add to cart </button>
+								} else {
+									<button type="submit " class="btn btn-primary" style="margin-bottom : 20 px" disabled>
+										Add to cart </button>
+								}
+								</form>
+							}
+						}
+					}
 				</div>
 				<div style="margin-top:20px" id="deliveryWrapper">
 					<table>
@@ -102,9 +126,9 @@
 								<td> 60 days money back, buyer pays return shipping </td>
 							</tr>
 							<tr>
-							<td>Payment: </td>
-							<td><img src="@routes.Assets.versioned("images/paypal.png")"/></td>
-						</tr>
+								<td>Payment: </td>
+								<td><img src="@routes.Assets.versioned("images/paypal.png")"/></td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -135,7 +159,7 @@
 						}
 					<div class="caption">
 
-						<span class="fa-stack fa-2x" style="float: right; margin-top: 10px">
+						<span class="fa-stack fa-2x" style="position: absolute; bottom: 20px; right: 20px;">
 							<i class="fa fa-star fa-stack-2x"></i>
 							<strong class="fa-stack-1x star-text">@Rating.getAverageRating(product.id)</strong>
 						</span>
@@ -191,7 +215,7 @@
 						@for(comment <- topComments){
 							<tr>
 								<td>
-									<a href=""><h4>@comment.title</h4></a>
+									<h4>@comment.title</h4>
 									<p class = "person">By @comment.user.firstName @comment.user.lastName on @CommonHelpers.getDateAsString(comment.commentDate)</p>
 									<p style = "margin-bottom:20px;">@comment.text</p>
 									<span style = "margin-right:6px; ">Was this review helpful to you?</span>
@@ -247,8 +271,8 @@
 								<form action="" method="post">
 									<tr>
 										<td>
-											<a href=""><h4>@comment.title</h4></a>
-											<p class = "person">By @comment.user.firstName @comment.user.lastName on @comment.commentDate</p>
+											<h4>@comment.title</h4>
+											<p class = "person">By @comment.user.firstName @comment.user.lastName on @CommonHelpers.getDateAsString(comment.commentDate)</p>
 											<p style = "margin-bottom:20px;">@comment.text</p>
 											<span style = "margin-right:6px; ">Was this review helpful to you?</span>
 											<a id="like@comment.id"> <span id="thumbs-up@comment.id" class="glyphicon glyphicon-thumbs-up" style="padding-right: 10px; font-size: 17px;">@Thumb.getNumberThumbsUp(comment)</span></a>
