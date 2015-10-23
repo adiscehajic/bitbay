@@ -35,8 +35,6 @@ public class Purchase extends Model {
     @Column(columnDefinition = "datetime")
     public Date purchaseDate = new Date();
 
-    public int isRefunded;
-
     private static Finder<String, Purchase> finder = new Finder<String, Purchase>(Purchase.class);
 
     public Purchase(){
@@ -54,56 +52,7 @@ public class Purchase extends Model {
         this.bitPayment_id = "bit" + UUID.randomUUID().toString().substring(0, 7);
         this.totalPrice = totalPrice;
         this.token = token;
-        this.isRefunded = 0;
     }
-
-
-    /**
-     * This method saves data to tables purchaseItem and purchase, and also deletes cartItems from cart of the current user
-     *
-     * @param payment_id String
-     * @param token      String
-     * @param buyer      User
-     * @return id of the created purchase ...
-     */
-    public static Purchase createPurchase(String payment_id, String saleId, double totalPrice,
-                                          String token, User buyer, List<PurchaseItem> purchaseItems, List<CartItem> cartItems, Purchase purchase) {
-
-        Product product;
-        purchase.user = buyer;
-        purchase.purchaseItems = purchaseItems;
-        purchase.payment_id = payment_id;
-        purchase.sale_id = saleId;
-        purchase.totalPrice = totalPrice;
-        purchase.token = token;
-        purchase.isRefunded = 0;
-        purchase.save();
-        PurchaseItem item;
-
-        for (int i = 0; i < purchaseItems.size(); i++) {
-            item = purchaseItems.get(i);
-            product = Product.getProductById(item.product.id);
-            item.purchase = purchase;
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(purchase.purchaseDate);
-            calendar.add(Calendar.HOUR, product.cancelation);
-            item.cancelationDueDate = calendar.getTime();
-            item.save();
-
-            product.quantity -= item.quantity;
-            product.update();
-        }
-
-        for (int i = 0; i < cartItems.size(); i++) {
-            CartItem cartItemI = cartItems.get(i);
-            cartItemI.delete();
-        }
-
-        return purchase;
-
-    }
-
-
 
     /**
      * Finds purchase by the given user

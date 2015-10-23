@@ -46,9 +46,9 @@
                         </form>
                         <script >
                           $(document).ready(function(){
-                          $('#delete@cartItem.id').click(function(){
+                          $('#delete'+ @cartItem.id).click(function(){
                              $.confirm({
-                                title: 'You are about to delete cart item ' + @cartItem.product.name + '?',
+                                title: 'You are about to delete cart item ?',
                                 content: 'Are you really sure?',
                                 theme: 'supervan',
                                 confirmButtonClass: 'btn-danger',
@@ -68,9 +68,9 @@
                                            },
                                           cancel: function(){
                                         }
-                                   });
-                                 })
-                             })
+                                      });
+                });
+            });
                      </script>
                     }
                     </tbody>

@@ -6,7 +6,6 @@ import play.Logger;
 import play.data.format.Formats;
 
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -68,7 +67,6 @@ public class Auction extends Model {
     public static void checkAuctionOutcome() {
         List<Auction> auctions = finder.all();
 
-        Logger.info("Number of auctions: " + auctions.size());
 
         Date currentDate = new Date();
 

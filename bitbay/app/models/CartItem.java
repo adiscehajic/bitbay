@@ -2,8 +2,9 @@ package models;
 
 import com.avaje.ebean.Model;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.List;
 
 /**
@@ -64,25 +65,6 @@ public class CartItem extends Model {
     public static CartItem getCartItemByProductAndUser(Product product, User user) {
         CartItem cartItem = CartItem.finder.where().eq("product", product).where().eq("user", user).findUnique();
         return cartItem;
-    }
-
-    /**
-     *This method finds all cartItems for a given cart id
-     * @param cart
-     * @return
-     * PayPalController uses it
-     */
-    public static List<CartItem> findCartItemsByCart(Cart cart) {
-        List<CartItem> cartItems= findAll();
-        List<CartItem> cartItemsByCart = new ArrayList<>();
-
-        for (int i = 0; i < cartItems.size(); i++){
-            CartItem cartItemI = cartItems.get(i);
-            if (cartItemI.cart.equals(cart)){
-                cartItemsByCart.add(cartItemI);
-            }
-        }
-        return cartItemsByCart;
     }
 
 }

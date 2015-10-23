@@ -41,39 +41,12 @@
             <td class="cartData" width="200px"> @purchaseItem.product.price KM</td>
             <td class="cartData" style="align: center;">@purchaseItem.quantity</td>
             <td class="cartData"> @purchaseItem.price KM </td>
-              @if(purchaseItem.cancelationDueDate.compareTo(new Date()) != -1 && purchaseItem.isRefunded == 0){
-                <td class="cartData"><a href="@routes.PayPalController.refundProcessing(purchaseItem.id)" id="@purchaseItem.id">Cancel order</a></td>
-              }
+                @if(purchaseItem.cancelationDueDate.compareTo(new Date()) != -1 && purchaseItem.isRefunded == 0){
+                    <td class="cartData"><a href="@routes.PayPalController.refundProcessing(purchaseItem.id)" id="delete@purchaseItem.id">Cancel order</a></td>
+                }
             </tr>
           </form>
-          <script >
-              $(document).ready(function(){
-                $('@purchaseItem').click(function(){
-                   $.confirm({
-                      title: 'You are about to cancel the order of ' + @purchaseItem.product.name + '?',
-                      content: 'Are you really sure?',
-                      theme: 'supervan',
-                      confirmButtonClass: 'btn-danger',
-                      cancelButtonClass: 'btn-info',
-                       confirmButton: 'Confirm',
-                       cancelButton: 'Cancel',
-                       backgroundDismiss: false,
-                         confirm: function(){
-                          $.ajax({
-                             url: '@routes.PayPalController.refundProcessing(purchaseItem.id)',
-                             method: 'GET',
-                              }).success(function(){
-                               window.location.replace("@routes.Users.getUserPurchases()");
-                                }).error(function(response){
-                                alert(response.responseText);
-                                 });
-                                 },
-                                cancel: function(){
-                              }
-                         });
-                       })
-                   })
-         </script>
+
         }
         </tbody>
       </table>

@@ -118,7 +118,6 @@ create table purchase (
   token                     varchar(255),
   user_id                   integer,
   purchase_date             datetime,
-  is_refunded               integer,
   constraint pk_purchase primary key (id))
 ;
 

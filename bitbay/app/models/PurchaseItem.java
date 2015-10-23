@@ -7,8 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Medina Banjic on 13/10/15.
@@ -77,7 +76,22 @@ public class PurchaseItem extends Model {
     }
 
     public static List<PurchaseItem> getPurchasedItemsByUser(User user){
+        List<PurchaseItem> purchaseItems = finder.where().eq("user", user).findList();
+
+        Set<Purchase> purchasesSet = new HashSet<>();
+
+        for (int i = 0; i < purchaseItems.size(); i++) {
+            purchasesSet.add(purchaseItems.get(i).purchase);
+        }
+
+        Iterator<Purchase> iter = purchasesSet.iterator();
+
+        while (iter.hasNext()) {
+            Purchase p = iter.next();
+            if (p.payment_id == null) {
+                p.delete();
+            }
+        }
         return PurchaseItem.finder.where().eq("user", user).findList();
     }
-
 }
