@@ -21,6 +21,7 @@ import java.util.List;
 @Entity
 public class Bid extends Model {
 
+    // Declaring bid properties.
     @Id
     public Integer id;
 
@@ -39,20 +40,38 @@ public class Bid extends Model {
 
     private static Finder<String, Bid> finder = new Finder<>(Bid.class);
 
+    /**
+     * Constructor.
+     */
     public Bid(){}
 
+    /**
+     * Constructor that creates new bid with inputed user, auction and amount of bid.
+     * @param user - User that placed the bid.
+     * @param auction - Auction in which is the bid placed.
+     * @param amount - Amount of the bid.
+     */
     public Bid(User user, Auction auction, Double amount) {
         this.user = user;
         this.auction = auction;
         this.amount = amount;
     }
 
+    /**
+     * Returns the count of bids for inputed auction.
+     * @param auction - Auction for which is count of bids returned.
+     * @return Count of bids.
+     */
     public static Integer getNumberOfAuctionBids(Auction auction) {
         return finder.where().eq("auction", auction).findRowCount();
     }
 
+    /**
+     * Returns the amount of the highest bid for inputed auction.
+     * @param auction - Auction for which is highest bid returned.
+     * @return
+     */
     public static Double getAmountOfHighestBid(Auction auction) {
-
         try {
             return finder.where().eq("auction", auction).orderBy("amount desc").findList().get(0).amount;
         } catch (IndexOutOfBoundsException e) {
@@ -61,10 +80,19 @@ public class Bid extends Model {
         }
     }
 
+    /**
+     * Returns the list of all bids for inputed auction.
+     * @param auction - Inputed auction.
+     * @return List of all bids.
+     */
     public static List<Bid> getAuctionBids(Auction auction) {
         return finder.where().eq("auction", auction).orderBy("amount desc").findList();
     }
 
+    /**
+     * Prints the information about the bid.
+     * @return
+     */
     public String toString() {
         return String.format("%d) %s - %f", id, user.email, amount);
     }

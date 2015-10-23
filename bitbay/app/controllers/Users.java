@@ -5,6 +5,9 @@ import helpers.CurrentAdmin;
 import helpers.CurrentBuyerSeller;
 import helpers.SessionHelper;
 import models.*;
+import com.avaje.ebean.Model;
+import com.cloudinary.Cloudinary;
+import helpers.*;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.Play;
@@ -15,13 +18,24 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.purchase.showUserPurchases;
+import views.html.index;
+import views.html.newPassword;
+import views.html.signup;
+import views.html.signIn;
 import views.html.user.userEdit;
 import views.html.user.userProducts;
 import views.html.user.userProfile;
-
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
+import com.avaje.ebean.Ebean;
+import models.*;
+import views.html.user.userProducts;
+import views.html.user.userCart;
+import models.Country;
+import javax.persistence.PersistenceException;
 
 
 /**
@@ -32,7 +46,7 @@ public class Users extends Controller {
     // Declaring user form.
     private static final Form<User> userRegistration = Form.form(User.class);
     public static final String BIT_BAY = Play.application().configuration().getString("BIT_BAY");
-
+   
     /**
      * Deletes selected user. Only administrator user can delete other users, except users that are also administrators.
      * When selected user is deleted it automatically deletes all products that that user has, if the user is seller,
@@ -42,7 +56,7 @@ public class Users extends Controller {
      * @return Administrator panel page where all users are listed.
      */
     @Security.Authenticated(CurrentAdmin.class)
-    public Result deleteUser(Integer id){
+    public Result deleteUser(Integer id) {
         // Finding user with inputed id.
         User user = User.findById(id);
         // Deleting selected user.
@@ -58,7 +72,7 @@ public class Users extends Controller {
      * @return Main page of the application.
      */
 
-    public Result deleteUserAccount(){
+    public Result deleteUserAccount() {
         // Getting current user from session.
         User user = SessionHelper.currentUser();
 
@@ -84,7 +98,7 @@ public class Users extends Controller {
      * @return - Profile page of current user that is signed in.
      */
     @Security.Authenticated(CurrentBuyerSeller.class)
-    public Result getUser(String email){
+    public Result getUser(String email) {
         User user = User.getUserByEmail(email);
         return ok(userProfile.render(user));
     }
@@ -133,7 +147,7 @@ public class Users extends Controller {
      */
     @RequireCSRFCheck
     @Security.Authenticated(CurrentBuyerSeller.class)
-    public Result updateUser(){
+    public Result updateUser() {
         // Getting current user from session.
         User user = SessionHelper.currentUser();
         // Declaring list of all countries in the world.
@@ -158,10 +172,10 @@ public class Users extends Controller {
             user.city = boundForm.data().get("city");
             user.address = boundForm.data().get("address");
             // Updating time when profile information has been changed.
-            user.updated= new Date();
+            user.updated = new Date();
             // Updating all altered information into the database.
             user.update();
-        }catch (Exception e){
+        } catch (Exception e) {
             Logger.info("ERROR: UserLogin failed.\n" + e.getStackTrace() + " -- Msg: " + e.getMessage());
             return badRequest(userEdit.render(boundForm, user, countries));
         }
@@ -190,11 +204,12 @@ public class Users extends Controller {
 
     /**
      * This will just validate the form for the AJAX call
+     *
      * @return ok if there are no errors or a JSON object representing the errors
      */
-    public Result validateFormUser(){
+    public Result validateFormUser() {
         Form<User> binded = userRegistration.bindFromRequest();
-        if(binded.hasErrors()){
+        if (binded.hasErrors()) {
             return badRequest(binded.errorsAsJson());
         } else {
             return ok("Validation successful.");
@@ -205,6 +220,7 @@ public class Users extends Controller {
      * This action method is activated after user click on a link in verification email.
      * It is using token from email to verify user and activate validateUser(user) method
      * which is saving validation data to DB
+     *
      * @param token - User token
      * @return - Result
      */
@@ -221,10 +237,86 @@ public class Users extends Controller {
             } else {
                 return redirect(routes.ApplicationController.signIn());
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             return redirect(routes.ApplicationController.signIn());
         }
     }
+
+    /**
+     * This method is activated after user click on a link in verification email.
+     * It is using token from email to verify user and redirect user to window where
+     * user can enter new password for his account.
+     * @param token
+     * @return
+     */
+    public Result validateForgottenPassword(String token) {
+        try {
+            User user = User.findUserByToken(token);
+            if (User.validateUser(user)) {
+                return redirect(routes.ApplicationController.newPassword(user.email));
+            } else {
+                return redirect(routes.ApplicationController.forgotPassword());
+            }
+
+        } catch (Exception e) {
+            return redirect(routes.ApplicationController.forgotPassword());
+        }
+    }
+
+    /**
+     * This method is checking if email user typed in email field is in DB and if user is registrated before.
+     * If user is registrated in DB new unique token is generated and verification mail is sent to users email.
+     * @return
+     */
+    public Result getRegistratedUserByEmail() {
+        DynamicForm form = Form.form().bindFromRequest();
+        String email = form.data().get("email");
+
+        User user = User.getUserByEmail(email);
+
+        if (user != null) {
+            user.token = UUID.randomUUID().toString();
+            user.update();
+            MailHelper.sendNewPassword(user.email, Users.BIT_BAY + "/signin/forgotpassword/" + user.token);
+            flash("success", "Email successfully sent");
+        } else {
+            flash("error", "Could not find user with that email ");
+        }
+        return redirect(routes.ApplicationController.forgotPassword());
+    }
+
+    /**
+     * This method is used to change old users password with new one,
+     * in case when new password and confirm passwor are equal and redirect user
+     * to sign in page.
+     * @return
+     */
+    public Result setNewPassword(String email) {
+        DynamicForm form = Form.form().bindFromRequest();
+        String password = form.get("password");
+        String confirmPassword = form.get("confirmPassword");
+
+        if(password == ""){
+            flash("emptyError", "Password is required");
+            return redirect(routes.ApplicationController.newPassword(email));
+        }
+
+        if(password.length()<8){
+            flash("lengthError", "Password must be min 8 characters long");
+            return redirect(routes.ApplicationController.newPassword(email));
+        }
+
+        if (password.equals(confirmPassword)) {
+            User user = User.getUserByEmail(email);
+            user.password = BCrypt.hashpw(form.get("confirmPassword"), BCrypt.gensalt());
+            user.update();
+            return redirect(routes.ApplicationController.signIn());
+        }
+        flash("matchError", "Password don't match");
+        return redirect(routes.ApplicationController.newPassword(email));
+    }
+
+
 
     @RequireCSRFCheck
     public Result saveUserPicture() {

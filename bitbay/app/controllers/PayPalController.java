@@ -123,6 +123,7 @@ public class PayPalController extends Controller {
 
             purchaseId = purchase.id;
 
+
             priceString = String.format("%1.2f", totalPrice);
 
             desc += "\nTotal amount: " + priceString;
