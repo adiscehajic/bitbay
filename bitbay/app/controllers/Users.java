@@ -11,6 +11,7 @@ import helpers.*;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.Play;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
@@ -253,6 +254,7 @@ public class Users extends Controller {
         try {
             User user = User.findUserByToken(token);
             if (User.validateUser(user)) {
+                user.token = null;
                 return redirect(routes.ApplicationController.newPassword(user.email));
             } else {
                 return redirect(routes.ApplicationController.forgotPassword());
