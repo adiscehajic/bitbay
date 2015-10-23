@@ -95,11 +95,16 @@ public class PayPalController extends Controller {
 
         // Process cart/payment information
         for (int i = 0; i < cartItems.size(); i++){
+            Logger.info(cartItems.size() + " Cart items size");
             CartItem cartItemI = cartItems.get(i);
             price = cartItemI.price;
+            Logger.info(price + " Price");
             totalPrice += price;
+            Logger.info(totalPrice + "Total price");
             quantity = cartItemI.quantity;
+            Logger.info(quantity.toString()  +" Quantity");
             productString = cartItemI.product.name;
+            //Logger.info();
             priceString = String.format("%1.2f", price);
             desc += "Product:" + productString + "\n";
 

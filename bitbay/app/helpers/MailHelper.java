@@ -45,4 +45,33 @@ public class MailHelper {
 
         }
     }
+
+    public static void sendNewPassword(String email, String message) {
+
+        try {
+            User user = User.getUserByEmail(email);
+            HtmlEmail mail = new HtmlEmail();
+            mail.setSubject("bitBay Forgot password");
+            mail.setFrom("bitBay <bitbayservice@gmail.com>");
+            mail.addTo("Contact <bitbayservice@gmail.com>");
+            mail.addTo(email);
+            mail.setMsg(message);
+            mail.setHtmlMsg(String
+                    .format("<html><body><h3>Hi %s %s</h3><strong> %s </strong> <p> %s </p> <p> %s </p> </body></html>",
+                            user.firstName, user.lastName,
+                            "Forgot your password!?",
+                            "Please follow link below.", message));
+            mail.setHostName("smtp.gmail.com");
+            mail.setStartTLSEnabled(true);
+            mail.setSSLOnConnect(true);
+            mail.setAuthenticator(new DefaultAuthenticator(
+                    Play.application().configuration().getString("EMAIL_USERNAME_ENV"),
+                    Play.application().configuration().getString("EMAIL_PASSWORD_ENV")
+            ));
+            mail.send();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
 }
