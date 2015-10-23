@@ -1,14 +1,10 @@
 package models;
 
 import com.avaje.ebean.Model;
-import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
-import views.html.user.userProducts;
-import org.apache.commons.io.FileUtils;
 
 import javax.persistence.*;
-import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -57,7 +53,10 @@ public class Product extends Model {
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     public Auction auction;
 
+    public int cancelation;
+
     private static Finder<String, Product> finder = new Finder<String, Product>(Product.class);
+
 
     public Product() {
     }
@@ -71,6 +70,7 @@ public class Product extends Model {
         this.price = price;
         this.quantity = quantity;
         this.sellingType = sellingType;
+        cancelation = 0;
     }
 
     public static Product getProductById(Integer id) {
