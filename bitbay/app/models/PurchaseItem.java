@@ -71,7 +71,7 @@ public class PurchaseItem extends Model {
      * @param id - PurchaseItem ID
      * @return - PurchaseItem by ID
      */
-    public static PurchaseItem getPurchaseById(Integer id) {
+    public static PurchaseItem getPurchaseItemById(Integer id) {
         PurchaseItem purchaseItem = PurchaseItem.finder.where().eq("id", id).findUnique();
         return purchaseItem;
     }

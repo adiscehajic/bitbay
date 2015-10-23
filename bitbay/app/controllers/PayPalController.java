@@ -17,6 +17,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.html.index;
 import views.html.purchase.purchaseResult;
+import views.html.purchase.showUserPurchases;
 import views.html.user.userCart;
 
 import java.util.*;
@@ -74,6 +75,8 @@ public class PayPalController extends Controller {
     private static Cart currentUserCart = Cart.findCartByUser(currentUser);
     private static List<CartItem> cartItems = CartItem.findCartItemsByCart(currentUserCart);
     private static List<PurchaseItem> purchaseItems = new ArrayList<>();
+    private static List<Product> products = Product.findAll();
+    private static List<Product> recommendations = Recommendation.getRecommendations();
     private static Map<String, String> config;
 
     private static Integer purchaseId;
@@ -239,9 +242,6 @@ public class PayPalController extends Controller {
      * @return render index page with a flash message
      */
     public Result approveTransaction() {
-
-        List<Product> products = Product.findAll();
-        List<Product> recommendations = Recommendation.getRecommendations();
         flash("success");
         return ok(index.render(products, recommendations));
     }
@@ -276,5 +276,62 @@ public class PayPalController extends Controller {
             CartItem cartItemI = cartItems.get(i);
             cartItemI.delete();
         }
+    }
+
+
+    /**
+     * Method for refunding
+     * @return redirect to the index page
+     */
+    public Result refundProcessing(Integer purchaseItem_id) {
+       if(executeRefund(purchaseItem_id)){
+           PurchaseItem purchaseItem = PurchaseItem.getPurchaseItemById(purchaseItem_id);
+           Product product = Product.getProductById(purchaseItem.product.id);
+           product.quantity += purchaseItem.quantity;
+           product.update();
+           return ok(showUserPurchases.render(currentUser,purchaseItems));
+       }
+        return ok(index.render(products, recommendations));
+    }
+
+    public static boolean executeRefund(Integer purchaseItem_id) {
+
+        try {
+            String accessToken = new OAuthTokenCredential(CLIENT_ID,
+                    CLIENT_SECRET).getAccessToken();
+
+            Map<String, String> sdkConfig = new HashMap<String, String>();
+            sdkConfig.put("mode", "sandbox");
+            context = new APIContext(accessToken);
+            context.setConfigurationMap(sdkConfig);
+
+            PurchaseItem purchaseItem = PurchaseItem.getPurchaseItemById(purchaseItem_id);
+            Sale sale = new Sale();
+            Refund refund = new Refund();
+            if(purchaseItem.purchase.sale_id != null && purchaseItem.isRefunded == 0) {
+                System.out.println(purchaseItem.purchase.token);
+                totalPrice = purchaseItem.price;
+                String totalPriceString = String.format("%1.2f", totalPrice);
+                sale.setId(purchaseItem.purchase.sale_id);
+                Amount amount = new Amount();
+                amount.setCurrency("USD");
+                amount.setTotal(totalPriceString);
+                refund.setAmount(amount);
+                sale.refund(context, refund);
+                purchaseItem.isRefunded = 1;
+                purchaseItem.update();
+                }
+                if(purchaseItem.purchase.sale_id == null || purchaseItem.isRefunded == 1) {
+                    purchaseItem.isRefunded = 1;
+                    purchaseItem.update();
+                }
+            flash("success");
+        } catch (PayPalRESTException e) {
+            //flash("error", Messages.get("error.msg.02"));
+            Logger.error("Error at purchaseProcessing: " + e.getMessage());
+            return false;
+
+        }
+        return true;
     }
 }
