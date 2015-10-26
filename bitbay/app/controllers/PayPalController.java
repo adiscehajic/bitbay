@@ -112,7 +112,7 @@ public class PayPalController extends Controller {
                 quantity = cartItemI.quantity;
                 productString = cartItemI.product.name;
                 priceString = String.format("%1.2f", price);
-                desc += "Product: " + productString + "\nQuantity: " + quantity + "\n";
+                desc += "Product: " + productString + "\n";
                 purchaseItem = new PurchaseItem(cartItemI.product, cartItemI.user, purchase, quantity);
                 // Adding the purchase item to the purchaseItems list
                 purchaseItems.add(purchaseItem);
