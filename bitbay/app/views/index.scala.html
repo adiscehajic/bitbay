@@ -3,15 +3,41 @@
 @(implicit products: java.util.List[Product], recommendedProducts: java.util.List[Product])
 
 @main("bitbay Home") {
-    <div class="jumbotron">
-        @if(!SessionHelper.isAuthenticated) {
-            <h1>Welcome</h1>
-        } else {
-            <h1>Welcome  @SessionHelper.currentUser().firstName</h1>
-            <h4>Your login was succesfull!</h4>
-        }
-        <p><a class="btn btn-primary btn-lg" href="/" role="button">Back to home</a></p>
-    </div>
+
+                <div id="carouselHacked" class="carousel slide carousel-fade" data-ride="carousel">
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <a href="product/7">
+                            <img src="@routes.Assets.versioned("images/playstation3.png")" alt="">
+                                </a>
+                        </div>
+                        <div class="item">
+                            <a href="product/1">
+                            <img src="@routes.Assets.versioned("images/samsungs6a.png")" alt="">
+                            </a>
+                         </div>
+                        <div class="item">
+                            <a href="product/21">
+                                <img src="@routes.Assets.versioned("images/bmw.png")" alt="">
+                            </a>
+                        </div>
+                        <div class="item">
+                            <a href="product/25">
+                                <img src="@routes.Assets.versioned("images/honda.png")" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <a class="left carousel-control" href="#carouselHacked" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carouselHacked" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+
     @if(recommendedProducts != null && recommendedProducts.size() > 3) {
         <div class="panel panel-primary">
             <div class="panel-heading">
