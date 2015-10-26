@@ -1,11 +1,13 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.data.format.Formats;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Medina Banjic on 13/10/15.
@@ -24,10 +26,15 @@ public class PurchaseItem extends Model {
 
     @ManyToOne
     public Purchase purchase;
-    @ManyToOne
-    public Cart cart;
+
     public Integer quantity;
     public Double price;
+
+    @Formats.DateTime(pattern = "dd/MM/yyyy")
+    @Column(columnDefinition = "datetime")
+    public Date cancelationDueDate;
+
+    public int isRefunded;
 
     public PurchaseItem(){}
 
@@ -35,17 +42,16 @@ public class PurchaseItem extends Model {
      * Constructor for a new purchaseItem object
      * @param product
      * @param user
-     * @param cart
      * @param purchase
      * @param quantity
      */
-    public PurchaseItem(Product product, User user, Cart cart, Purchase purchase, Integer quantity){
+    public PurchaseItem(Product product, User user, Purchase purchase, Integer quantity){
         this.product = product;
         this.purchase = purchase;
         this.user = user;
-        this.cart = cart;
         this.quantity = quantity;
         this.price = product.price*quantity;
+        isRefunded = 0;
     }
 
     private static Finder<String, PurchaseItem> finder = new Finder<String, PurchaseItem>(PurchaseItem.class);
@@ -64,9 +70,28 @@ public class PurchaseItem extends Model {
      * @param id - PurchaseItem ID
      * @return - PurchaseItem by ID
      */
-    public static PurchaseItem getPurchaseById(Integer id) {
+    public static PurchaseItem getPurchaseItemById(Integer id) {
         PurchaseItem purchaseItem = PurchaseItem.finder.where().eq("id", id).findUnique();
         return purchaseItem;
     }
 
+    public static List<PurchaseItem> getPurchasedItemsByUser(User user){
+        List<PurchaseItem> purchaseItems = finder.where().eq("user", user).findList();
+
+        Set<Purchase> purchasesSet = new HashSet<>();
+
+        for (int i = 0; i < purchaseItems.size(); i++) {
+            purchasesSet.add(purchaseItems.get(i).purchase);
+        }
+
+        Iterator<Purchase> iter = purchasesSet.iterator();
+
+        while (iter.hasNext()) {
+            Purchase p = iter.next();
+            if (p.payment_id == null) {
+                p.delete();
+            }
+        }
+        return PurchaseItem.finder.where().eq("user", user).findList();
+    }
 }

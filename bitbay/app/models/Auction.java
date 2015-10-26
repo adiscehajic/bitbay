@@ -4,6 +4,8 @@ import com.avaje.ebean.Model;
 import helpers.CommonHelpers;
 import play.data.format.Formats;
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 import java.util.*;
 
 /**

@@ -1,6 +1,10 @@
 package controllers;
 
 
+import helpers.CurrentAdmin;
+import helpers.CurrentBuyerSeller;
+import helpers.SessionHelper;
+import models.*;
 import com.avaje.ebean.Model;
 import com.cloudinary.Cloudinary;
 import helpers.*;
@@ -9,26 +13,22 @@ import play.Logger;
 import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
-import play.data.validation.ValidationError;
-import play.filters.csrf.AddCSRFToken;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
+import views.html.purchase.showUserPurchases;
 import views.html.index;
 import views.html.newPassword;
 import views.html.signup;
 import views.html.signIn;
 import views.html.user.userEdit;
+import views.html.user.userProducts;
 import views.html.user.userProfile;
-import views.html.user.userMessages;
-
 import java.io.File;
-import java.lang.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import com.avaje.ebean.Ebean;
@@ -254,6 +254,7 @@ public class Users extends Controller {
         try {
             User user = User.findUserByToken(token);
             if (User.validateUser(user)) {
+                user.token = null;
                 return redirect(routes.ApplicationController.newPassword(user.email));
             } else {
                 return redirect(routes.ApplicationController.forgotPassword());
@@ -343,5 +344,12 @@ public class Users extends Controller {
             }
         }
         return redirect(routes.Users.getUser(user.email));
+    }
+
+    public Result getUserPurchases(){
+        User currentUser = SessionHelper.currentUser();
+        List<PurchaseItem> items = PurchaseItem.getPurchasedItemsByUser(currentUser);
+
+        return ok(showUserPurchases.render(currentUser, items));
     }
 }

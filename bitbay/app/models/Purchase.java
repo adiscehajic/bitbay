@@ -5,8 +5,10 @@ import helpers.SessionHelper;
 import play.data.format.Formats;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Medina Banjic on 14/10/15.
@@ -18,6 +20,10 @@ public class Purchase extends Model {
     public Integer id;
 
     public String payment_id;
+    public String bitPayment_id;
+    public String sale_id;
+    public double totalPrice;
+    public String token; //token from paypalReturn
 
     @ManyToOne
     public User user;
@@ -36,23 +42,36 @@ public class Purchase extends Model {
 
     /**
      * Constructor for new purchase.
-     * @param buyer - current user
+     *
+     * @param buyer        - current user
      * @param purchaseItem - list of purchased items
-
      */
-    public Purchase (User user, List<PurchaseItem> purchaseItems){
+    public Purchase(User user, List<PurchaseItem> purchaseItems, double totalPrice, String token) {
         this.user = user;
         this.purchaseItems = purchaseItems;
+        this.bitPayment_id = "bit" + UUID.randomUUID().toString().substring(0, 7);
+        this.totalPrice = totalPrice;
+        this.token = token;
     }
 
-
     /**
-     * Finds purchase by the given id
+     * Finds purchase by the given user
      * @param user
      * @return
      */
     public static Purchase findPurchaseByUser(User user){
         Purchase purchase = Purchase.finder.where().eq("user", user).findUnique();
+
+        return purchase;
+    }
+
+    /**
+     * Finds purchase by the given id
+     * @param id
+     * @return
+     */
+    public static Purchase findPurchaseById(Integer id){
+        Purchase purchase = Purchase.finder.where().eq("id", id).findUnique();
 
         return purchase;
     }
