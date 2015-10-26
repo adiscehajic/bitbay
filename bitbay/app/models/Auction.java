@@ -95,7 +95,7 @@ public class Auction extends Model {
         // Declaring variable that represents current date.
         Date currentDate = new Date();
         // Declaring bitbay service user as message sender.
-        User sender = User.getUserByEmail("adis.cehajic@bitcamp.ba");
+        User sender = User.getUserByEmail("bitbayservice@gmail.com");
         // Going trough all auctions.
         for (int i = 0; i < auctions.size(); i++) {
             // Declaring variable that represents auction ending date.
