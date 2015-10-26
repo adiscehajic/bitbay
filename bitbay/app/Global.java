@@ -556,12 +556,6 @@ public class Global extends GlobalSettings {
             buyers.add(userFour);
             buyers.add(userSix);
 
-            Random num = new Random();
-
-            for(int i = 1; i < 1000; i++){
-                new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(50) + 1)), (num.nextInt(5) + 1)).save();
-            }
-
             List<Product> products = new ArrayList<>();
             products.add(p1);
             products.add(p2);
@@ -619,9 +613,11 @@ public class Global extends GlobalSettings {
             products.add(p54);
             products.add(p55);
 
+
             for (int i = 0; i < products.size(); i++){
                 products.get(i).cancelation = 2;
             }
+
 
             p1.save();
             p2.save();
@@ -678,6 +674,12 @@ public class Global extends GlobalSettings {
             p53.save();
             p54.save();
             p55.save();
+
+            Random num = new Random();
+
+            for(int i = 1; i < products.size(); i++){
+                new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(50) + 1)), (num.nextInt(5) + 1)).save();
+            }
 
             FAQ f1 = new FAQ("How does bitBay Valet work?\n", "Valet is a new and simple way to sell your things on eBay. Valets sell your items on your behalf, and you get up to 80% of the sale price.\n" +
                     "\n" +
