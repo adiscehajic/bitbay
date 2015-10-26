@@ -123,7 +123,22 @@
 
 							<tr>
 								<td> Returns: </td>
-								<td> 60 days money back, buyer pays return shipping </td>
+								@if(product.cancelation == 0){
+									<td> You cannot cancel this purchase! </td>
+
+								}
+								@if(product.cancelation < 2){
+									<td> You have @product.cancelation hour from purchase to cancel it. Buyer pays return shipping </td>
+
+								}
+								@if(product.cancelation > 1 && product.cancelation < 25){
+									<td> You have @product.cancelation hours from purchase to cancel it. Buyer pays return shipping </td>
+
+								}
+								@if(product.cancelation >= 25){
+									<td> You have @Product.cancelationHourToDay(product.cancelation) days from purchase to cancel it. Buyer pays return shipping </td>
+
+								}
 							</tr>
 							<tr>
 								<td>Payment: </td>
