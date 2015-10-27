@@ -46,7 +46,7 @@
             @for(info <- details) {
                 <h4>@info</h4>
             }
-            <button type="submit" class="btn btn-primary" formaction="@helper.CSRF(routes.PayPalController.approveTransaction())">
+            <button type="submit" class="btn btn-primary" formaction="@routes.PayPalController.sendInvoice()">
                 Get invoice</button>
             <button type="submit" class="btn btn-default" formaction="@routes.ApplicationController.index()" >Homepage</button>
         </form>

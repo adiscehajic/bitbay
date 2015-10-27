@@ -16,6 +16,7 @@ import views.html.user.userCart;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Dinko Hodzic on 9/15/15.
@@ -97,7 +98,6 @@ public class CartController extends Controller {
     public Result getCart(){
         User user = SessionHelper.currentUser();
         Cart cart = Cart.findCartByUser(user);
-
         if(cart != null) {
             return ok(userCart.render(cart.cartItems, user));
         } else {
@@ -117,7 +117,7 @@ public class CartController extends Controller {
 
         User user = SessionHelper.currentUser();
         Cart cart = Cart.findCartByUser(user);
-        // Removing foung cart item from the list of cart items and updating the cart.
+        // Removing founded cart item from the list of cart items and updating the cart.
         cart.cartItems.remove(cartItem);
         //cart.update();
         // Deleting the cart item from the database.
@@ -150,5 +150,14 @@ public class CartController extends Controller {
         product.update();
         return redirect(routes.CartController.getCart());
     }
+
+    public static Integer getCartNotification() {
+        if (SessionHelper.currentUser() != null && SessionHelper.currentUser().cart != null) {
+            List<CartItem> cartItems = SessionHelper.currentUser().cart.cartItems;
+            return cartItems.size();
+        }
+        return 0;
+    }
+
 
 }

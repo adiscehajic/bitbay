@@ -22,6 +22,7 @@
             <th> Price </th>
             <th> Quantity </th>
             <th> Total </th>
+              <th> Status </th>
           </tr>
         </thead>
         <tbody>
@@ -41,9 +42,18 @@
             <td class="cartData" width="200px"> @purchaseItem.product.price KM</td>
             <td class="cartData" style="align: center;">@purchaseItem.quantity</td>
             <td class="cartData"> @purchaseItem.price KM </td>
-                @if(purchaseItem.cancelationDueDate.compareTo(new Date()) != -1 && purchaseItem.isRefunded == 0){
-                    <td class="cartData"><a href="#" id="delete@purchaseItem.id">Cancel order</a></td>
-                }
+
+              @if(purchaseItem.cancelationDueDate.compareTo(new Date()) != -1 && purchaseItem.isRefunded == 0){
+                  <td class="cartData"><a href="@routes.PayPalController.refundProcessing(purchaseItem.id)" id="delete@purchaseItem.id">Cancel order</a></td>
+              }
+
+              @if(purchaseItem.cancelationDueDate.compareTo(new Date()) == -1 && purchaseItem.isRefunded == 0){
+                <td class="cartData"> You cannot cancel this purchase</td>
+              }
+              @if(purchaseItem.isRefunded == 1){
+                <td class="cartData">CANCELED</td>
+              }
+
             </tr>
           </form>
           <script >

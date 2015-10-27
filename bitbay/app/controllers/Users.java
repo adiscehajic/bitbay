@@ -5,11 +5,9 @@ import com.twilio.sdk.TwilioRestException;
 import com.twilio.sdk.verbs.TwiMLResponse;
 import helpers.CurrentAdmin;
 import helpers.CurrentBuyerSeller;
+import helpers.MailHelper;
 import helpers.SessionHelper;
 import models.*;
-import com.avaje.ebean.Model;
-import com.cloudinary.Cloudinary;
-import helpers.*;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.Play;
@@ -21,24 +19,14 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.purchase.showUserPurchases;
-import views.html.index;
-import views.html.newPassword;
-import views.html.signup;
-import views.html.signIn;
 import views.html.user.userEdit;
 import views.html.user.userProducts;
 import views.html.user.userProfile;
+
 import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
-import com.avaje.ebean.Ebean;
-import models.*;
-import views.html.user.userProducts;
-import views.html.user.userCart;
-import models.Country;
-import javax.persistence.PersistenceException;
 
 
 /**

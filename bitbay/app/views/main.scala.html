@@ -1,6 +1,6 @@
 @import helpers.SessionHelper
 
-@(title: String)(content: Html)(implicit categories: java.util.List[Category] = Category.findAllAll(), admin: Integer = 1, buyer: Integer = 2, seller: Integer = 3, user: User = SessionHelper.currentUser(), notifications: Integer = Message.getMessageNotification())
+@(title: String)(content: Html)(implicit categories: java.util.List[Category] = Category.findAllAll(), admin: Integer = 1, buyer: Integer = 2, seller: Integer = 3, user: User = SessionHelper.currentUser(), notifications: Integer = Message.getMessageNotification(), cartNotification: Integer = CartController.getCartNotification())
 
 <!DOCTYPE html>
 
@@ -107,7 +107,10 @@
                                 </a>
                             </li>
                             @if(SessionHelper.isUserType(buyer)) {
-                                <li><a href="@routes.CartController.getCart()"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 17px"></span></a></li>
+                                <li><a href="@routes.CartController.getCart()"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 17px"></span>
+                                    @if(cartNotification > 0) {
+                                        <span class="badge" style="font-size: 10px; background-color: #F4A600; border-radius: 9px; padding: 1px 4px 1px">@cartNotification</span>
+                                    }</a></li>
                             }
                             @if(SessionHelper.isUserType(seller)) {
                                 <li><a href="@routes.Users.getAllUserProducts(user.email)"> <span class="glyphicon glyphicon-list"></span></a></li>
@@ -116,7 +119,9 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> @user.firstName (@user.userType.name) <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="@routes.Users.getUser(user.email)"> <span class="glyphicon glyphicon-user"></span>  Profile </a></li>
-                                    <li><a href="@routes.Users.getUserPurchases()">Purchases</a> </li>
+                                    @if(SessionHelper.isUserType(buyer)) {
+                                        <li><a href="@routes.Users.getUserPurchases()">Purchases</a> </li>
+                                    }
                                     <li><a href="@routes.ApplicationController.logout()"> <span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
                                 </ul>
                             </li>
