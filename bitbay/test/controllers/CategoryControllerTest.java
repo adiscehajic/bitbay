@@ -37,14 +37,14 @@ public class CategoryControllerTest extends WithApplication{
 
     @Test
     public void newtCategoryTest() {
-    Category c = new Category("c1");
+    Category c = new Category("c1", null);
         c.save();
         assertNotNull(c);
     }
 
     @Test
     public void editCategoryTest(){
-    Category c = new Category("c");
+    Category c = new Category("c", null);
 
         c.save();
 

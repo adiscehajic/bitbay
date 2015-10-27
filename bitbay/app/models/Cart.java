@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * Created by neo on 9/15/15.
+ * Created by Dinko Hodzic on 9/15/15.
  */
 @Entity
 public class Cart extends Model{

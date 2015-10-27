@@ -66,13 +66,6 @@ public class Users extends Controller {
     public Result deleteUserAccount() {
         // Getting current user from session.
         User user = SessionHelper.currentUser();
-
-       /* List<Comment> comments = Comment.getCommentsByUser(user);
-
-        for (int i = 0; i < comments.size(); i++) {
-            comments.get(i).delete();
-        }*/
-
         // Deleting current user.
         user.delete();
         // Clearing session.

@@ -1,8 +1,10 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
+import play.data.validation.ValidationError;
 
 import javax.persistence.*;
 import java.util.*;
@@ -15,33 +17,49 @@ public class Product extends Model {
 
     @Id
     public Integer id;
+
     @ManyToOne
     public User user;
+
     @Constraints.MaxLength(255)
     @Constraints.Required(message = "Product name is required.")
     public String name;
+
     @Column(columnDefinition = "TEXT")
     public String description;
+
     public String manufacturer;
+
     @ManyToOne
-    @Constraints.Required(message = "Product category is required.")
     public Category category;
+
+    @Transient
+    @Constraints.Required(message = "Product category is required.")
+    public String categoryId;
+
 //    @Constraints.Min(value = 1, message = "Product price must be larger than 0.")
 //    @Constraints.Required(message = "Product price is required.")
     public Double price;
+
 //    @Constraints.Min(value = 1, message = "Product quantity must be larger than 0.")
 //    @Constraints.Required(message = "Product quantity is required.")
     public Integer quantity;
+
     @Constraints.Required(message = "Product selling type is required.")
     public String sellingType;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     public List<Image> images;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     public List<CartItem> cartItems;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     public List<Rating> ratings;
+
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     public Date registration = new Date();
@@ -144,4 +162,5 @@ public class Product extends Model {
     public static Integer cancelationHourToDay(Integer hours){
         return hours/24;
     }
+
 }

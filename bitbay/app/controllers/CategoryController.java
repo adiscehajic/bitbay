@@ -1,15 +1,19 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import helpers.CurrentAdmin;
 import play.Logger;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.filters.csrf.RequireCSRFCheck;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.admin.newCategory;
 import views.html.admin.editCategory;
 import java.lang.*;
+import java.util.ArrayList;
 import java.util.List;
 import com.avaje.ebean.Ebean;
 import models.*;
@@ -19,7 +23,6 @@ import views.html.category.viewProductsByCategory;
 /**
  * Created by Adnan Lapendic on 8.9.2015.
  */
-@Security.Authenticated(CurrentAdmin.class)
 public class CategoryController extends Controller {
 
     // Declaring category form.
@@ -32,6 +35,7 @@ public class CategoryController extends Controller {
      *
      * @return Page where administrator user can create new category.
      */
+    @Security.Authenticated(CurrentAdmin.class)
     public Result newCategory(){
         return ok(newCategory.render(categoryForm));
     }
@@ -43,6 +47,7 @@ public class CategoryController extends Controller {
      * @param id - Id of the category that user wants to edit.
      * @return Page where administrator user can edit existing category.
      */
+    @Security.Authenticated(CurrentAdmin.class)
     public Result editCategory(Integer id) {
         // Finding selected category from database.
         Category category = Category.getCategoryById(id);
@@ -61,6 +66,7 @@ public class CategoryController extends Controller {
      *         warning message occurs.
      */
     @RequireCSRFCheck
+    @Security.Authenticated(CurrentAdmin.class)
     public Result updateCategory(Integer id){
         // Declaring category form.
         Form<Category> boundForm = categoryForm.bindFromRequest();
@@ -84,15 +90,29 @@ public class CategoryController extends Controller {
      * @param id - Id of the category that user wants to edit.
      * @return Administrator panel page where all categories are listed.
      */
+    @Security.Authenticated(CurrentAdmin.class)
     public Result deleteCategory(Integer id){
         // Finding selected category from database.
         Category category = Category.getCategoryById(id);
-        // Creating list of products from selected category.
-        List<Product> products = Product.findAllProductsByCategory(category);
         // Going trough all products from selected category and putting them into 'Other' category.
-        for (Product product : products) {
-            product.category = Category.getCategoryById(Category.OTHER);
-            product.save();
+        if (category.parent != null) {
+            // Creating list of products from selected category.
+            List<Product> products = Product.findAllProductsByCategory(category);
+            for (Product product : products) {
+                product.category = Category.getCategoryById(Category.OTHER);
+                product.save();
+            }
+        } else {
+            // Finding all subcategories of selected category.
+            List<Category> subcategories = Category.getAllSubcategories(category);
+            for (Category subcategory : subcategories) {
+                // Creating list of products from selected category.
+                List<Product> products = Product.findAllProductsByCategory(subcategory);
+                for (Product p : products) {
+                    p.category = Category.getCategoryById(Category.OTHER);
+                    p.save();
+                }
+            }
         }
         // Deleting selected category.
         category.delete();
@@ -109,6 +129,7 @@ public class CategoryController extends Controller {
      * are listed, othervise warning message occurs.
      */
     @RequireCSRFCheck
+    @Security.Authenticated(CurrentAdmin.class)
     public Result saveCategory(){
         // Declaring category form.
         Form<Category> boundForm = categoryForm.bindFromRequest();
@@ -116,13 +137,37 @@ public class CategoryController extends Controller {
         if (boundForm.hasErrors()) {
             return badRequest(newCategory.render(boundForm));
         } else {
-            // Creating new category with inputed name and saving it into database.
-            Category category = new Category(boundForm.bindFromRequest().field("name").value());
-            category.save();
+            if (boundForm.data().get("parentName") == null) {
+                // Creating new category with inputed name and saving it into database.
+                Category category = new Category(boundForm.bindFromRequest().field("name").value(), null);
+                category.save();
+            } else {
+                // Creating new category with inputed name and saving it into database.
+                Category category = new Category(boundForm.bindFromRequest().field("name").value(), Category.getCategoryByName(boundForm.data().get("parentName")));
+                category.save();
+            }
         }
 
         // Redirecting to the administrator panel page where all categories are listed.
         return redirect(routes.AdminController.adminCategories());
+    }
+
+    public Result findAllSubcategories(){
+        DynamicForm form = Form.form().bindFromRequest();
+
+        String categoryName = form.get("categoryName");
+
+        List<Category> subcategories = Category.getAllSubcategories(Category.getCategoryByName(categoryName));
+
+        List<String> subcategoryNames = new ArrayList<>();
+
+        for (Category c : subcategories) {
+            subcategoryNames.add(c.name);
+        }
+
+        JsonNode object = Json.toJson(subcategoryNames);
+
+        return ok(object);
     }
 
     /**
@@ -139,4 +184,5 @@ public class CategoryController extends Controller {
             return ok("Validation successful.");
         }
     }
+
 }
