@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import java.util.List;
 
 /**
- * Created by neo on 9/17/15.
+ * Created by Dinko Hodzic on 9/17/15.
  */
 @Entity
 public class CartItem extends Model {

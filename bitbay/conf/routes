@@ -13,8 +13,8 @@ POST          /signin                                 @controllers.ApplicationCo
 GET           /signin/forgotpassword                  @controllers.ApplicationController.forgotPassword()
 POST          /signin/forgotpassword                  @controllers.Users.getRegistratedUserByEmail()
 GET           /signin/forgotpassword/:token           @controllers.Users.validateForgottenPassword(token: String)
-GET           /signin/newpassword/:email                     @controllers.ApplicationController.newPassword(email: String)
-POST          /signin/newpassword/email                     @controllers.Users.setNewPassword(email: String)
+GET           /signin/newpassword/:email              @controllers.ApplicationController.newPassword(email: String)
+POST          /signin/newpassword/email               @controllers.Users.setNewPassword(email: String)
 GET           /logout                                 @controllers.ApplicationController.logout()
 GET           /signup/validate/:token                 @controllers.Users.emailValidation(token: String)
 POST          /signin/validateFormLog                 @controllers.ApplicationController.validateFormLogin()
@@ -84,6 +84,8 @@ POST          /user/messages/reply                    @controllers.MessageContro
 POST          /user/messages/delete                   @controllers.MessageController.deleteMessage(id: Integer)
 POST          /user/messages/validateForm             @controllers.MessageController.validateFormMessage()
 
+
+GET           /category/                              @controllers.CategoryController.findAllSubcategories()
 GET           /category/new                           @controllers.CategoryController.newCategory()
 GET           /category/edit/:id                      @controllers.CategoryController.editCategory(id:Integer)
 GET           /category/delete/:id                    @controllers.CategoryController.deleteCategory(id:Integer)

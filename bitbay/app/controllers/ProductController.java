@@ -162,7 +162,7 @@ public class ProductController extends Controller {
             // Finding current user.
             User user = SessionHelper.currentUser();
             // Declaring string variable for the selected product category.
-            String categoryValue = boundForm.bindFromRequest().field("category").value();
+            String categoryValue = boundForm.bindFromRequest().field("categoryId").value();
             // Declaring selected category.
             Category category = Category.getCategoryByName(categoryValue);
             // Creating new product and adding selected values.
@@ -172,6 +172,7 @@ public class ProductController extends Controller {
             product.cancelation = Integer.parseInt(cancelationDate);
             product.user = user;
             product.category = category;
+
             // Saving product into database.
             product.save();
 
@@ -228,7 +229,7 @@ public class ProductController extends Controller {
         // Finding selected product.
         Product product = Product.getProductById(id);
         // Finding all categories.
-        List<Category> categories = Category.findAll();
+        List<Category> categories = Category.getAllSubcategories(Category.getParentCategory(product.category.parent));
         // Removing category of the product from the list of categories.
         categories.remove(product.category);
         // Creating product form that is filled with product information.
@@ -263,7 +264,7 @@ public class ProductController extends Controller {
 
         try {
             // Getting all inputed values and updating product into database.
-            String categoryValue = boundForm.bindFromRequest().field("category").value();
+            String categoryValue = boundForm.bindFromRequest().field("categoryId").value();
             Category category = Category.getCategoryByName(categoryValue);
 
             product.category = category;

@@ -2,10 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import helpers.SessionHelper;
-import models.Comment;
-import models.Product;
-import models.Thumb;
-import models.User;
+import models.*;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -14,6 +11,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -119,4 +117,5 @@ public class CommentController extends Controller {
             return ok("Validation successful.");
         }
     }
+
 }
