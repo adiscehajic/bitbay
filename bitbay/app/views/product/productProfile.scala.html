@@ -127,7 +127,7 @@
 									<td> You cannot cancel this purchase! </td>
 
 								}
-								@if(product.cancelation < 2){
+								@if(product.cancelation == 1){
 									<td> You have @product.cancelation hour from purchase to cancel it. Buyer pays return shipping </td>
 
 								}
@@ -135,7 +135,7 @@
 									<td> You have @product.cancelation hours from purchase to cancel it. Buyer pays return shipping </td>
 
 								}
-								@if(product.cancelation >= 25){
+								@if(product.cancelation > 24){
 									<td> You have @Product.cancelationHourToDay(product.cancelation) days from purchase to cancel it. Buyer pays return shipping </td>
 
 								}
