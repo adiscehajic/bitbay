@@ -163,6 +163,7 @@ create table user (
   last_name                 varchar(255),
   email                     varchar(255),
   password                  varchar(255),
+  phone_number              varchar(255),
   user_type_id              integer,
   country_id                integer,
   city                      varchar(255),
