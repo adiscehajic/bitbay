@@ -117,7 +117,9 @@ public class Auction extends Model {
                 message.save();
                 //Sending SMS notification to auction winner.
                 String sms = "Congratulations!!! You won bitBay auction for item #" + auctions.get(i).product.id + " - " + auctions.get(i).product.name+". " + "This product has been sent to your cart";
-                SmsHelper.sendSms(sms, highestBid.user.phoneNumber);
+                if(highestBid.user.phoneNumber != null) {
+                    SmsHelper.sendSms(sms, highestBid.user.phoneNumber);
+                }
                 //After user won on auction create new cart if user don't have one, and put auction item to his cart
                 Cart cart = Cart.findCartByUser(highestBid.user);
                 if (cart == null) {

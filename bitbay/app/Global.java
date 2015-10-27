@@ -61,6 +61,7 @@ public class Global extends GlobalSettings {
             userOne.email = "adis.cehajic@bitcamp.ba";
             userOne.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userOne.userType = seller;
+            userOne.phoneNumber = "+38761849315";
             userOne.setValidated(true);
 
             User userThree = new User();
@@ -69,6 +70,7 @@ public class Global extends GlobalSettings {
             userThree.email = "dinko.hodzic@bitcamp.ba";
             userThree.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userThree.userType = seller;
+            userThree.phoneNumber = "+38761555040";
             userThree.setValidated(true);
 
             User userFive = new User();
@@ -77,6 +79,7 @@ public class Global extends GlobalSettings {
             userFive.email = "medina.banjic@bitcamp.ba";
             userFive.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userFive.userType = seller;
+            userFive.phoneNumber = "+38761985788";
             userFive.setValidated(true);
 
             User userTwo = new User();
@@ -85,6 +88,7 @@ public class Global extends GlobalSettings {
             userTwo.email = "kerim.dragolj@bitcamp.ba";
             userTwo.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userTwo.userType = buyer;
+            userTwo.phoneNumber = "+38761066034";
             userTwo.setValidated(true);
 
             User userFour = new User();
@@ -93,6 +97,7 @@ public class Global extends GlobalSettings {
             userFour.email = "adnan.lapendic@bitcamp.ba";
             userFour.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userFour.userType = buyer;
+            userFour.phoneNumber = "+38761636292";
             userFour.setValidated(true);
 
             User userSix = new User();
@@ -101,6 +106,7 @@ public class Global extends GlobalSettings {
             userSix.email = "senadin.botic@bitcamp.ba";
             userSix.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userSix.userType = buyer;
+            userSix.phoneNumber = "+38766177380";
             userSix.setValidated(true);
 
             User userSeven = new User();
