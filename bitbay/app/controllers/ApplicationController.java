@@ -1,10 +1,11 @@
 package controllers;
 
-import com.avaje.ebean.Model.Finder;
-import helpers.MailHelper;
+import com.avaje.ebean.Model.Finder;import helpers.MailHelper;
 import helpers.SessionHelper;
+import helpers.SmsHelper;
 import models.*;
 import org.mindrot.jbcrypt.BCrypt;
+import play.Logger;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
@@ -20,7 +21,6 @@ import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 /**
  * Created by Adis Cehajic on 9/21/2015.
  */
@@ -38,7 +38,6 @@ public class ApplicationController extends Controller {
      * @return Index page of the application.
      */
     public Result index() {
-
         List<Product> recommendations = Recommendation.getRecommendations();
 
         // Declaring list that contains all products from database.
@@ -82,6 +81,7 @@ public class ApplicationController extends Controller {
     public Result signIn() {
         // Checking if there is user that is logged in.
         if (!SessionHelper.isAuthenticated()) {
+
             return ok(signIn.render(loginForm));
         } else {
             return redirect(routes.ApplicationController.index());
@@ -180,7 +180,7 @@ public class ApplicationController extends Controller {
      * @return Page where user that is administrator can sign in.
      */
     public Result logout() {
-        session().clear();
+        session().clear();;
         return redirect(routes.ApplicationController.signIn());
     }
 
@@ -309,5 +309,7 @@ public class ApplicationController extends Controller {
         }
 
     }
+
+
     
 }

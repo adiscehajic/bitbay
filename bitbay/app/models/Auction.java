@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Model;
 import helpers.CommonHelpers;
+import helpers.SmsHelper;
 import play.data.format.Formats;
 import javax.persistence.*;
 import java.util.Date;
@@ -114,6 +115,21 @@ public class Auction extends Model {
                 // Declaring and saving winning message.
                 Message message = new Message(sender, highestBid.user, "Auction Winning", winningMessage);
                 message.save();
+                //Sending SMS notification to auction winner.
+                String sms = "Congratulations!!! You won bitBay auction for item #" + auctions.get(i).product.id + " - " + auctions.get(i).product.name+". " + "This product has been sent to your cart";
+                SmsHelper.sendSms(sms, highestBid.user.phoneNumber);
+                //After user won on auction create new cart if user don't have one, and put auction item to his cart
+                Cart cart = Cart.findCartByUser(highestBid.user);
+                if (cart == null) {
+                    Cart newCart = new Cart();
+                    newCart.user = highestBid.user;
+                    newCart.save();
+                    CartItem cartItem = new CartItem(auctions.get(i).product, highestBid.user, newCart);
+                    cartItem.save();
+                } else {
+                    CartItem cartItem = new CartItem(auctions.get(i).product, highestBid.user, cart);
+                    cartItem.save();
+                }
                 // Declaring string set that will contain emails of all users that have not had highest bid.
                 Set<String> bidUsers = new HashSet<>();
                 // Adding all user emails to the set.

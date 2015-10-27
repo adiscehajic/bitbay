@@ -64,6 +64,9 @@ public class User extends Model {
     @Constraints.MinLength(value = 8, message = "Minimum 8 characters are required.")
     public String confirmPassword;
 
+    @Constraints.MaxLength(15)
+    public String phoneNumber;
+
     @ManyToOne
     //@Constraints.Required
     public UserType userType;

@@ -1,6 +1,8 @@
 package controllers;
 
 
+import com.twilio.sdk.TwilioRestException;
+import com.twilio.sdk.verbs.TwiMLResponse;
 import helpers.CurrentAdmin;
 import helpers.CurrentBuyerSeller;
 import helpers.MailHelper;
@@ -160,6 +162,8 @@ public class Users extends Controller {
             user.country = Country.findCountryByName(boundForm.data().get("country-state"));
             user.city = boundForm.data().get("city");
             user.address = boundForm.data().get("address");
+            user.phoneNumber = boundForm.data().get("phone").trim();
+
             // Updating time when profile information has been changed.
             user.updated = new Date();
             // Updating all altered information into the database.
@@ -268,6 +272,7 @@ public class Users extends Controller {
             user.token = UUID.randomUUID().toString();
             user.update();
             MailHelper.sendNewPassword(user.email, Users.BIT_BAY + "/signin/forgotpassword/" + user.token);
+
             flash("success", "Email successfully sent");
         } else {
             flash("error", "Could not find user with that email ");
@@ -340,4 +345,5 @@ public class Users extends Controller {
 
         return ok(showUserPurchases.render(currentUser, items));
     }
+
 }
