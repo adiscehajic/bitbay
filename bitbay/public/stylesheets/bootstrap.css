@@ -6466,7 +6466,6 @@ button.close {
   background-color: #ffffff;
 }
 .carousel-caption {
-  position: absolute;
   left: 15%;
   right: 15%;
   bottom: 20px;
@@ -6501,7 +6500,7 @@ button.close {
   .carousel-caption {
     left: 20%;
     right: 20%;
-    padding-bottom: 30px;
+    padding-bottom: 50%;
   }
   .carousel-indicators {
     bottom: 20px;
