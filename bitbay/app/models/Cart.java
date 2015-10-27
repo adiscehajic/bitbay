@@ -1,12 +1,9 @@
 package models;
 
 import com.avaje.ebean.Model;
-import com.avaje.ebean.Model.Finder;
 import helpers.SessionHelper;
 
-import javax.persistence.Entity;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 

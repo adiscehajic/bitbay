@@ -5,6 +5,7 @@ import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
 import helpers.CurrentBuyer;
+import helpers.MailHelper;
 import helpers.SessionHelper;
 import models.*;
 import play.Logger;
@@ -20,6 +21,7 @@ import views.html.purchase.purchaseResult;
 import views.html.purchase.showUserPurchases;
 import views.html.user.userCart;
 
+import javax.swing.text.html.HTML;
 import java.util.*;
 
 /**
@@ -80,6 +82,8 @@ public class PayPalController extends Controller {
 
     private static Integer purchaseId;
 
+    private static String messageInvoice;
+
     /**
      * This method configurates PayPal and PayPal payment information
      * Redirects to payment approval
@@ -112,7 +116,7 @@ public class PayPalController extends Controller {
                 quantity = cartItemI.quantity;
                 productString = cartItemI.product.name;
                 priceString = String.format("%1.2f", price);
-                desc += "Product:" + productString + "\nQuantity: " + quantity + "\n";
+                desc += "Product: " + productString + "  -   Quantity: " + quantity + " --- ";
                 purchaseItem = new PurchaseItem(cartItemI.product, cartItemI.user, purchase, quantity);
                 // Adding the purchase item to the purchaseItems list
                 purchaseItems.add(purchaseItem);
@@ -126,7 +130,8 @@ public class PayPalController extends Controller {
 
             priceString = String.format("%1.2f", totalPrice);
 
-            desc += "\nTotal amount: " + priceString;
+            desc += " >> Total amount: " + priceString;
+            messageInvoice = desc;
 
         /* details to render in the success view */
             details = new ArrayList<String>();
@@ -365,4 +370,23 @@ public class PayPalController extends Controller {
         }
         return true;
     }
+
+    /**
+     * This method is checking if email user typed in email field is in DB and if user is registrated before.
+     * If user is registrated in DB new unique token is generated and verification mail is sent to users email.
+     * @return
+     */
+    public Result sendInvoice() {
+        User user = SessionHelper.currentUser();
+
+        if (user != null) {
+            MailHelper.sendInvoice(user.email, PayPalController.messageInvoice);
+            flash("success", "Email successfully sent");
+        } else {
+            flash("error", "Could not find user with that email ");
+        }
+        return redirect(routes.ApplicationController.index());
+    }
+
+
 }

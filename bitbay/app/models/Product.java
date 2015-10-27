@@ -140,4 +140,8 @@ public class Product extends Model {
         }
         return list.subList(0, list.size());
     }
+
+    public static Integer cancelationHourToDay(Integer hours){
+        return hours/24;
+    }
 }
