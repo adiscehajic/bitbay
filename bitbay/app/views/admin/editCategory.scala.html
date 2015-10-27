@@ -11,6 +11,11 @@
         <form method="POST" action="@helper.CSRF(routes.CategoryController.updateCategory(category.id))">
             <div class = "row">
                 <div class="col-md-6">
+                    @if(category.parent != null) {
+                        <input type="hidden" class="form-control" id="exampleInputEmail1" name="parentName" value="@category.parent.id">
+                    }else{
+                        <input type="hidden" class="form-control" id="exampleInputEmail1" name="parentName" value="null">
+                    }
                     <label style = "margin-left : 20 px ; font-weight : normal ;"> Category name: </label>
                     <input type="text" class="form-control" id="exampleInputEmail1" name="name" value="@fillForm("name").value" >
                     <span class="alert-danger" data-error-for="name" style = "font-weight : normal ;"></span>
