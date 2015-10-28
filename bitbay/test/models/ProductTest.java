@@ -27,7 +27,7 @@ public class ProductTest extends WithApplication {
 
     @Test
     public void createNewProduct() {
-        Product p = new Product(new User(), "Bag", "Small", "Alma Ras", new Category("Fashion"), 15.0, 15, "Auction");
+        Product p = new Product(new User(), "Bag", "Small", "Alma Ras", new Category("Fashion", null), 15.0, 15, "Auction");
 
         p.save();
     }
@@ -39,7 +39,7 @@ public class ProductTest extends WithApplication {
 
         p.id = 1;
         p.user = new User();
-        p.category = new Category("Electronics");
+        p.category = new Category("Electronics", null);
         p.name = "3310";
         p.price = 200.00;
         p.quantity = 2;
@@ -71,7 +71,7 @@ public class ProductTest extends WithApplication {
     @Test
     public void testProductsSearchByCategory() {
 
-        Category c = new Category("Electronics");
+        Category c = new Category("Electronics", null);
 
         Product p = new Product();
 

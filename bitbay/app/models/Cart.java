@@ -3,14 +3,12 @@ package models;
 import com.avaje.ebean.Model;
 import helpers.ConstantsHelper;
 import helpers.SessionHelper;
-
-import javax.persistence.Entity;
 import javax.persistence.*;
 import java.util.List;
 
 
 /**
- * Created by neo on 9/15/15.
+ * Created by Dinko Hodzic on 9/15/15.
  */
 @Entity
 public class Cart extends Model{

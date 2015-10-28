@@ -74,6 +74,7 @@ GET           /purchasesuccess                        @controllers.PayPalControl
 GET           /purchasefail                           @controllers.PayPalController.purchaseFail()
 GET           /purchaseTransaction/                   @controllers.PayPalController.approveTransaction()
 GET           /refundpurchase/:purchaseitemid         @controllers.PayPalController.refundProcessing(purchaseitemid: Integer)
+GET          /purchaseinvoice                        @controllers.PayPalController.sendInvoice()
 
 GET           /user/messages                          @controllers.MessageController.getReceivedMessages()
 GET           /user/messages/sent                     @controllers.MessageController.getSentMessages()
@@ -84,6 +85,8 @@ POST          /user/messages/reply                    @controllers.MessageContro
 POST          /user/messages/delete                   @controllers.MessageController.deleteMessage(id: Integer)
 POST          /user/messages/validateForm             @controllers.MessageController.validateFormMessage()
 
+
+GET           /category/                              @controllers.CategoryController.findAllSubcategories()
 GET           /category/new                           @controllers.CategoryController.newCategory()
 GET           /category/edit/:id                      @controllers.CategoryController.editCategory(id:Integer)
 GET           /category/delete/:id                    @controllers.CategoryController.deleteCategory(id:Integer)

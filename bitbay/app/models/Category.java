@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Adnan on 8.9.2015.
+ * Created by Adnan Lapendic on 8.9.2015.
  */
 @Entity
 public class Category extends Model {
@@ -20,14 +20,25 @@ public class Category extends Model {
 
     @Id
     public Integer id;
+
     @Constraints.MaxLength(255)
-    @Constraints.MinLength(value = 0, message = "Category name can't be empty string.")
+    @Constraints.MinLength(value = 1, message = "Category name can't be empty string.")
     @Constraints.Pattern(value = "^[a-z A-Z]+$", message = "Category name can't contain diggits.")
     @Constraints.Required(message = "Please input category name.")
     public String name;
 
+    @ManyToOne
+    public Category parent;
+
+    @Transient
+    @Constraints.Required(message = "Please select category.")
+    public String parentName;
+
     @OneToMany
-    private List<Product> products;
+    public List<Product> products;
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    public List<Category> categories;
 
     //Finder for class Category
     private static Finder<String, Category> finder =
@@ -37,8 +48,9 @@ public class Category extends Model {
      * Constructor for Category
      * @param name - Category name
      */
-    public Category(String name) {
+    public Category(String name, Category category) {
         this.name = name;
+        this.parent = category;
     }
 
     /**
@@ -66,7 +78,7 @@ public class Category extends Model {
      * @return - List of all categories
      */
     public static List<Category> findAllAll(){
-        List<Category> allCategories = finder.orderBy("name asc").findList();
+        List<Category> allCategories = finder.orderBy("name asc").where().eq("parent", null).findList();
         return allCategories;
     }
 
@@ -75,14 +87,27 @@ public class Category extends Model {
      * @return - List of categories without category "other"
      */
     public static List<Category> findAll() {
-        List<Category> categories = finder.orderBy("name asc").where().ne("id", 1).findList();
+        List<Category> categories = finder.orderBy("name asc").where().ne("id", 1).where().eq("parent", null).findList();
         return categories;
+    }
+
+    /**
+     * Finds all subcategories of inputed category.
+     * @param category Inputed category.
+     * @return List of all subcategories of inputed category.
+     */
+    public static List<Category> getAllSubcategories(Category category) {
+        return finder.orderBy("name asc").where().eq("parent", category).findList();
+    }
+
+    public static Category getParentCategory(Category category) {
+        return finder.where().eq("id", category.id).findUnique();
     }
 
 
     /**
-     * Validates the admin login form and returns all errors that occur during administrator login.
-     * @return Errors that have occur during administrator login.
+     * Validates creating new category and returns all errors that occur during new category input.
+     * @return Errors that have occur during new category input.
      */
     public List<ValidationError> validate() {
         // Declaring the list of errors.

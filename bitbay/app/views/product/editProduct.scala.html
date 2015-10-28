@@ -16,13 +16,13 @@
                 }
                 <div class="form-group">
                     <label for="product-name">Category: * </label>
-                    <select class="form-control placeholder" name="category" onclick="validateProduct()" onfocusout="validateCategory()">
+                    <select class="form-control placeholder" name="categoryId" onclick="validateProduct()" onfocusout="validateCategory()">
                         <option value="@product.category.name" selected >@product.category.name</option>
                         @for(category <- categories) {
                             <option value="@category.name">@category.name</option>
                         }
                     </select>
-                    <span class="alert-danger" data-error-for="category" style="margin-left : 1 px ; font-weight : normal ;"></span>
+                    <span class="alert-danger" data-error-for="categoryId" style="margin-left : 1 px ; font-weight : normal ;"></span>
                 </div>
                 <div class="form-group">
                     <label for="product-name">Product Name:</label>

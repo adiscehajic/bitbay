@@ -3,6 +3,7 @@ package controllers;
 
 import helpers.CurrentAdmin;
 import helpers.CurrentBuyerSeller;
+import helpers.MailHelper;
 import helpers.SessionHelper;
 import models.*;
 import helpers.*;
@@ -23,7 +24,6 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
 import models.Country;
 
 
@@ -63,13 +63,6 @@ public class Users extends Controller {
     public Result deleteUserAccount() {
         // Getting current user from session.
         User user = SessionHelper.currentUser();
-
-       /* List<Comment> comments = Comment.getCommentsByUser(user);
-
-        for (int i = 0; i < comments.size(); i++) {
-            comments.get(i).delete();
-        }*/
-
         // Deleting current user.
         user.delete();
         // Clearing session.
@@ -90,11 +83,6 @@ public class Users extends Controller {
         User user = User.getUserByEmail(email);
         return ok(userProfile.render(user));
     }
-
-//    public Result getSelectedUserByEmail(String email){
-//        User user = User.getUserByEmail(email);
-//        return ok(userProfile.render(user));
-//    }
 
     /**
      * Renders page where user can edit his personal informations. He can alter inputed information that he has inputed
