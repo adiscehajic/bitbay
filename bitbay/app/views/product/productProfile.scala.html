@@ -2,6 +2,7 @@
 @import models.Bid
 @import helper._
 	@import helpers.CommonHelpers
+@import helpers.SessionHelper
 @main("Product") {
 	<div class="container" id="wrapper" style="padding-right: 30px">
 		@if(Auction.getAuctionByProduct(product) != null && !Auction.getAuctionByProduct(product).isActive) {
@@ -29,7 +30,7 @@
 							<img class="img-responsive" src="http://placehold.it/576x486" ></a>
 					</div>
 				}
-				@if(Cart.doesContainItem(product.id)) {
+				@if(PurchaseItem.getPurchasedItemsByUser(SessionHelper.currentUser()).contains(PurchaseItem.getPurchaseItemByUserProduct(product))) {
 					<div style="margin-left: auto; margin-right: auto; width: 10em">
 						<h4 style="margin-left: 25px">Rate product</h4>
 						<input class="rating" data-max="5" data-min="1" id="some_id" name="your_awesome_parameter" type="number" data-empty-value="0" data-icon-lib="fa" data-active-icon="fa-star fa-2x" data-inactive-icon="fa-star-o fa-2x"/>
@@ -182,7 +183,7 @@
 						<br><p style="min-height: 100px">@product.description</p>
 					</div>
 					<div id="menu2" class="tab-pane fade">
-						@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2 && Comment.hasUserCommented(product)) {
+						@if(PurchaseItem.getPurchasedItemsByUser(SessionHelper.currentUser()).contains(PurchaseItem.getPurchaseItemByUserProduct(product))  && (User.getUserByEmail(session().get("email"))).userType.id == 2 && Comment.hasUserCommented(product)) {
 							<div class="page-header">
 								<h2> Your Comment </h2>
 							</div>

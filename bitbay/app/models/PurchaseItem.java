@@ -94,4 +94,9 @@ public class PurchaseItem extends Model {
         }
         return PurchaseItem.finder.where().eq("user", user).findList();
     }
+
+    public static PurchaseItem getPurchaseItemByUserProduct(Product product){
+        PurchaseItem purchaseItem = PurchaseItem.finder.where().eq("product", product).findUnique();
+        return purchaseItem;
+    }
 }

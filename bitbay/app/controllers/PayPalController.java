@@ -4,11 +4,11 @@ import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
+import helpers.ConstantsHelper;
 import helpers.CurrentBuyer;
 import helpers.SessionHelper;
 import models.*;
 import play.Logger;
-import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.filters.csrf.RequireCSRFCheck;
@@ -17,7 +17,6 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.html.index;
 import views.html.purchase.purchaseResult;
-import views.html.purchase.showUserPurchases;
 import views.html.user.userCart;
 
 import java.util.*;
@@ -31,11 +30,6 @@ public class PayPalController extends Controller {
     /**
      * PayPal configurated constants
      */
-    public static final String CLIENT_ID = Play.application().configuration()
-            .getString("clientid");
-    public static final String CLIENT_SECRET = Play.application().configuration()
-            .getString("secret");
-
     private static User currentUser = SessionHelper.currentUser();
 
     private static double price;
@@ -93,7 +87,7 @@ public class PayPalController extends Controller {
             purchaseItems = new ArrayList<>();
 
             //Configuration PayPal
-            token = new OAuthTokenCredential(PayPalController.CLIENT_ID, PayPalController.CLIENT_SECRET).getAccessToken();
+            token = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID, ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
 
             config = new HashMap<>();
             config.put("mode", "sandbox");
@@ -196,8 +190,8 @@ public class PayPalController extends Controller {
         String token = paypalReturn.get("token");
 
         try {
-            String accessToken = new OAuthTokenCredential(CLIENT_ID,
-                    CLIENT_SECRET).getAccessToken();
+            String accessToken = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID,
+                    ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
             Map<String, String> sdkConfig = new HashMap<String, String>();
             sdkConfig.put("mode", "sandbox");
             context = new APIContext(accessToken);
@@ -311,8 +305,8 @@ public class PayPalController extends Controller {
         try {
             Logger.info("111111111111111");
 
-            String accessToken = new OAuthTokenCredential(CLIENT_ID,
-                    CLIENT_SECRET).getAccessToken();
+            String accessToken = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID,
+                    ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
             Logger.info("222222222222222");
 
             Map<String, String> sdkConfig = new HashMap<String, String>();

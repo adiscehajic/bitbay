@@ -1,7 +1,7 @@
 package controllers;
 
+import helpers.ConstantsHelper;
 import helpers.CurrentAdmin;
-import play.Logger;
 import play.data.Form;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
@@ -11,9 +11,8 @@ import views.html.admin.newCategory;
 import views.html.admin.editCategory;
 import java.lang.*;
 import java.util.List;
-import com.avaje.ebean.Ebean;
+
 import models.*;
-import views.html.category.viewProductsByCategory;
 
 
 /**
@@ -91,7 +90,7 @@ public class CategoryController extends Controller {
         List<Product> products = Product.findAllProductsByCategory(category);
         // Going trough all products from selected category and putting them into 'Other' category.
         for (Product product : products) {
-            product.category = Category.getCategoryById(Category.OTHER);
+            product.category = Category.getCategoryById(ConstantsHelper.CATEGORY_OTHER);
             product.save();
         }
         // Deleting selected category.

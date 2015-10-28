@@ -17,7 +17,6 @@ import java.util.List;
 public class Category extends Model {
 
     // Declaring constant that represents 'Other' category id.
-    public static final int OTHER = 1;
 
     @Id
     public Integer id;

@@ -1,12 +1,11 @@
 package models;
 
 import com.avaje.ebean.Model;
-import com.avaje.ebean.Model.Finder;
+import helpers.ConstantsHelper;
 import helpers.SessionHelper;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -56,7 +55,7 @@ public class Cart extends Model{
         User user = SessionHelper.currentUser();
         Cart cart = Cart.findCartByUser(user);
 
-        if (user != null && user.userType.id == UserType.BUYER)
+        if (user != null && user.userType.id == ConstantsHelper.BUYER)
             try {
                 List<CartItem> items = cart.cartItems;
 

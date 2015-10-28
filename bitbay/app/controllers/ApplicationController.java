@@ -1,11 +1,11 @@
 package controllers;
 
-import com.avaje.ebean.Model.Finder;import helpers.MailHelper;
+import com.avaje.ebean.Model.Finder;
+import helpers.ConstantsHelper;
+import helpers.MailHelper;
 import helpers.SessionHelper;
-import helpers.SmsHelper;
 import models.*;
 import org.mindrot.jbcrypt.BCrypt;
-import play.Logger;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
@@ -168,7 +168,7 @@ public class ApplicationController extends Controller {
             user.setValidated(false);
             // Saving new user into database.
             user.save();
-            MailHelper.send(user.email, Users.BIT_BAY + "/signup/validateForgotenPassword/" + user.token);
+            MailHelper.send(user.email, ConstantsHelper.BIT_BAY + "/signup/validate/" + user.token);
 
             return redirect(routes.ApplicationController.signIn());
         }
@@ -239,7 +239,7 @@ public class ApplicationController extends Controller {
             User user = User.authenticate(email, password);
             // Checking if the user exists. If the inputed email and password are correct
             // redirecting to the main page, othewise opens sign in page.
-            if (user == null || user.userType.id == UserType.ADMIN) {
+            if (user == null || user.userType.id == ConstantsHelper.ADMIN) {
                 errors.add(new ValidationError("password", "Wrong email or password."));
             }
             if(!user.validated){

@@ -1,5 +1,6 @@
 package helpers;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,5 +25,9 @@ public class CommonHelpers {
         SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm:ss");
         String time = localDateFormat.format(date);
         return time;
+    }
+    public static Double getTwoDecimalNumber(Double number){
+        DecimalFormat df = new DecimalFormat("#.00");
+        return Double.parseDouble(df.format(number));
     }
 }

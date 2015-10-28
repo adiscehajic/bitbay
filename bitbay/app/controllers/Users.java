@@ -1,18 +1,13 @@
 package controllers;
 
 
-import com.twilio.sdk.TwilioRestException;
-import com.twilio.sdk.verbs.TwiMLResponse;
 import helpers.CurrentAdmin;
 import helpers.CurrentBuyerSeller;
 import helpers.SessionHelper;
 import models.*;
-import com.avaje.ebean.Model;
-import com.cloudinary.Cloudinary;
 import helpers.*;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
-import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.filters.csrf.RequireCSRFCheck;
@@ -21,10 +16,6 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.purchase.showUserPurchases;
-import views.html.index;
-import views.html.newPassword;
-import views.html.signup;
-import views.html.signIn;
 import views.html.user.userEdit;
 import views.html.user.userProducts;
 import views.html.user.userProfile;
@@ -33,12 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import com.avaje.ebean.Ebean;
-import models.*;
-import views.html.user.userProducts;
-import views.html.user.userCart;
 import models.Country;
-import javax.persistence.PersistenceException;
 
 
 /**
@@ -48,7 +34,6 @@ public class Users extends Controller {
 
     // Declaring user form.
     private static final Form<User> userRegistration = Form.form(User.class);
-    public static final String BIT_BAY = Play.application().configuration().getString("BIT_BAY");
    
     /**
      * Deletes selected user. Only administrator user can delete other users, except users that are also administrators.
@@ -230,6 +215,7 @@ public class Users extends Controller {
      * @return - Result
      */
     public Result emailValidation(String token) {
+        session().clear();
         try {
             if (token == null) {
                 return redirect(routes.ApplicationController.index());
@@ -237,10 +223,9 @@ public class Users extends Controller {
 
             User user = User.findUserByToken(token);
             if (User.validateUser(user)) {
-                session("email", user.email);
-                return redirect(routes.ApplicationController.index());
-            } else {
                 return redirect(routes.ApplicationController.signIn());
+            } else {
+                return redirect(routes.ApplicationController.index());
             }
         } catch (Exception e) {
             return redirect(routes.ApplicationController.signIn());
@@ -283,7 +268,7 @@ public class Users extends Controller {
         if (user != null) {
             user.token = UUID.randomUUID().toString();
             user.update();
-            MailHelper.sendNewPassword(user.email, Users.BIT_BAY + "/signin/forgotpassword/" + user.token);
+            MailHelper.sendNewPassword(user.email, ConstantsHelper.BIT_BAY + "/signin/forgotpassword/" + user.token);
 
             flash("success", "Email successfully sent");
         } else {

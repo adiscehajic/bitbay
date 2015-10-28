@@ -1,10 +1,8 @@
 package controllers;
 
+import helpers.ConstantsHelper;
 import helpers.CurrentAdmin;
-import helpers.SessionHelper;
 import models.*;
-import controllers.ApplicationController.UserLogin;
-import play.Logger;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
@@ -190,7 +188,7 @@ public class AdminController extends Controller {
             User user = User.authenticate(email, password);
             // Checking if the user exists. If the inputed email and password are correct
             // redirecting to the main page, othewise opens sign in page.
-            if (user == null || user.userType.id != UserType.ADMIN) {
+            if (user == null || user.userType.id != ConstantsHelper.ADMIN) {
                 errors.add(new ValidationError("password", "Wrong email or password."));
             }
             return errors.isEmpty() ? null : errors;
