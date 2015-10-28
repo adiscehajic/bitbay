@@ -59,13 +59,12 @@
                                     <label style = "margin-left:20px;font-weight:normal;">Password</label>
                                         <!--field for password -->
                                     <input type="password"class="form-control" id="password"  name="password" style="margin-bottom: 0;">
-                                    <a href="@routes.ApplicationController.forgotPassword()">Forgot password?</a>
                                     <span class="alert-danger" data-error-for="password" style = "margin-left:20px;font-weight:normal;"></span>
-
                                 </div>
                             </div>
                             <div class = "row">
                                 <div class ="col-md-6">
+                                    <a  style = "margin-left:20px;font-weight:normal;" href="@routes.ApplicationController.forgotPassword()">Forgot password?</a>
                                     <div class="checkbox" style="width: 100%;">
                                         <input type="checkbox" name="remember" id="login-check" class="custom" style = "margin-left:20px; margin-top:14px;"> <p style = "padding-left:36px; padding-top:10px; width: 100%;">Stay signed in</p>
                                     </div>
@@ -81,7 +80,7 @@
                 </div>
             </div>
             <div class = "col-md-6">
-                <div class = "inputs" >
+                <div class = "inputs">
                     <div class = "container" >
                         <div class = "row" >
                             <div class = "col-md-6">
@@ -93,10 +92,9 @@
                                 <h4>Get started now. It's fast and easy!</h4>
                             </div>
                         </div>
-
                         <div class = "row">
                             <div class = "col-md-6">
-                                <a href="@routes.ApplicationController.signUp()"><button type="submit" class="btn btn-default" style = "margin-left:37%; margin-bottom: 85px;">Register</button></a>
+                                <a href="@routes.ApplicationController.signUp()"><button type="submit" class="btn btn-default" style = "margin-left:37%; margin-bottom: 114px;">Register</button></a>
                             </div>
                         </div>
                     </div>

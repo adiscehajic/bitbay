@@ -1,26 +1,24 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import helpers.ConstantsHelper;
 import helpers.CurrentBuyerSeller;
 import helpers.CurrentUser;
 import helpers.SessionHelper;
 import models.Message;
 import models.User;
-import models.UserType;
-import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.admin.adminViewMessage;
 import views.html.message.newMessage;
 import views.html.message.replyMessage;
 import views.html.message.allMessages;
 import views.html.admin.adminAllMessages;
 import views.html.admin.adminNewMessage;
-import views.html.user.userMessages;
+
 import java.util.List;
 
 /**
@@ -48,7 +46,7 @@ public class MessageController extends Controller {
         User sender = SessionHelper.currentUser();
         // Checking if form has errors.
         if (boundForm.hasErrors()) {
-            if(sender.userType.id == UserType.ADMIN) {
+            if(sender.userType.id == ConstantsHelper.ADMIN) {
                 return badRequest(adminNewMessage.render("", boundForm));
             }
             return badRequest(newMessage.render("", boundForm));
@@ -65,7 +63,7 @@ public class MessageController extends Controller {
         // Saving message into database.
         message.save();
         // If the user is administrator rendering administrator panel page where sent message is shown.
-        if(sender.userType.id == UserType.ADMIN) {
+        if(sender.userType.id == ConstantsHelper.ADMIN) {
             return redirect(routes.AdminController.adminNewMessage(""));
         }
         // If the user is buyer or seller rendering application page where sent message is shown.
@@ -88,7 +86,7 @@ public class MessageController extends Controller {
 
         List<Message> messages = Message.getReceivedMessages();
 
-        if(currentUser.userType.id == UserType.ADMIN) {
+        if(currentUser.userType.id == ConstantsHelper.ADMIN) {
             return ok(adminAllMessages.render(messages));
         } else {
             return ok(allMessages.render(messages));
@@ -112,7 +110,7 @@ public class MessageController extends Controller {
         User currentUser = SessionHelper.currentUser();
 
 
-        if(currentUser.userType.id == UserType.ADMIN) {
+        if(currentUser.userType.id == ConstantsHelper.ADMIN) {
             if (message.receiver.id == currentUser.id && message.receiverVisible == true) {
                 message.receiverVisible = false;
                 message.update();

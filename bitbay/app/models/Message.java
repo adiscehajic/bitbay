@@ -1,15 +1,13 @@
 package models;
 
-import com.avaje.ebean.Expr;
 import com.avaje.ebean.Model;
+import helpers.ConstantsHelper;
 import helpers.SessionHelper;
-import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
 
 import javax.persistence.*;
-import javax.validation.Constraint;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -149,7 +147,7 @@ public class Message extends Model {
         User currentUser = SessionHelper.currentUser();
         User user = User.getUserByEmail(receiverEmail);
         // Checking if administrator user has inputed existing user
-        if(currentUser.userType.id == UserType.ADMIN && user == null) {
+        if(currentUser.userType.id == ConstantsHelper.ADMIN && user == null) {
             errors.add(new ValidationError("receiverEmail", "User does not exist."));
         }
         // Checking if user has inputed existing user

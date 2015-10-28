@@ -13,7 +13,7 @@
                 </a>
                 <div class="carousel-caption" style="margin-left: 40%; color: #060c19; margin-bottom: 5%">
                     <h1>@recommendedProducts.get(0).name</h1>
-                    <h3>@recommendedProducts.get(0).price</h3>
+                    <h3>@recommendedProducts.get(0).price KM</h3>
                     <a href="@routes.ProductController.getProduct(recommendedProducts.get(0).id)"><button class="btn btn-primary">Buy this item</button></a>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                 </a>
                 <div class="carousel-caption" style="margin-left: 40%; color: #060c19 ; margin-bottom: 5%">
                     <h1>@recommendedProducts.get(a).name</h1>
-                    <h3>@recommendedProducts.get(a).price</h3>
+                    <h3>@recommendedProducts.get(a).price KM</h3>
                     <a href="@routes.ProductController.getProduct(recommendedProducts.get(a).id)"><button class="btn btn-primary">Buy this item</button></a>
                 </div>
             </div>
@@ -40,7 +40,6 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-
     }
 
     @if(recommendedProducts != null && recommendedProducts.size() > 3) {

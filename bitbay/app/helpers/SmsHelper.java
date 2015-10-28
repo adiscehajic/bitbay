@@ -8,19 +8,16 @@ import com.twilio.sdk.TwilioRestClient;
         import org.apache.http.NameValuePair;
         import org.apache.http.message.BasicNameValuePair;
         import play.Logger;
-        import play.Play;
 
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
         import java.util.List;
 
     public class SmsHelper {
-        public static final String ACCOUNT_SID = "AC14660cacd6b25d31819abb8e55c3ee50";
-        public static final String AUTH_TOKEN = "f8fa0ca08497e56caf6b81255a13260f";
 
             public static void sendSms(String smsBody, String smsTo) {
 
-                        TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
+                        TwilioRestClient client = new TwilioRestClient(ConstantsHelper.SMS_ACCOUNT_SID, ConstantsHelper.SMS_AUTH_TOKEN);
 
 
 

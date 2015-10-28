@@ -1,6 +1,6 @@
 package helpers;
 
-        import models.User;
+import models.User;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.HtmlEmail;
 import play.Play;
@@ -35,8 +35,8 @@ public class MailHelper {
             mail.setStartTLSEnabled(true);
             mail.setSSLOnConnect(true);
             mail.setAuthenticator(new DefaultAuthenticator(
-                    Play.application().configuration().getString("EMAIL_USERNAME_ENV"),
-                    Play.application().configuration().getString("EMAIL_PASSWORD_ENV")
+                   ConstantsHelper.EMAIL_USERNAME,
+                   ConstantsHelper.EMAIL_PASSWORD
             ));
             mail.send();
         } catch (Exception e) {
@@ -64,8 +64,8 @@ public class MailHelper {
             mail.setStartTLSEnabled(true);
             mail.setSSLOnConnect(true);
             mail.setAuthenticator(new DefaultAuthenticator(
-                    Play.application().configuration().getString("EMAIL_USERNAME_ENV"),
-                    Play.application().configuration().getString("EMAIL_PASSWORD_ENV")
+                    ConstantsHelper.EMAIL_USERNAME,
+                    ConstantsHelper.EMAIL_PASSWORD
             ));
             mail.send();
         } catch (Exception e) {

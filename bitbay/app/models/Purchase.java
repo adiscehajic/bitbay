@@ -1,11 +1,11 @@
 package models;
 
 import com.avaje.ebean.Model;
+import helpers.ConstantsHelper;
 import helpers.SessionHelper;
 import play.data.format.Formats;
 
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -100,7 +100,7 @@ public class Purchase extends Model {
         User user = SessionHelper.currentUser();
         Purchase purchase = Purchase.findPurchaseByUser(user);
 
-        if (user != null && user.userType.id == UserType.BUYER)
+        if (user != null && user.userType.id == ConstantsHelper.BUYER)
             try {
                 List<PurchaseItem> items = purchase.purchaseItems;
 

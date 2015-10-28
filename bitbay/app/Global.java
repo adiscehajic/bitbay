@@ -1,6 +1,7 @@
 
         import com.avaje.ebean.Ebean;
         import com.cloudinary.Cloudinary;
+        import helpers.CommonHelpers;
         import models.*;
         import org.mindrot.jbcrypt.BCrypt;
         import play.Application;
