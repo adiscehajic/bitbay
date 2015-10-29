@@ -178,6 +178,9 @@ public class Global extends GlobalSettings {
             /*
             Electronics
              */
+            /*
+            Phone
+             */
             Product p1 = new Product(userOne, "Samsung S6", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED, Verizon - LTE, AT&T - 3G, STRAIGHT TALK", "Samsung", subcategoryOne, 600.00, 20, "1");
             Image image1 = new Image();
             image1.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1444984356/elwd7zdcibbtlfhrngwq.jpg";
@@ -220,6 +223,14 @@ public class Global extends GlobalSettings {
             image6.secret_image_url = "v1444984182";
             p6.images.add(image6);
 
+            Product p56 = new Product(userOne, "HTC One V", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED", "HTC", subcategoryOne, 200.00, 20, "1");
+            Product p57 = new Product(userOne, "Iphone 4s", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED", "Apple", subcategoryOne, 400.00, 20, "1");
+            Product p58 = new Product(userOne, "CAT B25", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED", "CAT", subcategoryOne, 200.00, 20, "1");
+            Product p59 = new Product(userOne, "Sony Z4", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED", "Sony", subcategoryOne, 300.00, 20, "1");
+
+            /*
+            Computers
+             */
             Product p7 = new Product(userOne, "PlayStation 4", "The PlayStation 4 system opens the door to an incredible journey through i", "Sony", subcategoryTwo, 600.00, 10, "1");
             Image image7 = new Image();
             image7.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1444986457/ic61rm2i0q7z7orxsyty.jpg";
@@ -248,10 +259,21 @@ public class Global extends GlobalSettings {
             image10.secret_image_url = "v1444964868";
             p10.images.add(image10);
 
+            Product p60 = new Product(userOne, "Apple Macbook PRO", "Brand New, Never Used, Never Opened", "Apple", subcategoryTwo, 600.00, 10, "1");
+            Product p61 = new Product(userOne, "Lenovo U330p", "Brand New, Never Used, Never Opened", "Lenovo", subcategoryTwo, 600.00, 10, "1");
+            Product p62 = new Product(userOne, "HP 620", "Brand New, Never Used, Never Opened", "HP", subcategoryTwo, 600.00, 10, "1");
+            Product p63 = new Product(userOne, "Dell 15.6 Intel i5", "Brand New, Never Used, Never Opened", "Dell", subcategoryTwo, 600.00, 10, "1");
+            Product p64 = new Product(userOne, "Asus Transformer", "Brand New, Never Used, Never Opened", "Asus", subcategoryTwo, 600.00, 10, "1");
+            Product p65 = new Product(userOne, "Toshiba Satellite Pro", "Brand New, Never Used, Never Opened", "Toshiba", subcategoryTwo, 600.00, 10, "1");
+
+
             /*
             Fashion
              */
-            Product p11 = new Product(userFive, "New Sexy Women Summer Casual Sleeveless", "New without tags: A brand-new", "NEW", categoryThree, 600.00, 20, "1");
+            /*
+            Woman
+             */
+            Product p11 = new Product(userFive, "New Sexy Women Summer Casual Sleeveless", "New without tags: A brand-new", "NEW", subcategoryThree, 600.00, 20, "1");
             Image image11 = new Image();
             image11.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1444380665/walaw8ns3dqni9slghbo.jpg";
             image11.public_id = "walaw8ns3dqni9slghbo";
@@ -301,6 +323,14 @@ public class Global extends GlobalSettings {
             image17.secret_image_url = "v1445555576";
             p17.images.add(image17);
 
+            Product p66 = new Product(userFive, "2015 Fashion Summer Floral Casual Sleeveless", "New without tags: A brand-new", "Zara", subcategoryThree, 600.00, 20, "1");
+            Product p67 = new Product(userFive, "Women Casual Short Sleeveless Evening", "New without tags: A brand-new", "Sisters", subcategoryThree, 600.00, 20, "1");
+            Product p68 = new Product(userFive, "Fashion Women Bodycon Long Sleeve Dress", "New without tags: A brand-new", "H&M", subcategoryThree, 600.00, 20, "1");
+
+
+            /*
+            Man
+             */
             Product p18 = new Product(userFive, "Men's Slim Stylish Trench Coat Winter Long Jacket ", "New without tags: A brand-new,", "Springfield", subcategoryFour, 60.00, 10, "1");
             Image image18 = new Image();
             image18.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1444381282/ijevf7ybyxbnsuqbuag4.jpg";
@@ -322,8 +352,20 @@ public class Global extends GlobalSettings {
             image20.secret_image_url = "v1445555576";
             p20.images.add(image20);
 
+            Product p69 = new Product(userFive, "men shirt fit short sleeve ", "A brand-new, unused, and unworn", "Springfild", subcategoryFour, 60.00, 10, "1");
+            Product p70 = new Product(userFive, "2015 Summer Fashion Mens t shirt Short Cotton Sleeve", "A brand-new, unused, and unworn", "H&M", subcategoryFour, 60.00, 10, "1");
+            Product p71 = new Product(userFive, "Avengers Age Of Ultron Tony Stark Bruce Lee DJ Men's T-Shirt", "A brand-new, unused, and unworn", "JC", subcategoryFour, 60.00, 10, "1");
+            Product p72 = new Product(userFive, "Hot Jeans Men's Straight Slim Casual Pants Denim", "A brand-new, unused, and unworn", "Springfild", subcategoryFour, 60.00, 10, "1");
+            Product p73 = new Product(userFive, "Men's Classic Denim Pants Stylish Designed", "A brand-new, unused, and unworn", "JC", subcategoryFour, 60.00, 10, "1");
+            Product p74 = new Product(userFive, "Men's skinny Casual pencil Dress pants slim Straight-Leg jeans Leisure Trousers", "A brand-new, unused, and unworn", "Springfild", subcategoryFour, 60.00, 10, "1");
+            Product p75 = new Product(userFive, "2015 Summer Fashion Mens t shirt Short Cotton", "A brand-new, unused, and unworn", "H&M", subcategoryFour, 60.00, 10, "1");
+
+
             /*
             Motors
+             */
+            /*
+            Motorcycle
              */
             Product p21 = new Product(userThree, "2006 BMW K", "With enough raw power to shock even the most seasoned adrenaline ", "BMW", subcategorySeven, 6000.00, 1, "1");
             Image image21 = new Image();
@@ -360,6 +402,16 @@ public class Global extends GlobalSettings {
             image25.secret_image_url = "v1445555574";
             p25.images.add(image25);
 
+            Product p76 = new Product(userThree, "2010 Harley-Davidson Touring", "Dark red Street Glide - very clean and lots of chrome!", "Harley-Davidson", subcategoryEight, 6000.00, 1, "1");
+            Product p77 = new Product(userThree, "Yamaha YZF", "Super clean trade - pride of ownership shows.  Very affordable bike.", "Yamaha", subcategoryEight, 6000.00, 1, "1");
+            Product p78 = new Product(userThree, "1969 Kawasaki", "This is a very collectible 1969 Kawasaki 500cc H1 Mach III triple.", "Kawasaki", subcategoryEight, 6000.00, 1, "1");
+            Product p79 = new Product(userThree, "2014 Yamaha", "The R6 is a compact, lightweight DOHC, 599cc bike that has great response.", "Yamaha", subcategoryEight, 6000.00, 1, "1");
+            Product p80 = new Product(userThree, "1992 Honda Gold Wing", "1992 HONDA GOLDWING GL1500 INTERSTATE TRIKE BY MOTOR TRIKE", "Honda", subcategoryEight, 6000.00, 1, "1");
+
+
+            /*
+            Cars
+             */
             Product p26 = new Product(userThree, "2015 Ford Taurus", "Such a beautiful car, it is limited with Front wheel drive, navigation", "Ford", subcategorySeven, 16000.00, 1, "1");
             Image image26 = new Image();
             image26.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445555577/2015-ford-taurus-sho-review_k5ahiw.jpg";
@@ -396,6 +448,16 @@ public class Global extends GlobalSettings {
             image30.secret_image_url = "v1445555572";
             p30.images.add(image30);
 
+            Product p81 = new Product(userThree, "1976 Porsche 914", "Very solid , nice interior, rebuilt motor, front and rear factory sway bars", "Porsche", subcategorySeven, 16000.00, 1, "1");
+            Product p82 = new Product(userThree, "2003 Ford Mustang", "I have for sale in perfect condition a 2003 mustang cobra with a lot of adds and a new fresh Motor.", "Ford", subcategorySeven, 16000.00, 1, "1");
+            Product p83 = new Product(userThree, "1969 Chevrolet Camaro", "All original, unmolested car. Color changed from gold to red. Excellent paint, original interior.", "Chevrolet", subcategorySeven, 16000.00, 1, "1");
+            Product p84 = new Product(userThree, "2001 MBW 5", "Very solid , nice interior, rebuilt motor.", "BMW", subcategorySeven, 16000.00, 1, "1");
+            Product p85 = new Product(userThree, "1977 Lincoln Mark Series", "This vehicle is in good condition. The interior is pretty close to immaculate and includes the.", "Linkoln", subcategorySeven, 16000.00, 1, "1");
+
+
+            /*
+            Sports
+             */
             /*
             Sports
              */
@@ -455,6 +517,13 @@ public class Global extends GlobalSettings {
             image38.secret_image_url = "v1445558892";
             p38.images.add(image38);
 
+            Product p86 = new Product(userThree, "ADIDAS ORIGINALS ROM MENS TRAINERS SHOES", "A brand-new, unused, unopened, undamaged item in its original packaging", "Adidas", subcategoryNine, 60.00, 20, "1");
+            Product p87 = new Product(userThree, "Nike Air Jordan Low Chrome Size 10 UK with receipt", "A brand-new, unused, unopened, undamaged item in its original packaging", "Nike", subcategoryNine, 60.00, 20, "1");
+
+
+            /*
+            Fitnes
+             */
             Product p39 = new Product(userFive, "TaylorMade SLDR #3 15* Fairway Wood-Speeder 77G D", "LEFT HANDED USED LEFT HANDED TaylorMade", "TaylotMade", subcategoryTen, 50.00, 10, "1");
             Image image39 = new Image();
             image39.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445558918/DSC_0866-L_qjgs8x.jpg";
@@ -469,8 +538,21 @@ public class Global extends GlobalSettings {
             image40.secret_image_url = "v1445558873";
             p40.images.add(image40);
 
+            Product p88 = new Product(userFive, "Esprit Fitness XLR-8 Exercise Bike Adjustable Resistance Cardio Workout", "A brand-new, unused, unopened", "Esprit", subcategoryTen, 50.00, 10, "1");
+            Product p89 = new Product(userFive, "Running Machine Safety Key Treadmill Magnetic Security Switch Lock Exercise HLUS", "A brand-new, unused, unopened", "Adidas", subcategoryTen, 50.00, 10, "1");
+            Product p90 = new Product(userFive, "Running Machine Safety Key Treadmill Magnetic Security Switch Lock Fitness", "A brand-new, unused, unopened", "Puma", subcategoryTen, 50.00, 10, "1");
+            Product p91 = new Product(userFive, "Fluid + Plus Bicycle Bike Exercise Trainer Equipement Travel Trac Cardio Gear", "A brand-new, unused, unopened", "Nike", subcategoryTen, 50.00, 10, "1");
+            Product p92 = new Product(userFive, "MIRAFIT Shock Resistant Gym Floor Mat for Weight Bench/Treadmill/Cross Trainer", "A brand-new, unused, unopened", "Adidas", subcategoryTen, 50.00, 10, "1");
+            Product p93 = new Product(userFive, "Elevation Training Mask 2.0 Preda-Tore Sleeve", "A brand-new, unused, unopened", "Esprit", subcategoryTen, 50.00, 10, "1");
+            Product p94 = new Product(userFive, "Speed Resistance Training Parachute Running Chute Soccer Football Training", "A brand-new, unused, unopened", "Reebok", subcategoryTen, 50.00, 10, "1");
+            Product p95 = new Product(userFive, "Life Fitness 95x Engage Elliptical - Cleaned & Serviced - Clearance Sale", "A brand-new, unused, unopened", "Nike", subcategoryTen, 50.00, 10, "1");
+
+
             /*
             Home
+             */
+            /*
+            Garden
              */
             Product p41 = new Product(userOne, "Suncast GS9000 7 x 7 Large Outdoor Vertical Shed ", "Extreme Suncast Storage ", "Suncast", subcategoryEleven, 600.00, 20, "1");
             Image image41 = new Image();
@@ -486,12 +568,12 @@ public class Global extends GlobalSettings {
             image42.secret_image_url = "v1445589841";
             p42.images.add(image42);
 
-            Product p43 = new Product(userOne, "ADEL LS9 Biometric Fingerprint Door Lock Electronic Keyless", "A brand-new, unused", "Unbranded", subcategoryTwelve, 20.00, 10, "1");
-            Image image43 = new Image();
-            image43.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445590724/ADEL-LS9-Biometric-Fingerprint-Door-Lock-Electronic-Keyless-Password-Lock-Black-Yellow_320x320_fwyxi4.jpg";
-            image43.public_id = "ADEL-LS9-Biometric-Fingerprint-Door-Lock-Electronic-Keyless-Password-Lock-Black-Yellow_320x320_fwyxi4";
-            image43.secret_image_url = "v1445590724";
-            p43.images.add(image43);
+            Product p48 = new Product(userFive, "Hunter Hepa Allergen Removing Air Purifier- Tech", "An item that has been professionally ", "Hunter", subcategoryEleven, 100.00, 10, "1");
+            Image image48 = new Image();
+            image48.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445590724/Hunter-30793-PermaLife-Large-Room-Air-Purifier-with-Permanent-Filter_wmnx7f.jpg";
+            image48.public_id = "Hunter-30793-PermaLife-Large-Room-Air-Purifier-with-Permanent-Filter_wmnx7f";
+            image48.secret_image_url = "v1445590724";
+            p48.images.add(image48);
 
             Product p44 = new Product(userFive, "Outsunny 12pc Outdoor Patio Rattan Wicker Furniture Set", "A brand-new, unused,", "Unbranded", subcategoryEleven, 300.00, 10, "1");
             Image image44 = new Image();
@@ -500,66 +582,78 @@ public class Global extends GlobalSettings {
             image44.secret_image_url = "v1445590722";
             p44.images.add(image44);
 
-            Product p45 = new Product(userFive, "Phone APP Alarm System Remote Control Wireless House Fire", "A brand-new, unused,", "Unbranded", subcategoryTwelve, 200.00, 10, "1");
+            Product p96 = new Product(userOne, "Miniature Garden Ornament Figurine", "A brand-new, unused,", "Unbranded", subcategoryEleven, 600.00, 20, "1");
+            Product p97 = new Product(userOne, "Amazing Gift Wind Chimes 10 Metal Tubes Yard Garden", "A brand-new, unused,", "HowPlumb", subcategoryEleven, 600.00, 20, "1");
+            Product p98 = new Product(userOne, "Mini Red Mushroom Garden Ornament", "A brand-new, unused,", "Unbranded", subcategoryEleven, 600.00, 20, "1");
+            Product p99 = new Product(userOne, "Despicable Me Minion Garden Ornament", "A brand-new, unused,", "HowPlumb", subcategoryEleven, 600.00, 20, "1");
+            Product p100 = new Product(userOne, "Tiny Nymphs Sprite Gnome Pixie Horn", "A brand-new, unused,", "HowPlumb", subcategoryEleven, 600.00, 20, "1");
+            Product p101 = new Product(userOne, "Old Tree House Garden Ornament Miniature", "A brand-new, unused,", "Unbranded", subcategoryEleven, 600.00, 20, "1");
+
+
+            /*
+            Home
+             */
+            Product p43 = new Product(userOne, "ADEL LS9 Biometric Fingerprint Door Lock Electronic Keyless", "A brand-new, unused", "Unbranded", subcategoryTwelve, 20.00, 10, "1");
+            Image image43 = new Image();
+            image43.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445590724/ADEL-LS9-Biometric-Fingerprint-Door-Lock-Electronic-Keyless-Password-Lock-Black-Yellow_320x320_fwyxi4.jpg";
+            image43.public_id = "ADEL-LS9-Biometric-Fingerprint-Door-Lock-Electronic-Keyless-Password-Lock-Black-Yellow_320x320_fwyxi4";
+            image43.secret_image_url = "v1445590724";
+            p43.images.add(image43);
+
+            Product p45 = new Product(userFive, "Phone APP Alarm System Remote Control Wireless House Fire", "A brand-new, unused", "Unbranded", subcategoryTwelve, 200.00, 10, "1");
             Image image45 = new Image();
             image45.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445590724/21-21005851-21005851-11-150728150335_bai9po.jpg";
             image45.public_id = "21-21005851-21005851-11-150728150335_bai9po";
             image45.secret_image_url = "v1445590724";
             p45.images.add(image45);
 
-            Product p46 = new Product(userFive, "Double Hammock With Space Saving Steel Stand  Case", "A brand-new, unused,", "Unbranded", subcategoryTwelve, 100.00, 10, "1");
+            Product p46 = new Product(userFive, "Double Hammock With Space Saving Steel Stand  Case", "A brand-new, unused", "Unbranded", subcategoryTwelve, 100.00, 10, "1");
             Image image46 = new Image();
             image46.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445590723/81SRjuocm0L._SX466__fcfzps.jpg";
             image46.public_id = "81SRjuocm0L._SX466__fcfzps";
             image46.secret_image_url = "v1445590723";
             p46.images.add(image46);
 
-            Product p47 = new Product(userFive, "New 10/50/100pcs Wholesale DIY Accessories Wood Baby Craft", "A brand-new, unused,", "Handmade", subcategoryTwelve, 8.00, 10, "1");
+            Product p47 = new Product(userFive, "New 10/50/100pcs Wholesale DIY Accessories Wood Baby Craft", "A brand-new, unused", "Handmade", subcategoryTwelve, 8.00, 10, "1");
             Image image47 = new Image();
             image47.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445590722/mqVMhTcOihVS5x_xxELLaOw_cusqwt.jpg";
             image47.public_id = "mqVMhTcOihVS5x_xxELLaOw_cusqwt";
             image47.secret_image_url = "v1445590722";
             p47.images.add(image47);
 
-            Product p48 = new Product(userFive, "Hunter Hepa Allergen Removing Air Purifier- Tech", "An item that has been professionally ", "Hunter", subcategoryEleven, 100.00, 10, "1");
-            Image image48 = new Image();
-            image48.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445590724/Hunter-30793-PermaLife-Large-Room-Air-Purifier-with-Permanent-Filter_wmnx7f.jpg";
-            image48.public_id = "Hunter-30793-PermaLife-Large-Room-Air-Purifier-with-Permanent-Filter_wmnx7f";
-            image48.secret_image_url = "v1445590724";
-            p48.images.add(image48);
 
-
-            Product p49 = new Product(userFive, "Pink Cotton 5 Assorted Pre Cut Charm Craft 10", "A brand-new, unused, unopened, ", "Handmade", subcategoryTwelve, 6.00, 10, "1");
+            Product p49 = new Product(userFive, "Pink Cotton 5 Assorted Pre Cut Charm Craft 10", "A brand-new, unused, unopened", "Handmade", subcategoryTwelve, 6.00, 10, "1");
             Image image49 = new Image();
             image49.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445590722/5-Pink-Cotton-5-Assorted-Pre-Cut-Charm-Quilt-font-b-Squares-b-font-font-b_unh4nu.jpg";
             image49.public_id = "5-Pink-Cotton-5-Assorted-Pre-Cut-Charm-Quilt-font-b-Squares-b-font-font-b_unh4nu";
             image49.secret_image_url = "v1445590722";
             p49.images.add(image49);
 
-            Product p50 = new Product(userFive, "100Pcs 11MM DIY 2 Holes Round Resin Craft 20 Colors", "A brand-new, unused, unopened,", "Unbranded", subcategoryTwelve, 1.00, 10, "1");
+            Product p50 = new Product(userFive, "100Pcs 11MM DIY 2 Holes Round Resin Craft 20 Colors", "A brand-new, unused, unopened", "Unbranded", subcategoryTwelve, 1.00, 10, "1");
             Image image50 = new Image();
             image50.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445590723/100pcs-11mm-sweet-love-heart-2-holes-resin_ivx3pp.jpg";
             image50.public_id = "100pcs-11mm-sweet-love-heart-2-holes-resin_ivx3pp";
             image50.secret_image_url = "v1445590723";
             p50.images.add(image50);
 
+            Product p102 = new Product(userOne, "Yarnigans: Theodore the knitted bear, gray wool teddy", "A brand-new, unused", "HowPlumb", subcategoryTwelve, 20.00, 10, "1");
+            Product p103 = new Product(userOne, "ROC Paper Scissors: Handcrafted Fall Card - Li'l Pumpkin", "A brand-new, unused", "Unbranded", subcategoryTwelve, 20.00, 10, "1");
+            Product p104 = new Product(userOne, "Commercial 4 Tier Shelf Adjustable Steel Wire Metal Shelving Rack", "A brand-new, unused", "HowPlumb", subcategoryTwelve, 20.00, 10, "1");
+            Product p105 = new Product(userOne, "New Midea 2.0 Cu. Ft. Combination Washer/Dryer Combo Ventless", "A brand-new, unused", "Unbranded", subcategoryTwelve, 20.00, 10, "1");
+
+
             /*
             Books
              */
-
+            /*
+            Fiction
+             */
             Product p51 = new Product(userOne, "Humans of New York: Stories", "“There's no judgment, just observation and in many cases reverence","St. Martin's Press", subcategorySix, 20.00, 10, "1");
             Image image51 = new Image();
             image51.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445589841/humans_rchv39.jpg";
             image51.public_id = "humans_rchv39";
             image51.secret_image_url = "v1445589841";
             p51.images.add(image51);
-
-            Product p52 = new Product(userOne, "Lost", "Like everyone reading the newspapers these days, 10-year-old Barney Roberts knows ", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
-            Image image52 = new Image();
-            image52.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445589842/literary-lost-front-cover-visual21_ze4hbp.jpg";
-            image52.public_id = "literary-lost-front-cover-visual21_ze4hbp";
-            image52.secret_image_url = "v1445589842";
-            p52.images.add(image52);
 
             Product p53 = new Product(userOne, "Whirligig", "A terrible accident ends one life, but is just the beginning for another. . . .", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
             Image image53 = new Image();
@@ -568,6 +662,19 @@ public class Global extends GlobalSettings {
             image53.secret_image_url = "v1445589842";
             p53.images.add(image53);
 
+            Product p106 = new Product(userOne, "With Eyes Closed", "Into the Depths of A terrible addiction.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
+            Product p107 = new Product(userOne, "Forbidden Fantasy", "It all began with a stolen kiss.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
+            Product p108 = new Product(userOne, "Immortal Destiny", "Elizabeth is a 382 year old vampire.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
+            Product p109 = new Product(userOne, "Rain on My Wings", "I wanted him to see me, to open his eyes and simply acknowledge my presence. ", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
+            Product p110 = new Product(userOne, "Come Find Me", "People run away from things. Things that scare them.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
+            Product p111 = new Product(userOne, "The Picture of Dorian Gray", "This classic twisting tale all starts with a portrait of a beautiful young man, Dorian Gray.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
+            Product p112 = new Product(userOne, "Platinum Dust", "Pride and Prejudice is a popular classic romantic tale by Jane Austen.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
+            Product p113 = new Product(userOne, "Pride and Prejudice", "Raheim Starz is the son of a dead man and the woman who killed him.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
+
+
+            /*
+            Children
+             */
             Product p54 = new Product(userOne, "Zero the Hero", "Zero. Zip. Zilch. Nada. That's what all the other numbers think of Zero.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
             Image image54 = new Image();
             image54.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445589841/12071060_snseik.jpg";
@@ -581,6 +688,22 @@ public class Global extends GlobalSettings {
             image55.public_id = "51g-J3FXJIL._SX329_BO1_204_203_200__fdmqad";
             image55.secret_image_url = "v1445589841";
             p55.images.add(image55);
+
+            Product p52 = new Product(userOne, "Lost", "Like everyone reading the newspapers these days, 10-year-old Barney Roberts knows ", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
+            Image image52 = new Image();
+            image52.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445589842/literary-lost-front-cover-visual21_ze4hbp.jpg";
+            image52.public_id = "literary-lost-front-cover-visual21_ze4hbp";
+            image52.secret_image_url = "v1445589842";
+            p52.images.add(image52);
+
+            Product p114 = new Product(userOne, "The Little Gingerbread Man", "A surprising new version of the classic Gingerbread Man fairy tale.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
+            Product p115 = new Product(userOne, "The Yourney of the Noble Gnarble", "Little Sari discovers invisible alligators quietly sneaking", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
+            Product p116 = new Product(userOne, "Invisible Alligators", "The Pirate Modi uses his father's ship to follow a map.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
+            Product p117 = new Product(userOne, "The Brave Monkey Pirate", "Just what is it you can do with a wiener dog magnet?", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
+            Product p118 = new Product(userOne, "The Wiener Dog Magnet", "An illustrated story of animal sounds.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
+            Product p119 = new Product(userOne, "The Farm Animals", "A pirate in Jimmy's dream tells him where to find buried treasure.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
+            Product p120 = new Product(userOne, "The Bitaba Bird", "A blending of imagination with a science lesson.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
+
 
 
             List<User> buyers = new ArrayList<>();
@@ -644,6 +767,71 @@ public class Global extends GlobalSettings {
             products.add(p53);
             products.add(p54);
             products.add(p55);
+            products.add(p56);
+            products.add(p57);
+            products.add(p58);
+            products.add(p59);
+            products.add(p60);
+            products.add(p61);
+            products.add(p62);
+            products.add(p63);
+            products.add(p64);
+            products.add(p65);
+            products.add(p66);
+            products.add(p67);
+            products.add(p68);
+            products.add(p69);
+            products.add(p70);
+            products.add(p71);
+            products.add(p72);
+            products.add(p73);
+            products.add(p74);
+            products.add(p75);
+            products.add(p76);
+            products.add(p77);
+            products.add(p78);
+            products.add(p79);
+            products.add(p80);
+            products.add(p81);
+            products.add(p82);
+            products.add(p83);
+            products.add(p84);
+            products.add(p85);
+            products.add(p86);
+            products.add(p87);
+            products.add(p88);
+            products.add(p89);
+            products.add(p90);
+            products.add(p91);
+            products.add(p92);
+            products.add(p93);
+            products.add(p94);
+            products.add(p95);
+            products.add(p96);
+            products.add(p97);
+            products.add(p98);
+            products.add(p99);
+            products.add(p100);
+            products.add(p101);
+            products.add(p102);
+            products.add(p103);
+            products.add(p104);
+            products.add(p105);
+            products.add(p106);
+            products.add(p107);
+            products.add(p108);
+            products.add(p109);
+            products.add(p110);
+            products.add(p111);
+            products.add(p112);
+            products.add(p113);
+            products.add(p114);
+            products.add(p115);
+            products.add(p116);
+            products.add(p117);
+            products.add(p118);
+            products.add(p119);
+            products.add(p120);
 
 
             for (int i = 0; i < products.size(); i++){
@@ -706,11 +894,77 @@ public class Global extends GlobalSettings {
             p53.save();
             p54.save();
             p55.save();
+            p56.save();
+            p57.save();
+            p58.save();
+            p59.save();
+            p60.save();
+            p61.save();
+            p62.save();
+            p63.save();
+            p64.save();
+            p65.save();
+            p66.save();
+            p67.save();
+            p68.save();
+            p69.save();
+            p70.save();
+            p71.save();
+            p72.save();
+            p73.save();
+            p74.save();
+            p75.save();
+            p76.save();
+            p77.save();
+            p78.save();
+            p79.save();
+            p80.save();
+            p81.save();
+            p82.save();
+            p83.save();
+            p84.save();
+            p85.save();
+            p86.save();
+            p87.save();
+            p88.save();
+            p89.save();
+            p90.save();
+            p91.save();
+            p92.save();
+            p93.save();
+            p94.save();
+            p95.save();
+            p96.save();
+            p97.save();
+            p98.save();
+            p99.save();
+            p100.save();
+            p101.save();
+            p102.save();
+            p103.save();
+            p104.save();
+            p105.save();
+            p106.save();
+            p107.save();
+            p108.save();
+            p109.save();
+            p110.save();
+            p111.save();
+            p112.save();
+            p113.save();
+            p114.save();
+            p115.save();
+            p116.save();
+            p117.save();
+            p118.save();
+            p119.save();
+            p120.save();
+
 
             Random num = new Random();
 
-            for(int i = 1; i < 500; i++){
-                new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(50) + 1)), (num.nextInt(5) + 1)).save();
+            for(int i = 1; i < 1000; i++){
+                new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(120) + 1)), (num.nextInt(5) + 1)).save();
             }
 
             FAQ f1 = new FAQ("Registration and account info\n", "Your account is your identity on bitBay. You use your account to buy, sell, communicate with bitBay members, and leave Feedback for bitBay buyers and sellers.\n" +
