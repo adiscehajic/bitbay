@@ -247,9 +247,9 @@ public class PayPalController extends Controller {
      */
     public Result approveTransaction() {
         products = Product.findAll();
-        //recommendations = Recommendation.getRecommendations();
+        recommendations = Recommendation.getRecommendations();
         flash("success");
-        return ok(index.render(products, null));
+        return ok(index.render(products, recommendations));
     }
 
 
@@ -291,7 +291,7 @@ public class PayPalController extends Controller {
      */
     public Result refundProcessing(Integer purchaseItem_id) {
         products = Product.findAll();
-        //recommendations = Recommendation.getRecommendations();
+        recommendations = Recommendation.getRecommendations();
         Logger.info("+++++++++++++++" + purchaseItem_id);
 
         if(executeRefund(purchaseItem_id)){
@@ -303,7 +303,7 @@ public class PayPalController extends Controller {
            product.update();
            return redirect(routes.Users.getUserPurchases());
        }
-        return ok(index.render(products, null));
+        return ok(index.render(products, recommendations));
     }
 
     public static boolean executeRefund(Integer purchaseItem_id) {

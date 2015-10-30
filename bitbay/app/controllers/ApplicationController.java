@@ -6,6 +6,7 @@ import helpers.MailHelper;
 import helpers.SessionHelper;
 import models.*;
 import org.mindrot.jbcrypt.BCrypt;
+import play.Logger;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
@@ -38,12 +39,15 @@ public class ApplicationController extends Controller {
      * @return Index page of the application.
      */
     public Result index() {
-    //    List<Product> recommendations = Recommendation.getRecommendations();
+        List<Product> recommendations = Recommendation.getRecommendations();
 
+        for (Product p : recommendations) {
+            Logger.info("Name of product is: " + p.name);
+        }
 
         // Declaring list that contains all products from database.
         List<Product> products = Product.findAll();
-        return ok(index.render(products, null));
+        return ok(index.render(products, recommendations));
     }
 
     /**
