@@ -42,7 +42,7 @@ public class ApiUserController extends Controller {
             session("email", boundForm.bindFromRequest().field("email").value());
 
             // kerim ispravio
-            //List<Product> recommendations = Recommendation.getRecommendations();
+            List<Product> recommendations = Recommendation.getRecommendations();
             // Declaring list that contains all products from database.
             List<Product> products = Product.findAll();
             // Redirecting to main page.
