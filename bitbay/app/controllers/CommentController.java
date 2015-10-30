@@ -3,7 +3,6 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import helpers.SessionHelper;
 import models.*;
-import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.filters.csrf.RequireCSRFCheck;

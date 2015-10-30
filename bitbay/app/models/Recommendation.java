@@ -97,6 +97,20 @@ public class Recommendation extends Model {
 */
 
 
+    public static List<Product> getRecommendations() {
+        List<Recommendation> recommendations = finder.all();
+
+        List<Product> products = new ArrayList<>();
+        for (Recommendation r : recommendations) {
+            if (r.product.id <= 55) {
+                products.add(r.product);
+            }
+        }
+        Collections.shuffle(products);
+
+        return products.subList(0, 4);
+    }
+
     public static void savingProductView(User user, Product product) {
         Recommendation recommendation = Recommendation.getRecommendationByUserAndProduct(user, product);
         // Checking if recommendation exists.
@@ -143,7 +157,6 @@ public class Recommendation extends Model {
     public static List<Product> getRecommendedProducts(Product product) {
         // Find list of all lines in table recommendation for inputed product.
         List<Recommendation> commonRecommend = getAllProductViews(product);
-        Logger.info("Broj recommendationa je: " + commonRecommend.size());
         // Declaration of the list of objects that contain product and number of views of that product.
         List<ProductCount> commonProducts = findSimilarProducts(commonRecommend, product);
         return calculateSimilarProducts(commonProducts, product);
@@ -156,13 +169,11 @@ public class Recommendation extends Model {
         for (Recommendation r : commonRecommend) {
             commonUsers.add(r.user);
         }
-        Logger.info("Broj usera koji su pogledali product je: " + commonUsers.size());
         // Declaration of the list of objects that contain product and number of views of that product.
         List<ProductCount> commonProducts = new ArrayList<>();
         // Find all products that each user from common user list had viewed.
         for (int i = 0; i < commonUsers.size(); i++) {
             List<Recommendation> recommendations = getViewedProductByUser(commonUsers.get(i), product);
-            Logger.info("Broj pregledanih produkata usera " + i + " je: " + recommendations.size());
             for (int j = 0; j < recommendations.size(); j++) {
                 ProductCount productCount = new ProductCount(recommendations.get(j).product);
                 if (ProductCount.doesContain(commonProducts, productCount)) {
@@ -173,7 +184,6 @@ public class Recommendation extends Model {
             }
         }
 
-        Logger.info("Broj common produkata je: " + commonProducts.size());
         return commonProducts;
     }
 
@@ -184,7 +194,6 @@ public class Recommendation extends Model {
         for (int i = 0; i < commonProducts.size(); i++) {
             Product other = commonProducts.get(i).product;
             Double index = calculateCommonalityIndex(product, other);
-            Logger.info("Index of product " + i + " is: " + index);
             mostViewed.add(new ProductCount(other, index));
         }
 
