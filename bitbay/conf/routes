@@ -73,8 +73,8 @@ POST          /purchaseprocessing                     @controllers.PayPalControl
 GET           /purchasesuccess                        @controllers.PayPalController.purchaseSuccess()
 GET           /purchasefail                           @controllers.PayPalController.purchaseFail()
 GET           /purchaseTransaction/                   @controllers.PayPalController.approveTransaction()
-GET           /refundpurchase/:purchaseitemid         @controllers.PayPalController.refundProcessing(purchaseitemid: Integer)
-GET          /purchaseinvoice                        @controllers.PayPalController.sendInvoice()
+GET           /refundpurchase/                        @controllers.PayPalController.refundProcessing(purchaseitemid: Integer)
+GET           /purchaseinvoice                        @controllers.PayPalController.sendInvoice()
 
 GET           /user/messages                          @controllers.MessageController.getReceivedMessages()
 GET           /user/messages/sent                     @controllers.MessageController.getSentMessages()

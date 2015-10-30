@@ -44,7 +44,7 @@
             <td class="cartData"> @purchaseItem.price KM </td>
 
               @if(purchaseItem.cancelationDueDate.compareTo(new Date()) != -1 && purchaseItem.isRefunded == 0){
-                  <td class="cartData"><a href="@routes.PayPalController.refundProcessing(purchaseItem.id)" id="delete@purchaseItem.id">Cancel order</a></td>
+                  <td class="cartData"><a id="delete@purchaseItem.id">Cancel order</a></td>
               }
 
               @if(purchaseItem.cancelationDueDate.compareTo(new Date()) == -1 && purchaseItem.isRefunded == 0){

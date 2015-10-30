@@ -253,9 +253,9 @@ public class PayPalController extends Controller {
      */
     public Result approveTransaction() {
         products = Product.findAll();
-        recommendations = Recommendation.getRecommendations();
+        //recommendations = Recommendation.getRecommendations();
         flash("success");
-        return ok(index.render(products, recommendations));
+        return ok(index.render(products, null));
     }
 
 
@@ -297,9 +297,10 @@ public class PayPalController extends Controller {
      */
     public Result refundProcessing(Integer purchaseItem_id) {
         products = Product.findAll();
-        recommendations = Recommendation.getRecommendations();
+        //recommendations = Recommendation.getRecommendations();
         Logger.info("+++++++++++++++" + purchaseItem_id);
-       if(executeRefund(purchaseItem_id)){
+
+        if(executeRefund(purchaseItem_id)){
            Logger.info("----------------------" + purchaseItem_id);
 
            PurchaseItem purchaseItem = PurchaseItem.getPurchaseItemById(purchaseItem_id);
@@ -308,7 +309,7 @@ public class PayPalController extends Controller {
            product.update();
            return redirect(routes.Users.getUserPurchases());
        }
-        return ok(index.render(products, recommendations));
+        return ok(index.render(products, null));
     }
 
     public static boolean executeRefund(Integer purchaseItem_id) {
@@ -316,8 +317,9 @@ public class PayPalController extends Controller {
         try {
             Logger.info("111111111111111");
 
-            String accessToken = new OAuthTokenCredential(CLIENT_ID,
-                    CLIENT_SECRET).getAccessToken();
+            OAuthTokenCredential tokenCredential =
+                    new OAuthTokenCredential(CLIENT_ID, CLIENT_SECRET);
+            String accessToken = tokenCredential.getAccessToken();
             Logger.info("222222222222222");
 
             Map<String, String> sdkConfig = new HashMap<String, String>();
@@ -346,7 +348,7 @@ public class PayPalController extends Controller {
                 amount.setCurrency("USD");
                 amount.setTotal(totalPriceString);
                 refund.setAmount(amount);
-                Logger.info("888888888888888");
+                Logger.info("888888888888888 ++++++++++ " + refund.getAmount());
 
                 sale.refund(context, refund);
                 Logger.info("9999999999999§99");

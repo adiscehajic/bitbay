@@ -38,11 +38,12 @@ public class ApplicationController extends Controller {
      * @return Index page of the application.
      */
     public Result index() {
-        List<Product> recommendations = Recommendation.getRecommendations();
+    //    List<Product> recommendations = Recommendation.getRecommendations();
+
 
         // Declaring list that contains all products from database.
         List<Product> products = Product.findAll();
-        return ok(index.render(products, recommendations));
+        return ok(index.render(products, null));
     }
 
     /**

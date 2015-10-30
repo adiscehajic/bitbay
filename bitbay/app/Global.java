@@ -30,7 +30,7 @@ public class Global extends GlobalSettings {
     public void onStart(Application application) {
         super.onStart(application);
 
-        AuctionHandler.handleAuctions();
+        //AuctionHandler.handleAuctions();
 
         Image.cloudinary = new Cloudinary("cloudinary://"+ Play.application().configuration().getString("cloudinary.string"));
 
@@ -707,6 +707,16 @@ public class Global extends GlobalSettings {
             p55.save();
 
             Random num = new Random();
+
+            for (int i = 0; i < 250; i++) {
+
+                Recommendation.savingProductView(userOne, Product.getProductById((num.nextInt(55) + 1)));
+                Recommendation.savingProductView(userTwo, Product.getProductById((num.nextInt(50-20) + 20)));
+                Recommendation.savingProductView(userThree, Product.getProductById((num.nextInt(35-10) + 10)));
+                Recommendation.savingProductView(userFour, Product.getProductById((num.nextInt(25-1) + 1)));
+                Recommendation.savingProductView(userFive, Product.getProductById((num.nextInt(55-11) + 11)));
+                Recommendation.savingProductView(userSix, Product.getProductById((num.nextInt(45-29) + 29)));
+            }
 
             for(int i = 1; i < 500; i++){
                 new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(50) + 1)), (num.nextInt(5) + 1)).save();
