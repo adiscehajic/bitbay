@@ -49,11 +49,27 @@ public class ProductController extends Controller {
      * @return Page where all product informations are shown.
      */
     public Result getProduct(Integer id) {
+
         String averageRating = Rating.getAverageRating(id);
         Logger.info(averageRating);
         // Finding selected product.
         Product product = Product.getProductById(id);
         // Declaring image path.
+
+
+       // List<Recommendation.ProductCount> productRecommendations = Recommendation.getRecommended(product);
+
+       // for (int i = 0; i < productRecommendations.size(); i++) {
+         //   Logger.info(productRecommendations.get(i).toString());
+       // }
+
+
+
+
+
+
+
+
         String path = Image.getImagePath(product);
         // Declaring the list of comments and the list of top comments.
         List<Comment> comments = Comment.sortCommentByDate(product);
@@ -69,6 +85,11 @@ public class ProductController extends Controller {
         // Finding category of selected product.
         Category category = Category.getCategoryById(product.category.id);
         // Declaring recommendation
+
+        if (user != null) {
+            Recommendation.savingProductView(user, product);
+        }
+       /*
         Recommendation recommendation = Recommendation.getRecommendationByUserAndCategory(user, category);
         // Checking if recommendation exists.
         if (recommendation != null) {
@@ -82,6 +103,12 @@ public class ProductController extends Controller {
         }
 
         List<Product> recommendedProducts = Product.getFourRandomProducts(Product.findAllProductsByCategory(category));
+        */
+
+        List<Product> recommendedProducts = Recommendation.getRecommendedProducts(product);
+
+        Logger.info("Number of recommendations is: " + recommendedProducts.size());
+
         // Rendering product profile page.
         return ok(productProfile.render(product, path, comments, topComments, recommendedProducts, averageRating));
     }
@@ -168,8 +195,6 @@ public class ProductController extends Controller {
             // Creating new product and adding selected values.
             //finding cancelation duration selected by seller
             Product product = boundForm.get();
-            String cancelationDate = boundForm.bindFromRequest().field("cancelation-duration").value();
-            product.cancelation = Integer.parseInt(cancelationDate);
             product.user = user;
             product.category = category;
 

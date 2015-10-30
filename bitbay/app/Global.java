@@ -1,26 +1,23 @@
-
-        import com.avaje.ebean.Ebean;
-        import com.cloudinary.Cloudinary;
-        import helpers.CommonHelpers;
-        import models.*;
-        import org.mindrot.jbcrypt.BCrypt;
-        import play.Application;
-        import play.GlobalSettings;
-        import play.api.mvc.EssentialFilter;
-        import play.mvc.Result;
-        import play.libs.F;
-        import play.mvc.Http;
-        import play.*;
-        import play.mvc.*;
-        import play.mvc.Http.*;
-        import play.filters.csrf.CSRFFilter;
-
-        import java.util.ArrayList;
-        import java.util.List;
-        import java.util.Random;
-
-        import static play.mvc.Results.badRequest;
-        import static play.mvc.Results.notFound;
+import com.avaje.ebean.Ebean;
+import com.cloudinary.Cloudinary;
+import helpers.CommonHelpers;
+import models.*;
+import org.mindrot.jbcrypt.BCrypt;
+import play.Application;
+import play.GlobalSettings;
+import play.api.mvc.EssentialFilter;
+import play.mvc.Result;
+import play.libs.F;
+import play.mvc.Http;
+import play.*;
+import play.mvc.*;
+import play.mvc.Http.*;
+import play.filters.csrf.CSRFFilter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import static play.mvc.Results.badRequest;
+import static play.mvc.Results.notFound;
 
 /**
  * Created by Adis Cehajic on 9/22/2015.
@@ -31,7 +28,7 @@ public class Global extends GlobalSettings {
     public void onStart(Application application) {
         super.onStart(application);
 
-        AuctionHandler.handleAuctions();
+        //AuctionHandler.handleAuctions();
 
         Image.cloudinary = new Cloudinary("cloudinary://"+ Play.application().configuration().getString("cloudinary.string"));
 
@@ -56,6 +53,8 @@ public class Global extends GlobalSettings {
             Ebean.save(buyer);
             Ebean.save(seller);
 
+            List<User> users = new ArrayList<>();
+
             User userOne = new User();
             userOne.firstName = "Adis";
             userOne.lastName = "Cehajic";
@@ -64,6 +63,7 @@ public class Global extends GlobalSettings {
             userOne.userType = seller;
             userOne.phoneNumber = "+38761849315";
             userOne.setValidated(true);
+            users.add(userOne);
 
             User userThree = new User();
             userThree.firstName = "Dinko";
@@ -73,6 +73,7 @@ public class Global extends GlobalSettings {
             userThree.userType = seller;
             userThree.phoneNumber = "+38761555040";
             userThree.setValidated(true);
+            users.add(userThree);
 
             User userFive = new User();
             userFive.firstName = "Medina";
@@ -82,6 +83,7 @@ public class Global extends GlobalSettings {
             userFive.userType = seller;
             userFive.phoneNumber = "+38761985788";
             userFive.setValidated(true);
+            users.add(userFive);
 
             User userTwo = new User();
             userTwo.firstName = "Kerim";
@@ -91,6 +93,7 @@ public class Global extends GlobalSettings {
             userTwo.userType = buyer;
             userTwo.phoneNumber = "+38761066034";
             userTwo.setValidated(true);
+            users.add(userTwo);
 
             User userFour = new User();
             userFour.firstName = "Adnan";
@@ -100,6 +103,7 @@ public class Global extends GlobalSettings {
             userFour.userType = buyer;
             userFour.phoneNumber = "+38761636292";
             userFour.setValidated(true);
+            users.add(userFour);
 
             User userSix = new User();
             userSix.firstName = "Senadin";
@@ -109,6 +113,7 @@ public class Global extends GlobalSettings {
             userSix.userType = buyer;
             userSix.phoneNumber = "+38766177380";
             userSix.setValidated(true);
+            users.add(userSix);
 
             User userSeven = new User();
             userSeven.firstName = "Narena";
@@ -116,6 +121,7 @@ public class Global extends GlobalSettings {
             userSeven.email = "narena.ibrisimovic@bitcamp.ba";
             userSeven.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userSeven.userType = admin;
+            users.add(userSeven);
 
             User userEight = new User();
             userEight.firstName = "BitBay";
@@ -123,7 +129,53 @@ public class Global extends GlobalSettings {
             userEight.email = "bitbayservice@gmail.com";
             userEight.userType = admin;
             userEight.setValidated(true);
+            users.add(userEight);
 
+            User userNine = new User();
+            userNine.firstName = "Gordan";
+            userNine.lastName = "Masic";
+            userNine.email = "gordan.masic@bitcamp.ba";
+            userNine.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
+            userNine.userType = buyer;
+            userNine.phoneNumber = "+38711123456";
+            userNine.setValidated(true);
+            users.add(userNine);
+
+            User userTen = new User();
+            userTen.firstName = "Ajla";
+            userTen.lastName = "El Tabari";
+            userTen.email = "ajla.eltabari@bitcamp.ba";
+            userTen.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
+            userTen.userType = seller;
+            userTen.phoneNumber = "+38711123456";
+            userTen.setValidated(true);
+            users.add(userTen);
+
+            User userEleven = new User();
+            userEleven.firstName = "Mladen";
+            userEleven.lastName = "Teofilovic";
+            userEleven.email = "mladen.teofilovic@bitcamp.ba";
+            userEleven.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
+            userEleven.userType = buyer;
+            userEleven.phoneNumber = "+38711123456";
+            userEleven.setValidated(true);
+            users.add(userEleven);
+
+            User userTwelve = new User();
+            userTwelve.firstName = "Zeljko";
+            userTwelve.lastName = "Miljevic";
+            userTwelve.email = "zeljko.miljevic@bitcamp.ba";
+            userTwelve.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
+            userTwelve.userType = seller;
+            userTwelve.phoneNumber = "+3871112345678";
+            userTwelve.setValidated(true);
+            users.add(userTwelve);
+
+            for (int i = 0; i < users.size(); i++) {
+                users.get(i).save();
+            }
+
+            /*
             userOne.save();
             userTwo.save();
             userThree.save();
@@ -132,7 +184,7 @@ public class Global extends GlobalSettings {
             userSix.save();
             userSeven.save();
             userEight.save();
-
+*/
             Category categoryOne = new Category("Other", null);
             Category categoryTwo = new Category("Electronics", null);
             Category categoryThree = new Category("Fashion", null);
@@ -458,9 +510,6 @@ public class Global extends GlobalSettings {
             /*
             Sports
              */
-            /*
-            Sports
-             */
             Product p31 = new Product(userThree, "ADIDAS BRAZUCA FIFA", "A brand-new, unused, unopened, undamaged item in its original packaging", "Adidas", subcategoryNine, 60.00, 20, "1");
             Image image31 = new Image();
             image31.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445555580/3022879-inline-s-6-2013-fifa-world-cup-brasil-ball_pmdf3q.jpg";
@@ -704,12 +753,12 @@ public class Global extends GlobalSettings {
             Product p119 = new Product(userOne, "The Farm Animals", "A pirate in Jimmy's dream tells him where to find buried treasure.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
             Product p120 = new Product(userOne, "The Bitaba Bird", "A blending of imagination with a science lesson.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
 
-
-
             List<User> buyers = new ArrayList<>();
             buyers.add(userTwo);
             buyers.add(userFour);
             buyers.add(userSix);
+            buyers.add(userNine);
+            buyers.add(userEleven);
 
             List<Product> products = new ArrayList<>();
             products.add(p1);
@@ -836,9 +885,10 @@ public class Global extends GlobalSettings {
 
             for (int i = 0; i < products.size(); i++){
                 products.get(i).cancelation = 2;
+                products.get(i).save();
             }
 
-
+/*
             p1.save();
             p2.save();
             p3.save();
@@ -960,8 +1010,24 @@ public class Global extends GlobalSettings {
             p119.save();
             p120.save();
 
-
+*/
             Random num = new Random();
+
+            for (int i = 0; i < 250; i++) {
+
+                Recommendation.savingProductView(userOne, Product.getProductById((num.nextInt(120) + 1)));
+                Recommendation.savingProductView(userTwo, Product.getProductById((num.nextInt(120) + 1)));
+                Recommendation.savingProductView(userThree, Product.getProductById((num.nextInt(120) + 1)));
+                Recommendation.savingProductView(userFour, Product.getProductById((num.nextInt(120) + 1)));
+                Recommendation.savingProductView(userFive, Product.getProductById((num.nextInt(120) + 1)));
+                Recommendation.savingProductView(userSix, Product.getProductById((num.nextInt(120) + 1)));
+                Recommendation.savingProductView(userNine, Product.getProductById((num.nextInt(120) + 1)));
+                Recommendation.savingProductView(userTen, Product.getProductById((num.nextInt(120) + 1)));
+                Recommendation.savingProductView(userEleven, Product.getProductById((num.nextInt(120) + 1)));
+                Recommendation.savingProductView(userTwelve, Product.getProductById((num.nextInt(120) + 1)));
+//                Recommendation.savingProductView(userTwelve, Product.getProductById((num.nextInt(45-29) + 29)));
+
+            }
 
             for(int i = 1; i < 1000; i++){
                 new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(120) + 1)), (num.nextInt(5) + 1)).save();
@@ -987,8 +1053,6 @@ public class Global extends GlobalSettings {
             f4.save();
             f5.save();
             f6.save();
-
-
 
         }
     }

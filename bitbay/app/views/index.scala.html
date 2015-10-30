@@ -3,7 +3,7 @@
 @(implicit products: java.util.List[Product], recommendedProducts: java.util.List[Product])
 
 @main("bitbay Home") {
-    @if(recommendedProducts.size() > 0) {
+    @if(recommendedProducts != null && recommendedProducts.size() > 0) {
     <div id="carouselHacked" class="carousel slide carousel-fade" data-ride="carousel" style="margin-bottom: 25px">
         <div class="carousel-inner" role="listbox">
 

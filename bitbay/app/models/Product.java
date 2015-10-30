@@ -37,6 +37,9 @@ public class Product extends Model {
     @Constraints.Required(message = "Product category is required.")
     public String categoryId;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    public List<Recommendation> recommendations;
+
 //    @Constraints.Min(value = 1, message = "Product price must be larger than 0.")
 //    @Constraints.Required(message = "Product price is required.")
     public Double price;
