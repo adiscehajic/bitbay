@@ -339,9 +339,14 @@ public class ProductController extends Controller {
         // Getting inputed searched term.
         String term = boundForm.bindFromRequest().field("search").value();
         // Finding all products that have in name or description searched tarm.
-        List<Product> products = Product.searchProductByName(term);
-        // Rendering page where all searched products are listed.
-        return ok(searchProduct.render(products));
+        List<Product> products = null;
+        if(!"".equals(term)) {
+            products = Product.searchProductByName(term);
+            // Rendering page where all searched products are listed.
+            return ok(searchProduct.render(products));
+        }
+        return redirect(routes.ApplicationController.index());
+
     }
 
     /**

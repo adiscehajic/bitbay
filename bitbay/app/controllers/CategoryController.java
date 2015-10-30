@@ -1,5 +1,7 @@
 package controllers;
 
+import helpers.ConstantsHelper;
+import helpers.CurrentAdmin;
 import com.fasterxml.jackson.databind.JsonNode;
 import helpers.CurrentAdmin;
 import play.Logger;
@@ -15,9 +17,8 @@ import views.html.admin.editCategory;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.List;
-import com.avaje.ebean.Ebean;
+
 import models.*;
-import views.html.category.viewProductsByCategory;
 
 
 /**
@@ -95,11 +96,12 @@ public class CategoryController extends Controller {
         // Finding selected category from database.
         Category category = Category.getCategoryById(id);
         // Going trough all products from selected category and putting them into 'Other' category.
+
         if (category.parent != null) {
             // Creating list of products from selected category.
             List<Product> products = Product.findAllProductsByCategory(category);
             for (Product product : products) {
-                product.category = Category.getCategoryById(Category.OTHER);
+                product.category = Category.getCategoryById(ConstantsHelper.CATEGORY_OTHER);
                 product.save();
             }
         } else {
@@ -109,7 +111,7 @@ public class CategoryController extends Controller {
                 // Creating list of products from selected category.
                 List<Product> products = Product.findAllProductsByCategory(subcategory);
                 for (Product p : products) {
-                    p.category = Category.getCategoryById(Category.OTHER);
+                    p.category = Category.getCategoryById(ConstantsHelper.CATEGORY_OTHER);
                     p.save();
                 }
             }

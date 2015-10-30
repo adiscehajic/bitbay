@@ -1,5 +1,6 @@
 @import helpers.SessionHelper
 @import helpers.CommonHelpers
+@import helpers.ConstantsHelper
 @import helper._
 
 @(message: Message)
@@ -16,7 +17,7 @@
 
                 }
                 <label style="margin-left: 5%"> Date: </label> <label style="color: gray">@CommonHelpers.getDateAsString(message.date) h</label><br>
-                @if(message.sender.userType.id == UserType.ADMIN) {
+                @if(message.sender.userType.id == ConstantsHelper.ADMIN) {
                     <div style="margin-left: 5%; color: darkred"><i class="fa fa-exclamation-triangle"></i> BitBay Admin Team <i class="fa fa-exclamation-triangle"></i></div>
                 }
             </div>

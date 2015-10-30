@@ -97,17 +97,4 @@ public class Bid extends Model {
         return String.format("%d) %s - %f", id, user.email, amount);
     }
 
-    /**
-     * Validates the bid form and returns all errors that occur during user product biding.
-     * @return Errors that have occur during user product biding.
-     */
-   /* public List<ValidationError> validate() {
-        // Declaring the list of errors.
-        List<ValidationError> errors = new ArrayList<>();
-        // Checking are the inputed amount is higher than highest bid.
-        if (Double.compare(this.amount, Bid.getAmountOfHighestBid(auction)) >= 0) {
-            errors.add(new ValidationError("amount", "You have to bid more than " + Bid.getAmountOfHighestBid(auction) + " KM."));
-        }
-        return errors.isEmpty() ? null : errors;
-    }*/
 }
