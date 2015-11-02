@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import helpers.SessionHelper;
 import play.data.format.Formats;
 
@@ -20,12 +21,15 @@ public class PurchaseItem extends Model {
     public Integer id;
 
     @ManyToOne
+    @JsonBackReference
     public User user;
 
     @ManyToOne
+    @JsonBackReference
     public Product product;
 
     @ManyToOne
+    @JsonBackReference
     public Purchase purchase;
 
     public Integer quantity;

@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import helpers.ConstantsHelper;
 import helpers.SessionHelper;
 import play.data.format.Formats;
@@ -26,6 +27,7 @@ public class Purchase extends Model {
     public String token; //token from paypalReturn
 
     @ManyToOne
+    @JsonBackReference
     public User user;
 
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)

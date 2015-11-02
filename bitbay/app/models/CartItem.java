@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,10 +17,13 @@ public class CartItem extends Model {
     @Id
     public Integer id;
     @ManyToOne
+    @JsonBackReference
     public User user;
     @ManyToOne
+    @JsonBackReference
     public Product product;
     @ManyToOne
+    @JsonBackReference
     public Cart cart;
     public Integer quantity;
     public Double price;

@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import helpers.ConstantsHelper;
 import helpers.SessionHelper;
 import play.data.format.Formats;
@@ -21,8 +22,10 @@ public class Message extends Model {
     @Id
     public Integer id;
     @ManyToOne
+    @JsonBackReference
     public User sender;
     @ManyToOne
+    @JsonBackReference
     public User receiver;
     @Transient
     @Constraints.Email(message = "Valid email required.")

@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import helpers.SessionHelper;
 import play.Logger;
 
@@ -22,12 +23,15 @@ public class Recommendation extends Model {
     @Id
     public Integer id;
     @ManyToOne
+    @JsonBackReference
     public User user;
 
     @ManyToOne
+    @JsonBackReference
     public Product product;
 
     @ManyToOne
+    @JsonBackReference
     public Category category;
     public Integer count;
     // Declaring finder.

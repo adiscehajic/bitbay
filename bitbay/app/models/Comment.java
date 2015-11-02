@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.avaje.ebean.SqlQuery;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import helpers.SessionHelper;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -26,8 +27,10 @@ public class Comment extends Model{
     @Constraints.Required(message = "Please insert message content.")
     public String text;
     @ManyToOne
+    @JsonBackReference
     public User user;
     @ManyToOne
+    @JsonBackReference
     public Product product;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Thumb> thumbs;

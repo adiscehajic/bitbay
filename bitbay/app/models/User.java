@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.javafx.fxml.expression.Expression;
 import controllers.Users;
 import helpers.SessionHelper;
@@ -68,10 +69,11 @@ public class User extends Model {
     public String phoneNumber;
 
     @ManyToOne
-    //@Constraints.Required
+    @JsonBackReference
     public UserType userType;
 
     @ManyToOne
+    @JsonBackReference
     public Country country;
 
     @Constraints.MaxLength(255)

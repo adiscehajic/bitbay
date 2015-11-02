@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.Logger;
 
 import javax.persistence.Entity;
@@ -19,8 +20,10 @@ public class Thumb extends Model {
     @Id
     public Integer id;
     @ManyToOne
+    @JsonBackReference
     public Comment comment;
     @ManyToOne
+    @JsonBackReference
     public User user;
 
     public Boolean isUp;

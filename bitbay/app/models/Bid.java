@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -26,9 +27,11 @@ public class Bid extends Model {
     public Integer id;
 
     @ManyToOne
+    @JsonBackReference
     public User user;
 
     @ManyToOne
+    @JsonBackReference
     public Auction auction;
 
     //@Pattern(regexp="^1-9/,$", message="Enter a valid amount for your bid.")

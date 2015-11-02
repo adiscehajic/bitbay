@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
 
@@ -28,6 +29,7 @@ public class Category extends Model {
     public String name;
 
     @ManyToOne
+    @JsonBackReference
     public Category parent;
 
     @Transient

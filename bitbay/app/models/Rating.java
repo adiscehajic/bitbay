@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import helpers.SessionHelper;
 import play.Logger;
 
@@ -19,8 +20,10 @@ public class Rating extends Model {
     @Id
     public Integer id;
     @ManyToOne
+    @JsonBackReference
     public User user;
     @ManyToOne
+    @JsonBackReference
     public Product product;
     public Integer rate;
 

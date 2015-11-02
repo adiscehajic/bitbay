@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -19,6 +20,7 @@ public class Product extends Model {
     public Integer id;
 
     @ManyToOne
+    @JsonBackReference
     public User user;
 
     @Constraints.MaxLength(255)
@@ -31,6 +33,7 @@ public class Product extends Model {
     public String manufacturer;
 
     @ManyToOne
+    @JsonBackReference
     public Category category;
 
     @Transient

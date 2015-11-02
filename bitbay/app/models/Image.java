@@ -3,6 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Transformation;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import helpers.SessionHelper;
 import play.Logger;
 
@@ -35,6 +36,7 @@ public class Image extends Model {
     public String image_url;
 
     @ManyToOne
+    @JsonBackReference
     public Product product;
 
     @OneToOne
