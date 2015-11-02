@@ -103,8 +103,10 @@ public class Auction extends Model {
         List<Auction> auctions = finder.all();
         // Declaring variable that represents current date.
         Date currentDate = new Date();
+
+        User user = User.getUserByEmail("bitbayservice@gmail.com");
         // Declaring bitbay service user as message sender.
-        User sender = User.getUserByEmail("bitbayservice@gmail.com");
+        User sender = user;
         // Going trough all auctions.
         for (int i = 0; i < auctions.size(); i++) {
             // Declaring variable that represents auction ending date.

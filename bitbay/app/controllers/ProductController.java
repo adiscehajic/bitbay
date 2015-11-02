@@ -183,11 +183,11 @@ public class ProductController extends Controller {
         if (boundForm.hasErrors()) {
             return badRequest(newProduct.render(boundForm, Category.findAll()));
         }
+        // Finding current user.
+        User user = SessionHelper.currentUser();
         try {
             // Initializing cloudinery object.
             Image.cloudinary = new Cloudinary("cloudinary://" + Play.application().configuration().getString("cloudinary.string"));
-            // Finding current user.
-            User user = SessionHelper.currentUser();
             // Declaring string variable for the selected product category.
             String categoryValue = boundForm.bindFromRequest().field("categoryId").value();
             // Declaring selected category.
@@ -218,9 +218,9 @@ public class ProductController extends Controller {
                 Auction auction = auctionBoundForm.get();
 
                 String days = auctionBoundForm.data().get("auction-duration");
-                String buyItNowPrice = auctionBoundForm.data().get("buy-it-now-price");
+                //String buyItNowPrice = auctionBoundForm.data().get("buy-it-now-price");
 
-                product.price = Double.parseDouble(buyItNowPrice);
+                product.price = auction.startingPrice;
                 product.quantity = 1;
                 product.update();
 
@@ -238,7 +238,7 @@ public class ProductController extends Controller {
             return badRequest(newProduct.render(boundForm, Category.findAll()));
         }
         // Redirecting to the main application page.
-        return redirect(routes.ApplicationController.index());
+        return redirect(routes.Users.getAllUserProducts(user.email));
     }
 
     /**
