@@ -22,6 +22,7 @@
                             <th> Price </th>
                             <th> Quantity </th>
                             <th> Subtotal </th>
+                            <th>          </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,12 +79,12 @@
                 <div class="row">
                     <div class="col-md-8"></div>
                     <div class="col-md-4" align="center">
-                        <div class="cartTotal">
-                            <label style="margin-bottom: 15px;"> Total: <label style="font-size: 20px; margin-left: 15px; border-bottom: 1px solid lightblue"> @Cart.cartAmount(user) KM </label></label><br>
+                        <div class="cartTotal" style="background-color: #f5f5f5">
+                            <label style="margin-bottom: 15px;"> Total: <label style="font-size: 20px; margin-left: 15px; border-bottom: 1px solid lightblue; margin-top: 20px"> @Cart.cartAmount(user) KM </label></label><br>
 
-                            <a href="@routes.ApplicationController.index()"><button class="btn btn-success" style="min-width: 170px"><span class="fa fa-arrow-left"></span> Continue shopping </button></a>
+                            <a href="@routes.ApplicationController.index()"><button class="btn btn-success" style="min-width: 170px; margin-bottom: 10px"><span class="fa fa-arrow-left"></span> Continue shopping </button></a>
                             <form method="POST" action="@helper.CSRF(controllers.routes.PayPalController.purchaseProcessing())">
-                                <button type="submit" id="paypal" style="min-width: 170px" class="btn btn-primary">Checkout <span class="fa fa-arrow-right"></span></button>
+                                <button type="submit" id="paypal" style="min-width: 170px; margin-top: 10px; margin-bottom: 20px" class="btn btn-primary">Checkout <span class="fa fa-arrow-right"></span></button>
                             </form>
                         </div>
                     </div>

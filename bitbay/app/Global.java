@@ -1,26 +1,27 @@
 import com.avaje.ebean.Ebean;
 import com.cloudinary.Cloudinary;
-import helpers.CommonHelpers;
 import models.*;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Application;
 import play.GlobalSettings;
+import play.Play;
 import play.api.mvc.EssentialFilter;
-import play.mvc.Result;
+import play.filters.csrf.CSRFFilter;
 import play.libs.F;
 import play.mvc.Http;
-import play.*;
-import play.mvc.*;
-import play.mvc.Http.*;
-import play.filters.csrf.CSRFFilter;
+import play.mvc.Http.RequestHeader;
+import play.mvc.Result;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.notFound;
 
 /**
  * Created by Adis Cehajic on 9/22/2015.
+ * edited by everyone
  */
 public class Global extends GlobalSettings {
 
@@ -28,9 +29,9 @@ public class Global extends GlobalSettings {
     public void onStart(Application application) {
         super.onStart(application);
 
-        //AuctionHandler.handleAuctions();
+        AuctionHandler.handleAuctions();
 
-        Image.cloudinary = new Cloudinary("cloudinary://"+ Play.application().configuration().getString("cloudinary.string"));
+        Image.cloudinary = new Cloudinary("cloudinary://" + Play.application().configuration().getString("cloudinary.string"));
 
         if (Ebean.find(UserType.class).findRowCount() == 0) {
 
@@ -697,7 +698,7 @@ public class Global extends GlobalSettings {
             /*
             Fiction
              */
-            Product p51 = new Product(userOne, "Humans of New York: Stories", "“There's no judgment, just observation and in many cases reverence","St. Martin's Press", subcategorySix, 20.00, 10, "1");
+            Product p51 = new Product(userOne, "Humans of New York: Stories", "“There's no judgment, just observation and in many cases reverence", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
             Image image51 = new Image();
             image51.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445589841/humans_rchv39.jpg";
             image51.public_id = "humans_rchv39";
@@ -883,7 +884,7 @@ public class Global extends GlobalSettings {
             products.add(p120);
 
 
-            for (int i = 0; i < products.size(); i++){
+            for (int i = 0; i < products.size(); i++) {
                 products.get(i).cancelation = 2;
                 products.get(i).save();
             }
@@ -906,7 +907,7 @@ public class Global extends GlobalSettings {
 
             }
 
-            for(int i = 1; i < 1000; i++){
+            for (int i = 1; i < 1000; i++) {
                 new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(120) + 1)), (num.nextInt(5) + 1)).save();
             }
 
@@ -932,6 +933,7 @@ public class Global extends GlobalSettings {
             f6.save();
 
         }
+
     }
 
     @Override

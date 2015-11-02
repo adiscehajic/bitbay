@@ -6,7 +6,7 @@
 
 <html lang="en">
     <head>
-        <meta http-equiv="refresh" content="120">
+       
         <title>@title</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
@@ -120,7 +120,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="@routes.Users.getUser(user.email)"> <span class="glyphicon glyphicon-user"></span>  Profile </a></li>
                                     @if(SessionHelper.isUserType(buyer)) {
-                                        <li><a href="@routes.Users.getUserPurchases()">Purchases</a> </li>
+                                        <li><a href="@routes.Users.getUserPurchases()"><img style="width: 16px; height: 16px;padding-right: 3px" src="@routes.Assets.versioned("images/dollars-icon.png" )"/>Purchases</a> </li>
                                     }
                                     <li><a href="@routes.ApplicationController.logout()"> <span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
                                 </ul>

@@ -10,32 +10,33 @@ function validateProduct() {
     var button = document.getElementsByName("submitButton")[0];
 
 
-    button.disabled = true;
+    if(button != null){
+        button.disabled = true;
 
-    if(category == 0) {
-        button.disabled = true;
-        return;
-    } else if(name.length == 0) {
-        button.disabled = true;
-        return;
-    } else if(price <= 0) {
-        button.disabled = true;
-        return;
-    } else if(quantity <= 0 || quantity == null) {
-        button.disabled = true;
-        return;
-    }
-    button.disabled = false;
-
-    $('#booksChange').change(function(){
-        var thisValue = $(this).val();
-        if (thisValue == "Books"){
-            $("label[for='manufacturer']").text("Publisher:*");
-        } else {
-            $("label[for='manufacturer']").text("Manufacturer:*");
+        if(category == 0) {
+            button.disabled = true;
+            return;
+        } else if(name.length == 0) {
+            button.disabled = true;
+            return;
+        } else if(price <= 0) {
+            button.disabled = true;
+            return;
+        } else if(quantity <= 0 || quantity == null) {
+            button.disabled = true;
+            return;
         }
-    });
+        button.disabled = false;
 
+        $('#booksChange').change(function(){
+            var thisValue = $(this).val();
+            if (thisValue == "Books"){
+                $("label[for='manufacturer']").text("Publisher:*");
+            } else {
+                $("label[for='manufacturer']").text("Manufacturer:*");
+            }
+        });
+    }
 }
 
 function validateName() {
