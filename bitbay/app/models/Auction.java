@@ -65,6 +65,12 @@ public class Auction extends Model {
         if (auction != null) {
             // Finding and returning auction end date.
             Date endingDate = auction.endingDate;
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(endingDate);
+            calendar.add(Calendar.DATE, 1);
+            endingDate = calendar.getTime();
+
             return CommonHelpers.getOnlyDate(endingDate);
         }
         return CommonHelpers.getOnlyDate(new Date());

@@ -934,6 +934,20 @@
     });
 
     ts.addParser({
+// set a unique id
+        id: 'thousands',
+        is: function (s) {
+            return /[KM]/.test(s);
+        },
+        format: function(s) {
+            // format your data for normalization
+            return $.tablesorter.formatFloat(s.replace('KM',''));
+        },
+// set type, either numeric or text
+        type: 'numeric'
+    });
+
+    ts.addParser({
         id: "url",
         is: function (s) {
             return /^(https?|ftp|file):\/\/$/.test(s);

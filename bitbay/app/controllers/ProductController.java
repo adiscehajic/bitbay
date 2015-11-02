@@ -303,6 +303,28 @@ public class ProductController extends Controller {
 
             // Saving all changes into database.
             product.update();
+
+            // Getting selected images
+            Http.MultipartFormData body = request().body().asMultipartFormData();
+            List<Http.MultipartFormData.FilePart> fileParts = body.getFiles();
+
+            // Checking if the product already has uploaded images. If product has images, first deletes all old images
+            // and then saves new images.
+            if (product.images.size() > 0) {
+                for (int i = 0; i < product.images.size(); i++) {
+                    product.images.get(i).deleteImage();
+                    product.images.get(i).delete();
+                }
+            }
+            // Uploading selected images on cloudinery and saving image path into database.
+            if (fileParts != null) {
+                for (Http.MultipartFormData.FilePart filePart : fileParts) {
+                    File file = filePart.getFile();
+                    Image image = Image.create(file, product.id);
+                    image.save();
+                }
+            }
+
             // Rendering product profile page.
             return redirect(routes.ProductController.getProduct(product.id));
         } catch (Exception e) {

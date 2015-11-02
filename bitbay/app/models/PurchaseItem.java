@@ -75,6 +75,13 @@ public class PurchaseItem extends Model {
         return purchaseItem;
     }
 
+    /**
+     * Returns the list of all purchases of inputed user. If user has purchases that are canceled due internet or other
+     * error, deletes them and returns all completed purchases.
+     *
+     * @param user
+     * @return
+     */
     public static List<PurchaseItem> getPurchasedItemsByUser(User user){
         List<PurchaseItem> purchaseItems = finder.where().eq("user", user).findList();
 
@@ -95,8 +102,7 @@ public class PurchaseItem extends Model {
         return PurchaseItem.finder.where().eq("user", user).findList();
     }
 
-    public static PurchaseItem getPurchaseItemByUserProduct(Product product){
-        PurchaseItem purchaseItem = PurchaseItem.finder.where().eq("product", product).findUnique();
-        return purchaseItem;
+    public static Boolean hasPurchesedProduct(Product product){
+        return (finder.where().eq("product", product).where().eq("isRefunded", 0).findList().size() > 0) ? true : false;
     }
 }

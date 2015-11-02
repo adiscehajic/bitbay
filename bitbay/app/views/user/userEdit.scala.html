@@ -9,12 +9,11 @@
                 <form method="POST" action="@helper.CSRF(routes.Users.updateUser())">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <div class="panel-title">Some user</div>
+                            <div class="panel-title">@user.firstName  @user.lastName</div>
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-3 col-lg-3 ">
-                                    <img alt="User Pic" src="https://placeimg.com/300/300/people" class="img-rounded img-responsive">
                                 </div>
                                 <div class=" col-md-9 col-lg-9 ">
                                     <div class="col-md-9 personal-info">
