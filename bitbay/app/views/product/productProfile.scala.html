@@ -30,7 +30,7 @@
 							<img class="img-responsive" src="http://placehold.it/576x486" ></a>
 					</div>
 				}
-				@if(PurchaseItem.getPurchasedItemsByUser(SessionHelper.currentUser()).contains(PurchaseItem.getPurchaseItemByUserProduct(product))) {
+				@if(PurchaseItem.hasPurchesedProduct(product)) {
 					<div style="margin-left: auto; margin-right: auto; width: 10em">
 						<h4 style="margin-left: 25px">Rate product</h4>
 						<input class="rating" data-max="5" data-min="1" id="some_id" name="your_awesome_parameter" type="number" data-empty-value="0" data-icon-lib="fa" data-active-icon="fa-star fa-2x" data-inactive-icon="fa-star-o fa-2x"/>
@@ -59,56 +59,55 @@
 					<label>@CommonHelpers.getDateAsString(Auction.getAuctionByProduct(product).endingDate)h </label>
 				}
 				<div id="priceDiv" style="padding-left: 20px">
-					@if(Auction.getAuctionByProduct(product) != null && Auction.getAuctionByProduct(product).isActive) {
-						<div>
-						@if(Bid.getNumberOfAuctionBids(Auction.getAuctionByProduct(product)) == 0) {
-							<p style="display : inline ; font-size: 20px;">Starting bid:   </p>
-							<p style="display : inline ; font-size: 20px;"><strong>@Auction.getAuctionByProduct(product).startingPrice
-								KM</strong></p>
-						} else {
-							<p style="display : inline ; font-size: 20px;">Current bid:   </p>
-							<p style="display : inline ; font-size: 20px;"><strong>@Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product))
-								KM</strong></p>
-						}
-						</div>
-
-						<form action="@helper.CSRF(routes.BidController.placeBidForProduct(product.id))" method="POST">
-							<div style="margin-top : 25 px">
-								<input type="text" name="amount" style="display : inline ; margin-top : 15px;"/>
-								<span class="alert-danger" data-error-for="amount" style="margin-left : 1 px ; font-weight : normal ;"></span>
-								<input type="submit" class="btn btn-primary" value="Place Bid" style="display : inline ; margin-top : 10 px ; margin-left : 25 px ; margin-right : 25 px ;"/>
-								@if(Bid.getNumberOfAuctionBids(Auction.getAuctionByProduct(product)) == 0) {
-									<p style="font-size : 10 px ; margin-left : 135 px ;">
-										Enter @Auction.getAuctionByProduct(product).startingPrice KM or more</p>
-								} else {
-									<p style="font-size : 10 px ; margin-left : 135 px ;">
-										Enter more than @Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product)) KM</p>
-								}
-							</div>
-						</form>
-					}else {
-						@if(Auction.getAuctionByProduct(product) != null && !Auction.getAuctionByProduct(product).isActive) {
-							<div>
-								<p style="display : inline ; font-size : 20px;">Winning bid:   </p>
-								<p style="display : inline ; font-size : 20px;"><strong>@Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product))
-									KM</strong></p>
-							</div>
-						} else {
-							<label style="font-size : 15 px ;">
-								Price: </label> <label style="font-size : 20 px ;"> @product.price KM</label>
-							@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
-								<form action="@helper.CSRF(routes.CartController.addToCart(product.id))" method="POST">
-								@if(product.quantity > 0) {
-									<button type="submit " class="btn btn-primary" style="margin-bottom : 20 px">
-										Add to cart </button>
-								} else {
-									<button type="submit " class="btn btn-primary" style="margin-bottom : 20 px" disabled>
-										Add to cart </button>
-								}
-								</form>
+				@if(Auction.getAuctionByProduct(product) != null && Auction.getAuctionByProduct(product).isActive) {
+					<div>
+					@if(Bid.getNumberOfAuctionBids(Auction.getAuctionByProduct(product)) == 0) {
+						<p style="display : inline ; font-size: 20px;">Starting bid:   </p>
+						<p style="display : inline ; font-size: 20px;"><strong>@Auction.getAuctionByProduct(product).startingPrice
+							KM</strong></p>
+					} else {
+						<p style="display : inline ; font-size: 20px;">Current bid:   </p>
+						<p style="display : inline ; font-size: 20px;"><strong>@Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product))
+							KM</strong></p>
+					}
+					</div>
+					<form action="@helper.CSRF(routes.BidController.placeBidForProduct(product.id))" method="POST">
+						<div style="margin-top : 25 px">
+							<input type="text" name="amount" style="display : inline ; margin-top : 15px;"/>
+							<span class="alert-danger" data-error-for="amount" style="margin-left : 1 px ; font-weight : normal ;"></span>
+							<input type="submit" class="btn btn-primary" value="Place Bid" style="display : inline ; margin-top : 10 px ; margin-left : 25 px ; margin-right : 25 px ;"/>
+							@if(Bid.getNumberOfAuctionBids(Auction.getAuctionByProduct(product)) == 0) {
+								<p style="font-size : 10 px ; margin-left : 135 px ;">
+									Enter @Auction.getAuctionByProduct(product).startingPrice KM or more</p>
+							} else {
+								<p style="font-size : 10 px ; margin-left : 135 px ;">
+									Enter more than @Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product)) KM</p>
 							}
+						</div>
+					</form>
+				}else {
+					@if(Auction.getAuctionByProduct(product) != null && !Auction.getAuctionByProduct(product).isActive) {
+						<div>
+							<p style="display : inline ; font-size : 20px;">Winning bid:   </p>
+							<p style="display : inline ; font-size : 20px;"><strong>@Bid.getAmountOfHighestBid(Auction.getAuctionByProduct(product))
+								KM</strong></p>
+						</div>
+					} else {
+						<label style="font-size : 15 px ;">
+							Price: </label> <label style="font-size : 20 px ;"> @product.price KM</label>
+						@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
+							<form action="@helper.CSRF(routes.CartController.addToCart(product.id))" method="POST">
+							@if(product.quantity > 0) {
+								<button type="submit " class="btn btn-primary" style="margin-bottom : 20 px">
+									Add to cart </button>
+							} else {
+								<button type="submit " class="btn btn-primary" style="margin-bottom : 20 px" disabled>
+									Add to cart </button>
+							}
+							</form>
 						}
 					}
+				}
 				</div>
 				<div style="margin-top:20px" id="deliveryWrapper">
 					<table>
@@ -121,24 +120,19 @@
 								<td> Delivery: </td>
 								<td> Estimated 10-15 days. </td>
 							</tr>
-
 							<tr>
 								<td> Returns: </td>
 								@if(product.cancelation == 0){
 									<td> You cannot cancel this purchase! </td>
-
 								}
 								@if(product.cancelation == 1){
-									<td> You have @product.cancelation hour from purchase to cancel it. Buyer pays return shipping </td>
-
+									<td> You have @product.cancelation hour from purchase to cancel it.  Buyer pays return shipping. </td>
 								}
 								@if(product.cancelation > 1 && product.cancelation < 25){
-									<td> You have @product.cancelation hours from purchase to cancel it. Buyer pays return shipping </td>
-
+									<td> You have @product.cancelation hours from purchase to cancel it.  Buyer pays return shipping. </td>
 								}
 								@if(product.cancelation > 24){
-									<td> You have @Product.cancelationHourToDay(product.cancelation) days from purchase to cancel it. Buyer pays return shipping </td>
-
+									<td> You have @Product.cancelationHourToDay(product.cancelation) days from purchase to cancel it.  Buyer pays return shipping. </td>
 								}
 							</tr>
 							<tr>
@@ -150,8 +144,7 @@
 				</div>
 				@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 3 && product.user.id == User.getUserByEmail(session().get("email")).id) {
 					<form action="@routes.ProductController.editProduct(product.id)" method="GET">
-						<button type="submit " class="btn btn-primary" style="margin-top: 20px">
-							Edit </button>
+						<button type="submit " class="btn btn-primary" style="margin-top: 20px">Edit </button>
 					</form>
 				}
 			</div>
@@ -174,7 +167,6 @@
 								<img class="img-responsive" src="http://placehold.it/130x130" ></a>
 						}
 					<div class="caption">
-
 						<span class="fa-stack fa-2x" style="position: absolute; bottom: 20px; right: 20px;">
 							<i class="fa fa-star fa-stack-2x"></i>
 							<strong class="fa-stack-1x star-text">@Rating.getAverageRating(product.id)</strong>
@@ -198,11 +190,13 @@
 						<br><p style="min-height: 100px">@product.description</p>
 					</div>
 					<div id="menu2" class="tab-pane fade">
-						@if(PurchaseItem.getPurchasedItemsByUser(SessionHelper.currentUser()).contains(PurchaseItem.getPurchaseItemByUserProduct(product))  && (User.getUserByEmail(session().get("email"))).userType.id == 2 && Comment.hasUserCommented(product)) {
+						@if(PurchaseItem.hasPurchesedProduct(product) && (User.getUserByEmail(session().get("email"))).userType.id == 2 && Comment.hasUserCommented(product)) {
 							<div class="page-header">
 								<h2> Your Comment </h2>
 							</div>
 							<div class = "row">
+								<div class="col-md-12">
+
 								<form action="@helper.CSRF(routes.CommentController.saveComment(product.id))" method="POST">
 									<div class="form-group">
 										<label for="usr" style = "margin-top:40px;">Title:</label>
@@ -220,8 +214,8 @@
 									</script>
 									<script src="@routes.Assets.versioned("javascripts/validateForm.js")" type="text/javascript"></script>
 								</form>
-								<table class="table">
 								}
+								<table class="table">
 						<thead>
 							<tr>
 								<th><h3>Top comments</h3></th>
@@ -240,39 +234,9 @@
 								</td>
 							</tr>
 							<script>
-							$(document).ready(function() {
-								var comm = @comment.id;
-								var thumbUp = "true";
-								var thumbDown = "false";
-								$("#like" + comm).click(function(e) {
-											e.preventDefault();
-											$.ajax({
-											type: "post",
-											url: "@routes.CommentController.saveThumbUp()",
-											data: "comm=" + comm + "&thumb=" + thumbUp
-										}).success(function(response) {
-											console.log(response);
-											$("#thumbs-up" + comm).html(response[0]);
-											$("#thumbs-down" + comm).html(response[1]);
-											$("#like" + comm).css('color', 'grey');
-												$("#dislike" + comm).css('color', 'blue');
-											})
-										})
-										$("#dislike" + comm).click(function(e) {
-											e.preventDefault();
-											$.ajax({
-												type: "post",
-												url: "@routes.CommentController.saveThumbUp()",
-												data: "comm=" + comm + "&thumb=" + thumbDown
-											}).success(function(response) {
-												$("#thumbs-up" + comm).html(response[0]);
-											$("#thumbs-down" + comm).html(response[1]);
-												$("#like" + comm).css('color', 'blue');
-												$("#dislike" + comm).css('color', 'grey');
-											})
-										})
-											});
-										</script>
+							var commentId = @comment.id;
+							var saveThumbUp = "@routes.CommentController.saveThumbUp()";
+							</script>
 						}
 						</tbody>
 					</table>
@@ -297,42 +261,13 @@
 									</tr>
 								</form>
 								<script>
-									$(document).ready(function() {
-										var comm = @comment.id;
-										var thumbUp = "true";
-										var thumbDown = "false";
-										$("#like" + comm).click(function(e) {
-											e.preventDefault();
-											$.ajax({
-											type: "post",
-											url: "@routes.CommentController.saveThumbUp()",
-											data: "comm=" + comm + "&thumb=" + thumbUp
-										}).success(function(response) {
-											console.log(response);
-											$("#thumbs-up" + comm).html(response[0]);
-											$("#thumbs-down" + comm).html(response[1]);
-											$("#like" + comm).css('color', 'grey');
-												$("#dislike" + comm).css('color', 'blue');
-											})
-										})
-										$("#dislike" + comm).click(function(e) {
-											e.preventDefault();
-											$.ajax({
-												type: "post",
-												url: "@routes.CommentController.saveThumbUp()",
-												data: "comm=" + comm + "&thumb=" + thumbDown
-											}).success(function(response) {
-												$("#thumbs-up" + comm).html(response[0]);
-											$("#thumbs-down" + comm).html(response[1]);
-												$("#like" + comm).css('color', 'blue');
-												$("#dislike" + comm).css('color', 'grey');
-											})
-										})
-									});
+									var commentId = @comment.id;
+									var saveThumbUp = "@routes.CommentController.saveThumbUp()";
 								</script>
 							}
 							</tbody>
 						</table>
+						</div>
 					</div>
 					</div>
 				</div>
@@ -341,7 +276,10 @@
 	</div>
 	<script>
         var urlPost = "@routes.CommentController.validateFormComment()";
-    </script>
+        @if(product.auction != null) {
+        	var countTime = "@CommonHelpers.getOnlyDate(product.auction.endingDate)";
+        }
+	</script>
 	<script src="@routes.Assets.versioned("javascripts/validateForm.js")" type="text/javascript"></script>
 	<script >
 		$(document).ready(function(){
@@ -360,32 +298,12 @@
 	<script src="@routes.Assets.versioned("javascripts/galleria-1.4.2.min.js")" type="text/javascript"></script>
 	<script src="@routes.Assets.versioned("javascripts/galleria.history.min.js")" type="text/javascript"></script>
 	<script src="@routes.Assets.versioned("javascripts/jquery.countdown.min.js")" type="text/javascript"></script>
-
-	<script type="text/javascript">
-
-		$('#getting-started').countdown('@Auction.getAuctionEndingDate(product)', function(event) {
-			var hours = "@Auction.getAuctionEndingTime(product).substring(0, 2)";
-			var minutes = "@Auction.getAuctionEndingTime(product).substring(3, 5)";
-			var seconds = "@Auction.getAuctionEndingTime(product).substring(6, 8)";
-			var countHours = event.strftime('%H');
-			var countMinutes = event.strftime('%M');
-			var countSeconds = event.strftime('%S');
-			var resultHours = +countHours + +hours;
-			var resultMinutes = +countMinutes + +minutes;
-			if (event.strftime('%w') === "00") {
-				$(this).html(event.strftime('%dd ' + resultHours + 'h ' + resultMinutes + 'm ' + countSeconds + "s"));
-			} else if ((event.strftime('%w') && event.strftime('%d')) === "00") {
-				$(this).html(event.strftime(resultHours + 'h ' + resultMinutes + 'm ' + countSeconds + "s"));
-			} else {
-				$(this).html(event.strftime('%ww %dd ' + resultHours + 'h ' + resultMinutes + 'm ' + countSeconds + "s"));
-			}
-		});
-	</script>
-
+	<script src="@routes.Assets.versioned("javascripts/auctionCountdown.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.versioned("javascripts/like-dislike-checker.js")" type="text/javascript"></script>
 	<script >
 	// Load the classic theme
     Galleria.loadTheme('@routes.Assets.versioned("javascripts/galleria.classic.min.js")');
-		// Initialize Galleria
+	// Initialize Galleria
     Galleria.run('#galleria');
 	</script>
 }

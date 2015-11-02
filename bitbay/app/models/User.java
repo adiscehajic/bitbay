@@ -98,13 +98,19 @@ public class User extends Model {
     public List<Recommendation> recommendations;
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-    public List<Message> messages;
+    public List<Message> senderMessages;
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    public List<Message> receiverMessages;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     public List<Rating> ratings;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     public List<Bid> bids;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<Purchase> purchases;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     public Cart cart;

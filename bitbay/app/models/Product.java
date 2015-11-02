@@ -61,6 +61,9 @@ public class Product extends Model {
     public List<CartItem> cartItems;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    public List<PurchaseItem> purchaseItems;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     public List<Rating> ratings;
 
     @Formats.DateTime(pattern = "dd/MM/yyyy")

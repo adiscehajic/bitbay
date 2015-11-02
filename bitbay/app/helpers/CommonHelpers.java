@@ -16,7 +16,7 @@ public class CommonHelpers {
     }
 
     public static String getOnlyDate(Date date){
-        SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         String myDate = dtf.format(date);
         return myDate;
     }

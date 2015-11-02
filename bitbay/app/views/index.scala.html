@@ -9,10 +9,10 @@
 
             <div class="item active" style="margin-left: 12%">
                 <a href="@routes.ProductController.getProduct(recommendedProducts.get(0).id)">
-                    <img src="@recommendedProducts.get(0).images.get(0).getThumbnail(576,486)" alt="">
+                    <img src="@recommendedProducts.get(0).images.get(0).getThumbnail(457,386)" alt="">
                 </a>
                 <div class="carousel-caption" style="margin-left: 40%; color: #060c19; margin-bottom: 5%">
-                    <h1>@recommendedProducts.get(0).name</h1>
+                    <h4>@recommendedProducts.get(0).name</h4>
                     <h3>@recommendedProducts.get(0).price KM</h3>
                     <a href="@routes.ProductController.getProduct(recommendedProducts.get(0).id)"><button class="btn btn-primary">Buy this item</button></a>
                 </div>
@@ -20,10 +20,10 @@
         @for(a <- 1 to recommendedProducts.size() - 1) {
             <div class="item" style="margin-left: 12%">
                 <a href="@routes.ProductController.getProduct(recommendedProducts.get(a).id)">
-                    <img src="@recommendedProducts.get(a).images.get(0).getThumbnail(576,486)" alt="">
+                    <img src="@recommendedProducts.get(a).images.get(0).getThumbnail(457,386)" alt="">
                 </a>
                 <div class="carousel-caption" style="margin-left: 40%; color: #060c19 ; margin-bottom: 5%">
-                    <h1>@recommendedProducts.get(a).name</h1>
+                    <h4>@recommendedProducts.get(a).name</h4>
                     <h3>@recommendedProducts.get(a).price KM</h3>
                     <a href="@routes.ProductController.getProduct(recommendedProducts.get(a).id)"><button class="btn btn-primary">Buy this item</button></a>
                 </div>
@@ -122,7 +122,7 @@
     var slider = new MasterSlider();
     slider.setup('masterslider' , {
             width:1000,    // slider standard width
-            height:350,   // slider standard height
+            height:386,   // slider standard height
             space:5
             // more slider options goes here...
             // check slider options section in documentation for more options.

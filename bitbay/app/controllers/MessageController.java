@@ -94,7 +94,7 @@ public class MessageController extends Controller {
     }
     @Security.Authenticated(CurrentBuyerSeller.class)
     public Result getReceivedMessages(){
-     List<Message> recievedMessages = Message.getReceivedMessages();
+        List<Message> recievedMessages = Message.getReceivedMessages();
         return ok(allMessages.render(recievedMessages));
     }
 
@@ -151,8 +151,11 @@ public class MessageController extends Controller {
         User user = SessionHelper.currentUser();
 
         Message message = Message.getMessageById(id);
-        message.isRead = true;
-        message.update();
+
+        if (!message.sender.equals(user)) {
+            message.isRead = true;
+            message.update();
+        }
 
         return ok(replyMessage.render(message));
     }
