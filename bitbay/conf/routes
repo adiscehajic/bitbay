@@ -109,3 +109,5 @@ GET           /assets/*file                           controllers.Assets.version
 #REST
 GET           /api/signin                             @controllers.rest.ApiUserController.validateSignIn()
 GET           /api/signup                             @controllers.rest.ApiUserController.newUser()
+GET           /api/products                           @controllers.rest.ApiProductController.getProductsList()
+GET           /api/product/:id                        @controllers.rest.ApiProductController.getProductById(id: Integer)
