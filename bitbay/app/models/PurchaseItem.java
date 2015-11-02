@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import helpers.SessionHelper;
 import play.data.format.Formats;
 
 import javax.persistence.Column;
@@ -103,6 +104,6 @@ public class PurchaseItem extends Model {
     }
 
     public static Boolean hasPurchesedProduct(Product product){
-        return (finder.where().eq("product", product).where().eq("isRefunded", 0).findList().size() > 0) ? true : false;
+        return (finder.where().eq("product", product).where().eq("user", SessionHelper.currentUser()).where().eq("isRefunded", 0).findList().size() > 0) ? true : false;
     }
 }
