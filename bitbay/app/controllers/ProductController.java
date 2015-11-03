@@ -310,7 +310,7 @@ public class ProductController extends Controller {
 
             // Checking if the product already has uploaded images. If product has images, first deletes all old images
             // and then saves new images.
-            if (product.images.size() > 0) {
+            if (product.images.size() > 0 && fileParts != null) {
                 for (int i = 0; i < product.images.size(); i++) {
                     product.images.get(i).deleteImage();
                     product.images.get(i).delete();

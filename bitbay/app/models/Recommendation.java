@@ -100,13 +100,24 @@ public class Recommendation extends Model {
     }
 */
 
+    public static List<Product> getPopularProducts() {
+        int[] array = {61, 24, 3, 5, 2, 78, 64, 9, 21, 88, 27, 1, 10, 76};
+
+        List<Product> popular = new ArrayList<>();
+
+        for (int i = 0; i < array.length; i++) {
+            popular.add(Product.getProductById(array[i]));
+        }
+
+        return popular;
+    }
 
     public static List<Product> getRecommendations() {
         List<Recommendation> recommendations = finder.all();
 
         List<Product> products = new ArrayList<>();
         for (Recommendation r : recommendations) {
-            if (r.product.id <= 96) {
+            if (r.product.id <= 90) {
                 products.add(r.product);
             }
         }
