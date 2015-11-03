@@ -234,39 +234,39 @@ public class Global extends GlobalSettings {
             /*
             Phone
              */
-            Product p1 = new Product(userOne, "Samsung S6", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED, Verizon - LTE, AT&T - 3G, STRAIGHT TALK", "Samsung", subcategoryOne, 600.00, 20, "1");
+            Product p1 = new Product(userOne, "Samsung S6 edge+", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED, Verizon - LTE, AT&T - 3G, STRAIGHT TALK", "Samsung", subcategoryOne, 600.00, 20, "1");
             Image image1 = new Image();
             image1.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1444984356/elwd7zdcibbtlfhrngwq.jpg";
             image1.public_id = "elwd7zdcibbtlfhrngwq";
             image1.secret_image_url = "v1444984356";
             p1.images.add(image1);
 
-            Product p2 = new Product(userOne, "Samsung S5", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED, Verizon - LTE, AT&T - 3G, STRAIGHT TALK", "Samsung", subcategoryOne, 500.00, 20, "1");
+            Product p2 = new Product(userOne, "Samsung S6 edge", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED, Verizon - LTE, AT&T - 3G, STRAIGHT TALK", "Samsung", subcategoryOne, 1800.00, 20, "1");
             Image image2 = new Image();
             image2.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445541109/eshduir8aoztbcpdumpk.jpg";
             image2.public_id = "eshduir8aoztbcpdumpk";
             image2.secret_image_url = "v1445541109";
             p2.images.add(image2);
 
-            Product p3 = new Product(userOne, "Samsung S4", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED, Verizon - LTE, AT&T - 3G, STRAIGHT TALK", "Samsung", subcategoryOne, 400.00, 10, "1");
+            Product p3 = new Product(userOne, "Sony Z5", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED, Verizon - LTE, AT&T - 3G, STRAIGHT TALK", "Samsung", subcategoryOne, 1400.00, 10, "1");
             Image image3 = new Image();
-            image3.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1444984351/pz7tg4ebgnxvzppoiep2.jpg";
-            image3.public_id = "pz7tg4ebgnxvzppoiep2";
-            image3.secret_image_url = "v1444984351";
+            image3.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472835/Z5_white_group_unpu3h.jpg";
+            image3.public_id = "Z5_white_group_unpu3h";
+            image3.secret_image_url = "v1446472835";
             p3.images.add(image3);
 
-            Product p4 = new Product(userOne, "Samsung S3", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED, Verizon - LTE, AT&T - 3G, STRAIGHT TALK", "Samsung", subcategoryOne, 300.00, 10, "1");
+            Product p4 = new Product(userOne, "Iphone 6s", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED, Verizon - LTE, AT&T - 3G, STRAIGHT TALK", "Samsung", subcategoryOne, 1300.00, 10, "1");
             Image image4 = new Image();
-            image4.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445553327/samsung-i9300l-galaxy-s3-neo_q4smfa.jpg";
-            image4.public_id = "samsung-i9300l-galaxy-s3-neo_q4smfa";
-            image4.secret_image_url = "v1445553327";
+            image4.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472820/landing-page-why-vz-iphone-6s-plus-homescreen-v1_axub9q.jpg";
+            image4.public_id = "landing-page-why-vz-iphone-6s-plus-homescreen-v1_axub9q";
+            image4.secret_image_url = "v1446472820";
             p4.images.add(image4);
 
-            Product p5 = new Product(userOne, "Samsung S2", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED, Verizon - LTE, AT&T - 3G, STRAIGHT TALK", "Samsung", subcategoryOne, 200.00, 10, "1");
+            Product p5 = new Product(userOne, "HTC One", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED, Verizon - LTE, AT&T - 3G, STRAIGHT TALK", "Samsung", subcategoryOne, 900.00, 10, "1");
             Image image5 = new Image();
-            image5.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1445553326/samsung-galaxy-s2_lkngov.jpg";
-            image5.public_id = "samsung-galaxy-s2_lkngov";
-            image5.secret_image_url = "v1445553326";
+            image5.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472820/HTC-One-M8-Press-Photo-2-1280x1010_liv9tt.jpg";
+            image5.public_id = "HTC-One-M8-Press-Photo-2-1280x1010_liv9tt";
+            image5.secret_image_url = "v1446472820";
             p5.images.add(image5);
 
             Product p6 = new Product(userOne, "Samsung S", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED, Verizon - LTE, AT&T - 3G, STRAIGHT TALK", "Samsung", subcategoryOne, 100.00, 10, "1");
@@ -276,11 +276,33 @@ public class Global extends GlobalSettings {
             image6.secret_image_url = "v1444984182";
             p6.images.add(image6);
 
-            Product p56 = new Product(userOne, "HTC One V", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED", "HTC", subcategoryOne, 200.00, 20, "1");
-            Product p57 = new Product(userOne, "Iphone 4s", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED", "Apple", subcategoryOne, 400.00, 20, "1");
-            Product p58 = new Product(userOne, "CAT B25", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED", "CAT", subcategoryOne, 200.00, 20, "1");
-            Product p59 = new Product(userOne, "Sony Z4", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED", "Sony", subcategoryOne, 300.00, 20, "1");
+            Product p56 = new Product(userOne, "HTC One M8", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED", "HTC", subcategoryOne, 200.00, 20, "1");
+            Image image56 = new Image();
+            image56.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472820/HTC-One-M8-Press-Photo-2-1280x1010_liv9tt.jpg";
+            image56.public_id = "HTC-One-M8-Press-Photo-2-1280x1010_liv9tt";
+            image56.secret_image_url = "v1446472820";
+            p56.images.add(image56);
 
+            Product p57 = new Product(userOne, "Iphone 6s", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED", "Apple", subcategoryOne, 400.00, 20, "1");
+            Image image57 = new Image();
+            image57.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472820/landing-page-why-vz-iphone-6s-plus-homescreen-v1_axub9q.jpg";
+            image57.public_id = "landing-page-why-vz-iphone-6s-plus-homescreen-v1_axub9q";
+            image57.secret_image_url = "v1446472820";
+            p57.images.add(image57);
+
+            Product p58 = new Product(userOne, "CAT B25", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED", "CAT", subcategoryOne, 200.00, 20, "1");
+            Image image58 = new Image();
+            image58.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472823/0001798_caterpillar-cat-b25-dual-sim-black_afsp4k.jpg";
+            image58.public_id = "0001798_caterpillar-cat-b25-dual-sim-black_afsp4k";
+            image58.secret_image_url = "v1446472823";
+            p58.images.add(image58);
+
+            Product p59 = new Product(userOne, "Sony Z5", "NEW CONDITION in OPEN NON-RETAIL BOX. NO SIM CARD INCLUDED", "Sony", subcategoryOne, 300.00, 20, "1");
+            Image image59 = new Image();
+            image59.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472835/Z5_white_group_unpu3h.jpg";
+            image59.public_id = "Z5_white_group_unpu3h";
+            image59.secret_image_url = "v1446472835";
+            p59.images.add(image59);
             /*
             Computers
              */
@@ -313,11 +335,46 @@ public class Global extends GlobalSettings {
             p10.images.add(image10);
 
             Product p60 = new Product(userOne, "Apple Macbook PRO", "Brand New, Never Used, Never Opened", "Apple", subcategoryTwo, 600.00, 10, "1");
+            Image image60 = new Image();
+            image60.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472816/macbook-pro_u0vcjo.jpg";
+            image60.public_id = "macbook-pro_u0vcjo";
+            image60.secret_image_url = "v1446472816";
+            p60.images.add(image60);
+
             Product p61 = new Product(userOne, "Lenovo U330p", "Brand New, Never Used, Never Opened", "Lenovo", subcategoryTwo, 600.00, 10, "1");
+            Image image61 = new Image();
+            image61.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472820/u330pges_ovksj3.jpg";
+            image61.public_id = "u330pges_ovksj3";
+            image61.secret_image_url = "v1446472820";
+            p61.images.add(image61);
+
             Product p62 = new Product(userOne, "HP 620", "Brand New, Never Used, Never Opened", "HP", subcategoryTwo, 600.00, 10, "1");
+            Image image62 = new Image();
+            image62.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472817/satellite-pro-C650-EZ1521-600-01_01_ejfozh.jpg";
+            image62.public_id = "satellite-pro-C650-EZ1521-600-01_01_ejfozh";
+            image62.secret_image_url = "v1446472817";
+            p62.images.add(image62);
+
             Product p63 = new Product(userOne, "Dell 15.6 Intel i5", "Brand New, Never Used, Never Opened", "Dell", subcategoryTwo, 600.00, 10, "1");
+            Image image63 = new Image();
+            image63.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1443187214/qjmpa0a7ukkpuhbkzjhp.jpg";
+            image63.public_id = "qjmpa0a7ukkpuhbkzjhp";
+            image63.secret_image_url = "v1443187214";
+            p63.images.add(image63);
+
             Product p64 = new Product(userOne, "Asus Transformer", "Brand New, Never Used, Never Opened", "Asus", subcategoryTwo, 600.00, 10, "1");
+            Image image64 = new Image();
+            image64.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472817/asus-transformer-1_fwgync.jpg";
+            image64.public_id = "asus-transformer-1_fwgync";
+            image64.secret_image_url = "v1446472817";
+            p64.images.add(image64);
+
             Product p65 = new Product(userOne, "Toshiba Satellite Pro", "Brand New, Never Used, Never Opened", "Toshiba", subcategoryTwo, 600.00, 10, "1");
+            Image image65 = new Image();
+            image65.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446474030/idx92dklnecjihdoxasa.jpg";
+            image65.public_id = "idx92dklnecjihdoxasa";
+            image65.secret_image_url = "v1446474030";
+            p65.images.add(image65);
 
 
             /*
@@ -377,9 +434,25 @@ public class Global extends GlobalSettings {
             p17.images.add(image17);
 
             Product p66 = new Product(userFive, "2015 Fashion Summer Floral Casual Sleeveless", "New without tags: A brand-new", "Zara", subcategoryThree, 600.00, 20, "1");
-            Product p67 = new Product(userFive, "Women Casual Short Sleeveless Evening", "New without tags: A brand-new", "Sisters", subcategoryThree, 600.00, 20, "1");
-            Product p68 = new Product(userFive, "Fashion Women Bodycon Long Sleeve Dress", "New without tags: A brand-new", "H&M", subcategoryThree, 600.00, 20, "1");
+            Image image66 = new Image();
+            image66.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472817/ZSY50423066F_2015042305390256_rzoirs.jpg";
+            image66.public_id = "ZSY50423066F_2015042305390256_rzoirs";
+            image66.secret_image_url = "v1446472817";
+            p66.images.add(image66);
 
+            Product p67 = new Product(userFive, "Women Casual Short Sleeveless Evening", "New without tags: A brand-new", "Sisters", subcategoryThree, 600.00, 20, "1");
+            Image image67 = new Image();
+            image67.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472816/2015-New-Fashion-New-Sexy-Women-Summer-Casual-Sleeveless-Party-Evening-Cocktail-Short-Mini-Dress_lqozjp.jpg";
+            image67.public_id = "2015-New-Fashion-New-Sexy-Women-Summer-Casual-Sleeveless-Party-Evening-Cocktail-Short-Mini-Dress_lqozjp";
+            image67.secret_image_url = "v1446472816";
+            p67.images.add(image67);
+
+            Product p68 = new Product(userFive, "Fashion Women Bodycon Long Sleeve Dress", "New without tags: A brand-new", "H&M", subcategoryThree, 600.00, 20, "1");
+            Image image68 = new Image();
+            image68.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446472817/New-2014-European-Fashion-Women-Sexy-Black-Lace-Autumn-Winter-Long-Sleeve-Knee-Length-Bodycon-Dress_q0yt0w.jpg";
+            image68.public_id = "New-2014-European-Fashion-Women-Sexy-Black-Lace-Autumn-Winter-Long-Sleeve-Knee-Length-Bodycon-Dress_q0yt0w";
+            image68.secret_image_url = "v1446472817";
+            p68.images.add(image68);
 
             /*
             Man
@@ -406,13 +479,46 @@ public class Global extends GlobalSettings {
             p20.images.add(image20);
 
             Product p69 = new Product(userFive, "men shirt fit short sleeve ", "A brand-new, unused, and unworn", "Springfild", subcategoryFour, 60.00, 10, "1");
-            Product p70 = new Product(userFive, "2015 Summer Fashion Mens t shirt Short Cotton Sleeve", "A brand-new, unused, and unworn", "H&M", subcategoryFour, 60.00, 10, "1");
-            Product p71 = new Product(userFive, "Avengers Age Of Ultron Tony Stark Bruce Lee DJ Men's T-Shirt", "A brand-new, unused, and unworn", "JC", subcategoryFour, 60.00, 10, "1");
-            Product p72 = new Product(userFive, "Hot Jeans Men's Straight Slim Casual Pants Denim", "A brand-new, unused, and unworn", "Springfild", subcategoryFour, 60.00, 10, "1");
-            Product p73 = new Product(userFive, "Men's Classic Denim Pants Stylish Designed", "A brand-new, unused, and unworn", "JC", subcategoryFour, 60.00, 10, "1");
-            Product p74 = new Product(userFive, "Men's skinny Casual pencil Dress pants slim Straight-Leg jeans Leisure Trousers", "A brand-new, unused, and unworn", "Springfild", subcategoryFour, 60.00, 10, "1");
-            Product p75 = new Product(userFive, "2015 Summer Fashion Mens t shirt Short Cotton", "A brand-new, unused, and unworn", "H&M", subcategoryFour, 60.00, 10, "1");
+            Image image69 = new Image();
+            image69.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505270/Free-Shipping-Summer-Fashion-Element-T-Shirts-Skateboard-Streetwear-Boy-Cotton-Men-Shirt-Short-Sleeve-O4_ktmy8f.jpg";
+            image69.public_id = "Free-Shipping-Summer-Fashion-Element-T-Shirts-Skateboard-Streetwear-Boy-Cotton-Men-Shirt-Short-Sleeve-O4_ktmy8f";
+            image69.secret_image_url = "v1446505270";
+            p69.images.add(image69);
 
+            Product p70 = new Product(userFive, "2015 Summer Fashion Mens t shirt Short Cotton Sleeve", "A brand-new, unused, and unworn", "H&M", subcategoryFour, 60.00, 10, "1");
+            Image image70 = new Image();
+            image70.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505267/Free-Shipping-hot-sell-2015-Mens-Slim-fit-stylish-Dress-short-Sleeve-Shirts-Mens-dress-shirts_xkqhin.jpg";
+            image70.public_id = "Free-Shipping-hot-sell-2015-Mens-Slim-fit-stylish-Dress-short-Sleeve-Shirts-Mens-dress-shirts_xkqhin";
+            image70.secret_image_url = "v1446505267";
+            p70.images.add(image70);
+
+            Product p71 = new Product(userFive, "Avengers Age Of Ultron Tony Stark Bruce Lee DJ Men's T-Shirt", "A brand-new, unused, and unworn", "JC", subcategoryFour, 60.00, 10, "1");
+            Image image71 = new Image();
+            image71.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505264/Bruce_Lee_DJ__49400.1430117523.386.513_t7qysj.jpg";
+            image71.public_id = "Bruce_Lee_DJ__49400.1430117523.386.513_t7qysj";
+            image71.secret_image_url = "v1446505264";
+            p71.images.add(image71);
+
+            Product p72 = new Product(userFive, "Hot Jeans Men's Straight Slim Casual Pants Denim", "A brand-new, unused, and unworn", "Springfild", subcategoryFour, 60.00, 10, "1");
+            Image image72 = new Image();
+            image72.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505270/HTB1xjJuGFXXXXX6XFXXq6xXFXXX3_bhpew0.jpg";
+            image72.public_id = "HTB1xjJuGFXXXXX6XFXXq6xXFXXX3_bhpew0";
+            image72.secret_image_url = "v1446505270";
+            p72.images.add(image72);
+
+            Product p73 = new Product(userFive, "Men's Classic Denim Pants Stylish Designed", "A brand-new, unused, and unworn", "JC", subcategoryFour, 60.00, 10, "1");
+            Image image73 = new Image();
+            image73.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505268/XD99R_4_czlrpv.jpg";
+            image73.public_id = "XD99R_4_czlrpv";
+            image73.secret_image_url = "v1446505268";
+            p73.images.add(image73);
+
+            Product p74 = new Product(userFive, "Men's skinny Casual pencil Dress pants slim Straight-Leg jeans Leisure Trousers", "A brand-new, unused, and unworn", "Springfild", subcategoryFour, 60.00, 10, "1");
+            Image image74 = new Image();
+            image74.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505267/2015-Free-Shipping-Hot-Jeans-Men-Straight-Leg-Denim-Trousers-Slim-Men-s-Pants-Casual-Designer_wz81dx.jpg";
+            image74.public_id = "2015-Free-Shipping-Hot-Jeans-Men-Straight-Leg-Denim-Trousers-Slim-Men-s-Pants-Casual-Designer_wz81dx";
+            image74.secret_image_url = "v1446505267";
+            p74.images.add(image74);
 
             /*
             Motors
@@ -456,10 +562,40 @@ public class Global extends GlobalSettings {
             p25.images.add(image25);
 
             Product p76 = new Product(userThree, "2010 Harley-Davidson Touring", "Dark red Street Glide - very clean and lots of chrome!", "Harley-Davidson", subcategoryEight, 6000.00, 1, "1");
+            Image image76 = new Image();
+            image76.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505278/2010-Harley-Davidson-CVOFatBob-FXDFSE2b_uckyng.jpg";
+            image76.public_id = "2010-Harley-Davidson-CVOFatBob-FXDFSE2b_uckyng";
+            image76.secret_image_url = "v1446505278";
+            p76.images.add(image76);
+
             Product p77 = new Product(userThree, "Yamaha YZF", "Super clean trade - pride of ownership shows.  Very affordable bike.", "Yamaha", subcategoryEight, 6000.00, 1, "1");
+            Image image77 = new Image();
+            image77.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505278/2010-Harley-Davidson-CVOFatBob-FXDFSE2b_uckyng.jpg";
+            image77.public_id = "2010-Harley-Davidson-CVOFatBob-FXDFSE2b_uckyng";
+            image77.secret_image_url = "v1446505278";
+            p77.images.add(image77);
+
             Product p78 = new Product(userThree, "1969 Kawasaki", "This is a very collectible 1969 Kawasaki 500cc H1 Mach III triple.", "Kawasaki", subcategoryEight, 6000.00, 1, "1");
+            Image image78 = new Image();
+            image78.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505272/1969-Kawasaki-W2SS-Red-0_wrgv7s.jpg";
+            image78.public_id = "1969-Kawasaki-W2SS-Red-0_wrgv7s";
+            image78.secret_image_url = "v1446505272";
+            p78.images.add(image78);
+
             Product p79 = new Product(userThree, "2014 Yamaha", "The R6 is a compact, lightweight DOHC, 599cc bike that has great response.", "Yamaha", subcategoryEight, 6000.00, 1, "1");
+            Image image79 = new Image();
+            image79.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505266/2014-Yamaha-YZF-R125-EU-Anodized-Red-Studio-007_dla4m6.jpg";
+            image79.public_id = "2014-Yamaha-YZF-R125-EU-Anodized-Red-Studio-007_dla4m6";
+            image79.secret_image_url = "v1446505266";
+            p79.images.add(image79);
+
+
             Product p80 = new Product(userThree, "1992 Honda Gold Wing", "1992 HONDA GOLDWING GL1500 INTERSTATE TRIKE BY MOTOR TRIKE", "Honda", subcategoryEight, 6000.00, 1, "1");
+            Image image80 = new Image();
+            image80.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505275/2004_06_19_bikepics-167867-full_ffub2m.jpg";
+            image80.public_id = "2004_06_19_bikepics-167867-full_ffub2m";
+            image80.secret_image_url = "v1446505275";
+            p80.images.add(image80);
 
 
             /*
@@ -502,10 +638,40 @@ public class Global extends GlobalSettings {
             p30.images.add(image30);
 
             Product p81 = new Product(userThree, "1976 Porsche 914", "Very solid , nice interior, rebuilt motor, front and rear factory sway bars", "Porsche", subcategorySeven, 16000.00, 1, "1");
+            Image image81 = new Image();
+            image81.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505269/914a_uprpok.jpg";
+            image81.public_id = "914a_uprpok";
+            image81.secret_image_url = "v1446505269";
+            p81.images.add(image81);
+
             Product p82 = new Product(userThree, "2003 Ford Mustang", "I have for sale in perfect condition a 2003 mustang cobra with a lot of adds and a new fresh Motor.", "Ford", subcategorySeven, 16000.00, 1, "1");
+            Image image82 = new Image();
+            image82.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505278/_1200px__VORT_1024-568x-Mustang03_Front02_nbknz1.jpg";
+            image82.public_id = "_1200px__VORT_1024-568x-Mustang03_Front02_nbknz1";
+            image82.secret_image_url = "v1446505278";
+            p82.images.add(image82);
+
             Product p83 = new Product(userThree, "1969 Chevrolet Camaro", "All original, unmolested car. Color changed from gold to red. Excellent paint, original interior.", "Chevrolet", subcategorySeven, 16000.00, 1, "1");
+            Image image83 = new Image();
+            image83.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505266/camp-0905-01-black-1969-chevrolet-camaro-front-headlights_ld349y.jpg";
+            image83.public_id = "camp-0905-01-black-1969-chevrolet-camaro-front-headlights_ld349y";
+            image83.secret_image_url = "v1446505266";
+            p83.images.add(image83);
+
             Product p84 = new Product(userThree, "2001 MBW 5", "Very solid , nice interior, rebuilt motor.", "BMW", subcategorySeven, 16000.00, 1, "1");
+            Image image84 = new Image();
+            image84.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505266/Eg_640_lrmkhf.jpg";
+            image84.public_id = "Eg_640_lrmkhf";
+            image84.secret_image_url = "v1446505266";
+            p84.images.add(image84);
+
+
             Product p85 = new Product(userThree, "1977 Lincoln Mark Series", "This vehicle is in good condition. The interior is pretty close to immaculate and includes the.", "Linkoln", subcategorySeven, 16000.00, 1, "1");
+            Image image85 = new Image();
+            image85.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505277/lincoln-mark-v-1977-4_yf5cct.jpg";
+            image85.public_id = "lincoln-mark-v-1977-4_yf5cct";
+            image85.secret_image_url = "v1446505277";
+            p85.images.add(image85);
 
 
             /*
@@ -568,8 +734,18 @@ public class Global extends GlobalSettings {
             p38.images.add(image38);
 
             Product p86 = new Product(userThree, "ADIDAS ORIGINALS ROM MENS TRAINERS SHOES", "A brand-new, unused, unopened, undamaged item in its original packaging", "Adidas", subcategoryNine, 60.00, 20, "1");
-            Product p87 = new Product(userThree, "Nike Air Jordan Low Chrome Size 10 UK with receipt", "A brand-new, unused, unopened, undamaged item in its original packaging", "Nike", subcategoryNine, 60.00, 20, "1");
+            Image image86 = new Image();
+            image86.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446557684/141739765656_imgdata_7_6_7_7_4_9_webimg_849386243_o_np9gax.jpg";
+            image86.public_id = "141739765656_imgdata_7_6_7_7_4_9_webimg_849386243_o_np9gax";
+            image86.secret_image_url = "v1446557684";
+            p86.images.add(image86);
 
+            Product p87 = new Product(userThree, "Nike Air Jordan Low Chrome Size 10 UK with receipt", "A brand-new, unused, unopened, undamaged item in its original packaging", "Nike", subcategoryNine, 60.00, 20, "1");
+            Image image87 = new Image();
+            image87.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446557687/image-22_oazqbz.jpg";
+            image87.public_id = "image-22_oazqbz";
+            image87.secret_image_url = "v1446557687";
+            p87.images.add(image87);
 
             /*
             Fitnes
@@ -589,15 +765,18 @@ public class Global extends GlobalSettings {
             p40.images.add(image40);
 
             Product p88 = new Product(userFive, "Esprit Fitness XLR-8 Exercise Bike Adjustable Resistance Cardio Workout", "A brand-new, unused, unopened", "Esprit", subcategoryTen, 50.00, 10, "1");
+            Image image88 = new Image();
+            image88.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446557689/71ETMZNyMAL._SL1500__ggeuvf.jpg";
+            image88.public_id = "71ETMZNyMAL._SL1500__ggeuvf";
+            image88.secret_image_url = "v1446557689";
+            p88.images.add(image88);
+
             Product p89 = new Product(userFive, "Running Machine Safety Key Treadmill Magnetic Security Switch Lock Exercise HLUS", "A brand-new, unused, unopened", "Adidas", subcategoryTen, 50.00, 10, "1");
-            Product p90 = new Product(userFive, "Running Machine Safety Key Treadmill Magnetic Security Switch Lock Fitness", "A brand-new, unused, unopened", "Puma", subcategoryTen, 50.00, 10, "1");
-            Product p91 = new Product(userFive, "Fluid + Plus Bicycle Bike Exercise Trainer Equipement Travel Trac Cardio Gear", "A brand-new, unused, unopened", "Nike", subcategoryTen, 50.00, 10, "1");
-            Product p92 = new Product(userFive, "MIRAFIT Shock Resistant Gym Floor Mat for Weight Bench/Treadmill/Cross Trainer", "A brand-new, unused, unopened", "Adidas", subcategoryTen, 50.00, 10, "1");
-            Product p93 = new Product(userFive, "Elevation Training Mask 2.0 Preda-Tore Sleeve", "A brand-new, unused, unopened", "Esprit", subcategoryTen, 50.00, 10, "1");
-            Product p94 = new Product(userFive, "Speed Resistance Training Parachute Running Chute Soccer Football Training", "A brand-new, unused, unopened", "Reebok", subcategoryTen, 50.00, 10, "1");
-            Product p95 = new Product(userFive, "Life Fitness 95x Engage Elliptical - Cleaned & Serviced - Clearance Sale", "A brand-new, unused, unopened", "Nike", subcategoryTen, 50.00, 10, "1");
-
-
+            Image image89 = new Image();
+            image89.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446557683/a1ec4623406d65d6fee32c721ea04280_zalo8w.jpg";
+            image89.public_id = "a1ec4623406d65d6fee32c721ea04280_zalo8w";
+            image89.secret_image_url = "v1446557683";
+            p89.images.add(image89);
             /*
             Home
              */
@@ -632,13 +811,44 @@ public class Global extends GlobalSettings {
             image44.secret_image_url = "v1445590722";
             p44.images.add(image44);
 
-            Product p96 = new Product(userOne, "Miniature Garden Ornament Figurine", "A brand-new, unused,", "Unbranded", subcategoryEleven, 600.00, 20, "1");
-            Product p97 = new Product(userOne, "Amazing Gift Wind Chimes 10 Metal Tubes Yard Garden", "A brand-new, unused,", "HowPlumb", subcategoryEleven, 600.00, 20, "1");
-            Product p98 = new Product(userOne, "Mini Red Mushroom Garden Ornament", "A brand-new, unused,", "Unbranded", subcategoryEleven, 600.00, 20, "1");
-            Product p99 = new Product(userOne, "Despicable Me Minion Garden Ornament", "A brand-new, unused,", "HowPlumb", subcategoryEleven, 600.00, 20, "1");
-            Product p100 = new Product(userOne, "Tiny Nymphs Sprite Gnome Pixie Horn", "A brand-new, unused,", "HowPlumb", subcategoryEleven, 600.00, 20, "1");
-            Product p101 = new Product(userOne, "Old Tree House Garden Ornament Miniature", "A brand-new, unused,", "Unbranded", subcategoryEleven, 600.00, 20, "1");
+            Product p90 = new Product(userOne, "Miniature Garden Ornament Figurine", "A brand-new, unused,", "Unbranded", subcategoryEleven, 600.00, 20, "1");
+            Image image90 = new Image();
+            image90.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446557685/HW2001446_jai4oz.jpg";
+            image90.public_id = "HW2001446_jai4oz";
+            image90.secret_image_url = "v1446557685";
+            p90.images.add(image90);
 
+
+            Product p91 = new Product(userOne, "Amazing Gift Wind Chimes 10 Metal Tubes Yard Garden", "A brand-new, unused,", "HowPlumb", subcategoryEleven, 600.00, 20, "1");
+            Image image91 = new Image();
+            image91.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446557684/_3_hms6el.jpg";
+            image91.public_id = "_3_hms6el";
+            image91.secret_image_url = "v1446557684";
+            p91.images.add(image91);
+
+
+            Product p92 = new Product(userOne, "Mini Red Mushroom Garden Ornament", "A brand-new, unused,", "Unbranded", subcategoryEleven, 600.00, 20, "1");
+            Image image92 = new Image();
+            image92.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446557687/Decoden-Crafts-Home-Decoration-Accessories-10pcs-Mini-Red-Mushroom-Garden-Ornament-Miniature-Plant-Pots-Dollhouse-Diy_blhvau.jpg";
+            image92.public_id = "Decoden-Crafts-Home-Decoration-Accessories-10pcs-Mini-Red-Mushroom-Garden-Ornament-Miniature-Plant-Pots-Dollhouse-Diy_blhvau";
+            image92.secret_image_url = "v1446557687";
+            p92.images.add(image92);
+
+
+            Product p93 = new Product(userOne, "Despicable Me Minion Garden Ornament", "A brand-new, unused,", "HowPlumb", subcategoryEleven, 600.00, 20, "1");
+            Image image93 = new Image();
+            image93.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446557685/8pcs-2015-garden-miniature-terrarium-Despicable-Me-statuette-cute-mini-minions-movie-anime-action-figure-doll_fsl30e.jpg";
+            image93.public_id = "8pcs-2015-garden-miniature-terrarium-Despicable-Me-statuette-cute-mini-minions-movie-anime-action-figure-doll_fsl30e";
+            image93.secret_image_url = "v1446557685";
+            p93.images.add(image93);
+
+
+            Product p94 = new Product(userOne, "Old Tree House Garden Ornament Miniature", "A brand-new, unused,", "Unbranded", subcategoryEleven, 600.00, 20, "1");
+            Image image94 = new Image();
+            image94.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446557684/_12_zkcy9d.jpg";
+            image94.public_id = "_12_zkcy9d";
+            image94.secret_image_url = "v1446557684";
+            p94.images.add(image94);
 
             /*
             Home
@@ -686,12 +896,6 @@ public class Global extends GlobalSettings {
             image50.secret_image_url = "v1445590723";
             p50.images.add(image50);
 
-            Product p102 = new Product(userOne, "Yarnigans: Theodore the knitted bear, gray wool teddy", "A brand-new, unused", "HowPlumb", subcategoryTwelve, 20.00, 10, "1");
-            Product p103 = new Product(userOne, "ROC Paper Scissors: Handcrafted Fall Card - Li'l Pumpkin", "A brand-new, unused", "Unbranded", subcategoryTwelve, 20.00, 10, "1");
-            Product p104 = new Product(userOne, "Commercial 4 Tier Shelf Adjustable Steel Wire Metal Shelving Rack", "A brand-new, unused", "HowPlumb", subcategoryTwelve, 20.00, 10, "1");
-            Product p105 = new Product(userOne, "New Midea 2.0 Cu. Ft. Combination Washer/Dryer Combo Ventless", "A brand-new, unused", "Unbranded", subcategoryTwelve, 20.00, 10, "1");
-
-
             /*
             Books
              */
@@ -711,16 +915,6 @@ public class Global extends GlobalSettings {
             image53.public_id = "0805055827_lwxrsu";
             image53.secret_image_url = "v1445589842";
             p53.images.add(image53);
-
-            Product p106 = new Product(userOne, "With Eyes Closed", "Into the Depths of A terrible addiction.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
-            Product p107 = new Product(userOne, "Forbidden Fantasy", "It all began with a stolen kiss.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
-            Product p108 = new Product(userOne, "Immortal Destiny", "Elizabeth is a 382 year old vampire.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
-            Product p109 = new Product(userOne, "Rain on My Wings", "I wanted him to see me, to open his eyes and simply acknowledge my presence. ", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
-            Product p110 = new Product(userOne, "Come Find Me", "People run away from things. Things that scare them.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
-            Product p111 = new Product(userOne, "The Picture of Dorian Gray", "This classic twisting tale all starts with a portrait of a beautiful young man, Dorian Gray.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
-            Product p112 = new Product(userOne, "Platinum Dust", "Pride and Prejudice is a popular classic romantic tale by Jane Austen.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
-            Product p113 = new Product(userOne, "Pride and Prejudice", "Raheim Starz is the son of a dead man and the woman who killed him.", "St. Martin's Press", subcategorySix, 20.00, 10, "1");
-
 
             /*
             Children
@@ -746,13 +940,21 @@ public class Global extends GlobalSettings {
             image52.secret_image_url = "v1445589842";
             p52.images.add(image52);
 
-            Product p114 = new Product(userOne, "The Little Gingerbread Man", "A surprising new version of the classic Gingerbread Man fairy tale.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
-            Product p115 = new Product(userOne, "The Yourney of the Noble Gnarble", "Little Sari discovers invisible alligators quietly sneaking", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
-            Product p116 = new Product(userOne, "Invisible Alligators", "The Pirate Modi uses his father's ship to follow a map.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
-            Product p117 = new Product(userOne, "The Brave Monkey Pirate", "Just what is it you can do with a wiener dog magnet?", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
-            Product p118 = new Product(userOne, "The Wiener Dog Magnet", "An illustrated story of animal sounds.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
-            Product p119 = new Product(userOne, "The Farm Animals", "A pirate in Jimmy's dream tells him where to find buried treasure.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
-            Product p120 = new Product(userOne, "The Bitaba Bird", "A blending of imagination with a science lesson.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
+            Product p95 = new Product(userOne, "The Little Gingerbread Man", "A surprising new version of the classic Gingerbread Man fairy tale.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
+            Image image95 = new Image();
+            image95.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446557684/51HWa3mygsL_f124pt.jpg";
+            image95.public_id = "51HWa3mygsL_f124pt";
+            image95.secret_image_url = "v1446557684";
+            p95.images.add(image95);
+
+
+            Product p96 = new Product(userOne, "Invisible Alligators", "The Pirate Modi uses his father's ship to follow a map.", "St. Martin's Press", subcategoryFive, 20.00, 10, "1");
+            Image image96 = new Image();
+            image96.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446557685/IA_tvc2rj.png";
+            image96.public_id = "IA_tvc2rj";
+            image96.secret_image_url = "v1446557685";
+            p96.images.add(image96);
+
 
             List<User> buyers = new ArrayList<>();
             buyers.add(userTwo);
@@ -836,7 +1038,6 @@ public class Global extends GlobalSettings {
             products.add(p72);
             products.add(p73);
             products.add(p74);
-            products.add(p75);
             products.add(p76);
             products.add(p77);
             products.add(p78);
@@ -858,30 +1059,6 @@ public class Global extends GlobalSettings {
             products.add(p94);
             products.add(p95);
             products.add(p96);
-            products.add(p97);
-            products.add(p98);
-            products.add(p99);
-            products.add(p100);
-            products.add(p101);
-            products.add(p102);
-            products.add(p103);
-            products.add(p104);
-            products.add(p105);
-            products.add(p106);
-            products.add(p107);
-            products.add(p108);
-            products.add(p109);
-            products.add(p110);
-            products.add(p111);
-            products.add(p112);
-            products.add(p113);
-            products.add(p114);
-            products.add(p115);
-            products.add(p116);
-            products.add(p117);
-            products.add(p118);
-            products.add(p119);
-            products.add(p120);
 
 
             for (int i = 0; i < products.size(); i++) {
@@ -893,22 +1070,22 @@ public class Global extends GlobalSettings {
 
             for (int i = 0; i < 250; i++) {
 
-                Recommendation.savingProductView(userOne, Product.getProductById((num.nextInt(120) + 1)));
-                Recommendation.savingProductView(userTwo, Product.getProductById((num.nextInt(120) + 1)));
-                Recommendation.savingProductView(userThree, Product.getProductById((num.nextInt(120) + 1)));
-                Recommendation.savingProductView(userFour, Product.getProductById((num.nextInt(120) + 1)));
-                Recommendation.savingProductView(userFive, Product.getProductById((num.nextInt(120) + 1)));
-                Recommendation.savingProductView(userSix, Product.getProductById((num.nextInt(120) + 1)));
-                Recommendation.savingProductView(userNine, Product.getProductById((num.nextInt(120) + 1)));
-                Recommendation.savingProductView(userTen, Product.getProductById((num.nextInt(120) + 1)));
-                Recommendation.savingProductView(userEleven, Product.getProductById((num.nextInt(120) + 1)));
-                Recommendation.savingProductView(userTwelve, Product.getProductById((num.nextInt(120) + 1)));
+                Recommendation.savingProductView(userOne, Product.getProductById((num.nextInt(90) + 1)));
+                Recommendation.savingProductView(userTwo, Product.getProductById((num.nextInt(90) + 1)));
+                Recommendation.savingProductView(userThree, Product.getProductById((num.nextInt(90) + 1)));
+                Recommendation.savingProductView(userFour, Product.getProductById((num.nextInt(90) + 1)));
+                Recommendation.savingProductView(userFive, Product.getProductById((num.nextInt(90) + 1)));
+                Recommendation.savingProductView(userSix, Product.getProductById((num.nextInt(90) + 1)));
+                Recommendation.savingProductView(userNine, Product.getProductById((num.nextInt(90) + 1)));
+                Recommendation.savingProductView(userTen, Product.getProductById((num.nextInt(90) + 1)));
+                Recommendation.savingProductView(userEleven, Product.getProductById((num.nextInt(90) + 1)));
+                Recommendation.savingProductView(userTwelve, Product.getProductById((num.nextInt(90) + 1)));
 //                Recommendation.savingProductView(userTwelve, Product.getProductById((num.nextInt(45-29) + 29)));
 
             }
 
             for (int i = 1; i < 1000; i++) {
-                new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(120) + 1)), (num.nextInt(5) + 1)).save();
+                new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(96) + 1)), (num.nextInt(5) + 1)).save();
             }
 
             FAQ f1 = new FAQ("Registration and account info\n", "Your account is your identity on bitBay. You use your account to buy, sell, communicate with bitBay members, and leave Feedback for bitBay buyers and sellers.\n" +

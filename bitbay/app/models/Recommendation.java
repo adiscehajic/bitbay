@@ -106,7 +106,7 @@ public class Recommendation extends Model {
 
         List<Product> products = new ArrayList<>();
         for (Recommendation r : recommendations) {
-            if (r.product.id <= 55) {
+            if (r.product.id <= 96) {
                 products.add(r.product);
             }
         }
