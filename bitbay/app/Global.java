@@ -570,9 +570,9 @@ public class Global extends GlobalSettings {
 
             Product p77 = new Product(userThree, "Yamaha YZF", "Super clean trade - pride of ownership shows.  Very affordable bike.", "Yamaha", subcategoryEight, 6000.00, 1, "1");
             Image image77 = new Image();
-            image77.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505278/2010-Harley-Davidson-CVOFatBob-FXDFSE2b_uckyng.jpg";
-            image77.public_id = "2010-Harley-Davidson-CVOFatBob-FXDFSE2b_uckyng";
-            image77.secret_image_url = "v1446505278";
+            image77.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1446505265/2014-SR-Viper-XTX-SE-red-profile_pzznqb.jpg";
+            image77.public_id = "2014-SR-Viper-XTX-SE-red-profile_pzznqb";
+            image77.secret_image_url = "v1446505265";
             p77.images.add(image77);
 
             Product p78 = new Product(userThree, "1969 Kawasaki", "This is a very collectible 1969 Kawasaki 500cc H1 Mach III triple.", "Kawasaki", subcategoryEight, 6000.00, 1, "1");

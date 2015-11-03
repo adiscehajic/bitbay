@@ -19,15 +19,16 @@
 				@if(product.images.size() > 0) {
 					<div id="galleria">
 					@for(image <- product.images) {
-						<a href="@image.getSize(576,486)">
+						@*<a href="@image.getSize(576,486)">*@
 							<img src="@image.getSize(576,486)">
-						</a>
+						@*</a>*@
 					}
 					</div>
 				} else {
 					<div class="thumbnail">
-						<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">
-							<img class="img-responsive" src="http://placehold.it/576x486" ></a>
+						@*<a href="@routes.ProductController.getProduct(product.id)" class="thumbnail" style="margin-bottom: 0;">*@
+							<img class="img-responsive" src="http://placehold.it/576x486" >
+					@*</a>*@
 					</div>
 				}
 				@if(PurchaseItem.hasPurchesedProduct(product)) {
