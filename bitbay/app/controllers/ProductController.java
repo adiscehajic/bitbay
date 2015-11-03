@@ -295,11 +295,13 @@ public class ProductController extends Controller {
             product.category = category;
             product.name = boundForm.bindFromRequest().field("name").value();
             product.description = boundForm.bindFromRequest().field("description").value();
-            product.price = Double.parseDouble(boundForm.bindFromRequest().field("price").value());
-            product.quantity = Integer.parseInt(boundForm.bindFromRequest().field("quantity").value());
             product.sellingType = boundForm.bindFromRequest().field("sellingType").value();
             product.manufacturer = boundForm.bindFromRequest().field("manufacturer").value();
 
+            if (product.auction == null) {
+                product.price = Double.parseDouble(boundForm.bindFromRequest().field("price").value());
+                product.quantity = Integer.parseInt(boundForm.bindFromRequest().field("quantity").value());
+            }
 
             // Saving all changes into database.
             product.update();
@@ -310,7 +312,7 @@ public class ProductController extends Controller {
 
             // Checking if the product already has uploaded images. If product has images, first deletes all old images
             // and then saves new images.
-            if (product.images.size() > 0 && fileParts != null) {
+            if (product.images.size() > 0 && fileParts.size() > 0) {
                 for (int i = 0; i < product.images.size(); i++) {
                     product.images.get(i).deleteImage();
                     product.images.get(i).delete();
