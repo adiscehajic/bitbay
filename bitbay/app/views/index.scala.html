@@ -3,29 +3,29 @@
 @(implicit products: java.util.List[Product], recommendedProducts: java.util.List[Product])
 
 @main("bitbay Home") {
-    @if(recommendedProducts != null && recommendedProducts.size() > 0) {
+    @if(Recommendation.getPopularProducts != null && Recommendation.getPopularProducts.size() > 0) {
     <div id="carouselHacked" class="carousel slide carousel-fade" data-ride="carousel" style="margin-bottom: 25px">
         <div class="carousel-inner" role="listbox">
 
             <div class="item active" style="margin-left: 12%">
-                <a href="@routes.ProductController.getProduct(recommendedProducts.get(0).id)">
-                    <img src="@recommendedProducts.get(0).images.get(0).getThumbnail(457,386)" alt="">
+                <a href="@routes.ProductController.getProduct(Recommendation.getPopularProducts.get(0).id)">
+                    <img src="@Recommendation.getPopularProducts.get(0).images.get(0).getThumbnail(457,386)" alt="">
                 </a>
                 <div class="carousel-caption" style="margin-left: 40%; color: #060c19; margin-bottom: 5%">
-                    <h4>@recommendedProducts.get(0).name</h4>
-                    <h3>@recommendedProducts.get(0).price KM</h3>
-                    <a href="@routes.ProductController.getProduct(recommendedProducts.get(0).id)"><button class="btn btn-primary">Buy this item</button></a>
+                    <h4>@Recommendation.getPopularProducts.get(0).name</h4>
+                    <h3>@Recommendation.getPopularProducts.get(0).price KM</h3>
+                    <a href="@routes.ProductController.getProduct(Recommendation.getPopularProducts.get(0).id)"><button class="btn btn-primary">Buy this item</button></a>
                 </div>
             </div>
-        @for(a <- 1 to recommendedProducts.size() - 1) {
+        @for(a <- 1 to Recommendation.getPopularProducts.size() - 1) {
             <div class="item" style="margin-left: 12%">
-                <a href="@routes.ProductController.getProduct(recommendedProducts.get(a).id)">
-                    <img src="@recommendedProducts.get(a).images.get(0).getThumbnail(457,386)" alt="">
+                <a href="@routes.ProductController.getProduct(Recommendation.getPopularProducts.get(a).id)">
+                    <img src="@Recommendation.getPopularProducts.get(a).images.get(0).getThumbnail(457,386)" alt="">
                 </a>
                 <div class="carousel-caption" style="margin-left: 40%; color: #060c19 ; margin-bottom: 5%">
-                    <h4>@recommendedProducts.get(a).name</h4>
-                    <h3>@recommendedProducts.get(a).price KM</h3>
-                    <a href="@routes.ProductController.getProduct(recommendedProducts.get(a).id)"><button class="btn btn-primary">Buy this item</button></a>
+                    <h4>@Recommendation.getPopularProducts.get(a).name</h4>
+                    <h3>@Recommendation.getPopularProducts.get(a).price KM</h3>
+                    <a href="@routes.ProductController.getProduct(Recommendation.getPopularProducts.get(a).id)"><button class="btn btn-primary">Buy this item</button></a>
                 </div>
             </div>
         }

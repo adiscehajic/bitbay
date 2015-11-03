@@ -110,6 +110,12 @@ public class Product extends Model {
         return products;
     }
 
+    public static List<Product> getRandomProducts() {
+        List<Product> products = finder.all();
+        Collections.shuffle(products);
+        return products.subList(0, 16);
+    }
+
     public static List<Product> findAllProductsByUser(User user) {
 
         List<Product> products = Product.finder.where().eq("user", user).findList();

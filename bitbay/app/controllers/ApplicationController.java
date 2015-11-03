@@ -46,7 +46,7 @@ public class ApplicationController extends Controller {
         }
 
         // Declaring list that contains all products from database.
-        List<Product> products = Product.findAll();
+        List<Product> products = Product.getRandomProducts();
         return ok(index.render(products, recommendations));
     }
 
