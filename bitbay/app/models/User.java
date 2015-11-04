@@ -115,6 +115,7 @@ public class User extends Model {
     public List<Purchase> purchases;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     public Cart cart;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -254,6 +255,8 @@ public class User extends Model {
     public static User findUserByToken(String token) {
         return finder.where().eq("token", token).findUnique();
     }
+
+    public static User findUserByEmail(String email) { return finder.where().eq("email", email).findUnique(); }
 
     /**
      * Seting validated atribute to True or False

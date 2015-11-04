@@ -9,12 +9,14 @@ import controllers.Users;
 import controllers.routes;
 import helpers.ConstantsHelper;
 import helpers.MailHelper;
+import helpers.SessionHelper;
 import models.Product;
 import models.Recommendation;
 import models.User;
 import models.UserType;
 import org.mindrot.jbcrypt.BCrypt;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
@@ -35,19 +37,19 @@ public class ApiUserController extends Controller {
     public Result validateSignIn() {
         // Connecting with sign in form.
         Form<UserLogin> boundForm = loginForm.bindFromRequest();
+        String email = boundForm.field("email").value();
+        User u = User.findUserByEmail(email);
         // Checking are the inputed values correct and if the form has errors.
         if (!boundForm.hasErrors()) {
             // Clearing all sessions and creating new session that stores user email
             session().clear();
             session("email", boundForm.bindFromRequest().field("email").value());
 
-            // kerim ispravio
             List<Product> recommendations = Recommendation.getRecommendations();
             // Declaring list that contains all products from database.
             List<Product> products = Product.findAll();
             // Redirecting to main page.
-            return ok(index.render(products, null));
-
+            return ok(Json.toJson(u));
         } else {
             // If form has errors printing warning message.
             //flash("signInError", "Please input email and password.");

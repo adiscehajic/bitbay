@@ -5,6 +5,7 @@ import helpers.ConstantsHelper;
 import helpers.MailHelper;
 import helpers.SessionHelper;
 import models.*;
+import org.apache.http.entity.mime.Header;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.data.Form;
@@ -12,16 +13,20 @@ import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import views.html.*;
 import views.html.faq;
+import views.html.helper.CSRF;
 import views.html.index;
 import views.html.signIn;
 import views.html.signup;
 import javax.persistence.Column;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+
 /**
  * Created by Adis Cehajic on 9/21/2015.
  */

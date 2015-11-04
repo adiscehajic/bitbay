@@ -29,7 +29,7 @@ public class Global extends GlobalSettings {
     public void onStart(Application application) {
         super.onStart(application);
 
-        AuctionHandler.handleAuctions();
+        //AuctionHandler.handleAuctions();
 
         Image.cloudinary = new Cloudinary("cloudinary://" + Play.application().configuration().getString("cloudinary.string"));
 
