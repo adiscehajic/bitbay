@@ -167,7 +167,7 @@ public class User extends Model {
      */
     public static User authenticate(String email, String password) {
         // Loading user from database which has inputed email.
-        User user = User.finder.where().eq("email", email).findUnique();
+        User user = finder.where().eq("email", email).findUnique();
         // Checking if the loaded user exists and if his password corresponds to the inputed password.
         if (user != null && BCrypt.checkpw(password, user.password)) {
             return user;
@@ -177,7 +177,7 @@ public class User extends Model {
     }
 
     public static User getUserByEmail(String email) {
-        User user = User.finder.where().eq("email", email).findUnique();
+        User user = finder.where().eq("email", email).findUnique();
         if (user != null) {
             return user;
         } else {
@@ -186,7 +186,7 @@ public class User extends Model {
     }
 
     public static User findById(Integer id){
-        User user = User.finder.where().eq("id", id).findUnique();
+        User user = finder.where().eq("id", id).findUnique();
         if(user != null){
             return user;
         }else{

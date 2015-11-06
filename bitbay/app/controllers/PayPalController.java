@@ -336,6 +336,7 @@ public class PayPalController extends Controller {
                 String totalPriceString = String.format("%1.2f", totalPrice);
                 sale.setId(purchaseItem.purchase.sale_id);
                 Logger.info("777777777777777");
+                Logger.info("Sale id is: " + purchaseItem.purchase.sale_id);
 
                 Amount amount = new Amount();
                 amount.setCurrency("USD");
@@ -359,7 +360,7 @@ public class PayPalController extends Controller {
             flash("success");
         } catch (PayPalRESTException e) {
             //flash("error", Messages.get("error.msg.02"));
-            Logger.error("Error at purchaseProcessing: " + e.getMessage());
+            Logger.info("Error at purchaseProcessing: " + e.getMessage());
             return false;
 
         }
