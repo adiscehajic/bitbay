@@ -3,6 +3,7 @@ package helpers;
 import play.Play;
 
 /**
+ * This class is user to store all constant variables from this project on one place.
  * Created by Adnan on 28.10.2015..
  */
 public class ConstantsHelper {

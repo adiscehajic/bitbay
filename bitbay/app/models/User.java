@@ -176,6 +176,11 @@ public class User extends Model {
         }
     }
 
+    /**
+     * This method search in DB user with selected email.
+     * @param email - User email
+     * @return - User with selected email
+     */
     public static User getUserByEmail(String email) {
         User user = finder.where().eq("email", email).findUnique();
         if (user != null) {
@@ -185,6 +190,11 @@ public class User extends Model {
         }
     }
 
+    /**
+     * This method goes through DB and find user with given ID.
+     * @param id - User ID
+     * @return - User with given ID
+     */
     public static User findById(Integer id){
         User user = finder.where().eq("id", id).findUnique();
         if(user != null){
@@ -194,6 +204,10 @@ public class User extends Model {
         }
     }
 
+    /**
+     * This method return list of all users from DB.
+     * @return
+     */
     public static List<User> findAll() {
         List<User> users = finder.where().ne("userType.id", 1).findList();
         return users;
@@ -221,13 +235,19 @@ public class User extends Model {
         return errors.isEmpty() ? null : errors;
     }
 
+    /**
+     * This method find user and all his sold products. Than it goes through list of products and
+     * summ all ratings from products, and result will be displayed as users average grade on his profile.
+     */
     public static String getAverageUserRating(User user) {
+        //List of all users products
         List<Product> userProducts = Product.findAllProductsByUser(user);
         Double average = 0.0;
         Double ratedProducts = 0.0;
 
         if (userProducts != null && userProducts.size() > 0) {
             for (int i = 0; i < userProducts.size(); i++) {
+                //Calculating sum off  all products rating
                 Double rating = Double.parseDouble(Rating.getAverageRating(userProducts.get(i).id));
                 if (rating != 0.0) {
                     ratedProducts = ratedProducts + 1;
@@ -235,6 +255,7 @@ public class User extends Model {
                 average = average + rating;
             }
 
+            //Calculating average grade of user
             if (average != 0) {
                 Double result = average / ratedProducts;
                 DecimalFormat df = new DecimalFormat("#.0");

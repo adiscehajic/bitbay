@@ -2,7 +2,6 @@ package models;
 
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
@@ -88,6 +87,9 @@ public class Product extends Model {
     public Product() {
     }
 
+    /**
+     * Constructor for new product
+     */
     public Product(User user, String name, String description, String manufacturer, Category category, Double price, Integer quantity, String sellingType) {
         this.user = user;
         this.name = name;
@@ -100,22 +102,36 @@ public class Product extends Model {
         cancelation = 0;
     }
 
+    /**
+     * Method that goes thrlough DB and return product with given Id.
+     */
     public static Product getProductById(Integer id) {
         Product product = Product.finder.where().eq("id", id).findUnique();
         return product;
     }
 
+    /**
+     * This method return list of all products from DB.
+     */
     public static List<Product> findAll() {
         List<Product> products = finder.all();
         return products;
     }
 
+    /**
+     * This method return a list of 16 random products from DB.
+     */
     public static List<Product> getRandomProducts() {
         List<Product> products = finder.all();
         Collections.shuffle(products);
         return products.subList(0, 16);
     }
 
+    /**
+     * This method return list of all products for given user/
+     * @param user
+     * @return
+     */
     public static List<Product> findAllProductsByUser(User user) {
 
         List<Product> products = Product.finder.where().eq("user", user).findList();
@@ -123,6 +139,11 @@ public class Product extends Model {
         return products;
     }
 
+    /**
+     * Method that finds all product from selected category.
+     * @param category
+     * @return - List of products from slected category
+     */
     public static List<Product> findAllProductsByCategory(Category category) {
         List<Product> products = Product.finder.where().eq("category", category).findList();
 
@@ -151,11 +172,19 @@ public class Product extends Model {
         return products;
     }
 
+    /**
+     * Method that return one random product from given list of products.
+     * @return
+     */
     public static Product getOneRandomProduct(List<Product> products) {
         Random rand = new Random();
         return products.get(rand.nextInt(products.size()));
     }
 
+    /**
+     * Method that return two random products from given list of products.
+     * @return
+     */
     public static List<Product> getTwoRandomProducts(List<Product> products) {
         List<Product> list = new LinkedList<>(products);
         Collections.shuffle(list);
@@ -165,6 +194,10 @@ public class Product extends Model {
         return list.subList(0, list.size());
     }
 
+    /**
+     * Method that return four random products from given list of products.
+     * @return
+     */
     public static List<Product> getFourRandomProducts(List<Product> products) {
         List<Product> list = new LinkedList<>(products);
         Collections.shuffle(list);
@@ -174,6 +207,11 @@ public class Product extends Model {
         return list.subList(0, list.size());
     }
 
+    /**
+     * Method that sets cancelation time for product after purchase
+     * @param hours
+     * @return
+     */
     public static Integer cancelationHourToDay(Integer hours){
         return hours/24;
     }

@@ -129,6 +129,12 @@ public class Message extends Model {
         return sentMessages;
     }
 
+    /**
+     * Method for setting message notifications.
+     * It goes through list of messages and check if message is read or not.
+     * If message is not red a number of notification is increased.
+     * @return number of messages that are not read.
+     */
     public static Integer getMessageNotification() {
         List<Message> messages = getReceivedMessages();
         Integer counter = 0;

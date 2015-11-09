@@ -107,6 +107,9 @@ public class PurchaseItem extends Model {
         return PurchaseItem.finder.where().eq("user", user).findList();
     }
 
+    /**
+     * This method is checking if product was bought by curent user
+     */
     public static Boolean hasPurchesedProduct(Product product){
         return (finder.where().eq("product", product).where().eq("user", SessionHelper.currentUser()).where().eq("isRefunded", 0).findList().size() > 0) ? true : false;
     }

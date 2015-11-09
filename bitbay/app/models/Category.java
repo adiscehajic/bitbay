@@ -102,6 +102,10 @@ public class Category extends Model {
         return finder.orderBy("name asc").where().eq("parent", category).findList();
     }
 
+    /**
+     * Method that finds parent category for given subcategory
+     * @return - Parent category
+     */
     public static Category getParentCategory(Category category) {
         return finder.where().eq("id", category.id).findUnique();
     }

@@ -31,6 +31,9 @@ public class CartItem extends Model {
     public CartItem(){
     }
 
+    /**
+     * Constructor
+     */
     public CartItem(Product product, User user, Cart cart){
         this.product = product;
         this.user = user;
