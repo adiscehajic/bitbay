@@ -3,7 +3,6 @@ package models;
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import helpers.SessionHelper;
-import play.Logger;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

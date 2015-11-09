@@ -5,7 +5,6 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.Transformation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import helpers.SessionHelper;
-import play.Logger;
 
 import javax.persistence.*;
 import java.io.File;
@@ -43,6 +42,9 @@ public class Image extends Model {
     public User user;
 
 
+    /**
+     * Constructor
+     */
     public static Image create(String public_id, String image_url, String secret_image_url) {
         Image img = new Image();
         img.public_id = public_id;
@@ -52,6 +54,9 @@ public class Image extends Model {
         return img;
     }
 
+    /**
+     * Method that return image after uploading it on cloudinary
+     */
     public static Image create(File image, Integer id) {
         Map result;
         try {
@@ -63,21 +68,23 @@ public class Image extends Model {
         return null;
     }
 
+    /**
+     * Uploading new image for selected product and saving its path with product
+     */
     public static Image create(Map uploadResult, Integer id) {
         Image img = new Image();
-        Logger.info("-------3--------");
         img.public_id = (String) uploadResult.get("public_id");
-        Logger.debug(img.public_id);
         img.image_url = (String) uploadResult.get("url");
-        Logger.debug(img.image_url);
         img.secret_image_url = (String) uploadResult.get("secure_url");
-        Logger.debug(img.secret_image_url);
         Product product = Product.getProductById(id);
         img.product = product;
         img.save();
         return img;
     }
 
+    /**
+     * Adding new profile picture for user
+     */
     public static Image createUserImage(File image) {
         Map result;
         try {
@@ -89,25 +96,31 @@ public class Image extends Model {
         return null;
     }
 
+    /**
+     * Creating picture for user profile
+     */
     public static Image createUserImage(Map uploadResult) {
         Image img = new Image();
 
         img.public_id = (String) uploadResult.get("public_id");
-        Logger.debug(img.public_id);
         img.image_url = (String) uploadResult.get("url");
-        Logger.debug(img.image_url);
         img.secret_image_url = (String) uploadResult.get("secure_url");
-        Logger.debug(img.secret_image_url);
         User user = SessionHelper.currentUser();
         img.user = user;
         img.save();
         return img;
     }
 
+    /**
+     *  Return list of all images
+     */
     public static List<Image> all() {
         return finder.all();
     }
 
+    /**
+     * Method that return image path for selected product
+     */
     public static String getImagePath(Product product) {
         List<Image> image = Image.finder.where().eq("product", product).findList();
         if (image.size() > 0) {
@@ -117,12 +130,18 @@ public class Image extends Model {
         }
     }
 
+    /**
+     * Return user profile picture
+     */
     public static Image getUserImage(User user) {
         Image image = Image.finder.where().eq("user", user).findUnique();
             return image;
 
     }
 
+    /**
+     *  Setting size for picture
+     */
     public String getSize(int width, int height) {
 
         String url = cloudinary.url().format("jpg")
@@ -132,6 +151,9 @@ public class Image extends Model {
         return url;
     }
 
+    /**
+     * Setting thumbnail size for picture
+     */
     public String getThumbnail(Integer width, Integer height){
         String url = cloudinary.url().format("png")
                 .transformation(
@@ -140,6 +162,9 @@ public class Image extends Model {
         return url;
     }
 
+    /**
+     * Delete picture
+     */
     public void deleteImage() {
         try {
             cloudinary.uploader().destroy(public_id, null);

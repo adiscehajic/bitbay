@@ -45,6 +45,12 @@ public class MailHelper {
         }
     }
 
+    /**
+     * This method is used to send user new mail with verification link. After clicking on that link
+     * new window will open where user can type new password and confirm same.
+     * @param email - User email
+     * @param message - Mail content
+     */
     public static void sendNewPassword(String email, String message) {
 
         try {

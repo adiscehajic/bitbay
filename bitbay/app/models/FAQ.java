@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import java.util.List;
 
 /**
- * Created by Senadin on 17.10.2015.
+ * Created by Senadin Botic on 17.10.2015.
  */
 @Entity
 public class FAQ extends Model {

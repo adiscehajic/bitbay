@@ -27,18 +27,28 @@ public class Cart extends Model{
     public Cart(){
     }
 
+    /**
+     * Constructor
+     */
     public Cart (User user, List<CartItem> cartItems){
         this.user = user;
         this.cartItems = cartItems;
     }
 
 
+    /**
+     * This method is used to find cart for given user
+     */
     public static Cart findCartByUser(User user){
         Cart cart = Cart.finder.where().eq("user", user).findUnique();
 
         return cart;
     }
 
+    /**
+     * This method goes through list of cart items and returns amount of all products that
+     * are currently in the cart.
+     * */
     public static Double cartAmount(User user) {
         Cart cart = Cart.findCartByUser(user);
         Double amount = 0.0;
@@ -49,6 +59,9 @@ public class Cart extends Model{
         return amount;
     }
 
+    /**
+     * Method that check does current user has any items in the cart.
+     */
     public static Boolean doesContainItem(Integer id) {
         User user = SessionHelper.currentUser();
         Cart cart = Cart.findCartByUser(user);
