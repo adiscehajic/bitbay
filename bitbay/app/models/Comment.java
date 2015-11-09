@@ -40,6 +40,9 @@ public class Comment extends Model{
 
     private  static Finder<String, Comment>finder = new Finder<String, Comment>(Comment.class);
 
+    /**
+     * Constructor for comment
+     */
     public Comment(String title, String text, User user, Product product){
         this.title = title;
         this.text = text;
@@ -76,10 +79,17 @@ public class Comment extends Model{
         return comment;
     }
 
+    /**
+     * This method finds list of all comments from given user
+     */
     public static List<Comment> getCommentsByUser(User user) {
         return finder.where().eq("user", user).findList();
     }
 
+    /**
+     * This method check if user has commented on given product
+     * @return true or false
+     */
     public static Boolean hasUserCommented(Product product) {
         return Comment.finder.where().eq("user", SessionHelper.currentUser()).where().eq("product", product).findRowCount() == 0;
     }
