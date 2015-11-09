@@ -24,13 +24,15 @@ import javax.swing.text.html.HTML;
 import java.util.*;
 
 /**
+ * This class contains methods for sending requests to PayPal API
+ *
  * Created by Medina Banjic on 12/10/15.
  */
 @Security.Authenticated(CurrentBuyer.class)
 public class PayPalController extends Controller {
 
     /**
-     * PayPal configurated constants
+     * Fields and variables declarations
      */
     private static User currentUser = SessionHelper.currentUser();
 
@@ -79,32 +81,37 @@ public class PayPalController extends Controller {
     private static String messageInvoice;
 
     /**
-     * This method configurates PayPal and PayPal payment information
-     * Redirects to payment approval
-     * @return approve_url
+     * This method configures PayPal and PayPal payment information
+     * Redirects to payment approval page
+     * @return return url if approved, cancel url if declined
      */
     @Security.Authenticated(CurrentBuyer.class)
     @RequireCSRFCheck
     public Result purchaseProcessing(Integer cartId) {
         try {
-            //cartItems = Cart.findCartByUser(currentUser).cartItems;
-
+            //list of items from current user cart
             cartItems = Cart.findCartById(cartId).cartItems;
+            //purchased items list
             purchaseItems = new ArrayList<>();
 
             //Configuration PayPal
-            token = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID, ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
 
+            //security token, required, String
+            token = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID, ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
+            //configuration of mode (sandbox or live)
             config = new HashMap<>();
             config.put("mode", "sandbox");
-
+            //forwarding generated token and config
             context = new APIContext(token);
             context.setConfigurationMap(config);
-
+            //initializing description and total price which we send to PayPal
             desc = "";
             totalPrice = 0;
 
             // Process cart/payment information
+
+            //this is a loop which iterates through cart and gets info from every cart item
+            //so that we can create desc and total price and also to save it to purchased items list
             for (int i = 0; i < cartItems.size(); i++){
                 CartItem cartItemI = cartItems.get(i);
                 price = cartItemI.price;
@@ -117,12 +124,12 @@ public class PayPalController extends Controller {
                 // Adding the purchase item to the purchaseItems list
                 purchaseItems.add(purchaseItem);
             }
-
+            //creating a new purchase for a current user, purchased items list,
+            //total price and generated token which is going to be used for a payment execution
             purchase = new Purchase(currentUser,purchaseItems,totalPrice,token);
             purchase.save();
 
             purchaseId = purchase.id;
-
 
             priceString = String.format("%1.2f", totalPrice);
 
