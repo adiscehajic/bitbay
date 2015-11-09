@@ -69,7 +69,7 @@ POST          /user/edit                              @controllers.Users.updateU
 POST          /user/saveuserimage                     @controllers.Users.saveUserPicture()
 GET           /user/purchasehistory                   @controllers.Users.getUserPurchases()
 
-POST          /purchaseprocessing                     @controllers.PayPalController.purchaseProcessing()
+POST          /purchaseprocessing                     @controllers.PayPalController.purchaseProcessing(id: Integer)
 GET           /purchasesuccess                        @controllers.PayPalController.purchaseSuccess()
 GET           /purchasefail                           @controllers.PayPalController.purchaseFail()
 GET           /purchaseTransaction/                   @controllers.PayPalController.approveTransaction()
@@ -81,7 +81,6 @@ GET           /user/messages/sent                     @controllers.MessageContro
 GET           /user/messages/reply                    @controllers.MessageController.replyMessage(id: Integer)
 GET           /user/messages/new                      @controllers.MessageController.newMessage(email: String)
 POST          /user/messages/send                     @controllers.MessageController.sendMessage()
-POST          /user/messages/reply                    @controllers.MessageController.respondMessage()
 POST          /user/messages/delete                   @controllers.MessageController.deleteMessage(id: Integer)
 POST          /user/messages/validateForm             @controllers.MessageController.validateFormMessage()
 

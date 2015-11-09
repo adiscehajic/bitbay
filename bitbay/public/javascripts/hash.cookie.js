@@ -17,7 +17,6 @@ $(document).ready(function() {
         $('#password').val(password2);
         $('#login-check').attr('checked',true);
     }
-    console.log(email);
     $("#login-form").submit(function() {
         if ($('#login-check').is(':checked')) {
             var email = $('#email').val();

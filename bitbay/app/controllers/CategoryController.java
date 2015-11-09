@@ -154,21 +154,28 @@ public class CategoryController extends Controller {
         return redirect(routes.AdminController.adminCategories());
     }
 
+    /**
+     * Reads the selected category and finds all subcategories of selected category and returns the list of names of
+     * the all subcategories as JSON.
+     *
+     * @return The list of names of all subcategories of selected category.
+     */
     public Result findAllSubcategories(){
+        // Connecting with category form.
         DynamicForm form = Form.form().bindFromRequest();
-
+        // Reading selected category name.
         String categoryName = form.get("categoryName");
-
+        // Finding all subcategories of selected category.
         List<Category> subcategories = Category.getAllSubcategories(Category.getCategoryByName(categoryName));
-
+        // Declaring the list of string variables that will contain all names of subcategories.
         List<String> subcategoryNames = new ArrayList<>();
-
+        // Adding all names of the subcategories to the list.
         for (Category c : subcategories) {
             subcategoryNames.add(c.name);
         }
-
+        // Declaring JSON object.
         JsonNode object = Json.toJson(subcategoryNames);
-
+        // Returning JSON object.
         return ok(object);
     }
 

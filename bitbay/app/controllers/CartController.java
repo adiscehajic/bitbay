@@ -151,13 +151,18 @@ public class CartController extends Controller {
         return redirect(routes.CartController.getCart());
     }
 
+    /**
+     * Finds the list of all current user product items that are in the user cart and returns the nuber of the product
+     * items in the cart. If the user has no product items in the cart it returns 0.
+     *
+     * @return Number of product items, if there is product items in current user cart, otherwise 0.
+     */
     public static Integer getCartNotification() {
+        // Checking if there is product items in current user cart.
         if (SessionHelper.currentUser() != null && SessionHelper.currentUser().cart != null) {
             List<CartItem> cartItems = SessionHelper.currentUser().cart.cartItems;
             return cartItems.size();
         }
         return 0;
     }
-
-
 }

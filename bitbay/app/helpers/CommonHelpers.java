@@ -1,5 +1,7 @@
 package helpers;
 
+import models.User;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,5 +31,9 @@ public class CommonHelpers {
     public static Double getTwoDecimalNumber(Double number){
         DecimalFormat df = new DecimalFormat("#.00");
         return Double.parseDouble(df.format(number));
+    }
+
+    public static User serviceUser(){
+        return User.getUserByEmail("bitbayservice@gmail.com");
     }
 }

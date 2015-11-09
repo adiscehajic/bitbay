@@ -19,15 +19,15 @@ import views.html.contactUs;
 import javax.inject.Inject;
 
 /**
- * Created by banjic on 05/10/15.
+ * Created by Medina Banjic on 05/10/15.
  */
 public class EmailController  extends Controller{
 
+    // Declaring variable that will represent contact form.
     private static final Form<Contact> contactForm = Form.form(Contact.class);
 
-
     /**
-     * Renders contactUs.html page with a form for sending a message from user to ADMIN.
+     * Renders contactUs.html page with a form for sending a message from user to application administrator.
      *
      * @return ContactUs page of the application.
      */
@@ -36,27 +36,23 @@ public class EmailController  extends Controller{
     }
 
     /**
-     * This method gets inputs from contact us form, verifies recaptcha and sends email to
-     * bitbayservice@gmail.com from userfeedback.bitbay@gmail.com
+     * This method gets inputs from contact us form, verifies recaptcha and sends email to bitbayservice@gmail.com
+     * from userfeedback.bitbay@gmail.com.
+     *
+     * @return
      */
     @Inject WSClient ws;
     @RequireCSRFCheck
     public Result sendEmail() {
-
+        // Connecting with contact us form.
         Form<Contact> boundForm = contactForm.bindFromRequest();
-
+        // Checking if the form has errors. If the form has errors renders contact us page.
         if(boundForm.hasErrors()){
             return badRequest(contactUs.render(boundForm));
         }
-
+        // Getting all values inputed into fields and creating new contact.
         Contact newContact = boundForm.get();
-
-/*
-        String username = newEmail.name;
-        String mail = newEmail.email;
-        String subject = newEmail.subject;
-        String message = newEmail.message;
-*/
+        // Declaring and checking recaptcha.
         String grecaptcha = request().body().asFormUrlEncoded().get("g-recaptcha-response")[0];
         WSRequest rq = ws.url("https://www.google.com/recaptcha/api/siteverify");
         rq.setQueryParameter("secret", "6LfUKg4TAAAAAASFERHrMiHR0quZWg0oein3DsUu");
@@ -66,8 +62,9 @@ public class EmailController  extends Controller{
             return response.asJson();
         });
         JsonNode returnedJson = responsePromise.get(3000);
-
+        // If the recaptcha is correct creating and sending new mail.
         if(returnedJson.findValue("success").asBoolean() == true){
+            // Declaring and initializing new email.
             SimpleEmail email = new SimpleEmail();
             email.setHostName(Play.application().configuration().getString("smtp.host"));
             email.setSmtpPort(587);
@@ -83,7 +80,8 @@ public class EmailController  extends Controller{
                 email.send();
 
             } catch (EmailException e) {
-                Logger.info("Error");e.printStackTrace();
+                Logger.info("Error");
+                e.printStackTrace();
                 return redirect(routes.EmailController.sendEmail());
             }
             Logger.info("Message successfully sent");
@@ -96,15 +94,13 @@ public class EmailController  extends Controller{
         }
     }
 
-
-
     /**
      * Created by Senadin Botic 12/10/15.
      *
      * Inner class with four variables that are required.
      */
     public static class Contact {
-
+        // Declaring properties.
         @Constraints.MaxLength(255)
         @Constraints.Required(message = "Please insert your name.")
         @Constraints.Pattern(value = "^[a-z A-Z]+$", message = "Name can't contain digits.")
@@ -125,7 +121,6 @@ public class EmailController  extends Controller{
 
     }
 
-
     /**
      * Validates the form when the AJAX calls it. If the form has errors returns the JSON object that represents all
      * errors that occurs. If there is no errors returns ok.
@@ -140,5 +135,4 @@ public class EmailController  extends Controller{
             return ok("Validation successful.");
         }
     }
-
 }

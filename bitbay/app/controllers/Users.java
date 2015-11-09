@@ -148,7 +148,6 @@ public class Users extends Controller {
             user.city = boundForm.data().get("city");
             user.address = boundForm.data().get("address");
             user.phoneNumber = boundForm.data().get("phone").trim();
-
             // Updating time when profile information has been changed.
             user.updated = new Date();
             // Updating all altered information into the database.
@@ -195,21 +194,23 @@ public class Users extends Controller {
     }
 
     /**
-     * This action method is activated after user click on a link in verification email.
-     * It is using token from email to verify user and activate validateUser(user) method
-     * which is saving validation data to DB
+     * This action method is activated after user click on a link in verification email. It is using token from email
+     * to verify user and activate validateUser(user) method which is saving validation data to database.
      *
-     * @param token - User token
-     * @return - Result
+     * @param token - User token.
+     * @return - If the user has validated account it renders index page, otherwise renders sign in page.
      */
     public Result emailValidation(String token) {
+        // Clearing the session.
         session().clear();
         try {
+            // Checking if the user has already validated account.
             if (token == null) {
                 return redirect(routes.ApplicationController.index());
             }
-
+            // Finding the user with inputed token.
             User user = User.findUserByToken(token);
+            // Validating the user account and rendering sign in page.
             if (User.validateUser(user)) {
                 return redirect(routes.ApplicationController.signIn());
             } else {
@@ -221,15 +222,17 @@ public class Users extends Controller {
     }
 
     /**
-     * This method is activated after user click on a link in verification email.
-     * It is using token from email to verify user and redirect user to window where
-     * user can enter new password for his account.
-     * @param token
+     * This method is activated after user click on a link in verification email. It is using token from email to
+     * verify user and redirect user to page where user can enter new password for his account.
+     *
+     * @param token - Token in the forgot password URL.
      * @return
      */
     public Result validateForgottenPassword(String token) {
         try {
+            // Finding the user with inputed token.
             User user = User.findUserByToken(token);
+            // Validating the user account and rendering sign in page.
             if (User.validateUser(user)) {
                 user.token = null;
                 return redirect(routes.ApplicationController.newPassword(user.email));
@@ -243,21 +246,23 @@ public class Users extends Controller {
     }
 
     /**
-     * This method is checking if email user typed in email field is in DB and if user is registrated before.
-     * If user is registrated in DB new unique token is generated and verification mail is sent to users email.
-     * @return
+     * This method is checking if email user typed in email field is in database and if user is registrated before. If
+     * user is registrated in database new unique token is generated and verification mail is sent to users email.
+     *
+     * @return Page where user can input email on which he wants to send new password.
      */
     public Result getRegistratedUserByEmail() {
+        // Connecting with form.
         DynamicForm form = Form.form().bindFromRequest();
+        // Declaring variable that contains inputed email.
         String email = form.data().get("email");
-
+        // Finding user with inputed email.
         User user = User.getUserByEmail(email);
-
+        // Checking if the user exists in database and sending email.
         if (user != null) {
             user.token = UUID.randomUUID().toString();
             user.update();
             MailHelper.sendNewPassword(user.email, ConstantsHelper.BIT_BAY + "/signin/forgotpassword/" + user.token);
-
             flash("success", "Email successfully sent");
         } else {
             flash("error", "Could not find user with that email ");
@@ -266,21 +271,22 @@ public class Users extends Controller {
     }
 
     /**
-     * This method is used to change old users password with new one,
-     * in case when new password and confirm passwor are equal and redirect user
-     * to sign in page.
-     * @return
+     * This method is used to change old users password with new one, in case when new password and confirm password
+     * are equal and redirect user to sign in page.
+     *
+     * @return Page where user can input new password.
      */
     public Result setNewPassword(String email) {
+        // Connecting with form.
         DynamicForm form = Form.form().bindFromRequest();
+        // Declaring variables that contain inputed password and confirm password.
         String password = form.get("password");
         String confirmPassword = form.get("confirmPassword");
-
+        // Checking are the all validations correct.
         if(password == ""){
             flash("emptyError", "Password is required");
             return redirect(routes.ApplicationController.newPassword(email));
         }
-
         if(password.length()<8){
             flash("lengthError", "Password must be min 8 characters long");
             return redirect(routes.ApplicationController.newPassword(email));
@@ -296,16 +302,20 @@ public class Users extends Controller {
         return redirect(routes.ApplicationController.newPassword(email));
     }
 
-
-
+    /**
+     * Uploads selected user profile image to cloudinery and saves path of the image into database.
+     *
+     * @return
+     */
     @RequireCSRFCheck
     public Result saveUserPicture() {
+        // Finding current user.
         User user = SessionHelper.currentUser();
-
+        // Getting selected image.
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart filePart = body.getFile("image");
-        // Uploading selected image on cloudinery and saving image path into database.
-
+        // Uploading selected image on cloudinery and saving image path into database. If user has already uploaded
+        // profile image it finds the old image and deletes it, and then uploads and saves new image.
         if (user.image != null) {
             user.image.deleteImage();
             user.image.delete();
@@ -324,11 +334,18 @@ public class Users extends Controller {
         return redirect(routes.Users.getUser(user.email));
     }
 
+    /**
+     * Renders page where all user purchases are listed. If the time for the refund of the purchese has not passed,
+     * user can refund the purchase.
+     *
+     * @return Page where all user purchases are listed.
+     */
     public Result getUserPurchases(){
+        // Findind current user.
         User currentUser = SessionHelper.currentUser();
+        // Finding all purchases of the user.
         List<PurchaseItem> items = PurchaseItem.getPurchasedItemsByUser(currentUser);
-
+        // Rendering page.
         return ok(showUserPurchases.render(currentUser, items));
     }
-
 }

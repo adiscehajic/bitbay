@@ -114,7 +114,7 @@ public class AdminController extends Controller {
      * Renders administrator panel page where all products of the application are listed. Administrator user can decide
      * if he wants to delete product. Administrator user can not update product.
      *
-     * To this page can access only users that are administrators.
+     * On this page can access only users that are administrators.
      *
      * @return Page where all products of the application are listed.
      */
@@ -123,6 +123,59 @@ public class AdminController extends Controller {
         // Creating the list of the products.
         List<Product> list = Product.findAll();
         return ok(allProducts.render(list));
+    }
+
+    /**
+     * Renders page where admin user can send new message to the other users. User needs to input receivers email and
+     * content of the message. If the email and content are not inputed, prints error message.
+     *
+     * @param email Receivers email.
+     * @return Page where admin user can send other user message.
+     */
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminNewMessage(String email) {
+        return ok(adminNewMessage.render(email, messageForm));
+    }
+
+    /**
+     * Renders page where admin user can see all received messages from other users.
+     *
+     * @return Page where list of all received messages are shown.
+     */
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminReceivedMessages() {
+        // Finding the list of all received messages.
+        List<Message> messages = Message.getReceivedMessages();
+        return ok(adminAllMessages.render(messages));
+    }
+
+    /**
+     * Renders page where admin user can see all sent messages to other users.
+     *
+     * @return Page where list of all sent messages are shown.
+     */
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminSentMessages() {
+        // Finding the list of all sent messages.
+        List<Message> messages = Message.getSentMessages();
+        return ok(adminAllMessages.render(messages));
+    }
+
+    /**
+     * Renders page where admin user can read selected message. If admin user wants he can reply to received message.
+     *
+     * @param id Id of selected message.
+     * @return Page where admin user can read selected message.
+     */
+    @Security.Authenticated(CurrentAdmin.class)
+    public Result adminViewMessage(Integer id) {
+        // Finding the selected message.
+        Message message = Message.getMessageById(id);
+        // If the message is not read, setting the read attribute to true.
+        message.isRead = true;
+        message.update();
+        // Rendering page.
+        return ok(adminViewMessage.render(message));
     }
 
     /**
@@ -194,32 +247,5 @@ public class AdminController extends Controller {
             return errors.isEmpty() ? null : errors;
         }
     }
-
-    @Security.Authenticated(CurrentAdmin.class)
-    public Result adminNewMessage(String email) {
-        return ok(adminNewMessage.render(email, messageForm));
-    }
-
-    @Security.Authenticated(CurrentAdmin.class)
-    public Result adminReceivedMessages() {
-        List<Message> messages = Message.getReceivedMessages();
-        return ok(adminAllMessages.render(messages));
-    }
-
-    @Security.Authenticated(CurrentAdmin.class)
-    public Result adminSentMessages() {
-        List<Message> messages = Message.getSentMessages();
-        return ok(adminAllMessages.render(messages));
-    }
-
-    @Security.Authenticated(CurrentAdmin.class)
-    public Result adminViewMessage(Integer id) {
-        Message message = Message.getMessageById(id);
-        message.isRead = true;
-        message.update();
-
-        return ok(adminViewMessage.render(message));
-    }
-
 }
 

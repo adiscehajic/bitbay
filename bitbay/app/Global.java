@@ -21,7 +21,7 @@ import static play.mvc.Results.notFound;
 
 /**
  * Created by Adis Cehajic on 9/22/2015.
- * edited by everyone
+ * Updated by Adnan Lapendic, Medina Banjic & Senadin Botic
  */
 public class Global extends GlobalSettings {
 

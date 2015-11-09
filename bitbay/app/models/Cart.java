@@ -35,12 +35,17 @@ public class Cart extends Model{
         this.cartItems = cartItems;
     }
 
-
     /**
      * This method is used to find cart for given user
      */
     public static Cart findCartByUser(User user){
         Cart cart = Cart.finder.where().eq("user", user).findUnique();
+
+        return cart;
+    }
+
+    public static Cart findCartById(Integer id){
+        Cart cart = Cart.finder.where().eq("id", id).findUnique();
 
         return cart;
     }
