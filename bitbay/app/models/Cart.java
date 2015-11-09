@@ -39,6 +39,12 @@ public class Cart extends Model{
         return cart;
     }
 
+    public static Cart findCartById(Integer id){
+        Cart cart = Cart.finder.where().eq("id", id).findUnique();
+
+        return cart;
+    }
+
     public static Double cartAmount(User user) {
         Cart cart = Cart.findCartByUser(user);
         Double amount = 0.0;

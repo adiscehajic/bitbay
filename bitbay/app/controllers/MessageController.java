@@ -36,7 +36,7 @@ public class MessageController extends Controller {
      * user.
      *
      * @return If the sending message is successful renders page where sent message and other reply messages are shown,
-     * othervise warning message occurs.
+     * otherwise warning message occurs.
      */
     @RequireCSRFCheck
     public Result sendMessage(){
@@ -70,46 +70,43 @@ public class MessageController extends Controller {
         return redirect(routes.MessageController.getReceivedMessages());
     }
 
-    @RequireCSRFCheck
-    public Result respondMessage(){
-        DynamicForm boundForm = Form.form().bindFromRequest();
-        String receiverEmail = boundForm.get("receiverEmail");
-        String senderEmail = SessionHelper.currentUser().email;
-        String message = boundForm.get("messageText");
-        String title = boundForm.get("title");
-        User receiver = User.getUserByEmail(receiverEmail);
-        User sender = User.getUserByEmail(senderEmail);
-        User currentUser = SessionHelper.currentUser();
-
-        Message msg = new Message(sender,receiver, title, message);
-        Ebean.save(msg);
-
-        List<Message> messages = Message.getReceivedMessages();
-
-        if(currentUser.userType.id == ConstantsHelper.ADMIN) {
-            return ok(adminAllMessages.render(messages));
-        } else {
-            return ok(allMessages.render(messages));
-        }
-    }
+    /**
+     * Renders page where all received user messages are listed. User can view and delete all messages that are in
+     * inbox.
+     *
+      * @return Page where all user received messages are listed.
+     */
     @Security.Authenticated(CurrentBuyerSeller.class)
     public Result getReceivedMessages(){
+        // Finding all received messages.
         List<Message> recievedMessages = Message.getReceivedMessages();
         return ok(allMessages.render(recievedMessages));
     }
 
+    /**
+     * Renders page where all sent user messages are listed. User can view and delete all messages that are in
+     * sentbox.
+     *
+     * @return Page where all user sent messages are listed.
+     */
     @Security.Authenticated(CurrentUser.class)
     public Result getSentMessages(){
+        // Finding all sent messages.
         List<Message> sentMesages = Message.getSentMessages();
         return ok(allMessages.render(sentMesages));
     }
 
+    /**
+     * Deletes selected message from database.
+     *
+     * @param id Id of the selected message that user wants to delete.
+     * @return Page where all messages are shown.
+     */
     @RequireCSRFCheck
     public Result deleteMessage(Integer id){
         Message message = Message.getMessageById(id);
         User currentUser = SessionHelper.currentUser();
 
-
         if(currentUser.userType.id == ConstantsHelper.ADMIN) {
             if (message.receiver.id == currentUser.id && message.receiverVisible == true) {
                 message.receiverVisible = false;
@@ -141,22 +138,36 @@ public class MessageController extends Controller {
         }
     }
 
+    /**
+     * Renders page where user can send new message to the other users. User needs to input receivers email and
+     * content of the message. If the email and content are not inputed, prints error message.
+     *
+     * @param email Receivers email.
+     * @return Page where user can send other user message.
+     */
     @Security.Authenticated(CurrentBuyerSeller.class)
     public Result newMessage(String email) {
         return ok(newMessage.render(email, messageForm));
     }
 
+    /**
+     * Renders page where message and all information about message are shown. If the message is received user can
+     * reply to received message.
+     *
+     * @param id Id of the selected message.
+     * @return Page where selected message is shown.
+     */
     @Security.Authenticated(CurrentBuyerSeller.class)
     public Result replyMessage(Integer id) {
+        // Finding current user.
         User user = SessionHelper.currentUser();
-
+        // Finding selected message.
         Message message = Message.getMessageById(id);
-
+        // Checking if the user is sender and updating message to read.
         if (!message.sender.equals(user)) {
             message.isRead = true;
             message.update();
         }
-
         return ok(replyMessage.render(message));
     }
 
@@ -174,5 +185,4 @@ public class MessageController extends Controller {
             return ok("Validation successful.");
         }
     }
-
 }

@@ -85,9 +85,11 @@ public class PayPalController extends Controller {
      */
     @Security.Authenticated(CurrentBuyer.class)
     @RequireCSRFCheck
-    public Result purchaseProcessing() {
+    public Result purchaseProcessing(Integer cartId) {
         try {
-            cartItems = Cart.findCartByUser(currentUser).cartItems;
+            //cartItems = Cart.findCartByUser(currentUser).cartItems;
+
+            cartItems = Cart.findCartById(cartId).cartItems;
             purchaseItems = new ArrayList<>();
 
             //Configuration PayPal

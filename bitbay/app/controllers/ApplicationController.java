@@ -30,7 +30,6 @@ public class ApplicationController extends Controller {
     // Declaring variable.
     private static final Form<UserLogin> loginForm = Form.form(UserLogin.class);
     private static final Form<UserRegistration> registrationForm = Form.form(UserRegistration.class);
-    private static final Finder<String, FAQ> faqFinder = new Finder<>(FAQ.class);
 
     /**
      * Renders index.html page on which are listed all products from database. User can select product and depending on
@@ -39,12 +38,8 @@ public class ApplicationController extends Controller {
      * @return Index page of the application.
      */
     public Result index() {
+        // Finding recommended products.
         List<Product> recommendations = Recommendation.getRecommendations();
-
-        for (Product p : recommendations) {
-            Logger.info("Name of product is: " + p.name);
-        }
-
         // Declaring list that contains all products from database.
         List<Product> products = Product.getRandomProducts();
         return ok(index.render(products, recommendations));
@@ -52,7 +47,8 @@ public class ApplicationController extends Controller {
 
     /**
      * Renders faq.html page on which are listed all faqs from database.
-     * @return Faq page.
+     *
+     * @return Page where user can read all FAQ.
      */
     public Result showFaq() {
         List<FAQ> faqs = FAQ.findAll();
@@ -86,7 +82,6 @@ public class ApplicationController extends Controller {
     public Result signIn() {
         // Checking if there is user that is logged in.
         if (!SessionHelper.isAuthenticated()) {
-
             return ok(signIn.render(loginForm));
         } else {
             return redirect(routes.ApplicationController.index());
@@ -94,22 +89,24 @@ public class ApplicationController extends Controller {
     }
 
     /**
-     * Method for rendering forgot password page where user can enter his email
-     * @return
+     * Method for rendering forgot password page where user can enter his email.
+     *
+     * @return Page where user can get new password.
      */
     public Result forgotPassword() {
-        User user = SessionHelper.currentUser();
         return ok(forgotPassword.render());
     }
 
     /**
-     * Method for rendering new password page ehere user can enter and confirm new password
-     * @return
+     * Method for rendering new password page where user can enter and confirm new password.
+     *
+     * @return Page where user can input new password.
      */
     public Result newPassword(String email){
         User user = User.getUserByEmail(email);
         return ok(newPassword.render(user));
     }
+
     /**
      * Reads values that are inputed on signIn.html page and validates them. On sign in user needs to input correct
      * email and password. If the email or password are incorrect, or if the email or password are not inputed, warning
@@ -122,10 +119,8 @@ public class ApplicationController extends Controller {
     public Result validateSignIn() {
         // Connecting with sign in form.
         Form<UserLogin> boundForm = loginForm.bindFromRequest();
-        // Checking are the inputed values correct and if the form has errors.
+        // Checking are the inputed values correct and if the form has errors printing warning message.
         if (boundForm.hasErrors()) {
-            // If form has errors printing warning message.
-            //flash("signInError", "Please input email and password.");
             return badRequest(signIn.render(boundForm));
         } else {
             // Clearing all sessions and creating new session that stores user email
@@ -173,8 +168,9 @@ public class ApplicationController extends Controller {
             user.setValidated(false);
             // Saving new user into database.
             user.save();
+            // Sending new user validation link.
             MailHelper.send(user.email, ConstantsHelper.BIT_BAY + "/signup/validate/" + user.token);
-
+            // Rendering sign in page.
             return redirect(routes.ApplicationController.signIn());
         }
     }
@@ -225,11 +221,9 @@ public class ApplicationController extends Controller {
      * Represents inner class that has two variables that are required.
      */
     public static class UserLogin {
-        @Constraints.MaxLength(255)
         @Constraints.Required(message = "Please input email.")
         @Constraints.Email(message = "Valid email is required.")
         public String email;
-        @Constraints.MaxLength(255)
         @Constraints.MinLength(value = 8, message = "Minimum 8 characters are required.")
         @Constraints.Required(message = "Please input password.")
         public String password;
@@ -247,8 +241,9 @@ public class ApplicationController extends Controller {
             if (user == null || user.userType.id == ConstantsHelper.ADMIN) {
                 errors.add(new ValidationError("password", "Wrong email or password."));
             }
-            if(!user.validated){
-                errors.add(new ValidationError("password", "Please verify your email"));
+            // Checking if the user account is validated.
+            if(user != null && !user.validated){
+                errors.add(new ValidationError("password", "Please verify your email."));
             }
             return errors.isEmpty() ? null : errors;
         }
@@ -312,9 +307,5 @@ public class ApplicationController extends Controller {
             }
             return errors.isEmpty() ? null : errors;
         }
-
     }
-
-
-    
 }

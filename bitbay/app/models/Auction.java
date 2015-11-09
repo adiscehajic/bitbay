@@ -103,10 +103,6 @@ public class Auction extends Model {
         List<Auction> auctions = finder.all();
         // Declaring variable that represents current date.
         Date currentDate = new Date();
-
-        User user = User.getUserByEmail("bitbayservice@gmail.com");
-        // Declaring bitbay service user as message sender.
-        User sender = user;
         // Going trough all auctions.
         for (int i = 0; i < auctions.size(); i++) {
             // Declaring variable that represents auction ending date.
@@ -121,7 +117,7 @@ public class Auction extends Model {
                 String winningMessage = "Congratulations!!! You won bitBay auction for item #" + auctions.get(i).product.id + " - " + auctions.get(i).product.name +
                         ".\n\r \n\r To proceed with transaction please contact: " + auctions.get(i).product.user.email;
                 // Declaring and saving winning message.
-                Message message = new Message(sender, highestBid.user, "Auction Winning", winningMessage);
+                Message message = new Message(CommonHelpers.serviceUser(), highestBid.user, "Auction Winning", winningMessage);
                 message.save();
                 //Sending SMS notification to auction winner.
                 String sms = "Congratulations!!! You won bitBay auction for item #" + auctions.get(i).product.id + " - " + auctions.get(i).product.name+". " + "This product has been sent to your cart";
@@ -156,7 +152,7 @@ public class Auction extends Model {
                 // Going trough all emails and sending message.
                 while (iter.hasNext()) {
                     User receiver = User.getUserByEmail(iter.next());
-                    Message msg = new Message(sender, receiver, "Auction results", losingMessage);
+                    Message msg = new Message(CommonHelpers.serviceUser(), receiver, "Auction results", losingMessage);
                     msg.save();
                 }
                 // Setting auction status to inactive.

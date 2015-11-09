@@ -12,71 +12,91 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="userInfoWrapper" style="height: 400px; width: 96%; margin-left: 20px" >
-                                <div class="col-md-3 col-lg-3 ">
-                                            @if(Image.getUserImage(user) != null) {
-                                                <img class="img-responsive" alt="User Pic" src="@Image.getUserImage(user).getSize(300,300)" class="img-rounded img-responsive">
-                                            } else {
-                                                <img class="img-responsive" alt="User pic" src="http://placehold.it/300x300" class="img-rounded img-responsive">
-                                            }
-                                        @if(user.id == SessionHelper.currentUser().id) {
-                                            <form method="POST" action="@helper.CSRF(routes.Users.saveUserPicture())" enctype="multipart/form-data">
-                                                <div style="text-align: center">
-                                                <input type="file" class="filestyle" name="image" onchange="form.submit()" data-classButton="btn btn-default" data-input="false" data-classIcon="icon-plus" data-buttonText="Change picture" align="middle" accept="image/*" >
-                                                </div>
-                                            </form>
-                                        }
-                                <div>
-                                @if(user.userType.id == 3) {
-                                    <span  class="fa-stack fa-2x" style="margin-left: auto; margin-right: auto; width: 9em; margin-top: 10px" title="Users rating">
-                                        <i class="fa fa-star fa-stack-2x"></i>
-                                        <strong class="fa-stack-1x star-text">@User.getAverageUserRating(user)</strong>
-                                    </span>
+                            <div class="col-md-3 col-lg-3">
+                                <div class="col-md-12 col-lg-12">
+                                @if(Image.getUserImage(user) != null) {
+                                    <img class="img-responsive" alt="User Pic" src="@Image.getUserImage(user).getSize(300,300)" class="img-rounded img-responsive">
+                                } else {
+                                    <img class="img-responsive" alt="User pic" src="http://placehold.it/300x300" class="img-rounded img-responsive">
+                                    }
+                                </div>
+                                <div class="col-md-12 col-lg-12">
+                                @if(user.id == SessionHelper.currentUser().id) {
+                                    <form method="POST" action="@helper.CSRF(routes.Users.saveUserPicture())" enctype="multipart/form-data">
+                                        <div style="text-align: center">
+                                            <input type="file" class="filestyle" name="image" onchange="form.submit()" data-classButton="btn btn-default" data-input="false" data-classIcon="icon-plus" data-buttonText="Change picture" align="middle" accept="image/*" >
+                                        </div>
+                                    </form>
                                 }
                                 </div>
-                                </div>
-                                <div class=" col-md-9 col-lg-9 ">
-                                    <div class="col-md-9 personal-info">
-                                        <h1 style="margin-bottom: 40px;">@user.firstName @user.lastName</h1>
-                                        <table>
-                                            <thead></thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><label>Email: </label></td>
-                                                    <td><label>@user.email</label></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>Type: </label></td>
-                                                    <td><label>@user.userType.name</label></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>Phone number: </label></td>
-                                                    <td><label>@user.phoneNumber</label></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>Coutry: </label></td>
-                                                    <td><label>@user.country</label></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>Zip: </label></td>
-                                                    <td><label>@user.zip</label></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                            </div>
+                            <div class=" col-md-8 col-lg-8">
+                                <div class="row">
+                                    <div class="col-md-3 col-lg-3">
+                                        <label>Email: </label>
+                                    </div>
+                                    <div class="col-md-9 col-lg-9">
+                                        <label>@user.email</label>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-3 col-lg-3">
+                                        <label>Type: </label>
+                                    </div>
+                                    <div class="col-md-9 col-lg-9">
+                                        <label>@user.userType.name</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 col-lg-3">
+                                        <label>Phone number: </label>
+                                    </div>
+                                    @if(user.phoneNumber != null) {
+                                        <div class="col-md-9 col-lg-9">
+                                            <label>@user.phoneNumber</label>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 col-lg-3">
+                                        <label>Country: </label>
+                                    </div>
+                                    @if(user.country != null) {
+                                        <div class="col-md-9 col-lg-9">
+                                            <label>@user.country.name</label>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 col-lg-3">
+                                        <label>City: </label>
+                                    </div>
+                                    @if(user.city != null) {
+                                        <div class="col-md-9 col-lg-9">
+                                            <label>@user.city</label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-lg-1">
+                            @if(user.userType.id == 3) {
+                                <span  class="fa-stack fa-2x" title="Users rating">
+                                    <i class="fa fa-star fa-stack-2x"></i>
+                                    <strong class="fa-stack-1x star-text">@User.getAverageUserRating(user)</strong>
+                                </span>
+                            }
                             </div>
                         </div>
                         <div class="panel-footer" style="background-color: transparent; border-top: none">
                             <span>
-                                    @if(user.userType.id == 3) {
-                                        <a href="@routes.Users.getAllUserProducts(user.email)"><button type="submit" class="btn btn-lg btn-primary" >
-                                            Products</button></a>
-                                        @if(user.id != SessionHelper.currentUser().id) {
-                                            <a href="@routes.MessageController.newMessage(user.email)"><button type="submit" class="btn btn-lg btn-success" >
-                                                Message <span class="glyphicon glyphicon-send"></span></button></a>
-                                        }
+                                @if(user.userType.id == 3) {
+                                    <a href="@routes.Users.getAllUserProducts(user.email)"><button type="submit" class="btn btn-lg btn-primary" >
+                                        Products</button></a>
+                                    @if(user.id != SessionHelper.currentUser().id) {
+                                        <a href="@routes.MessageController.newMessage(user.email)"><button type="submit" class="btn btn-lg btn-success" >
+                                            Message <span class="glyphicon glyphicon-send"></span></button></a>
                                     }
+                                }
                                 @if(SessionHelper.currentUser().email == user.email) {
                                     <a href="@routes.Users.editUser()" title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning"><i class="glyphicon glyphicon-edit" style="font-size : 20 px"></i>
                                         Edit</a>
@@ -86,7 +106,6 @@
                             </span>
                         </div>
                     </div>
-
                     <script >
                       $(document).ready(function(){
                       $('#deleteUser').click(function(){

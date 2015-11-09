@@ -1,3 +1,4 @@
+@import java.util.List
 @(cartItems : List[CartItem])(user: User)
     @import helpers.SessionHelper;
     @import helper._
@@ -9,7 +10,7 @@
                 <div class="panel-title">@user.firstName's Cart</div>
             </div>
             <div class="panel-body">
-            @if(cartItems == null || cartItems.length == 0) {
+            @if(cartItems == null || cartItems.size() == 0) {
                 <h2 align="center"> Your cart is empty! </h2>
                 <br>
                 <a href="@routes.ApplicationController.index()"><button class="btn btn-primary center-block"> Homepage </button></a>
@@ -83,7 +84,7 @@
                             <label style="margin-bottom: 15px;"> Total: <label style="font-size: 20px; margin-left: 15px; border-bottom: 1px solid lightblue; margin-top: 20px"> @Cart.cartAmount(user) KM </label></label><br>
 
                             <a href="@routes.ApplicationController.index()"><button class="btn btn-success" style="min-width: 170px; margin-bottom: 10px"><span class="fa fa-arrow-left"></span> Continue shopping </button></a>
-                            <form method="POST" action="@helper.CSRF(controllers.routes.PayPalController.purchaseProcessing())">
+                            <form method="POST" action="@helper.CSRF(controllers.routes.PayPalController.purchaseProcessing(cartItems.get(0).cart.id))">
                                 <button type="submit" id="paypal" style="min-width: 170px; margin-top: 10px; margin-bottom: 20px" class="btn btn-primary">Checkout <span class="fa fa-arrow-right"></span></button>
                             </form>
                         </div>

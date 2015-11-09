@@ -25,7 +25,6 @@ import views.html.product.productProfile;
 import views.html.product.searchProduct;
 import views.html.user.userProducts;
 import views.html.category.viewProductsByCategory;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,27 +48,11 @@ public class ProductController extends Controller {
      * @return Page where all product informations are shown.
      */
     public Result getProduct(Integer id) {
-
+        // Getting the average rating of the product.
         String averageRating = Rating.getAverageRating(id);
-        Logger.info(averageRating);
         // Finding selected product.
         Product product = Product.getProductById(id);
         // Declaring image path.
-
-
-       // List<Recommendation.ProductCount> productRecommendations = Recommendation.getRecommended(product);
-
-       // for (int i = 0; i < productRecommendations.size(); i++) {
-         //   Logger.info(productRecommendations.get(i).toString());
-       // }
-
-
-
-
-
-
-
-
         String path = Image.getImagePath(product);
         // Declaring the list of comments and the list of top comments.
         List<Comment> comments = Comment.sortCommentByDate(product);
@@ -84,31 +67,12 @@ public class ProductController extends Controller {
         User user = SessionHelper.currentUser();
         // Finding category of selected product.
         Category category = Category.getCategoryById(product.category.id);
-        // Declaring recommendation
-
+        // Saving that user has viewed product.
         if (user != null) {
             Recommendation.savingProductView(user, product);
         }
-       /*
-        Recommendation recommendation = Recommendation.getRecommendationByUserAndCategory(user, category);
-        // Checking if recommendation exists.
-        if (recommendation != null) {
-            // If recommendation exists increase recommendation count for one and update recommendation.
-            recommendation.count++;
-            recommendation.update();
-        } else {
-            // If recommendation does not exist creating new recommendation and saving into database.
-            Recommendation newRecommendation = new Recommendation(user, category);
-            newRecommendation.save();
-        }
-
-        List<Product> recommendedProducts = Product.getFourRandomProducts(Product.findAllProductsByCategory(category));
-        */
-
+        // Finding the list of recommended products.
         List<Product> recommendedProducts = Recommendation.getRecommendedProducts(product);
-
-        Logger.info("Number of recommendations is: " + recommendedProducts.size());
-
         // Rendering product profile page.
         return ok(productProfile.render(product, path, comments, topComments, recommendedProducts, averageRating));
     }
@@ -197,10 +161,8 @@ public class ProductController extends Controller {
             Product product = boundForm.get();
             product.user = user;
             product.category = category;
-
             // Saving product into database.
             product.save();
-
             // Getting selected images
             Http.MultipartFormData body = request().body().asMultipartFormData();
             List<Http.MultipartFormData.FilePart> fileParts = body.getFiles();
@@ -212,21 +174,22 @@ public class ProductController extends Controller {
                     image.save();
                 }
             }
-
+            // Checking if the selling type of the product is by auction.
             if (product.sellingType.equals("2")) {
+                // Connecting with auction form.
                 Form<Auction> auctionBoundForm = auctionForm.bindFromRequest();
+                // Creating new auction.
                 Auction auction = auctionBoundForm.get();
-
+                // Declaring the variable that represents how long is the duration of the auction.
                 String days = auctionBoundForm.data().get("auction-duration");
                 //String buyItNowPrice = auctionBoundForm.data().get("buy-it-now-price");
-
+                // Updating the product price and quantity.
                 product.price = auction.startingPrice;
                 product.quantity = 1;
                 product.update();
-
+                // Setting the starting and ending date of the auction and saving the auction.
                 auction.startingDate = new Date();
                 auction.product = product;
-
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(new Date());
                 calendar.add(Calendar.DATE, Integer.parseInt(days));
@@ -297,19 +260,16 @@ public class ProductController extends Controller {
             product.description = boundForm.bindFromRequest().field("description").value();
             product.sellingType = boundForm.bindFromRequest().field("sellingType").value();
             product.manufacturer = boundForm.bindFromRequest().field("manufacturer").value();
-
+            // If the product selling type is not auction user can update product selling price and quantity.
             if (product.auction == null) {
                 product.price = Double.parseDouble(boundForm.bindFromRequest().field("price").value());
                 product.quantity = Integer.parseInt(boundForm.bindFromRequest().field("quantity").value());
             }
-
             // Saving all changes into database.
             product.update();
-
             // Getting selected images
             Http.MultipartFormData body = request().body().asMultipartFormData();
             List<Http.MultipartFormData.FilePart> fileParts = body.getFiles();
-
             // Checking if the product already has uploaded images. If product has images, first deletes all old images
             // and then saves new images.
             if (product.images.size() > 0 && fileParts.size() > 0) {
@@ -326,7 +286,6 @@ public class ProductController extends Controller {
                     image.save();
                 }
             }
-
             // Rendering product profile page.
             return redirect(routes.ProductController.getProduct(product.id));
         } catch (Exception e) {
@@ -370,7 +329,6 @@ public class ProductController extends Controller {
             return ok(searchProduct.render(products));
         }
         return redirect(routes.ApplicationController.index());
-
     }
 
     /**
@@ -411,28 +369,36 @@ public class ProductController extends Controller {
         }
     }
 
+    /**
+     * Saves the rating of the product that current user has selected. If the user has rated the product multiple times
+     * it always saves the last rate. Only users that had bought product can rate the product.
+     *
+     * @return The JSON object that contains the rate of the product.
+     */
     public Result productRating() {
+        // Connecting with the form.
         DynamicForm form = Form.form().bindFromRequest();
+        // Declaring the variable that contains the product id.
         String productId = form.get("productId");
+        // Finding the selected product.
         Integer id = Integer.parseInt(productId);
         Product product = Product.getProductById(id);
         User user = SessionHelper.currentUser();
+        // Declaring the variable that contain the user rate of the product.
         String numOfStars = form.get("rating");
         Integer intRatingValue = Integer.parseInt(numOfStars);
-
+        // Checking has the user rated the product. If the user has rated the product multiple times it always saves
+        // the last rate, otherwise saves the new rate.
         if(Rating.hasRated(product)) {
-            Logger.info(product.name);
             Rating rating = Rating.getRating(product);
             rating.rate = intRatingValue;
-           // Logger.info(rating.rate.toString());
             rating.update();
         } else {
             Rating rating = new Rating(user, product, intRatingValue);
             rating.save();
         }
+        // Declaring and returning JSON object.
         JsonNode object = Json.toJson(numOfStars);
         return ok(object);
     }
-
 }
-

@@ -307,7 +307,4 @@ public class Recommendation extends Model {
         }
 
     }
-
-
-
 }

@@ -31,7 +31,7 @@ import java.util.List;
 
 
 /**
- * Created by adis.cehajic on 02/09/15.
+ * Created by Adis Cehajic on 02/09/15.
  */
 @Entity
 public class User extends Model {
