@@ -73,5 +73,4 @@ public class CartItem extends Model {
         CartItem cartItem = CartItem.finder.where().eq("product", product).where().eq("user", user).findUnique();
         return cartItem;
     }
-
 }

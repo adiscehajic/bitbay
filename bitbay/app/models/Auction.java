@@ -114,13 +114,16 @@ public class Auction extends Model {
                 // Declaring variable that represents highest bid.
                 Bid highestBid = bids.get(0);
                 // Declaring string variable that represents winning message.
-                String winningMessage = "Congratulations!!! You won bitBay auction for item #" + auctions.get(i).product.id + " - " + auctions.get(i).product.name +
+                String winningMessage = "Congratulations!!! You won bitBay auction for item #" +
+                        auctions.get(i).product.id + " - " + auctions.get(i).product.name +
                         ".\n\r \n\r To proceed with transaction please contact: " + auctions.get(i).product.user.email;
                 // Declaring and saving winning message.
-                Message message = new Message(CommonHelpers.serviceUser(), highestBid.user, "Auction Winning", winningMessage);
+                Message message = new Message(CommonHelpers.serviceUser(), highestBid.user, "Auction Winning",
+                        winningMessage);
                 message.save();
                 //Sending SMS notification to auction winner.
-                String sms = "Congratulations!!! You won bitBay auction for item #" + auctions.get(i).product.id + " - " + auctions.get(i).product.name+". " + "This product has been sent to your cart";
+                String sms = "Congratulations!!! You won bitBay auction for item #" + auctions.get(i).product.id +
+                        " - " + auctions.get(i).product.name+". " + "This product has been sent to your cart";
                 if(highestBid.user.phoneNumber != null) {
                     SmsHelper.sendSms(sms, highestBid.user.phoneNumber);
                 }
