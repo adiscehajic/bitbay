@@ -151,4 +151,18 @@ public class PurchaseItem extends Model {
         // Returning the list of the top 10 most purchased products.
         return mostPurchased;
     }
+
+    @Override
+    public String toString() {
+        return "PurchaseItem{" +
+                "id=" + id +
+                ", user=" + user +
+                ", product=" + product +
+                ", purchase=" + purchase +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", cancelationDueDate=" + cancelationDueDate +
+                ", isRefunded=" + isRefunded +
+                '}';
+    }
 }

@@ -41,7 +41,7 @@ public class PayPalController extends Controller {
 
     private static String priceString;
     private static String productString;
-    private static String desc = "";
+    private static String desc;
 
     private static String token;
 
@@ -58,11 +58,12 @@ public class PayPalController extends Controller {
     private static Transaction transaction;
 
     private static Payer payer;
+    private static String payerID;
 
     private static Payment payment;
     private static Payment madePayments;
-    private static String paymentID = "";
-    private static String saleID = "";
+    private static String paymentID;
+    private static String saleID;
 
     private static RedirectUrls redirects;
 
@@ -115,63 +116,77 @@ public class PayPalController extends Controller {
             for (int i = 0; i < cartItems.size(); i++){
                 CartItem cartItemI = cartItems.get(i);
                 price = cartItemI.price;
+                //adding an item price to total price
                 totalPrice += price;
                 quantity = cartItemI.quantity;
                 productString = cartItemI.product.name;
+                //creating a price string for a purchased item
                 priceString = String.format("%1.2f", price);
+                //creating a description for a purchase
                 desc += "Product: " + productString + "  -   Quantity: " + quantity + " --- ";
+                //creating new purchase item
                 purchaseItem = new PurchaseItem(cartItemI.product, cartItemI.user, purchase, quantity);
                 // Adding the purchase item to the purchaseItems list
                 purchaseItems.add(purchaseItem);
+                Logger.info("Purchase item details: " + purchaseItem.toString());
             }
             //creating a new purchase for a current user, purchased items list,
             //total price and generated token which is going to be used for a payment execution
             purchase = new Purchase(currentUser,purchaseItems,totalPrice,token);
             purchase.save();
 
+            //purchase id from a database
             purchaseId = purchase.id;
 
+            //price string for a total amount for PayPal
             priceString = String.format("%1.2f", totalPrice);
 
             desc += " >> Total amount: " + priceString;
+
+            //string for a mail context
             messageInvoice = desc;
 
-        /* details to render in the success view */
+            //details to render in the success view
             details = new ArrayList<String>();
             details.add("Total price " + priceString);
 
             // Configure payment
 
+            //Amount object for PayPal
             amount = new Amount();
             amount.setTotal(priceString);
             amount.setCurrency("USD");
 
+            //transaction object for PayPal
             transactionList = new ArrayList<>();
             transaction = new Transaction();
             transaction.setAmount(amount);
             transaction.setDescription(desc);
             transactionList.add(transaction);
 
+            //payer object for PayPal
             payer = new Payer();
             payer.setPaymentMethod("paypal");
 
+            //payment object
             payment = new Payment();
             payment.setIntent("sale");
             payment.setPayer(payer);
             payment.setTransactions(transactionList);
 
-            /** Redirect urls*/
+            //Redirect urls
             redirects = new RedirectUrls();
             redirects.setCancelUrl("http://localhost:9000/purchasefail");
             redirects.setReturnUrl("http://localhost:9000/purchasesuccess");
             payment.setRedirectUrls(redirects);
 
+            //creating payment
             madePayments = payment.create(context);
 
-       /*Iterating through the url lists received from the paypal response
-         * and checking if we got a approval_url
-         * If a approval url is found, we can redirect the client to the
-         * paypal checkout page*/
+            //Iterating through the url lists received from the paypal response
+            //and checking if we got an approval_url
+            //If an approval url is found, we can redirect the client to the
+            //paypal checkout page
             Iterator<Links> it = madePayments.getLinks().iterator();
             while(it.hasNext()) {
                 Links link = it.next();
@@ -193,19 +208,19 @@ public class PayPalController extends Controller {
      * in other words, if the user continues to approve transaction during the
      * paypal checkout
      *
-     * @return
+     * @return purchaseResult page
      */
     public Result purchaseSuccess() {
         DynamicForm paypalReturn = Form.form().bindFromRequest();
 
-        //These datas are generated in the return_url
+        //This data is generated in the return_url
         paymentID = paypalReturn.get("paymentId");
-        String payerID = paypalReturn.get("PayerID");
-        String token = paypalReturn.get("token");
+        payerID = paypalReturn.get("PayerID");
+        //token = paypalReturn.get("token");
 
         try {
-            String accessToken = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID,
-                    ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
+            String accessToken = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID, ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
+
             Map<String, String> sdkConfig = new HashMap<String, String>();
             sdkConfig.put("mode", "sandbox");
             context = new APIContext(accessToken);
@@ -244,6 +259,13 @@ public class PayPalController extends Controller {
      * @return
      */
     public Result purchaseFail() {
+
+        for (int i = 0; i < purchaseItems.size(); i++){
+            purchaseItems.get(i).delete();
+        }
+
+        purchase.delete();
+
         flash("error");
         return ok(userCart.render(cartItems,currentUser));
     }
