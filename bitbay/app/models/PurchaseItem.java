@@ -1,8 +1,11 @@
 package models;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model;
+import com.avaje.ebean.SqlRow;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import helpers.SessionHelper;
+import play.Logger;
 import play.data.format.Formats;
 
 import javax.persistence.Column;
@@ -112,5 +115,40 @@ public class PurchaseItem extends Model {
      */
     public static Boolean hasPurchesedProduct(Product product){
         return (finder.where().eq("product", product).where().eq("user", SessionHelper.currentUser()).where().eq("isRefunded", 0).findList().size() > 0) ? true : false;
+    }
+
+    /**
+     * Finds the top 10 products that are most purchased in the last 7 days. It goes through purchase_item table and
+     * calculates how many times is the each product purchased and sorts the count of product purchases.
+     *
+     * Top 10 products are shown on slider that is on main page od the application. The products that are shown on the
+     * slider are every day different and they depend on user product purchase.
+     *
+     * @return The list of top 10 most purchased products in the last 7 days.
+     */
+    public static List<Product> getMostSellingPurchaseItems() {
+        // Declaring the list that will contain the top 10 products.
+        List<Product> mostPurchased = new ArrayList<>();
+        // Declaring the sql query that will find top 10 products.
+        String sql = "SELECT product_id FROM purchase_item INNER JOIN purchase ON purchase_item.purchase_id = " +
+                "purchase.id WHERE purchase.purchase_date > :purchaseDate GROUP BY product_id ORDER BY " +
+                "COUNT(product_id) DESC LIMIT 10;";
+
+        // Declaring variable that represent the current date.
+        Date purchaseDate = new Date();
+        // Setting the date variable to date 7 days before current date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(purchaseDate);
+        calendar.add(Calendar.DATE, -7);
+        purchaseDate = calendar.getTime();
+        // Declaring the list that contain the SqlRows that sql query has returned.
+        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).setParameter("purchaseDate", purchaseDate).findList();
+        // Going trough every SqlRow and adding returned product to the top 10 product list.
+        for (SqlRow sqlRow : sqlRows) {
+            Product product  = Product.getProductById(sqlRow.getInteger("product_id"));
+            mostPurchased.add(product);
+        }
+        // Returning the list of the top 10 most purchased products.
+        return mostPurchased;
     }
 }
