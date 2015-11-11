@@ -48,7 +48,7 @@ public class CartController extends Controller {
         if (cartItem == null) {
             cartItem = new CartItem(product, user, cart);
         }
-        
+
         // Checking if the cart of current user exists and if there is cart items in the cart.
         if(cart != null && cart.cartItems.size() > 0) {
             // If the user clicks again on the button ADD TO CART increasing amount of product in the cart for one.

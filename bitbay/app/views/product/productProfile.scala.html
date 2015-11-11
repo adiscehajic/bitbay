@@ -99,10 +99,10 @@
 						@if(session().get("email") != null && (User.getUserByEmail(session().get("email"))).userType.id == 2) {
 							<form action="@helper.CSRF(routes.CartController.addToCart(product.id))" method="POST">
 							@if(product.quantity > 0) {
-								<button type="submit " class="btn btn-primary" style="margin-bottom : 20 px">
+								<button type="submit" class="btn btn-primary" style="margin-bottom : 20 px">
 									Add to cart </button>
 							} else {
-								<button type="submit " class="btn btn-primary" style="margin-bottom : 20 px" disabled>
+								<button type="submit" class="btn btn-primary" style="margin-bottom : 20 px" disabled>
 									Add to cart </button>
 							}
 							</form>

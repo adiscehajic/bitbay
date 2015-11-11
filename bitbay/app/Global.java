@@ -13,6 +13,7 @@ import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -176,16 +177,6 @@ public class Global extends GlobalSettings {
                 users.get(i).save();
             }
 
-            /*
-            userOne.save();
-            userTwo.save();
-            userThree.save();
-            userFour.save();
-            userFive.save();
-            userSix.save();
-            userSeven.save();
-            userEight.save();
-*/
             Category categoryOne = new Category("Other", null);
             Category categoryTwo = new Category("Electronics", null);
             Category categoryThree = new Category("Fashion", null);
@@ -963,6 +954,13 @@ public class Global extends GlobalSettings {
             buyers.add(userNine);
             buyers.add(userEleven);
 
+            List<User> sellers = new ArrayList<>();
+            sellers.add(userOne);
+            sellers.add(userThree);
+            sellers.add(userFive);
+            sellers.add(userTen);
+            sellers.add(userTwelve);
+
             List<Product> products = new ArrayList<>();
             products.add(p1);
             products.add(p2);
@@ -1069,7 +1067,6 @@ public class Global extends GlobalSettings {
             Random num = new Random();
 
             for (int i = 0; i < 250; i++) {
-
                 Recommendation.savingProductView(userOne, Product.getProductById((num.nextInt(90) + 1)));
                 Recommendation.savingProductView(userTwo, Product.getProductById((num.nextInt(90) + 1)));
                 Recommendation.savingProductView(userThree, Product.getProductById((num.nextInt(90) + 1)));
@@ -1081,11 +1078,20 @@ public class Global extends GlobalSettings {
                 Recommendation.savingProductView(userEleven, Product.getProductById((num.nextInt(90) + 1)));
                 Recommendation.savingProductView(userTwelve, Product.getProductById((num.nextInt(90) + 1)));
 //                Recommendation.savingProductView(userTwelve, Product.getProductById((num.nextInt(45-29) + 29)));
-
             }
 
             for (int i = 1; i < 1000; i++) {
-                new Rating(buyers.get(num.nextInt(3)), Product.getProductById((num.nextInt(96) + 1)), (num.nextInt(5) + 1)).save();
+                new Rating(buyers.get(num.nextInt(4)), Product.getProductById((num.nextInt(96) + 1)), (num.nextInt(5) + 1)).save();
+            }
+
+            for (int i = 0; i < sellers.size(); i++) {
+                Purchase purchase = new Purchase("PAY-32349787AP362040NKZARUTY", "bitc8448e3", "8J9338302G4262634", 600.00, "Bearer A101.T2pfWYf0fD6I-FE1A8LHHRIrZBgdpIFwwj5uMzScNK5HSEnE81rogK6jOySziT6F.12LMW8fogcBwHMYmT8UH_S0o2BG", sellers.get(i), new Date());
+                purchase.save();
+            }
+
+            for (int i = 0; i < 100; i++) {
+                PurchaseItem purchaseItem = new PurchaseItem(Product.getProductById((num.nextInt(90) + 1)), sellers.get(num.nextInt(5)), Purchase.findPurchaseById(num.nextInt(6) + 1), (num.nextInt(10) + 1));
+                purchaseItem.save();
             }
 
             FAQ f1 = new FAQ("Registration and account info\n", "Your account is your identity on bitBay. You use your account to buy, sell, communicate with bitBay members, and leave Feedback for bitBay buyers and sellers.\n" +
