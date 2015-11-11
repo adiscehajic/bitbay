@@ -1,5 +1,7 @@
 logs
 target
+.DS_Store
+app/.DS_Store
 /.idea
 /.idea_modules
 /.classpath
