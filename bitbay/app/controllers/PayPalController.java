@@ -216,21 +216,24 @@ public class PayPalController extends Controller {
         //This data is generated in the return_url
         paymentID = paypalReturn.get("paymentId");
         payerID = paypalReturn.get("PayerID");
-        //token = paypalReturn.get("token");
 
         try {
+            //configuration
             String accessToken = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID, ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
-
             Map<String, String> sdkConfig = new HashMap<String, String>();
             sdkConfig.put("mode", "sandbox");
             context = new APIContext(accessToken);
             context.setConfigurationMap(sdkConfig);
+
+            //Payment which has been approved
             payment = Payment.get(accessToken, paymentID);
+            //execution of purchase
             paymentExecution = new PaymentExecution();
             paymentExecution.setPayerId(payerID);
 
             //Executes a payment
             Payment newPayment = payment.execute(context, paymentExecution);
+            //getting a sale id
             saleID = newPayment.getTransactions().get(0).getRelatedResources().get(0).getSale().getId();
 
             purchase = Purchase.findPurchaseById(purchaseId);
@@ -294,6 +297,7 @@ public class PayPalController extends Controller {
      */
     public static void savePurchaseItemToDatabase(List<PurchaseItem> purchaseItems, Purchase purchase, List<CartItem> cartItems){
         Product product;
+        Cart cart = null;
 
         for (int i = 0; i < purchaseItems.size(); i++) {
             PurchaseItem item = purchaseItems.get(i);
@@ -312,7 +316,10 @@ public class PayPalController extends Controller {
         for (int i = 0; i < cartItems.size(); i++) {
             CartItem cartItemI = cartItems.get(i);
             cartItemI.delete();
+            cart = cartItemI.cart;
         }
+        if (cart != null)
+        cart.delete();
     }
 
 
