@@ -106,7 +106,10 @@ GET           /user/:email                            @controllers.Users.getUser
 GET           /assets/*file                           controllers.Assets.versioned(path="/public", file: Asset)
 
 #REST
-GET           /api/signin                             @controllers.rest.ApiUserController.validateSignIn()
-GET           /api/signup                             @controllers.rest.ApiUserController.newUser()
-GET           /api/products                           @controllers.rest.ApiProductController.getProductsList()
-GET           /api/product/:id                        @controllers.rest.ApiProductController.getProductById(id: Integer)
+GET           /api/signin                               @controllers.rest.ApiUserController.validateSignIn()
+GET           /api/signup                               @controllers.rest.ApiUserController.newUser()
+GET           /api/products                             @controllers.rest.ApiProductController.getProductsList()
+GET           /api/product/:id                          @controllers.rest.ApiProductController.getProductById(id: Integer)
+GET           /api/purchaseprocessing/:productId        @controllers.rest.ApiPayPalController.purchaseProcessing(productId: Integer)
+GET           /api/purchasesuccess                      @controllers.rest.ApiPayPalController.purchaseSuccess()
+GET           /api/purchasefail                         @controllers.rest.ApiPayPalController.purchaseFail()
