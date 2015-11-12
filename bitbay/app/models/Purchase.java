@@ -57,6 +57,27 @@ public class Purchase extends Model {
     }
 
     /**
+     * Constructor for creating new purchase.
+     *
+     * @param bitPayment_id
+     * @param payment_id
+     * @param sale_id
+     * @param totalPrice
+     * @param token
+     * @param user
+     * @param purchaseDate
+     */
+    public Purchase(String bitPayment_id, String payment_id, String sale_id, double totalPrice, String token, User user, Date purchaseDate) {
+        this.bitPayment_id = bitPayment_id;
+        this.payment_id = payment_id;
+        this.sale_id = sale_id;
+        this.totalPrice = totalPrice;
+        this.token = token;
+        this.user = user;
+        this.purchaseDate = purchaseDate;
+    }
+
+    /**
      * Finds purchase by the given user
      * @param user
      * @return

@@ -280,6 +280,7 @@ public class PayPalController extends Controller {
             product.update();
         }
 
+
         for (int i = 0; i < cartItems.size(); i++) {
             CartItem cartItemI = cartItems.get(i);
             cartItemI.delete();
