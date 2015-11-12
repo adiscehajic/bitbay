@@ -24,13 +24,15 @@ import javax.swing.text.html.HTML;
 import java.util.*;
 
 /**
+ * This class contains methods for sending requests to PayPal API
+ *
  * Created by Medina Banjic on 12/10/15.
  */
 @Security.Authenticated(CurrentBuyer.class)
 public class PayPalController extends Controller {
 
     /**
-     * PayPal configurated constants
+     * Fields and variables declarations
      */
     private static User currentUser = SessionHelper.currentUser();
 
@@ -39,7 +41,7 @@ public class PayPalController extends Controller {
 
     private static String priceString;
     private static String productString;
-    private static String desc = "";
+    private static String desc;
 
     private static String token;
 
@@ -56,11 +58,12 @@ public class PayPalController extends Controller {
     private static Transaction transaction;
 
     private static Payer payer;
+    private static String payerID;
 
     private static Payment payment;
     private static Payment madePayments;
-    private static String paymentID = "";
-    private static String saleID = "";
+    private static String paymentID;
+    private static String saleID;
 
     private static RedirectUrls redirects;
 
@@ -79,92 +82,111 @@ public class PayPalController extends Controller {
     private static String messageInvoice;
 
     /**
-     * This method configurates PayPal and PayPal payment information
-     * Redirects to payment approval
-     * @return approve_url
+     * This method configures PayPal and PayPal payment information
+     * Redirects to payment approval page
+     * @return return url if approved, cancel url if declined
      */
     @Security.Authenticated(CurrentBuyer.class)
     @RequireCSRFCheck
     public Result purchaseProcessing(Integer cartId) {
         try {
-            //cartItems = Cart.findCartByUser(currentUser).cartItems;
-
+            //list of items from current user cart
             cartItems = Cart.findCartById(cartId).cartItems;
+            //purchased items list
             purchaseItems = new ArrayList<>();
 
             //Configuration PayPal
-            token = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID, ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
 
+            //security token, required, String
+            token = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID, ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
+            //configuration of mode (sandbox or live)
             config = new HashMap<>();
             config.put("mode", "sandbox");
-
+            //forwarding generated token and config
             context = new APIContext(token);
             context.setConfigurationMap(config);
-
+            //initializing description and total price which we send to PayPal
             desc = "";
             totalPrice = 0;
 
             // Process cart/payment information
+
+            //this is a loop which iterates through cart and gets info from every cart item
+            //so that we can create desc and total price and also to save it to purchased items list
             for (int i = 0; i < cartItems.size(); i++){
                 CartItem cartItemI = cartItems.get(i);
                 price = cartItemI.price;
+                //adding an item price to total price
                 totalPrice += price;
                 quantity = cartItemI.quantity;
                 productString = cartItemI.product.name;
+                //creating a price string for a purchased item
                 priceString = String.format("%1.2f", price);
+                //creating a description for a purchase
                 desc += "Product: " + productString + "  -   Quantity: " + quantity + " --- ";
+                //creating new purchase item
                 purchaseItem = new PurchaseItem(cartItemI.product, cartItemI.user, purchase, quantity);
                 // Adding the purchase item to the purchaseItems list
                 purchaseItems.add(purchaseItem);
+                Logger.info("Purchase item details: " + purchaseItem.toString());
             }
-
+            //creating a new purchase for a current user, purchased items list,
+            //total price and generated token which is going to be used for a payment execution
             purchase = new Purchase(currentUser,purchaseItems,totalPrice,token);
             purchase.save();
 
+            //purchase id from a database
             purchaseId = purchase.id;
 
-
+            //price string for a total amount for PayPal
             priceString = String.format("%1.2f", totalPrice);
 
             desc += " >> Total amount: " + priceString;
+
+            //string for a mail context
             messageInvoice = desc;
 
-        /* details to render in the success view */
+            //details to render in the success view
             details = new ArrayList<String>();
             details.add("Total price " + priceString);
 
             // Configure payment
 
+            //Amount object for PayPal
             amount = new Amount();
             amount.setTotal(priceString);
             amount.setCurrency("USD");
 
+            //transaction object for PayPal
             transactionList = new ArrayList<>();
             transaction = new Transaction();
             transaction.setAmount(amount);
             transaction.setDescription(desc);
             transactionList.add(transaction);
 
+            //payer object for PayPal
             payer = new Payer();
             payer.setPaymentMethod("paypal");
 
+            //payment object
             payment = new Payment();
             payment.setIntent("sale");
             payment.setPayer(payer);
             payment.setTransactions(transactionList);
 
-            /** Redirect urls*/
+            //Redirect urls
             redirects = new RedirectUrls();
             redirects.setCancelUrl("http://localhost:9000/purchasefail");
             redirects.setReturnUrl("http://localhost:9000/purchasesuccess");
             payment.setRedirectUrls(redirects);
 
+            //creating payment
             madePayments = payment.create(context);
 
-       /*Iterating through the url lists received from the paypal response
-         * and checking if we got a approval_url
-         * If a approval url is found, we can redirect the client to the
-         * paypal checkout page*/
+            //Iterating through the url lists received from the paypal response
+            //and checking if we got an approval_url
+            //If an approval url is found, we can redirect the client to the
+            //paypal checkout page
             Iterator<Links> it = madePayments.getLinks().iterator();
             while(it.hasNext()) {
                 Links link = it.next();
@@ -186,29 +208,32 @@ public class PayPalController extends Controller {
      * in other words, if the user continues to approve transaction during the
      * paypal checkout
      *
-     * @return
+     * @return purchaseResult page
      */
     public Result purchaseSuccess() {
         DynamicForm paypalReturn = Form.form().bindFromRequest();
 
-        //These datas are generated in the return_url
+        //This data is generated in the return_url
         paymentID = paypalReturn.get("paymentId");
-        String payerID = paypalReturn.get("PayerID");
-        String token = paypalReturn.get("token");
+        payerID = paypalReturn.get("PayerID");
 
         try {
-            String accessToken = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID,
-                    ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
+            //configuration
+            String accessToken = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID, ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
             Map<String, String> sdkConfig = new HashMap<String, String>();
             sdkConfig.put("mode", "sandbox");
             context = new APIContext(accessToken);
             context.setConfigurationMap(sdkConfig);
+
+            //Payment which has been approved
             payment = Payment.get(accessToken, paymentID);
+            //execution of purchase
             paymentExecution = new PaymentExecution();
             paymentExecution.setPayerId(payerID);
 
             //Executes a payment
             Payment newPayment = payment.execute(context, paymentExecution);
+            //getting a sale id
             saleID = newPayment.getTransactions().get(0).getRelatedResources().get(0).getSale().getId();
 
             purchase = Purchase.findPurchaseById(purchaseId);
@@ -237,6 +262,13 @@ public class PayPalController extends Controller {
      * @return
      */
     public Result purchaseFail() {
+
+        for (int i = 0; i < purchaseItems.size(); i++){
+            purchaseItems.get(i).delete();
+        }
+
+        purchase.delete();
+
         flash("error");
         return ok(userCart.render(cartItems,currentUser));
     }
@@ -265,6 +297,7 @@ public class PayPalController extends Controller {
      */
     public static void savePurchaseItemToDatabase(List<PurchaseItem> purchaseItems, Purchase purchase, List<CartItem> cartItems){
         Product product;
+        Cart cart = null;
 
         for (int i = 0; i < purchaseItems.size(); i++) {
             PurchaseItem item = purchaseItems.get(i);
@@ -284,7 +317,10 @@ public class PayPalController extends Controller {
         for (int i = 0; i < cartItems.size(); i++) {
             CartItem cartItemI = cartItems.get(i);
             cartItemI.delete();
+            cart = cartItemI.cart;
         }
+        if (cart != null)
+        cart.delete();
     }
 
 
