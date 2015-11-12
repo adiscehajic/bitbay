@@ -19,6 +19,7 @@ GET           /logout                                 @controllers.ApplicationCo
 GET           /signup/validate/:token                 @controllers.Users.emailValidation(token: String)
 POST          /signin/validateFormLog                 @controllers.ApplicationController.validateFormLogin()
 POST          /signup/validateFormReg                 @controllers.ApplicationController.validateFormRegistration()
+GET           /aboutUs                                @controllers.ApplicationController.aboutUs()
 
 GET           /contactus                              @controllers.EmailController.contactUs()
 POST          /contactus                              @controllers.EmailController.sendEmail()

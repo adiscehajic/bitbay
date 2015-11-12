@@ -64,6 +64,11 @@ public class Global extends GlobalSettings {
             userOne.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userOne.userType = seller;
             userOne.phoneNumber = "+38761849315";
+            Image image97 = new Image();
+            image97.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447355590/g41bdreigo5dqij5kdbj.jpg";
+            image97.public_id = "g41bdreigo5dqij5kdbj";
+            image97.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447355590/g41bdreigo5dqij5kdbj.jpg";
+            userOne.image = image97;
             userOne.setValidated(true);
             users.add(userOne);
 
@@ -74,6 +79,11 @@ public class Global extends GlobalSettings {
             userThree.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userThree.userType = seller;
             userThree.phoneNumber = "+38761555040";
+            Image image98 = new Image();
+            image98.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447355792/nk1viweeyj8bwdvyeizc.jpg";
+            image98.public_id = "nk1viweeyj8bwdvyeizc";
+            image98.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447355792/nk1viweeyj8bwdvyeizc.jpg";
+            userThree.image = image98;
             userThree.setValidated(true);
             users.add(userThree);
 
@@ -84,6 +94,11 @@ public class Global extends GlobalSettings {
             userFive.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userFive.userType = seller;
             userFive.phoneNumber = "+38761985788";
+            Image image99 = new Image();
+            image99.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447355691/aovw56y9rqmcj5orsfst.jpg";
+            image99.public_id = "aovw56y9rqmcj5orsfst";
+            image99.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447355691/aovw56y9rqmcj5orsfst.jpg";
+            userFive.image = image99;
             userFive.setValidated(true);
             users.add(userFive);
 
@@ -94,6 +109,11 @@ public class Global extends GlobalSettings {
             userTwo.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userTwo.userType = buyer;
             userTwo.phoneNumber = "+38761066034";
+            Image image100 = new Image();
+            image100.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447355533/ynvuopdumijptn0blin1.jpg";
+            image100.public_id = "ynvuopdumijptn0blin1";
+            image100.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447355533/ynvuopdumijptn0blin1.jpg";
+            userTwo.image = image100;
             userTwo.setValidated(true);
             users.add(userTwo);
 
@@ -104,6 +124,11 @@ public class Global extends GlobalSettings {
             userFour.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userFour.userType = buyer;
             userFour.phoneNumber = "+38761636292";
+            Image image101 = new Image();
+            image101.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447355739/yz5wsltpgmellkcsyl0j.jpg";
+            image101.public_id = "yz5wsltpgmellkcsyl0j";
+            image101.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447355739/yz5wsltpgmellkcsyl0j.jpg";
+            userFour.image = image101;
             userFour.setValidated(true);
             users.add(userFour);
 
@@ -114,6 +139,11 @@ public class Global extends GlobalSettings {
             userSix.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userSix.userType = buyer;
             userSix.phoneNumber = "+38766177380";
+            Image image102 = new Image();
+            image102.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447355653/mp97cjqbosbxvqzyaltw.jpg";
+            image102.public_id = "mp97cjqbosbxvqzyaltw";
+            image102.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447355653/mp97cjqbosbxvqzyaltw.jpg";
+            userSix.image = image102;
             userSix.setValidated(true);
             users.add(userSix);
 
@@ -122,13 +152,20 @@ public class Global extends GlobalSettings {
             userSeven.lastName = "Ibrisimovic";
             userSeven.email = "narena.ibrisimovic@bitcamp.ba";
             userSeven.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
-            userSeven.userType = admin;
+            userSeven.userType = buyer;
+            Image image103 = new Image();
+            image103.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447363074/lxhvbo5bav8qmbkksixl.jpg";
+            image103.public_id = "lxhvbo5bav8qmbkksixl";
+            image103.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447363074/lxhvbo5bav8qmbkksixl.jpg";
+            userSeven.image = image103;
+            userSeven.setValidated(true);
             users.add(userSeven);
 
             User userEight = new User();
             userEight.firstName = "BitBay";
             userEight.lastName = "Service";
             userEight.email = "bitbayservice@gmail.com";
+            userEight.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userEight.userType = admin;
             userEight.setValidated(true);
             users.add(userEight);

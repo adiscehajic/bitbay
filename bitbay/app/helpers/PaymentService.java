@@ -384,6 +384,9 @@ public class PaymentService {
         return true;
     }
 
+    /**
+     * Getters and Setters
+     */
     public static double getPrice() {
         return price;
     }

@@ -84,6 +84,7 @@ public class PayPalController extends Controller {
         List<Product> products = Product.findAll();
         List<Product> recommendations = Recommendation.getRecommendations();
 
+        //if refund is done product quantity will be increased by refunded quantity
         if(PaymentService.executeRefund(purchaseItem_id)){
            PurchaseItem purchaseItem = PurchaseItem.getPurchaseItemById(purchaseItem_id);
            Product product = Product.getProductById(purchaseItem.product.id);
@@ -101,6 +102,8 @@ public class PayPalController extends Controller {
     public Result sendInvoice() {
         User user = SessionHelper.currentUser();
 
+        //if user exists sendInvoice method will get email address and string created while making an order
+        //and send a message
         if (user != null) {
             MailHelper.sendInvoice(user.email, PaymentService.getMessageInvoice());
         } else {

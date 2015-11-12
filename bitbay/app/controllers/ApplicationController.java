@@ -308,4 +308,8 @@ public class ApplicationController extends Controller {
             return errors.isEmpty() ? null : errors;
         }
     }
+
+    public Result aboutUs(){
+        return ok(aboutUs.render());
+    }
 }
