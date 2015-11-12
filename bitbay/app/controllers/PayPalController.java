@@ -4,11 +4,12 @@ import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
-import helpers.ConstantsHelper;
-import helpers.CurrentBuyer;
-import helpers.MailHelper;
-import helpers.SessionHelper;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+import helpers.*;
 import models.*;
+import org.json.simple.JSONObject;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -21,6 +22,7 @@ import views.html.purchase.purchaseResult;
 import views.html.user.userCart;
 
 import javax.swing.text.html.HTML;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -216,6 +218,10 @@ public class PayPalController extends Controller {
             purchase.sale_id = saleID;
             purchase.update();
 
+            // Calling method that goes through all purchased items and checks if there is courses. If the item is
+            // course it sends to bitClassroom information about purchased course.
+            PurchaseItem.findClassroomCourses(purchaseItems);
+
             savePurchaseItemToDatabase(purchaseItems,purchase,cartItems);
 
             flash("info");
@@ -224,6 +230,7 @@ public class PayPalController extends Controller {
             Logger.debug("Error at purchaseSucess: " + e.getMessage(), e);
             return redirect(routes.ApplicationController.index());
         }
+
         /**when the payment is built, the client is redirected to the
          purchaseResult view*/
         return ok(purchaseResult.render(currentUser, purchase, details));

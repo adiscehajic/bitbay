@@ -4,7 +4,11 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.SqlRow;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import helpers.CommonHelpers;
+import helpers.ConstantsHelper;
+import helpers.ServiceRequest;
 import helpers.SessionHelper;
+import org.json.simple.JSONObject;
 import play.Logger;
 import play.data.format.Formats;
 
@@ -150,5 +154,29 @@ public class PurchaseItem extends Model {
         }
         // Returning the list of the top 10 most purchased products.
         return mostPurchased;
+    }
+
+    /**
+     * Goes through all purchased user items and checks if there is items that are courses of the bitClassroom
+     * application. If the item is course it sends to the bitClassroom application information about purchased course.
+     *
+     * The bitClassroom application receives the email of the user that had purchased course and the course token.
+     *
+     * @param purchaseItems - The list of items that user has purchased.
+     */
+    public static void findClassroomCourses(List<PurchaseItem> purchaseItems) {
+        // Going through all purchased items.
+        for (int i = 0; i < purchaseItems.size(); i++) {
+            // Checking if the product is one of the bitClassroom courses.
+            if (purchaseItems.get(i).product.user.equals(CommonHelpers.bitclassroomUser())){
+                // Declaring JSON object that will contain information about purchase.
+                JSONObject json = new JSONObject();
+                // Putting buyers email and course token into created JSON object.
+                json.put("user_email", SessionHelper.currentUser().email);
+                json.put("premium_id", purchaseItems.get(i).product.id + "bitbay");
+                // Sending request to the bitClassroom application.
+                ServiceRequest.post(ConstantsHelper.BIT_CLASSROOM_COURSES, json.toString(), ServiceRequest.checkRequest());
+            }
+        }
     }
 }

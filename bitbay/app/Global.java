@@ -173,6 +173,15 @@ public class Global extends GlobalSettings {
             userTwelve.setValidated(true);
             users.add(userTwelve);
 
+            User classroom = new User();
+            classroom.firstName = "BitClassroom";
+            classroom.lastName = "BitClassroom";
+            classroom.email = "bitclassroom2015@gmail.com";
+            classroom.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
+            classroom.userType = seller;
+            classroom.setValidated(true);
+            users.add(classroom);
+
             for (int i = 0; i < users.size(); i++) {
                 users.get(i).save();
             }

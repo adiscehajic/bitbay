@@ -41,6 +41,9 @@ POST          /product/new/                           @controllers.ProductContro
 GET           /product/edit/:id                       @controllers.ProductController.editProduct(id: Integer)
 POST          /product/edit/:id                       @controllers.ProductController.updateProduct(id: Integer)
 
+POST          /product/new/bitclassroomcourse         @controllers.ConnectionController.saveCourse()
+
+
 GET           /admin                                  @controllers.AdminController.adminLogin()
 GET           /admin/logout                           @controllers.AdminController.adminLogout()
 GET           /admin/index                            @controllers.AdminController.adminIndex()
