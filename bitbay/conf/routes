@@ -72,7 +72,6 @@ GET           /user/purchasehistory                   @controllers.Users.getUser
 POST          /purchaseprocessing                     @controllers.PayPalController.purchaseProcessing(id: Integer)
 GET           /purchasesuccess                        @controllers.PayPalController.purchaseSuccess()
 GET           /purchasefail                           @controllers.PayPalController.purchaseFail()
-GET           /purchaseTransaction/                   @controllers.PayPalController.approveTransaction()
 GET           /refundpurchase/                        @controllers.PayPalController.refundProcessing(purchaseitemid: Integer)
 GET           /purchaseinvoice                        @controllers.PayPalController.sendInvoice()
 
