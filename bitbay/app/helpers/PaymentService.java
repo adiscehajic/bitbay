@@ -119,7 +119,6 @@ public class PaymentService {
             //so that we can create desc, total price and also to save it to purchased items list as a new purchaseItem
             for (int i = 0; i < cartItems.size(); i++){
                 CartItem cartItemFromCart = cartItems.get(i);
-                Logger.info("Cart item details: " + cartItemFromCart);
                 price = cartItemFromCart.price;
                 //adding an item price to total price
                 totalPrice += price;
@@ -133,14 +132,11 @@ public class PaymentService {
                 purchaseItem = new PurchaseItem(cartItemFromCart.product, cartItemFromCart.user, purchase, quantity);
                 // Adding the purchase item to the purchaseItems list
                 purchaseItems.add(purchaseItem);
-                Logger.info("Purchase item details: " + purchaseItem.toString());
             }
-            Logger.info("Izasao iz loopa");
             //creating a new purchase for a current user, with parameters purchased items list,
             //total price and generated security token
             purchase = new Purchase(currentUser,purchaseItems,totalPrice,token);
             purchase.save();
-            Logger.info("snimio purchase");
 
             //purchase id from a database
             purchaseId = purchase.id;
@@ -332,21 +328,17 @@ public class PaymentService {
             //Configuration
             String accessToken = new OAuthTokenCredential(ConstantsHelper.PAY_PAL_CLIENT_ID,
                     ConstantsHelper.PAY_PAL_CLIENT_SECRET).getAccessToken();
-            Logger.info("Access token generated");
 
             Map<String, String> sdkConfig = new HashMap<String, String>();
             sdkConfig.put("mode", "sandbox");
-            Logger.info("sdkConfig mode");
 
             context = new APIContext(accessToken);
             context.setConfigurationMap(sdkConfig);
-            Logger.info("context configuration map sdk");
 
             //Declaring and initializing purchaseItem, sale object and refund object
             PurchaseItem purchaseItem = PurchaseItem.getPurchaseItemById(purchaseItem_id);
             Sale sale = Sale.get(context, purchaseItem.purchase.sale_id);
             Refund refund = new Refund();
-            Logger.info("purchasedItem: " + purchaseItem.toString());
 
             //
             if(purchaseItem.purchase.sale_id != null && purchaseItem.isRefunded == 0) {
@@ -354,23 +346,18 @@ public class PaymentService {
                 //creating amount object
                 totalPrice = purchaseItem.price;
                 priceString = String.format("%1.2f", totalPrice);
-                Logger.info("Price: " + priceString);
 
                 Amount amount = new Amount();
                 amount.setCurrency("USD");
                 amount.setTotal(priceString);
 
                 refund.setAmount(amount);
-                Logger.info("Amount: " + refund.getAmount());
-                Logger.info("Refund: " + refund.getDescription());
                 //Executing refund of a sale
                 Refund newrefund = sale.refund(context, refund);
-                Logger.info("Refund: " + refund.getState());
 
                 //changes purchaseItem attribute to 1
                 purchaseItem.isRefunded = 1;
                 purchaseItem.update();
-                Logger.info("Purchase item is refunded? " + purchaseItem.isRefunded);
             }
             if(purchaseItem.purchase.sale_id == null || purchaseItem.isRefunded == 1) {
                 purchaseItem.isRefunded = 1;
