@@ -210,6 +210,15 @@ public class Global extends GlobalSettings {
             userTwelve.setValidated(true);
             users.add(userTwelve);
 
+            User classroom = new User();
+            classroom.firstName = "BitClassroom";
+            classroom.lastName = "BitClassroom";
+            classroom.email = "bitclassroom2015@gmail.com";
+            classroom.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
+            classroom.userType = seller;
+            classroom.setValidated(true);
+            users.add(classroom);
+
             for (int i = 0; i < users.size(); i++) {
                 users.get(i).save();
             }
@@ -221,6 +230,7 @@ public class Global extends GlobalSettings {
             Category categoryFive = new Category("Motors", null);
             Category categorySix = new Category("Sports", null);
             Category categorySeven = new Category("Home", null);
+            Category categoryEight = new Category("Courses", null);
 
             categoryOne.save();
             categoryTwo.save();
@@ -229,6 +239,7 @@ public class Global extends GlobalSettings {
             categoryFive.save();
             categorySix.save();
             categorySeven.save();
+            categoryEight.save();
 
             Category subcategoryOne = new Category("Cell Phones & Accessories", categoryTwo);
             Category subcategoryTwo = new Category("Computers/Tablets & Networking", categoryTwo);
@@ -242,6 +253,7 @@ public class Global extends GlobalSettings {
             Category subcategoryTen = new Category("Exercise & fitness", categorySix);
             Category subcategoryEleven = new Category("Yard, garden & outdoor", categorySeven);
             Category subcategoryTwelve = new Category("Home improvement", categorySeven);
+            Category subcategoryThirteen = new Category("BitClassroom", categoryEight);
 
             subcategoryOne.save();
             subcategoryTwo.save();
@@ -255,6 +267,7 @@ public class Global extends GlobalSettings {
             subcategoryTen.save();
             subcategoryEleven.save();
             subcategoryTwelve.save();
+            subcategoryThirteen.save();
 
             /*
             Electronics

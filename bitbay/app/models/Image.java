@@ -5,10 +5,13 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.Transformation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import helpers.SessionHelper;
+import org.apache.commons.io.FileUtils;
+import play.Logger;
 
 import javax.persistence.*;
 import java.io.File;
 import java.io.*;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -178,6 +181,39 @@ public class Image extends Model {
             cloudinary.uploader().destroy(public_id, null);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Uploads image that is stored on inputed URL on cloudinary and saves image cloudinary URL in database. First
+     * creates new image file and saves the image file in temp directory.
+     *
+     * Then copies image that is stored on inputed URL into created file. After that creates image file and uploads
+     * him on cloudinary, and saves new image file cloudinary URL into database. At the end it deletes created image
+     * file from the temp directory.
+     *
+     * @param imageUrl - URL of the image that user wants to upload on cloudinary.
+     * @param product - Product that is on image file.
+     */
+    public static void savingImageFromUrl(String imageUrl, Product product) {
+        try {
+            // Checking if the inputed string is URL.
+            if (!imageUrl.equals("no_image")) {
+                // Storing image file in temp directory.
+                String tmpDirectory = System.getProperty("java.io.tmpdir");
+                String path = tmpDirectory + "tmp" + ".jpg";
+                File fileImage = new File(path);
+                fileImage.deleteOnExit();
+                // Creating URL from inputed string variable.
+                URL url = new URL(imageUrl);
+                // Storing image file from URL into created file.
+                FileUtils.copyURLToFile(url, fileImage);
+                // Uploading image file on cloudinary and saving image cloudinary URL into database.
+                Image image = Image.create(fileImage, product.id);
+                image.save();
+            }
+        } catch (IOException e) {
+            Logger.error("Error while uploading image to cloudinary and saving into database. " + " - " + e.getMessage());
         }
     }
 

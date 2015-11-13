@@ -45,7 +45,11 @@
 				</span>
 				<h2 style="display: inline;">@product.name</h2>
 				<p style="height: 20px"></p>
-				<a href="@routes.Users.getUser(product.user.email)"> @product.user.email <a href="@routes.MessageController.newMessage(product.user.email)"><span class="glyphicon glyphicon-envelope"></span></a></a>
+				<a href="@routes.Users.getUser(product.user.email)"> @product.user.email
+					@if(!product.user.equals(CommonHelpers.bitclassroomUser())) {
+						<a href="@routes.MessageController.newMessage(product.user.email)"><span class="glyphicon glyphicon-envelope"></span></a>
+					}
+				</a>
 				<br>
 				@if(Auction.getAuctionByProduct(product) == null) {
 					<label> Quantity: </label> <label> @product.quantity </label>
@@ -113,6 +117,7 @@
 				<div style="margin-top:20px" id="deliveryWrapper">
 					<table>
 						<tbody>
+						@if(!product.user.equals(CommonHelpers.bitclassroomUser())) {
 							<tr>
 								<td> Shipping: </td>
 								<td> </td>
@@ -121,6 +126,7 @@
 								<td> Delivery: </td>
 								<td> Estimated 10-15 days. </td>
 							</tr>
+						}
 							<tr>
 								<td> Returns: </td>
 								@if(product.cancelation == 0){
