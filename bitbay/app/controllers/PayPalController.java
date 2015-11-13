@@ -1,14 +1,8 @@
 package controllers;
 
-import com.paypal.api.payments.*;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.OAuthTokenCredential;
-import com.paypal.base.rest.PayPalRESTException;
+
 import helpers.*;
 import models.*;
-import play.Logger;
-import play.data.DynamicForm;
-import play.data.Form;
 import play.filters.csrf.RequireCSRFCheck;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -16,8 +10,6 @@ import play.mvc.Security;
 import views.html.index;
 import views.html.purchase.purchaseResult;
 import views.html.user.userCart;
-
-import javax.swing.text.html.HTML;
 import java.util.*;
 
 /**
@@ -51,10 +43,12 @@ public class PayPalController extends Controller {
      * @return purchaseResult page
      */
     public Result purchaseSuccess() {
+
         if(PaymentService.purchaseSuccess())
             /**when the payment is built, the client is redirected to the
              purchaseResult view*/
-            return ok(purchaseResult.render(SessionHelper.currentUser(), PaymentService.getPurchase(), PaymentService.getDetails()));
+            return ok(purchaseResult.render(SessionHelper.currentUser(), PaymentService.getPurchase(),
+                    PaymentService.getDetails()));
         else
             return redirect(routes.CartController.getCart());
     }

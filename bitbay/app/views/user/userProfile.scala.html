@@ -1,3 +1,4 @@
+@import helpers.CommonHelpers
 @(user: User)
 @import helper._
 
@@ -92,7 +93,7 @@
                                 @if(user.userType.id == 3) {
                                     <a href="@routes.Users.getAllUserProducts(user.email)"><button type="submit" class="btn btn-lg btn-primary" >
                                         Products</button></a>
-                                    @if(user.id != SessionHelper.currentUser().id) {
+                                    @if(user.id != SessionHelper.currentUser().id && !user.equals(CommonHelpers.bitclassroomUser())) {
                                         <a href="@routes.MessageController.newMessage(user.email)"><button type="submit" class="btn btn-lg btn-success" >
                                             Message <span class="glyphicon glyphicon-send"></span></button></a>
                                     }

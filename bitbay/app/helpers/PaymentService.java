@@ -241,6 +241,12 @@ public class PaymentService {
             purchase.sale_id = saleID;
             purchase.update();
 
+            // Calling method that goes through all purchased user items and checks if there is items that are courses
+            // of the bitClassroom application. If the product item is course it sends to the bitClassroom application
+            // information about purchased course, otherwise connects with bitTracking application and sends for every
+            // purchased product item sellers address information and buyers address information.
+            PurchaseItem.managePurchasedItems(purchaseItems);
+
             savePurchaseItemToDatabase(purchaseItems, purchase, cartItems);
         } catch (Exception e) {
             flash("error");
