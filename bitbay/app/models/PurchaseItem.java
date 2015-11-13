@@ -158,25 +158,58 @@ public class PurchaseItem extends Model {
 
     /**
      * Goes through all purchased user items and checks if there is items that are courses of the bitClassroom
-     * application. If the item is course it sends to the bitClassroom application information about purchased course.
+     * application. If the product item is course it sends to the bitClassroom application information about purchased
+     * course, otherwise connects with bitTracking application and sends for every purchased product item sellers
+     * address information and buyers address information.
      *
      * The bitClassroom application receives the email of the user that had purchased course and the course token.
      *
+     * The bitTracking application receives address, city and country of purchased product seller and buyer. After
+     * every purchased product is delivered bitTracking application sends information about purchased product delivery.
+     *
      * @param purchaseItems - The list of items that user has purchased.
      */
-    public static void findClassroomCourses(List<PurchaseItem> purchaseItems) {
+    public static void managePurchasedItems(List<PurchaseItem> purchaseItems) {
+        User user = SessionHelper.currentUser();
         // Going through all purchased items.
         for (int i = 0; i < purchaseItems.size(); i++) {
+            PurchaseItem purchaseItem = purchaseItems.get(i);
             // Checking if the product is one of the bitClassroom courses.
-            if (purchaseItems.get(i).product.user.equals(CommonHelpers.bitclassroomUser())){
-                // Declaring JSON object that will contain information about purchase.
+            if (purchaseItem.product.user.equals(CommonHelpers.bitclassroomUser())){
+                // Declaring JSON object that will contain information about course purchase.
                 JSONObject json = new JSONObject();
                 // Putting buyers email and course token into created JSON object.
-                json.put("user_email", SessionHelper.currentUser().email);
-                json.put("premium_id", purchaseItems.get(i).product.id + "bitbay");
+                json.put("user_email", user.email);
+                json.put("premium_id", String.format(purchaseItems.get(i).product.id + "bitbay"));
                 // Sending request to the bitClassroom application.
                 ServiceRequest.post(ConstantsHelper.BIT_CLASSROOM_COURSES, json.toString(), ServiceRequest.checkRequest());
             }
+            /*else {
+                Logger.info("++++++++++111111111111111+++++++++++");
+                // Declaring JSON object that will contain information about product purchase.
+                JSONObject json = new JSONObject();
+                // Putting seller addres information into JSON object.
+                json.put("seller_country", purchaseItem.product.user.country);
+                json.put("seller_city", purchaseItem.product.user.city);
+                json.put("seller_address", purchaseItem.product.user.address);
+                // Putting buyer addres information into JSON object.
+                json.put("buyer_country", user.country);
+                json.put("buyer_city", user.city);
+                json.put("buyer_address", user.address);
+                json.put("buyer_firstname", user.firstName);
+                json.put("buyer_lastname", user.lastName);
+                // Putting product information into JSON object.
+                json.put("product_name", purchaseItem.product.name);
+                json.put("product_price", purchaseItem.price);
+                json.put("product_weight", purchaseItem.quantity);
+                Logger.info("++++++++++222222222222222+++++++++++");
+
+                // Sending request to the bitTracking application.
+                ServiceRequest.post(ConstantsHelper.BIT_TRACKING_SEND, json.toString(), ServiceRequest.checkRequest());
+                Logger.info("++++++++++333333333333333+++++++++++");
+
+            }*/
+
         }
     }
 }

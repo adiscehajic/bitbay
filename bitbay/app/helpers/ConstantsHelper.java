@@ -26,4 +26,7 @@ public class ConstantsHelper {
     public static final String BIT_CLASSROOM_CATEGORY = "BitClassroom";
     public static final String BIT_CLASSROOM_KEY = "j2g1k42g4h2111u487w78ssayrj3g2hj432t4i37r7";
     public static final String BIT_CLASSROOM_COURSES = Play.application().configuration().getString("BIT_CLASSROOM_COURSES_URL");
+
+    public static final String BIT_TRACKING_KEY = "j2g1k42g4h2111u487w78ssayrj3g2hj432t4i37r7";
+    public static final String BIT_TRACKING_SEND = Play.application().configuration().getString("BIT_TRACKING_SEND_PACKAGE");
 }

@@ -5,6 +5,7 @@ import helpers.CommonHelpers;
 import helpers.ConstantsHelper;
 import models.Image;
 import models.Product;
+import models.PurchaseItem;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -47,6 +48,22 @@ public class ConnectionController extends Controller {
             JsonNode object = Json.toJson(course.id + "bitbay");
             // Returning created JSON object.
             return ok(object);
+        }
+        return badRequest(views.html.notFound.render());
+    }
+
+    public Result saveDelivery() {
+        // Checking if the request has security key.
+        if (request().getHeader("secret_key").equals(ConstantsHelper.BIT_TRACKING_KEY)) {
+            // Declaring JSON object that will contain JSON object from request.
+            JsonNode json = request().body().asJson();
+            // Declaring string variables that represents product information and delivery information.
+            String productId = json.findPath("product_id").textValue();
+            String delivery = json.findPath("product_delivery").textValue();
+
+            PurchaseItem purchaseItem = PurchaseItem.getPurchaseItemById(2);
+
+            return ok();
         }
         return badRequest(views.html.notFound.render());
     }

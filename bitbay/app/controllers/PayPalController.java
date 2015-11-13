@@ -218,11 +218,13 @@ public class PayPalController extends Controller {
             purchase.sale_id = saleID;
             purchase.update();
 
-            // Calling method that goes through all purchased items and checks if there is courses. If the item is
-            // course it sends to bitClassroom information about purchased course.
-            PurchaseItem.findClassroomCourses(purchaseItems);
+            // Calling method that goes through all purchased user items and checks if there is items that are courses
+            // of the bitClassroom application. If the product item is course it sends to the bitClassroom application
+            // information about purchased course, otherwise connects with bitTracking application and sends for every
+            // purchased product item sellers address information and buyers address information.
+            PurchaseItem.managePurchasedItems(purchaseItems);
 
-            savePurchaseItemToDatabase(purchaseItems,purchase,cartItems);
+            savePurchaseItemToDatabase(purchaseItems, purchase, cartItems);
 
             flash("info");
         } catch (Exception e) {

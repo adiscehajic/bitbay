@@ -50,7 +50,7 @@ public class ServiceRequest {
 
         Request request = requestBuilder
                 .url(url).addHeader("Accept", "application/json")
-                .addHeader("secret_key", ConstantsHelper.BIT_CLASSROOM_KEY).build();
+                .build();
 
         Call call = client.newCall(request);
         call.enqueue(callback);
