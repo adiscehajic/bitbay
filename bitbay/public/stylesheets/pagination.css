@@ -12,23 +12,17 @@ footer {
 footer a {
     color:#fff;
     padding:3px 5px;
-    text-decoration:underline;
     -webkit-transition:all .5s;
     -moz-transition:all .5s;
     -o-transition:all .5s;
     -ms-transition:all .5s;
     transition:all .5s;
 }
-footer a:hover {
-    background:#fff;
-    color:#08c;
-    text-decoration:none;
-    transform: rotate(30deg);
-    -ms-transform: rotate(30deg);
-    -webkit-transform: rotate(30deg);
-    -o-transform: rotate(30deg);
-    -moz-transform: rotate(30deg);
+
+.img-center {
+    margin: 0 auto;
 }
+
 .easyPaginateNav {text-align: center}
 #easyPaginate.product {display:block;margin-bottom:10px;}
 .easyPaginateNav a {padding:5px;}

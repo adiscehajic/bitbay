@@ -1,0 +1,111 @@
+@main("About Us"){
+    <!-- Page Content -->
+    <div class="container">
+
+            <!-- Introduction Row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">About Us
+                    <small>bitbay team</small>
+                </h1>
+                <p>We are the part of a project BITCamp, which is a six-month training program in the field of .NET and Java/Android Development.</p>
+            </div>
+        </div>
+
+            <!-- Team Members Row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Our Team</h2>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-responsive img-center" src="@Image.getImageById(97).getSize(300,300)" alt="">
+                <h3>Adis Ćehajić
+                    <small>Junior Developer</small>
+                </h3>
+                <p>E-mail address: @User.findById(1).email</p>
+                <p>GitHub account: <a target="_blank" href="https://github.com/adiscehajic">adiscehajic</a></p>
+                <p>Phone number: @User.findById(1).phoneNumber</p>
+                <p></p>
+
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-responsive img-center" src="@Image.getImageById(99).getSize(300,300)" alt="">
+                <h3>Medina Banjić
+                    <small>Junior Developer</small>
+                </h3>
+                <p>E-mail address: @User.findById(3).email</p>
+                <p>GitHub account: <a target="_blank" href="https://github.com/medinabanjic">medinabanjic</a></p>
+                <p>Phone number: @User.findById(3).phoneNumber</p>
+                <p></p>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-responsive img-center" src="@Image.getImageById(100).getSize(300,300)" alt="">
+                <h3>Adnan Lapendić
+                    <small>Junior Developer</small>
+                </h3>
+                <p>E-mail address: @User.findById(5).email</p>
+                <p>GitHub account: <a target="_blank" href="https://github.com/AdnanLapendic">adnanlapendic</a></p>
+                <p>Phone number: @User.findById(5).phoneNumber</p>
+                <p></p>
+            </div>
+
+        <hr>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-responsive img-center" src="@Image.getImageById(96).getSize(300,300)" alt="">
+                <h3>Kerim Dragolj
+                    <small>Junior Developer</small>
+                </h3>
+                <p>E-mail address: @User.findById(4).email</p>
+                <p>GitHub account: <a target="_blank" href="https://github.com/kerimdragolj">kerimdragolj</a></p>
+                <p>Phone number: @User.findById(4).phoneNumber</p>
+                <p></p>
+            </div>
+
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-responsive img-center" src="@Image.getImageById(98).getSize(300,300)" alt="">
+                <h3>Senadin Botić
+                    <small>Junior Developer</small>
+                </h3>
+                <p>E-mail address: @User.findById(6).email</p>
+                <p>GitHub account: <a target="_blank" href="https://github.com/SenadinBitCamp">senadinbotic</a></p>
+                <p>Phone number: @User.findById(6).phoneNumber</p>
+                <p></p>
+            </div>
+
+                <div class="col-lg-4 col-sm-6 text-center">
+                    <img class="img-responsive img-center" src="@Image.getImageById(101).getSize(300,300)" alt="">
+                    <h3>Dinko Hodžić
+                        <small>Junior Developer</small>
+                    </h3>
+                    <p>E-mail address: @User.findById(2).email</p>
+                    <p>GitHub account: <a target="_blank" href="https://github.com/dinkohodzic">dinkohodzic</a></p>
+                    <p>Phone number: @User.findById(2).phoneNumber</p>
+                    <p></p>
+                </div>
+
+        <hr>
+
+            <div class="col-lg-4 col-sm-6 text-center">
+            </div>
+
+        <div class="col-lg-4 col-sm-6 text-center">
+            <img class="img-responsive img-center" src="@Image.getImageById(102).getSize(300,300)" alt="">
+            <h3>Narena Ibrišimović
+                <small>Junior Developer</small>
+            </h3>
+            <p>E-mail address: @User.findById(7).email</p>
+            <p>GitHub account: <a  href="#">narenaibrisimovic</a></p>
+            <p>Phone number: @User.findById(7).phoneNumber</p>
+            <p></p>
+        </div>
+
+            <div class="col-lg-4 col-sm-6 text-center">
+                </div>
+            </div>
+
+
+        </div>
+    <!-- /.container -->
+
+
+}

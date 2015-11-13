@@ -121,6 +121,14 @@ public class Image extends Model {
         return finder.all();
     }
 
+
+    /**
+     * Returns image by the given id
+     */
+    public static Image getImageById(Integer id){
+        return Image.finder.where().eq("id", id).findUnique();
+    }
+
     /**
      * Method that return image path for selected product
      */

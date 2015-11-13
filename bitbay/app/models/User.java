@@ -156,7 +156,6 @@ public class User extends Model {
         this.email = email;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.userType = userType;
-
     }
 
     /**
@@ -284,6 +283,12 @@ public class User extends Model {
         this.validated = validated;
     }
 
+    /**
+     * This method finds user in database by email that we passed into this method.
+     * @param email
+     * @return
+     */
+    public static User findUserByEmail(String email) { return finder.where().eq("email", email).findUnique(); }
 
     /**
      * Method is used to validate user after verification email was sent to users email address.
