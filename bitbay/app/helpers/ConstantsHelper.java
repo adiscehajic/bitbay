@@ -10,6 +10,8 @@ public class ConstantsHelper {
     public static final int ADMIN = 1;
     public static final int BUYER = 2;
     public static final int SELLER = 3;
+    public static final String FIXED_PRICE = "1";
+    public static final String AUCTION = "2";
     public static final int CATEGORY_OTHER = 1;
     public static final String PAY_PAL_CLIENT_ID = Play.application().configuration()
             .getString("clientid");
@@ -20,4 +22,11 @@ public class ConstantsHelper {
     public static final String BIT_BAY = Play.application().configuration().getString("BIT_BAY");
     public static final String EMAIL_USERNAME = Play.application().configuration().getString("EMAIL_USERNAME_ENV");
     public static final String EMAIL_PASSWORD = Play.application().configuration().getString("EMAIL_PASSWORD_ENV");
+    public static final String BIT_CLASSROOM_EMAIL = "bitclassroom2015@gmail.com";
+    public static final String BIT_CLASSROOM_CATEGORY = "BitClassroom";
+    public static final String BIT_CLASSROOM_KEY = "j2g1k42g4h2111u487w78ssayrj3g2hj432t4i37r7";
+    public static final String BIT_CLASSROOM_COURSES = Play.application().configuration().getString("BIT_CLASSROOM_COURSES_URL");
+
+    public static final String BIT_TRACKING_KEY = "j2g1k42g4h2111u487w78ssayrj3g2hj432t4i37r7";
+    public static final String BIT_TRACKING_SEND = Play.application().configuration().getString("BIT_TRACKING_SEND_PACKAGE");
 }

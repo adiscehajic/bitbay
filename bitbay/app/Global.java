@@ -65,7 +65,16 @@ public class Global extends GlobalSettings {
             userOne.userType = seller;
             userOne.phoneNumber = "+38761849315";
             userOne.setValidated(true);
-            users.add(userOne);
+            userOne.save();
+            //users.add(userOne);
+            Image image97 = new Image();
+            image97.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447355590/g41bdreigo5dqij5kdbj.jpg";
+            image97.public_id = "g41bdreigo5dqij5kdbj";
+            image97.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447355590/g41bdreigo5dqij5kdbj.jpg";
+            image97.user = userOne;
+            image97.save();
+            userOne.image = image97;
+            userOne.update();
 
             User userThree = new User();
             userThree.firstName = "Dinko";
@@ -75,7 +84,16 @@ public class Global extends GlobalSettings {
             userThree.userType = seller;
             userThree.phoneNumber = "+38761555040";
             userThree.setValidated(true);
-            users.add(userThree);
+            userThree.save();
+            //users.add(userThree);
+            Image image98 = new Image();
+            image98.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447355792/nk1viweeyj8bwdvyeizc.jpg";
+            image98.public_id = "nk1viweeyj8bwdvyeizc";
+            image98.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447355792/nk1viweeyj8bwdvyeizc.jpg";
+            image98.user = userThree;
+            image98.save();
+            userThree.image = image98;
+            userThree.update();
 
             User userFive = new User();
             userFive.firstName = "Medina";
@@ -85,7 +103,16 @@ public class Global extends GlobalSettings {
             userFive.userType = seller;
             userFive.phoneNumber = "+38761985788";
             userFive.setValidated(true);
-            users.add(userFive);
+            userFive.save();
+            //users.add(userFive);
+            Image image99 = new Image();
+            image99.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447355691/aovw56y9rqmcj5orsfst.jpg";
+            image99.public_id = "aovw56y9rqmcj5orsfst";
+            image99.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447355691/aovw56y9rqmcj5orsfst.jpg";
+            image99.user = userFive;
+            image99.save();
+            userFive.image = image99;
+            userFive.update();
 
             User userTwo = new User();
             userTwo.firstName = "Kerim";
@@ -95,7 +122,16 @@ public class Global extends GlobalSettings {
             userTwo.userType = buyer;
             userTwo.phoneNumber = "+38761066034";
             userTwo.setValidated(true);
-            users.add(userTwo);
+            //users.add(userTwo);
+            userTwo.save();
+            Image image100 = new Image();
+            image100.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447355533/ynvuopdumijptn0blin1.jpg";
+            image100.public_id = "ynvuopdumijptn0blin1";
+            image100.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447355533/ynvuopdumijptn0blin1.jpg";
+            image100.user = userTwo;
+            image100.save();
+            userTwo.image = image100;
+            userTwo.update();
 
             User userFour = new User();
             userFour.firstName = "Adnan";
@@ -105,7 +141,16 @@ public class Global extends GlobalSettings {
             userFour.userType = buyer;
             userFour.phoneNumber = "+38761636292";
             userFour.setValidated(true);
-            users.add(userFour);
+            //users.add(userFour);
+            userFour.save();
+            Image image101 = new Image();
+            image101.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447355739/yz5wsltpgmellkcsyl0j.jpg";
+            image101.public_id = "yz5wsltpgmellkcsyl0j";
+            image101.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447355739/yz5wsltpgmellkcsyl0j.jpg";
+            image101.user = userFour;
+            image101.save();
+            userFour.image = image101;
+            userFour.update();
 
             User userSix = new User();
             userSix.firstName = "Senadin";
@@ -115,20 +160,40 @@ public class Global extends GlobalSettings {
             userSix.userType = buyer;
             userSix.phoneNumber = "+38766177380";
             userSix.setValidated(true);
-            users.add(userSix);
+            //users.add(userSix);
+            userSix.save();
+            Image image102 = new Image();
+            image102.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447355653/mp97cjqbosbxvqzyaltw.jpg";
+            image102.public_id = "mp97cjqbosbxvqzyaltw";
+            image102.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447355653/mp97cjqbosbxvqzyaltw.jpg";
+            image102.user = userSix;
+            image102.save();
+            userSix.image = image102;
+            userSix.update();
 
             User userSeven = new User();
             userSeven.firstName = "Narena";
             userSeven.lastName = "Ibrisimovic";
             userSeven.email = "narena.ibrisimovic@bitcamp.ba";
             userSeven.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
-            userSeven.userType = admin;
-            users.add(userSeven);
+            userSeven.userType = buyer;
+            userSeven.setValidated(true);
+            //users.add(userSeven);
+            userSeven.save();
+            Image image103 = new Image();
+            image103.image_url = "http://res.cloudinary.com/bitcamp/image/upload/v1447363074/lxhvbo5bav8qmbkksixl.jpg";
+            image103.public_id = "lxhvbo5bav8qmbkksixl";
+            image103.secret_image_url = "https://res.cloudinary.com/bitcamp/image/upload/v1447363074/lxhvbo5bav8qmbkksixl.jpg";
+            image103.user = userSeven;
+            image103.save();
+            userSeven.image = image103;
+            userSeven.update();
 
             User userEight = new User();
             userEight.firstName = "BitBay";
             userEight.lastName = "Service";
             userEight.email = "bitbayservice@gmail.com";
+            userEight.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
             userEight.userType = admin;
             userEight.setValidated(true);
             users.add(userEight);
@@ -173,6 +238,15 @@ public class Global extends GlobalSettings {
             userTwelve.setValidated(true);
             users.add(userTwelve);
 
+            User classroom = new User();
+            classroom.firstName = "BitClassroom";
+            classroom.lastName = "BitClassroom";
+            classroom.email = "bitclassroom2015@gmail.com";
+            classroom.password = BCrypt.hashpw("12345678", BCrypt.gensalt());
+            classroom.userType = seller;
+            classroom.setValidated(true);
+            users.add(classroom);
+
             for (int i = 0; i < users.size(); i++) {
                 users.get(i).save();
             }
@@ -184,6 +258,7 @@ public class Global extends GlobalSettings {
             Category categoryFive = new Category("Motors", null);
             Category categorySix = new Category("Sports", null);
             Category categorySeven = new Category("Home", null);
+            Category categoryEight = new Category("Courses", null);
 
             categoryOne.save();
             categoryTwo.save();
@@ -192,6 +267,7 @@ public class Global extends GlobalSettings {
             categoryFive.save();
             categorySix.save();
             categorySeven.save();
+            categoryEight.save();
 
             Category subcategoryOne = new Category("Cell Phones & Accessories", categoryTwo);
             Category subcategoryTwo = new Category("Computers/Tablets & Networking", categoryTwo);
@@ -205,6 +281,7 @@ public class Global extends GlobalSettings {
             Category subcategoryTen = new Category("Exercise & fitness", categorySix);
             Category subcategoryEleven = new Category("Yard, garden & outdoor", categorySeven);
             Category subcategoryTwelve = new Category("Home improvement", categorySeven);
+            Category subcategoryThirteen = new Category("BitClassroom", categoryEight);
 
             subcategoryOne.save();
             subcategoryTwo.save();
@@ -218,6 +295,7 @@ public class Global extends GlobalSettings {
             subcategoryTen.save();
             subcategoryEleven.save();
             subcategoryTwelve.save();
+            subcategoryThirteen.save();
 
             /*
             Electronics

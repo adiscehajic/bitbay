@@ -6,6 +6,7 @@ import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
 import controllers.PayPalController;
 import helpers.ConstantsHelper;
+import helpers.PaymentService;
 import helpers.SessionHelper;
 import models.*;
 import play.Logger;
@@ -199,7 +200,7 @@ public class ApiPayPalController extends Controller {
             purchase.sale_id = saleID;
             purchase.update();
 
-            PayPalController.savePurchaseItemToDatabase(purchaseItems, purchase, cartItems);
+            PaymentService.savePurchaseItemToDatabase(purchaseItems, purchase, cartItems);
 
             flash("info");
         } catch (Exception e) {

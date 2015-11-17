@@ -19,6 +19,7 @@ GET           /logout                                 @controllers.ApplicationCo
 GET           /signup/validate/:token                 @controllers.Users.emailValidation(token: String)
 POST          /signin/validateFormLog                 @controllers.ApplicationController.validateFormLogin()
 POST          /signup/validateFormReg                 @controllers.ApplicationController.validateFormRegistration()
+GET           /aboutUs                                @controllers.ApplicationController.aboutUs()
 
 GET           /contactus                              @controllers.EmailController.contactUs()
 POST          /contactus                              @controllers.EmailController.sendEmail()
@@ -40,6 +41,9 @@ GET           /product/delete/:id                     @controllers.ProductContro
 POST          /product/new/                           @controllers.ProductController.saveProduct()
 GET           /product/edit/:id                       @controllers.ProductController.editProduct(id: Integer)
 POST          /product/edit/:id                       @controllers.ProductController.updateProduct(id: Integer)
+
+POST          /product/new/bitclassroomcourse         @controllers.ConnectionController.saveCourse()
+POST          /product/send/bittracking               @controllers.ConnectionController.saveDelivery()
 
 GET           /admin                                  @controllers.AdminController.adminLogin()
 GET           /admin/logout                           @controllers.AdminController.adminLogout()
@@ -72,7 +76,6 @@ GET           /user/purchasehistory                   @controllers.Users.getUser
 POST          /purchaseprocessing                     @controllers.PayPalController.purchaseProcessing(id: Integer)
 GET           /purchasesuccess                        @controllers.PayPalController.purchaseSuccess()
 GET           /purchasefail                           @controllers.PayPalController.purchaseFail()
-GET           /purchaseTransaction/                   @controllers.PayPalController.approveTransaction()
 GET           /refundpurchase/                        @controllers.PayPalController.refundProcessing(purchaseitemid: Integer)
 GET           /purchaseinvoice                        @controllers.PayPalController.sendInvoice()
 
