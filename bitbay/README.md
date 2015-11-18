@@ -25,12 +25,15 @@ User can also buy a product from a list.
 
 bitbay team:
 
-Adis Cehajic,
-Adnan Lapendic,
-Kerim Dragolj,
-Medina Banjic,
-Senadin Botic.
+
+[Adis Cehajic](https://www.github.com/adiscehajic),
+[Adnan Lapendic](https://www.github.com/AdnanLapendic),
+[Kerim Dragolj](https://www.github.com/kerimdragolj),
+[Medina Banjic](https://www.github.com/medinabanjic),
+[Senadin Botic](https://www.github.com/SenadinBitCamp).
 
 ex members:
 Dinko Hodzic,
 Narena Ibrisimovic.
+
+
