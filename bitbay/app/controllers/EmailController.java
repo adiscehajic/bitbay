@@ -73,7 +73,8 @@ public class EmailController  extends Controller{
                 email.setFrom(Play.application().configuration().getString("mailFrom"));
                 email.setAuthentication(Play.application().configuration().getString("mailFromPass"), Play.application().configuration().getString("mail.smtp.pass"));
                 email.setStartTLSEnabled(true);
-                email.setDebug(true);
+                email.setSSLOnConnect(true);
+                //email.setDebug(true);
                 email.addTo(Play.application().configuration().getString("mail.smtp.user"));
                 email.setSubject(newContact.subject);
                 email.setMsg("Name: " + newContact.name + "\n" + "E-mail address: " + newContact.email + "\n\n" + newContact.message);
