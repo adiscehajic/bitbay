@@ -55,7 +55,7 @@ public class EmailController  extends Controller{
         // Declaring and checking recaptcha.
         String grecaptcha = request().body().asFormUrlEncoded().get("g-recaptcha-response")[0];
         WSRequest rq = ws.url("https://www.google.com/recaptcha/api/siteverify");
-        rq.setQueryParameter("secret", "6LfUKg4TAAAAAASFERHrMiHR0quZWg0oein3DsUu");
+        rq.setQueryParameter("secret", "6LcoOxETAAAAAPKT55QwSa8RbN9A0keCQhxZFBiN");
         rq.setQueryParameter("response", grecaptcha);
 
         F.Promise<JsonNode> responsePromise = rq.get().map(response -> {
