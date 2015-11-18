@@ -182,8 +182,8 @@ public class PaymentService {
 
             //Redirect urls
             redirects = new RedirectUrls();
-            redirects.setCancelUrl("http://localhost:9000/purchasefail");
-            redirects.setReturnUrl("http://localhost:9000/purchasesuccess");
+            redirects.setCancelUrl(ConstantsHelper.BIT_BAY + "/purchasefail");
+            redirects.setReturnUrl(ConstantsHelper.BIT_BAY + "/purchasesuccess");
             payment.setRedirectUrls(redirects);
 
             //creating payment
